@@ -1,0 +1,84 @@
+%\documentclass[12pt,a4paper,twoside]{memoir}
+\documentclass[a4paper,twoside]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[francais,frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern} %% latin modern font
+%\usepackage{fcursive}
+%\usepackage[mathscr]{euscript}
+\usepackage{mathrsfs}
+\usepackage{lettrine}
+\usepackage{mathrsfs} %% fournit \mathsrc (majuscules rondes)
+%\usepackage{scrextend} %%% http://tex.stackexchange.com/questions/5339/how-to-specify-font-size-less-than-10pt-or-more-than-12pt
+%\changefontsizes[20pt]{16pt}
+\usepackage[fontsize=14pt]{scrextend}
+\usepackage{subfig}%% \subfloat
+\usepackage{xspace}
+\usepackage{lipsum}
+\usepackage[textwidth=23mm]{todonotes} %%% Ajuster le textwidth en fct de la marge
+%\usepackage[disable]{todonotes}
+\usepackage{xcolor}
+\usepackage[left=35mm,right=25mm,top=30mm,bottom=30mm]{geometry}
+\usepackage{tcolorbox}
+\usepackage{subfiles}
+
+%\usepackage{frcursive} %fournit l'environnement cursive, qui imite une écriture manuelle
+%%%%% fncychap predefini
+%\usepackage[Glenn]{fncychap}
+%\usepackage[Conny]{fncychap}
+\usepackage[Bjornstrup]{fncychap}
+%\usepackage[Peters]{fncychap}
+%\usepackage{fncychap}
+%%\usepackage{fancyhdr} %%%% incompatible avec la class memoir
+
+%%%%%% MES MACROS %%%%%%%%
+\graphicspath{{../img/}} %% 
+
+\newcommand{\custompart}[3]{
+\part{ 
+#1 \\ {
+% \bf %% bold
+% \it %% italic
+%\tt %% typewriter style
+%\sl %% slanted typestyle
+%\rm %%% roman style
+%\sc %%% small caps
+\sf %% sans serif
+\LARGE #2 }
+\newpage
+%\begin{tabular}{p{130mm}}
+\normalsize \normalfont #3
+%\end{tabular}
+}
+}
+
+\newcommand{\hetero}{hétérogénéité\xspace}
+\newcommand{\heterogene}{hétérogène\xspace}
+\newcommand{\Nber}{Patient~A\xspace}
+\newcommand{\Chen}{Patient~B\xspace}
+\newcommand{\ie}{{\it i.e.}\xspace}
+
+%%%%%% DEBUT DU DOCUMENT %%%%%%%%
+\begin{document}
+%{\tiny abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\scriptsize abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\footnotesize abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\small abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\normalsize abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\large abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\Large abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\LARGE abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\huge abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%{\Huge abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
+%\lipsum[1]
+
+\custompart{Modèles EDPs de croissance tumorale}{Cas des métastases hépatiques}{Description de la partie.... }
+
+%\subfile{chap1}
+\subfile{chap_analyse_heterogeneite}
+\end{document}

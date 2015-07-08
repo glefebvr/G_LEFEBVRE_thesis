@@ -1,0 +1,60 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\custompart{Quantifier l'\hetero d'une tumeur à partir d'une image}{Comment ? Par quel biais? Exploration de différents critères.}{Dans cette partie, on propose d'examiner en détail le caractère \heterogene de nos images - les images médicales ainsi que les images produites numériquement avec le modèle EDP. Dans un premier temps, nous présenterons la construction d'histogrammes des niveaux de gris contenus dans l'image. Dans un second temps, nous décrirons ces histogrammes par un mélange de gaussienne. Enfin ce mélange gaussien sera utilisé pour calculer différents critères qui seront comparés. }
+
+\chapter{Construction des histogrammes de niveaux de gris}
+\chapter{Fit des histogrammes}
+\todo[noline]{On peut employer le mot "fit" ?}
+\chapter{Critères quantifiant l'\hetero.}
+
+%%http://ctan.mines-albi.fr/macros/latex/contrib/lettrine/doc/demo.pdf
+\renewcommand{\LettrineFontHook}{
+%\fontfamily{yfrak}
+\fontfamily{pag}
+\fontseries{bx}\fontshape{it}
+%\color[gray]{0.5}
+}
+%\lettrine[lines=2, lhang=0.33, loversize=0.25]{$\mathscr{D}$}{ans} 
+\lettrine[lines=2, lhang=0.33, loversize=0.25]{D}{ans} 
+tout ce chapitre, on considère l'approximation en un mélange de 2 gaussiennes d'un histogramme de niveau gris. Ce mélange gaussien est entièrement décrit par les paramètres suivants:
+\begin{itemize}
+\item $c_1, c_2$ : Centre des gaussiennes.
+%% Sans pertes de généralité on peut admettre que l'on a ordonné les gaussienne \ie $c_1<c_2$.
+\item $\sigma_1,\sigma_2$ : Ecart-type de chacune des gaussiennes
+\item $w_1,w_2$ : Poids associées aux gaussiennes dans le mélange ($w_1+w_2=1$)
+\end{itemize}
+On peut ainsi définir plusieurs quantités caractéristiques :
+\begin{itemize}
+\item $h_1,h_2$ : Hauteur des gaussiennes. Elles sont données par $h_i = \frac{w_i}{\sigma_i\sqrt{2\pi}}$
+\end{itemize}
+Notons $\Delta$ l'opérateur de différence défini par $\Delta :  u \longmapsto u_2 - u_1$. Ainsi les quantités suivantes pourront s'avérée intéressantes à étudier : $\Delta c$, $\Delta \sigma$,  $\Delta \sigma^2$, $\Delta h$, $\Delta w$ représentant respectivement l'écart entre les centres, la différence d'écart-type, la différence des variances, la différence des hauteurs et la diffirences des poids.
+
+Afin de correctement traduire l'\hetero, il est nécéssaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero $\mathscr{H}$ :
+\begin{itemize}
+\item $\mathscr{H}=0.9$ : très \heterogene
+\item $\mathscr{H}=0.7$ : plutôt \heterogene
+\item $\mathscr{H}=0.5$ : cas intermédiaire ou difficile à caractériser
+\item $\mathscr{H}=0.3$ : plutôt homogène
+\item  $\mathscr{H}=0.1$ : très homogène
+\end{itemize}
+Après appréciation visuelle \footnote{\samepage Cette appréciation visuelle reste ma perception personnelle même si je me suis efforcer de rester le plus objectif possible. Mettre à contribution les membres de l'équipe de recherche par exemple, pour leur demander une catégorisation aurait pu permettre de confronter l'évolution de l'\hetero au cours du temps que je perçois à celle que perçoivent les autres. La fonction objectif finale pourrait ainsi être la moyenne de celles que chacun obtient. On aurait donc un peu plus de nuances : des valeurs intermédiaires aux 5 paliers notamment ainsi que des barres d'erreur pour chaque valeur}
+%(la fonction objectif sera appelée \hetero visuelle)
+, voici ce que donne les fonctions objectifs pour $\mathscr{H}$ (cf. Fig. \ref{fig:hetero_visuelle} ).
+
+\begin{figure}
+\subfloat[\Nber]{\includegraphics[width=0.48\textwidth]{graph_hetero/00-note_hetero_Nber.png}}
+\subfloat[\Chen]{\includegraphics[width=0.48\textwidth]{graph_hetero/00-note_hetero_Chen.png}}
+\caption{\label{fig:hetero_visuelle}Fonction objectif de l'\hetero}
+\end{figure}
+
+Notons que \Nber est encore ici un cas très représentatif de ce que l'on cherche à étudier \ie corrélation entre \hetero et rechute imminente. En effet, ici l'\hetero croit avant même que le volume tumorale ne réaugmente, signe de la reprise d'activité cellulaire sur le pourtour de la métastase. Le coeur reste nécrosé et donc l'\hetero est accrue. Lorsque le volume tumorale fini par augmenter, le tissu proliférant à, en grande partie (si le centre de la tumeur est suffisament vascularisé), recoloniser la zone nécrosée. La croissance de la métastase est alors synonyme d'homogénéisation, puisque l'ensemble de la surface tumorale tend à être proliférante. Une homogénéisation a également lieu lorsque le traitement est efficace. Dans ce cas-ci, l'ensemble de la tumeur tend à être nécrosée.
+
+Examinons à présent, les informations que fournissent les quantités suivantes (qui pourraient être des quantificateurs de l'\hetero):
+\begin{align}
+\mathcal{H}_1 =& \frac{\Delta c }{256}, \\
+\mathcal{H}'_1 =& 1-\frac{ \min(c_1,c_2) }{\max(c_1,c_2)}, \\
+%% \mathsrc{A} & %%% on ne peut pas utiliser mathsrc ici ...
+\end{align}
+
+\end{document}
