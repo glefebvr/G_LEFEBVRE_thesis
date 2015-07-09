@@ -28,7 +28,16 @@ On peut ainsi définir plusieurs quantités caractéristiques :
 \begin{itemize}
 \item $h_1,h_2$ : Hauteur des gaussiennes. Elles sont données par $h_i = \frac{w_i}{\sigma_i\sqrt{2\pi}}$
 \end{itemize}
-Notons $\Delta$ l'opérateur de différence défini par $\Delta :  u \longmapsto u_2 - u_1$. Ainsi les quantités suivantes pourront s'avérée intéressantes à étudier : $\Delta c$, $\Delta \sigma$,  $\Delta \sigma^2$, $\Delta h$, $\Delta w$ représentant respectivement l'écart entre les centres, la différence d'écart-type, la différence des variances, la différence des hauteurs et la diffirences des poids.
+Notons $\Delta$ l'opérateur de différence défini par :
+\begin{equation}
+\label{eq:operateur_delta_gaussienne}
+\Delta :  u \longmapsto \Delta u := u_2 - u_1.
+\end{equation}
+Ainsi les quantités suivantes pourront s'avérée intéressantes à étudier : $\Delta c$, $\Delta \sigma$,  $\Delta \sigma^2$, $\Delta h$, $\Delta w$ représentant respectivement l'écart entre les centres, la différence d'écart-type, la différence des variances, la différence des hauteurs et la diffirences des poids. On pourra aussi regarder le ratio des quantités :
+\begin{equation}
+\label{eq:operateur_quotient_gaussienne}
+Q :  u \longmapsto Qu := \dfrac{ \min( u_2 , u_1) }{ \max( u_2 , u_1)  }.
+\end{equation}
 
 Afin de correctement traduire l'\hetero, il est nécéssaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero $\mathscr{H}$ :
 \begin{itemize}
@@ -43,8 +52,8 @@ Après appréciation visuelle \footnote{\samepage Cette appréciation visuelle r
 , voici ce que donne les fonctions objectifs pour $\mathscr{H}$ (cf. Fig. \ref{fig:hetero_visuelle} ).
 
 \begin{figure}
-\subfloat[\Nber]{\includegraphics[width=0.48\textwidth]{graph_hetero/00-note_hetero_Nber.png}}
-\subfloat[\Chen]{\includegraphics[width=0.48\textwidth]{graph_hetero/00-note_hetero_Chen.png}}
+\subfloat[\label{fig:hetero_objectif_Nber}\Nber]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/00-note_hetero.png}}
+\subfloat[\label{fig:hetero_objectif_Chen}\Chen]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Chen/00-note_hetero.png}}
 \caption{\label{fig:hetero_visuelle}Fonction objectif de l'\hetero}
 \end{figure}
 
@@ -52,9 +61,47 @@ Notons que \Nber est encore ici un cas très représentatif de ce que l'on cherc
 
 Examinons à présent, les informations que fournissent les quantités suivantes (qui pourraient être des quantificateurs de l'\hetero):
 \begin{align}
-\mathcal{H}_1 =& \frac{\Delta c }{256}, \\
-\mathcal{H}'_1 =& 1-\frac{ \min(c_1,c_2) }{\max(c_1,c_2)}, \\
+\mathcal{H}_1 =& \frac{|\Delta c |}{256}, \\
+\mathcal{H}'_1 =& 1-Qc \\ %%1-\frac{ \min(c_1,c_2) }{\max(c_1,c_2)}, \\
+\mathcal{H}'_2 =& \left| \frac{\Delta c / 256 }{\Delta h}\right|, \\
 %% \mathsrc{A} & %%% on ne peut pas utiliser mathsrc ici ...
+\mathcal{H}_3 =& Qw, \\ %%\frac{ \min (w_1,w_2) }{ \max (w_1,w_2) },  
+\\
+\mathcal{H}'_3 =& |\Delta w|, \\
+\mathcal{H}_8 =& |\Delta h|, \\
+\mathcal{H}'_8 =& \frac{ \min (h_1,h_2) }{ \max (h_1,h_2) },
 \end{align}
+
+\begin{figure}[htpb]
+\subfloat[\label{fig:critere_dc}Critères basés sur $\Delta c$]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/01-dc.png}}
+\subfloat[\label{fig:critere_dh}Critères basés sur $\Delta h$]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/02-dh.png}}
+\\
+\centering
+\subfloat[\label{fig:critere_dw}Critères basés sur $\Delta w$]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/02_2-dw.png}}
+\caption{\label{fig:premiers_criteres}Premiers critères}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+%\subfloat[\label{fig:critere_dc_sur_dh}Critères basés sur la pente $\dfrac{\Delta c}{\Delta h}$]{
+\includegraphics[width=0.70\textwidth]{graph_hetero/dcm_Nber/03-atan(dc_sur_dh).png}
+%}
+\caption{\label{fig:critere_dc_sur_dh}Critères basés sur la pente $\Delta c / \Delta h$}
+\end{figure}
+
+La Figure \ref{fig:premiers_criteres} montre l'évolution de ces différentes quantités (ou de quantités qui en découle) au cours du temps. 
+Les ratios $Qc, Qh$ et $Qw$ sont par définition entre 0 et 1. 
+Notez que $\Delta h$ et $\Delta w$ sont nécessairement compris entre 0 et 1, puisqu'ils sont la différence de 2 élements compris entre ces même bornes. En ce qui concerne $\Delta c$ on le divisera par 256, pour également le ramener dans cet intervalle. Pour garantir l'appartenance à l'intervalle $[0,1]$, on pourra également saturer les quantités :
+\begin{equation}
+\label{eq:saturation_critere}
+\mathscr{S}: x \longmapsto \dfrac{x}{1+x}
+\end{equation}
+
+On remarque qu'aucune de ces quantités n'est pertinente pour décrire l'\hetero. Outre cela, on peut également remarquer les équivalences suivantes :
+\begin{equation}
+\label{eq:equiv_diff_rapport}
+\dfrac{\Delta c}{256} \simeq 1 - \dfrac{\min(c_1,c_2)}{\max(c_1,c_2)} \quad {\rm et } \quad \Delta w \simeq 1 - \dfrac{\min(w_1,w_2)}{\max(w_1,w_2)}.
+\end{equation}
+Pour $\Delta h$, on a visiblement pas d'équivalence stricte mais les variations du ratio semble être une dilatation de celles de la différence.
+
 
 \end{document}
