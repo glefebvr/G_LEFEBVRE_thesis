@@ -245,10 +245,47 @@ Comment différencier ces deux cas ? Cet exemple mis en exergue nous invite à d
 \caption{\label{fig:critere_dc2_sur_dh_Chen} Critères basés sur $(\Delta c)^2 / \Delta h$ sur \Chen }
 \end{figure}
 
-%%% Ou chapitre ?
 \section{L'\hetero sur les simulations numériques}
+\todo[noline]{Nouveau chapitre ?}
 Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), faisons parler ce critère sur nos simulations numériques. En ce qui concerne cet aspect, les images  résultantes (gouvernées par EQREF \todo[noline]{eqref} ) des simulations numériques dépendent de 3 paramètres : $\tau_N, \tau_P$ et $\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveau de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit : $\tau_N=38, \tau_P=166$ et $\tau_S=204$.
 \todo[noline]{Et l'optim du niveau de gris faite entre temps ?}
 Dans un second temps, on pourra faire varier ces paramètres pour examiner l'influence de ceux-ci sur l'\hetero numérique.
+On ne montrera ici que l'\hetero numérique de \Nber. Celle de \Chen n'a absolument aucune chance d'être correctement reproduite pour la simple et bonne raison que le premier scan est très \heterogene, alors que notre condition initial dans le modèle numérique est complètement homogène. Il faudrait prendre une condition initiale plus en relation avec l'image médicale, à minima une condition initiale qui présenterait le même niveaux d'\hetero pour pouvoir poursuivre l'étude avec ce patient.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]
+{graph_hetero/simu_Nber_N38_P166_S204/06-dc2_sur_dh.png}
+\caption{\label{fig:hetero_nber_simu}\Hetero numérique pour \Nber\ -- $\tau_N=33, \tau_P=166$ et $\tau_S=215$. L'\hetero clinique est rappelée, à titre de comparaison, ici en rouge.}
+\end{figure}
+
+Sur la Figure~\ref{fig:hetero_nber_simu} est présenté l'\hetero numérique de \Nber.
+La fonction objectif pour l'\hetero clinique ainsi que l'évolution de l'aire tumorale sont ici rappelées sur ce graphique à titre comparatif. La phase avec imatinib est  correctement décrite :
+\begin{itemize}
+\item Présence d'un pic d'\hetero jour~119.
+\item Décroissance de l'\hetero lorsque l'imatinib agit de manière efficace.
+\item Saut important de l'\hetero qui grandit juste avant la recroissance de l'aire tumorale.
+\end{itemize}
+En ce qui concerne la partie avec sunitinib, au début de l'administration du traitement l'\hetero décroit. Cependant, bla .....
+
+
+L'influence des niveaux de gris est présenté sur la Figure~\ref{fig:impact_grey_lvl_on_hetero}.
+
+\begin{figure}
+\centering
+\subfloat[$\tau_N=23, \tau_P=142$ et $\tau_S=215$]
+{\includegraphics[width=0.48\textwidth]
+{graph_hetero/simu_Nber_N23_P142_S215/06-dc2_sur_dh.png}}
+\subfloat[$\tau_N=30, \tau_P=122$ et $\tau_S=215$]
+{\includegraphics[width=0.48\textwidth]
+{graph_hetero/simu_Nber_N30_P122_S215/06-dc2_sur_dh.png}}\\
+\subfloat[$\tau_N=26, \tau_P=127$ et $\tau_S=215$]
+{\includegraphics[width=0.48\textwidth]
+{graph_hetero/simu_Nber_N26_P127_S215/06-dc2_sur_dh.png}}
+\subfloat[$\tau_N=36, \tau_P=142$ et $\tau_S=215$]
+{\includegraphics[width=0.48\textwidth]
+{graph_hetero/simu_Nber_N36_P142_S215/06-dc2_sur_dh.png}}
+\caption{\label{fig:impact_grey_lvl_on_hetero} Influence du choix des niveaux de gris $\tau_N, \tau_P$ et $\tau_S$ sur l'\hetero numérique.}
+\end{figure}
 
 \end{document}
