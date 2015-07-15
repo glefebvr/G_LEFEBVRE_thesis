@@ -42,7 +42,7 @@ Q :  u \longmapsto Qu := \dfrac{ \min( u_2 , u_1) }{ \max( u_2 , u_1)  }.
 \end{equation}
 
 \section{Définition d'une fonction objectif à reproduire}
-Afin de correctement traduire l'\hetero, il est nécéssaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero $\mathscr{H}$ :
+Afin de correctement traduire l'\hetero, il est nécessaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero $\mathscr{H}$ :
 \begin{itemize}
 \item $\mathscr{H}=0.9$ : très \heterogene
 \item $\mathscr{H}=0.7$ : plutôt \heterogene
@@ -195,7 +195,7 @@ x=\dfrac{c_1+c_2}{2}-\dfrac{\sigma^2}{\Delta c}\ln \left( \dfrac{1-w}{w} \right)
 \label{eq:discr_reduit}
 \Delta' := B'^2 - AC = \sigma_1^2 \sigma_2^2 \left[ (\Delta c)^2 - 2(\sigma_2^2-\sigma_1^2) \ln (h_2/h_1)  \right].
 \end{equation}
-Ce discriminant n'est pas nécéssairement positif ! Donc il existe des cas où les gaussiennes ne s'intersectent pas.
+Ce discriminant n'est pas nécessairement positif ! Donc il existe des cas où les gaussiennes ne s'intersectent pas.
 \todo[inline]{analyse du signe du discriminant à compléter}
 
 \subsection{Etudes de différents critères}
@@ -209,12 +209,11 @@ Ce discriminant n'est pas nécéssairement positif ! Donc il existe des cas où 
 \section{Critère retenu}
 \begin{figure}
 \centering
-{\color{red} FIGURE A METTRE}
-\subfloat[\label{fig:pente_gaussienne_identique_a} Cas clairement \hetero ]{
-FIiiiiiiiiiiiiiiiiiiiiiiiiig a
+\subfloat[\label{fig:pente_gaussienne_identique_a} Cas clairement \heterogene ]{
+\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_pente1a.png}
 }
 \subfloat[\label{fig:pente_gaussienne_identique_b} Cas plutôt homogène]{
-FIiiiiiiiiiiiiiiiiiiiiiiiiig b
+\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_pente1b.png}
 }
 \caption{\label{fig:pente_gaussienne_identique}Deux configurations très différentes mais fournissant la même pente entre les gaussiennes.}
 \end{figure}
@@ -241,7 +240,7 @@ Comment différencier ces deux cas ? Cet exemple mis en exergue nous invite à d
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh.png}
+\includegraphics[width=0.75\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh.png}
 \caption{\label{fig:critere_dc2_sur_dh_Chen} Critères basés sur $(\Delta c)^2 / \Delta h$ sur \Chen }
 \end{figure}
 
