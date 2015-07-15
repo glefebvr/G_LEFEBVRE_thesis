@@ -1,5 +1,6 @@
 %\documentclass[12pt,a4paper,twoside]{memoir}
-\documentclass[a4paper,twoside]{book}
+%\documentclass[a4paper,twoside]{book} %%% twoside pour final
+\documentclass[a4paper,oneside]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage[francais,frenchb]{babel}
@@ -20,10 +21,13 @@
 \usepackage{subfig}%% \subfloat
 \usepackage{xspace}
 \usepackage{lipsum}
-\usepackage[textwidth=23mm]{todonotes} %%% Ajuster le textwidth en fct de la marge
-%\usepackage[disable]{todonotes}
 \usepackage{xcolor}
-\usepackage[left=35mm,right=25mm,top=30mm,bottom=30mm]{geometry}
+\usepackage[textwidth=25mm]{todonotes} %%% Ajuster le textwidth en fct de la marge
+%\usepackage[disable]{todonotes}
+%%% Dimension page pour final
+%\usepackage[left=35mm,right=25mm,top=30mm,bottom=30mm]{geometry} 
+%%% Dimension page pour todonote a droite
+\usepackage[left=20mm,right=40mm,top=30mm,bottom=30mm]{geometry}
 \usepackage{tcolorbox}
 \usepackage{subfiles}
 
