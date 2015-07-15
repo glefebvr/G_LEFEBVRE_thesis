@@ -247,6 +247,8 @@ Comment différencier ces deux cas ? Cet exemple mis en exergue nous invite à d
 
 \section{L'\hetero sur les simulations numériques}
 \todo[noline]{Nouveau chapitre ?}
+\todo[noline]{Titre sous-section ?}
+\subsection{Titre ....}
 Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), faisons parler ce critère sur nos simulations numériques. En ce qui concerne cet aspect, les images  résultantes (gouvernées par EQREF \todo[noline]{eqref} ) des simulations numériques dépendent de 3 paramètres : $\tau_N, \tau_P$ et $\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveau de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit : $\tau_N=38, \tau_P=166$ et $\tau_S=204$.
 \todo[noline]{Et l'optim du niveau de gris faite entre temps ?}
 Dans un second temps, on pourra faire varier ces paramètres pour examiner l'influence de ceux-ci sur l'\hetero numérique.
@@ -266,10 +268,46 @@ La fonction objectif pour l'\hetero clinique ainsi que l'évolution de l'aire tu
 \item Décroissance de l'\hetero lorsque l'imatinib agit de manière efficace.
 \item Saut important de l'\hetero qui grandit juste avant la recroissance de l'aire tumorale.
 \end{itemize}
-En ce qui concerne la partie avec sunitinib, au début de l'administration du traitement l'\hetero décroit. Cependant, bla .....
+En ce qui concerne la partie avec sunitinib, au début de l'administration du traitement l'\hetero décroit. Cependant :
+\begin{itemize}
+\item La recroissance de l'\hetero numérique a lieu un peu tôt par rapport à celle constatée cliniquement.
+\item Sur la partie finale (lors de la rechute au sunitinib, après le jour~1116), l'\hetero numérique décroit alors que celle clinique continue d'augmenter. 
+\end{itemize}
+En ce qui concerne le deuxième point, cela peut venir soit de la manière dont on calcule l'\hetero, soit du modèle EDP lui même qui ne retranscrirait pas bien l'évolution de l'\hetero. La Figure~\ref{fig:baisse_hetero_fin_simu} tends à dire que c'est plutôt le modèle EDP puisque le jour~1120 est beaucoup plus \hetero que le 
+jour~1227. En effet, le contraste entre les deux masses dominantes (pourtour et intérieur de la tumeur) 
+est beaucoup plus important jour~1120 que jour~1227. De plus le rapport du volume de ces dominantes est beaucoup plus proche de 1 au jour~1120 qu'au jour~1227 (si le ratio est égal à 1 alors les masses sont de volume égal). Ces impressions visuelles sont confirmées par les histogrammes également présentés sur la Figure~\ref{fig:baisse_hetero_fin_simu}. 
+Tout ceci renforce donc l'idée que l'image du jour~1120 est plus \hetero que celle du jour~1227.
+
+\begin{figure}
+\centering
+\subfloat[Jour~1120]
+{\begin{tabular}{c}
+\includegraphics[width=0.31\textwidth]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor086.png}\\
+\includegraphics[width=0.31\textwidth]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1120(85).png}
+\end{tabular}}
+\subfloat[Jour~1186]
+{\begin{tabular}{c}
+\includegraphics[width=0.31\textwidth]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor091.png}\\
+\includegraphics[width=0.31\textwidth]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1186(90).png}
+\end{tabular}}
+\subfloat[Jour~1227]
+{\begin{tabular}{c}
+\includegraphics[width=0.31\textwidth]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor095.png}\\
+\includegraphics[width=0.31\textwidth]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1227(94).png}
+\end{tabular}}
+\caption{\label{fig:baisse_hetero_fin_simu} \Hetero numérique de \Nber. }
+\end{figure}
 
 
-L'influence des niveaux de gris est présenté sur la Figure~\ref{fig:impact_grey_lvl_on_hetero}.
+\subsection{Influence des niveaux de gris sur l'\hetero numérique}
+La principale conséquence du changement des niveaux de gris $\tau_N$, $\tau_P$ et $\tau_S$ est la dilatation de l'histogramme des niveaux de gris. Les variations de l'\hetero ne sont donc que peu dépendante de ces paramètres, comme le montre 
+la Figure~\ref{fig:impact_grey_lvl_on_hetero}, sur laquelle toute les courbes sont comparables. Comme différence, on pourra relever tout de même que plus $\tau_N$ est écarté de $\tau_P$, plus les variations de l'\hetero numérique sont importantes. Ceci est notamment visible lors de la rechute à l'imatinib, entre les jour~776 et 888 où le pic descendant de l'\hetero numérique est plus prononcé si $\tau_P-\tau_N$ est grand. Ceci est conforme à ce que l'on pouvait attendre, puisque cette différence va impacter directement la position des gaussiennes sur l'histogramme, position relative en grande partie donnée par $\Delta c$ qui intervient dans le calcul de notre critère de l'\hetero numérique.
 
 \begin{figure}
 \centering
