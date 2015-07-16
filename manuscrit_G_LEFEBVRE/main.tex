@@ -5,19 +5,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage[francais,frenchb]{babel}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+\usepackage{amsmath,amsfonts,amssymb}
 \usepackage{graphicx}
 \usepackage{lmodern} %% latin modern font
 %\usepackage{fcursive}
 %\usepackage[mathscr]{euscript}
-\usepackage{mathrsfs}
-\usepackage{lettrine}
 \usepackage{mathrsfs} %% fournit \mathsrc (majuscules rondes)
 %\usepackage{scrextend} %%% http://tex.stackexchange.com/questions/5339/how-to-specify-font-size-less-than-10pt-or-more-than-12pt
 %\changefontsizes[20pt]{16pt}
 \usepackage[fontsize=14pt]{scrextend}
+\usepackage{lettrine}
 \usepackage{subfig}%% \subfloat
 \usepackage{xspace}
 \usepackage{lipsum}
@@ -49,6 +46,14 @@
 %\setcounter{secnumdepth}{3}
 %\setcounter{tocdepth}{3}
 
+%%http://ctan.mines-albi.fr/macros/latex/contrib/lettrine/doc/demo.pdf
+\renewcommand{\LettrineFontHook}{
+%\fontfamily{yfrak}
+\fontfamily{pag}
+\fontseries{bx}\fontshape{it}
+%\color[gray]{0.5}
+}
+
 \newcommand{\custompart}[3]{
 \part{ 
 #1 \\ {
@@ -77,6 +82,11 @@
 \newcommand{\Chen}{Patient~B\xspace}
 \newcommand{\ie}{{\it i.e.}\xspace}
 \newcommand{\cf}{{\it cf.}\xspace}
+\newcommand{\dx}{\;{\rm d}x\xspace}
+\newcommand{\vol}{\mathcal{V}}
+\newcommand{\aire}{\mathcal{A}}
+\newcommand{\intperso}[1]{\!\!\int\limits_{#1}\!\!\!}
+\newcommand{\trans}{\,^t}
 
 %%%%%% DEBUT DU DOCUMENT %%%%%%%%
 \begin{document}
@@ -92,8 +102,9 @@
 %{\Huge abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ}\\
 %\lipsum[1]
 
-\custompart{Modèles EDPs de croissance tumorale}{Cas des métastases hépatiques}{Description de la partie.... }
+%\custompart{Modèles EDPs de croissance tumorale}{Cas des métastases hépatiques}{Description de la partie.... }
 
 %\subfile{chap1}
+\subfile{chap_optim_grey}
 \subfile{chap_analyse_heterogeneite}
 \end{document}

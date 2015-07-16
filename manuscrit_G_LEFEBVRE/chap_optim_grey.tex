@@ -1,0 +1,50 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\chapter{Optimisation de la reconstruction d'image scanner}
+\lettrine[lines=2, lhang=0.33, loversize=0.25]{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons nous sur la manière de reconstruire une image en niveau de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités $N(t,x)$, $P(t,x)$ et $S(t,x)$ (toutes comprises entre 0 et 1). On tentera, dans ce chapitre, d'optimiser les niveaux de gris $\tau_N, \tau_P$ et $\tau_S$ de l'interpolation EQREF \todo[noline]{eqref} afin de rapprocher au maximum la visualisation des résultas numériques de la visualisation des scanners médicaux.
+
+\section{Présentation de l'approche}
+Pour un patient donné, on considère $n$ instants auxquels on possède des scanner (aux temps $t_i, i\in \{ 1,...,n \}$). Sur ces $n$ images, on propose d'optimiser les coefficients de l'interpolation $\tau_N N + \tau_P P + \tau_S S$:
+\begin{equation}
+\begin{aligned}
+\frac{1}{\aire\big(Z_1(t_i)\big)}&\left( \tau_N\intperso{Z_1(t_i)}N(t_i,x) \dx + \tau_P\intperso{Z_1(t_i)}P(t_i,x) \dx + \tau_S\intperso{Z_1(t_i)} S(t_i,x) \dx \right) \\
+&= \frac{1}{\aire\big(Z_2(t_i)\big)} \ \intperso{Z_2(t_i)} s(t_i,x,z_0) \dx \qquad i \in \{1,...,n\}
+\end{aligned}
+\end{equation}
+où : \begin{itemize}
+\item $\aire(Z)$ est l'aire de la zone $Z$.
+\item $Z_1(t_i)$ est la zone correspondant à la tumeur dans les simulations numériques au temps $t_i$. Elle est définie par un seuillage sur $S$.
+\todo[noline]{speciifier le seuillage ?}
+\item $Z_2(t_i)$ est la zone tumorale sur le scanner réalisé au temps $t_i$. Cette zone a été définie par contourage manuel à l'aide du logiciel OsiriX.
+\item $z_0$ est la coupe que l'on choisie d'étudier dans les scanners. Cette coupe est la même au cours du temps.
+\item $s(t_i,x,z_0)$ est la valeur du niveaux de gris du pixel en position $x$ sur la coupe $z_0$ du scanner effectué au temps $t_i$.
+\end{itemize}
+En utilisant la discrétisation, aussi bien sur les simulations numériques que sur les scanners, on obtient :
+\begin{equation}
+\begin{aligned}
+\frac{1}{\mathcal{N}\big(Z_1(t_i)\big)}&\left( \tau_N\!\!\sum_{x\in Z_1(t_i)}\!\!N(t_i,x) + \tau_P\!\!\sum_{x\in Z_1(t_i)}\!\!P(t_i,x) + \tau_S\!\!\sum_{x\in Z_1(t_i)}\!\!S(t_i,x) \right) \\
+&= \frac{1}{\mathcal{N}\big(Z_2(t_i)\big)} \sum_{x\in Z_2(t_i)}\!\! s(t_i,x,z_0) \qquad i \in \{1,...,n\}
+\end{aligned}
+\end{equation}
+où $\mathcal{N}(Z)$ désigne le nombre de pixel contenu dans la zone $Z$. On a donc un système linéaire de 3 inconnues à $n$ équations que l'on peut réécrire :
+\begin{equation}
+A\tau=B,
+\end{equation}
+avec $\tau= \trans(\tau_N,\tau_P,\tau_S)$, $A$ matrice de taille $n\times 3$ et $B$ vecteur colonne de taille $n$.
+
+Pour ne pas se limiter au cas $n=3$ qui clos le système, on le résoud par la minimisation suivante :
+\begin{equation}\label{eq:min_optim_grey}
+\min_{\tau} \dfrac{\| A\tau - B \|^2_{\ell^2}}{\|B\|^2_{\ell^2}}.
+\end{equation}
+
+\section{Optimisation sur 3 paramètres}
+L'équation~\eqref{eq:min_optim_grey} fournit donc le $\tau$ optimal. Examinons les différences lorsque l'on fait varier :
+\begin{itemize}
+\item le nombre d'images considérées
+\item les moments considérés
+\item l'algorithme d'optimisation lui-même
+\item la fonction coût utilisée
+\end{itemize}
+
+\section{Optimisation sur 2 paramètres, $\tau_S$ fixé} 
+\end{document}
