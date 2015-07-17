@@ -12,6 +12,8 @@
 *.aux
 *.synctex.gz
 *.log
+*.out
+*.bbl
 ### Ignorer tous les fichier (ou dossier) commencant par essai_
 essai_*
 ### Ignorer tous les fichier (ou dossier) commencant par essai_

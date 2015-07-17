@@ -16,7 +16,7 @@ où : \begin{itemize}
 \item $Z_1(t_i)$ est la zone correspondant à la tumeur dans les simulations numériques au temps $t_i$. Elle est définie par un seuillage sur $S$.
 \todo[noline]{speciifier le seuillage ?}
 \item $Z_2(t_i)$ est la zone tumorale sur le scanner réalisé au temps $t_i$. Cette zone a été définie par contourage manuel à l'aide du logiciel OsiriX.
-\item $z_0$ est la coupe que l'on choisie d'étudier dans les scanners. Cette coupe est la même au cours du temps.
+\item $z_0$ est la coupe que l'on choisie d'étudier dans les scanners. Cette coupe est approximativement la même au cours du temps.
 \item $s(t_i,x,z_0)$ est la valeur du niveaux de gris du pixel en position $x$ sur la coupe $z_0$ du scanner effectué au temps $t_i$.
 \end{itemize}
 En utilisant la discrétisation, aussi bien sur les simulations numériques que sur les scanners, on obtient :
@@ -32,13 +32,14 @@ A\tau=B,
 \end{equation}
 avec $\tau= \trans(\tau_N,\tau_P,\tau_S)$, $A$ matrice de taille $n\times 3$ et $B$ vecteur colonne de taille $n$.
 
-Pour ne pas se limiter au cas $n=3$ qui clos le système, on le résoud par la minimisation suivante :
+Pour ne pas se limiter au cas $n=3$ qui clos le système, on le résoud par la minimisation suivante avec pénalisation pour assurer que les optima  respectent les bornes~0 à~255 :
 \begin{equation}\label{eq:min_optim_grey}
-\min_{\tau} \dfrac{\| A\tau - B \|^2_{\ell^2}}{\|B\|^2_{\ell^2}}.
+\min_{\tau} \left( \dfrac{\| A\tau - B \|^2_{\ell^2}}{\|B\|^2_{\ell^2}} + 1e7 
+\times \big( \tau \notin  [0;255]^3 \big) \right).
 \end{equation}
 
 \section{Optimisation sur 3 paramètres}
-L'équation~\eqref{eq:min_optim_grey} fournit donc le $\tau$ optimal. Examinons les différences lorsque l'on fait varier :
+La résolution de l'équation~\eqref{eq:min_optim_grey} fournit donc le $\tau$ optimal. Examinons les différences lorsque l'on fait varier :
 \begin{itemize}
 \item le nombre d'images considérées
 \item les moments considérés
@@ -46,5 +47,258 @@ L'équation~\eqref{eq:min_optim_grey} fournit donc le $\tau$ optimal. Examinons 
 \item la fonction coût utilisée
 \end{itemize}
 
-\section{Optimisation sur 2 paramètres, $\tau_S$ fixé} 
+Dans tous les cas, on ne considèrera pas le premier scanner (numéro~0) car la condition initiale numérique EQREF \todo[noline]{EQREF} n'est pas prise de sorte à respecter la répartition des niveaux de gris du scanner. Evitons donc d'inclure dans l'optimisation une erreur de base qui serait incompressible.
+\todo[noline]{Presenter numerotation des scans}
+
+\DTLloaddb{optim3_0grey}{../data/cout_1/optim3.csv}
+\DTLloaddb[noheader]{optim3_0leg}{../data/cout_1/optim3_leg.csv}
+\DTLloaddb{optim3_0stat}{../data/cout_1/optim3_stat.csv}
+%\DTLloaddb[noheader]{optim3_0stat}{../data/cout_1/optim3_stat.csv}
+%\DTLsetheader{optim3_0stat}{Column1}{}
+\DTLsetheader{optim3_0leg}{Column1}{}
+\DTLsetheader{optim3_0leg}{Column2}{}
+\begin{sidewaystable}
+\footnotesize\smaller[0.5]
+%\scriptsize
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+\rowcolor{gray!70}
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
+\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+\rowcolor{gray!70}
+\multirow{-2}{2cm}{\scriptsize \bfseries Scanners choisis}
+& \bfseries SLSQP
+& \bfseries GC 
+& \bfseries Neldear-Mead 
+& \bfseries BFGS  
+%%\\ \hline &&
+%%\\ \multicolumn{3}{|c|}{\rule{3cm}{1pt}}
+\DTLforeach*{optim3_0grey}{%
+\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \begin{tabular}{c}
+\col \\ \errcol
+\end{tabular} & \begin{tabular}{c}
+\CG \\ \errCG
+\end{tabular} & \begin{tabular}{c}
+\NM \\ \errNM
+\end{tabular} & \begin{tabular}{c}
+\BFGS \\ \errBFGS
+\end{tabular} 
+}%
+\DTLforeach*{optim3_0stat}{%
+\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+Moyenne : & \col & \CG & \NM & \BFGS  }
+\\ \hline
+\end{tabular}
+\caption{\label{tab:optim3gris} Tableau récapitulatif des optimisations pour les 3 niveaux de gris}
+\end{sidewaystable}
+\DTLcleardb{optim3_0leg}
+\DTLcleardb{optim3_0stat}
+\DTLcleardb{optim3_0stat}
+%
+%\DTLloaddb{optim3_grey}{../data/cout_3/optim3.csv}
+%\DTLloaddb[noheader]{optim3_leg}{../data/cout_3/optim3_leg.csv}
+%\DTLloaddb[noheader]{optim3_stat}{../data/cout_3/optim3_stat.csv}
+%\DTLsetheader{optim3_stat}{Column1}{}
+%\DTLsetheader{optim3_leg}{Column1}{}
+%\DTLsetheader{optim3_leg}{Column2}{}
+%\begin{sidewaystable}
+%%\begin{table}[htbp]
+%\footnotesize
+%\centering
+%\begin{tabular}{|c|c|c|c|c|}
+%\hline
+%%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+%\rowcolor{gray!70}
+%& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
+%\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+%\rowcolor{gray!70}
+%\multirow{-2}{2cm}{\scriptsize \bfseries Scanners choisis}
+%& \bfseries SLSQP
+%& \bfseries GC 
+%& \bfseries Neldear-Mead 
+%& \bfseries BFGS  
+%%%\\ \hline &&
+%%%\\ \multicolumn{3}{|c|}{\rule{3cm}{1pt}}
+%\DTLforeach*{optim3_grey}{%
+%\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+%\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+%\\
+%\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+%\scan & \begin{tabular}{c}
+%\col \\ \errcol
+%\end{tabular} & \begin{tabular}{c}
+%\CG \\ \errCG
+%\end{tabular} & \begin{tabular}{c}
+%\NM \\ \errNM
+%\end{tabular} & \begin{tabular}{c}
+%\BFGS \\ \errBFGS
+%\end{tabular} 
+%}%
+%\\ \hline
+%\end{tabular}
+%\caption{\label{tab:optim3gris} Tableau récapitulatif des optimisations pour les 3 niveaux de gris}
+%\end{sidewaystable}
+%%\end{table}
+%
+%\begin{table}
+%\centering
+%%\begin{tabular}{c}
+%%\DTLdisplaydb{optim3_leg}
+%%\end{tabular}
+%\begin{tabular}{c}
+%N \qquad P \qquad S \\
+%\DTLdisplaydb{optim3_stat}
+%\end{tabular}
+%\caption{\label{tab:moyenne_optim_3gris} Moyenne des niveaux de gris optimaux présentés dans la Table~\ref{tab:optim3gris}}
+%\end{table}
+%\todo[noline]{tableau \ref{tab:moyenne_optim_3gris} a refaire}
+%
+%\DTLcleardb{optim3_leg}
+%\DTLcleardb{optim3_stat}
+%\DTLcleardb{optim3_stat}
+
+
+La Table~\ref{tab:optim3gris} synthétise l'ensemble des résultats d'optimisation obtenus sur les différents test qui ont été réalisé. 
+On remarque que plus le nombre d'image considérées est grand, plus l'erreur à convergence est grande. Ce comportement est attendu et ne pose pas de problème tant que l'erreur reste acceptable (de l'ordre de quelques pourcents). Augmenter le nombre d'images considérées s'avère utile pour rendre les optima moins sensibles aux perturbations éventuelles qu'il y a sur les données (bruit, marge d'erreur de segmentation manuelle, etc ...).
+
+
+On peut de plus remarquer que selon les images choisies et selon les algorithmes choisis les résultats sont assez variables. Les moyennes des optima trouvés selon l'algorithme sont présentés sur la dernière ligne de la Table~\ref{tab:optim3gris}. Seul l'algorithme SLSQP se démarque des autres qui ont une valeur moyenne de $\tau_P$ non seulement proche de $\tau_S$ - ce qui ne facilite pas du tout le contraste du tissu proliférant avec le tissu sain - mais aussi supérieur à $\tau_S$ alors qu'on s'attendrait plutôt à l'inverse... 
+En faîte le paramètre $\tau_S$ est très peu influent dans le calcul de l'erreur~\eqref{eq:min_optim_grey} car il n'y a que très peu de tissu sain dans le périmètre tumorale. La valeur de $\tau_S$ n'a donc que très peu de poids et donc il est difficile de la déterminer avec ce type d'approche.
+\todo[inline]{Valeur numerique des intégrales}
+
+On note également que la combinaison $[1,9,11]$ ne semble pas pertinente pour calculer les niveaux de gris puisque les optima tendent vers les bornes autorisées ($[0,255]$).
+
+%%%%%  ---- SECTION  OPTIM SUR 2 NVX DE GRIS ----- %%%%%
+\section{Optimisation sur 2 paramètres, $\tau_S$ fixé}
+Pour palier au problèmes rencontrés dans la section précédentes, nous allons fixés $\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de 0 à 255). Cette valeur a été fixée en réalisant un contourage d'une zone en tissu sain dans OsiriX (cf. Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de 134.5 HU. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi ramener cette quantité en HU à un niveau de gris compris entre~0 et~255. Ainsi, selon l'échelle considérée ici, 134.5~HU équivaut à un gris de 77\% soit un gris de niveau~197.
+\todo[inline]{schema correspondance HU \% et grey lvl}
+
+\begin{figure}
+\includegraphics[width=\textwidth]{OsiriX_gris_sain_rognee.png}
+\caption{\label{fig:contourage_sain}Contourage d'une zone saine -- Moyenne de la valeur des pixels dans ce périmètre : 134.5 HU (avec une échelle HU de \mbox{-135 à 215}).}
+\end{figure}
+
+%%%%%% Cout1
+\DTLloaddb{optim2_1grey}{../data/cout_1/optim2.csv}
+\DTLloaddb[noheader]{optim2_1leg}{../data/cout_1/optim2_leg.csv}
+\DTLloaddb{optim2_1stat}{../data/cout_1/optim2_stat.csv}
+\DTLsetheader{optim2_1leg}{Column1}{}
+\DTLsetheader{optim2_1leg}{Column2}{}
+\begin{table}[htbp]
+\footnotesize
+\hspace{-4mm} %%% Le tableau depasse sur les marges !
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+\rowcolor{gray!70}
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algo d'optim} \\
+\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+\rowcolor{gray!70}
+\multirow{-2}{2cm}{\scriptsize \bfseries Scan choisis pour optim}
+& \bfseries SLSQP
+& \bfseries GC 
+& \bfseries Neldear-Mead 
+& \bfseries BFGS 
+%%\\ \hline &&
+%%\\ \multicolumn{3}{|c|}{\rule{3cm}{1pt}}
+\DTLforeach*{optim2_1grey}{%
+\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \begin{tabular}{c}
+\col \\ \errcol
+\end{tabular} & \begin{tabular}{c}
+\CG \\ \errCG
+\end{tabular} & \begin{tabular}{c}
+\NM \\ \errNM
+\end{tabular} & \begin{tabular}{c}
+\BFGS \\ \errBFGS
+\end{tabular} 
+}%
+\DTLforeach*{optim2_1stat}{%
+\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+Moyenne : & \col & \CG & \NM & \BFGS  }
+\\ \hline
+\end{tabular}
+%\centering
+%\begin{tabular}{cc}
+%\DTLdisplaydb{optim2_leg}
+%\end{tabular}
+\caption{\label{tab:optim2gris}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197.}
+\end{table}
+\DTLcleardb{optim2_1leg}
+\DTLcleardb{optim2_1stat}
+\DTLcleardb{optim2_1stat}
+
+
+
+%%%%%% Cout3
+\DTLloaddb{optim2_grey}{../data/cout_3/optim2.csv}
+\DTLloaddb[noheader]{optim2_leg}{../data/cout_3/optim2_leg.csv}
+\DTLloaddb{optim2_stat}{../data/cout_3/optim2_stat.csv}
+\DTLsetheader{optim2_leg}{Column1}{}
+\DTLsetheader{optim2_leg}{Column2}{}
+\begin{table}[htbp]
+\footnotesize
+\hspace{-4mm} %%% Le tableau depasse sur les marges !
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+\rowcolor{gray!70}
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algo d'optim} \\
+\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+\rowcolor{gray!70}
+\multirow{-2}{2cm}{\scriptsize \bfseries Scan choisis pour optim}
+& \bfseries SLSQP
+& \bfseries GC 
+& \bfseries Neldear-Mead 
+& \bfseries BFGS 
+%%\\ \hline &&
+%%\\ \multicolumn{3}{|c|}{\rule{3cm}{1pt}}
+\DTLforeach*{optim2_grey}{%
+\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \begin{tabular}{c}
+\col \\ \errcol
+\end{tabular} & \begin{tabular}{c}
+\CG \\ \errCG
+\end{tabular} & \begin{tabular}{c}
+\NM \\ \errNM
+\end{tabular} & \begin{tabular}{c}
+\BFGS \\ \errBFGS
+\end{tabular} 
+}%
+\DTLforeach*{optim2_stat}{%
+\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+Moyenne : & \col & \CG & \NM & \BFGS  }
+\\ \hline
+\end{tabular}
+%\centering
+%\begin{tabular}{cc}
+%\DTLdisplaydb{optim2_leg}
+%\end{tabular}
+\caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique.}
+\end{table}
+
+\DTLcleardb{optim2_leg}
+\DTLcleardb{optim2_stat}
+\DTLcleardb{optim2_stat}
+
+L'ensemble des résultats d'optimisation de $\tau_N$ et de $\tau_P$ avec $\tau_S$ fixé à~197 est fourni dans les Tables~\ref{tab:optim2gris}. Ici les niveaux de gris moyen fournis sont conformes aux attentes de le sens où l'on a $\tau_N$<$\tau_P$<$\tau_S$.
+
+Il reste un petit bémol : on notera que dans certaines configurations, les algorithmes tendent vers un jeu de paramètres optimal qui s'approche du bord 0 ou du bord 255.
+
+
 \end{document}

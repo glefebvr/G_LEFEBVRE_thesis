@@ -7,18 +7,37 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{graphicx}
+
 \usepackage{lmodern} %% latin modern font
 %\usepackage{fcursive}
 %\usepackage[mathscr]{euscript}
+\usepackage{dsfont}
 \usepackage{mathrsfs} %% fournit \mathsrc (majuscules rondes)
 %\usepackage{scrextend} %%% http://tex.stackexchange.com/questions/5339/how-to-specify-font-size-less-than-10pt-or-more-than-12pt
 %\changefontsizes[20pt]{16pt}
 \usepackage[fontsize=14pt]{scrextend}
+%\usepackage{frcursive} %fournit l'environnement cursive, qui imite une écriture manuelle
+\usepackage{relsize}
 \usepackage{lettrine}
 \usepackage{subfig}%% \subfloat
 \usepackage{xspace}
 \usepackage{lipsum}
+\usepackage{booktabs} %% midrule
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{colortbl} %% rowcolor
+\usepackage[table]{xcolor} %% gray!40  %% rowcolors
+\usepackage{datatool} %%%% See the documentation :
+%%%% http://texdoc.net/texmf-dist/doc/latex/datatool/datatool-user.pdf
+\usepackage{pict2e}
+\usepackage{slashbox}
+\usepackage{hhline}
+\usepackage{spreadtab}
+\usepackage{rotating}
+
 \usepackage{xcolor}
+%\usepackage{showkeys} %%% Pour faire afficher les label utilisés
+\usepackage{hyperref} %%% Les premieres compilations fournisse une erreur. recompiler plsrs fois ...
 \usepackage[textwidth=25mm]{todonotes} %%% Ajuster le textwidth en fct de la marge
 %\usepackage[disable]{todonotes}
 %%% Dimension page pour final
@@ -28,7 +47,6 @@
 \usepackage{tcolorbox}
 \usepackage{subfiles}
 
-%\usepackage{frcursive} %fournit l'environnement cursive, qui imite une écriture manuelle
 %%%%% fncychap predefini
 %\usepackage[Glenn]{fncychap}
 %\usepackage[Conny]{fncychap}
@@ -39,6 +57,8 @@
 
 %%%%%% MES MACROS %%%%%%%%
 \graphicspath{{../img/}} %%
+
+\setlength\doublerulesep{2mm} %% hauteur entre 2 \hline successifs
 
 \DeclareMathOperator{\atan}{atan}
 \DeclareMathOperator{\atanh}{atanh}
@@ -74,7 +94,6 @@
 %\cleardoublepage
 }
 
-
 \newcommand{\hetero}{hétérogénéité\xspace}
 \newcommand{\Hetero}{Hétérogénéité\xspace}
 \newcommand{\heterogene}{hétérogène\xspace}
@@ -87,6 +106,8 @@
 \newcommand{\aire}{\mathcal{A}}
 \newcommand{\intperso}[1]{\!\!\int\limits_{#1}\!\!\!}
 \newcommand{\trans}{\,^t}
+
+
 
 %%%%%% DEBUT DU DOCUMENT %%%%%%%%
 \begin{document}
