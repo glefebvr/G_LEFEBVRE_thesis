@@ -1,4 +1,8 @@
 \documentclass[main.tex]{subfiles}
+\newlength{\retraittableau}
+\setlength{\retraittableau}{-4mm}
+\newlength{\firstcolwidth} %% on ne peut mettre ni chiffre ni caractere special dans le nom d'une longueur
+\setlength{\firstcolwidth}{22mm}
 \begin{document}
 \chapter{Optimisation de la reconstruction d'image scanner}
 \lettrine[lines=2, lhang=0.33, loversize=0.25]{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons nous sur la manière de reconstruire une image en niveau de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités $N(t,x)$, $P(t,x)$ et $S(t,x)$ (toutes comprises entre 0 et 1). On tentera, dans ce chapitre, d'optimiser les niveaux de gris $\tau_N, \tau_P$ et $\tau_S$ de l'interpolation EQREF \todo[noline]{eqref} afin de rapprocher au maximum la visualisation des résultas numériques de la visualisation des scanners médicaux.
@@ -32,24 +36,17 @@ A\tau=B,
 \end{equation}
 avec $\tau= \trans(\tau_N,\tau_P,\tau_S)$, $A$ matrice de taille $n\times 3$ et $B$ vecteur colonne de taille $n$.
 
-Pour ne pas se limiter au cas $n=3$ qui clos le système, on le résoud par la minimisation suivante avec pénalisation pour assurer que les optima  respectent les bornes~0 à~255 :
+Pour ne pas se limiter au cas $n=3$ qui clos le système, on le résoud par la minimisation suivante :
 \begin{equation}\label{eq:min_optim_grey}
-\min_{\tau} \left( \dfrac{\| A\tau - B \|^2_{\ell^2}}{\|B\|^2_{\ell^2}} + 1e7 
-\times \big( \tau \notin  [0;255]^3 \big) \right).
+\min_{\tau} \left( \dfrac{\| A\tau - B \|^2_{\ell^2}}{\|B\|^2_{\ell^2}} + \mathcal{P}(\tau) \right),
+\end{equation}
+où la pénalisation $\mathcal{P}$ permet d'assurer que les optima respectent les bornes~0 à~255 :
+\begin{equation}
+\label{eq:penalisation_creneau}
+\mathcal{P}(\tau) = 1e7 \times ( \tau \notin  [0;255]^3 ).
 \end{equation}
 
 \section{Optimisation sur 3 paramètres}
-La résolution de l'équation~\eqref{eq:min_optim_grey} fournit donc le $\tau$ optimal. Examinons les différences lorsque l'on fait varier :
-\begin{itemize}
-\item le nombre d'images considérées
-\item les moments considérés
-\item l'algorithme d'optimisation lui-même
-\item la fonction coût utilisée
-\end{itemize}
-
-Dans tous les cas, on ne considèrera pas le premier scanner (numéro~0) car la condition initiale numérique EQREF \todo[noline]{EQREF} n'est pas prise de sorte à respecter la répartition des niveaux de gris du scanner. Evitons donc d'inclure dans l'optimisation une erreur de base qui serait incompressible.
-\todo[noline]{Presenter numerotation des scans}
-
 \DTLloaddb{optim3_0grey}{../data/cout_1/optim3.csv}
 \DTLloaddb[noheader]{optim3_0leg}{../data/cout_1/optim3_leg.csv}
 \DTLloaddb{optim3_0stat}{../data/cout_1/optim3_stat.csv}
@@ -68,11 +65,16 @@ Dans tous les cas, on ne considèrera pas le premier scanner (numéro~0) car la 
 & \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
 \hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
 \rowcolor{gray!70}
-\multirow{-2}{2cm}{\scriptsize \bfseries Scanners choisis}
 & \bfseries SLSQP
 & \bfseries GC 
 & \bfseries Neldear-Mead 
-& \bfseries BFGS  
+& \bfseries BFGS \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& $\tau_N, \qquad \tau_P, \qquad \tau_S$
+& $\tau_N, \qquad \tau_P, \qquad \tau_S$
+& $\tau_N, \qquad \tau_P, \qquad \tau_S$
+& $\tau_N, \qquad \tau_P, \qquad \tau_S$
 %%\\ \hline &&
 %%\\ \multicolumn{3}{|c|}{\rule{3cm}{1pt}}
 \DTLforeach*{optim3_0grey}{%
@@ -101,68 +103,16 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 \DTLcleardb{optim3_0leg}
 \DTLcleardb{optim3_0stat}
 \DTLcleardb{optim3_0stat}
-%
-%\DTLloaddb{optim3_grey}{../data/cout_3/optim3.csv}
-%\DTLloaddb[noheader]{optim3_leg}{../data/cout_3/optim3_leg.csv}
-%\DTLloaddb[noheader]{optim3_stat}{../data/cout_3/optim3_stat.csv}
-%\DTLsetheader{optim3_stat}{Column1}{}
-%\DTLsetheader{optim3_leg}{Column1}{}
-%\DTLsetheader{optim3_leg}{Column2}{}
-%\begin{sidewaystable}
-%%\begin{table}[htbp]
-%\footnotesize
-%\centering
-%\begin{tabular}{|c|c|c|c|c|}
-%\hline
-%%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
-%\rowcolor{gray!70}
-%& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
-%\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
-%\rowcolor{gray!70}
-%\multirow{-2}{2cm}{\scriptsize \bfseries Scanners choisis}
-%& \bfseries SLSQP
-%& \bfseries GC 
-%& \bfseries Neldear-Mead 
-%& \bfseries BFGS  
-%%%\\ \hline &&
-%%%\\ \multicolumn{3}{|c|}{\rule{3cm}{1pt}}
-%\DTLforeach*{optim3_grey}{%
-%\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
-%\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
-%\\
-%\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-%\scan & \begin{tabular}{c}
-%\col \\ \errcol
-%\end{tabular} & \begin{tabular}{c}
-%\CG \\ \errCG
-%\end{tabular} & \begin{tabular}{c}
-%\NM \\ \errNM
-%\end{tabular} & \begin{tabular}{c}
-%\BFGS \\ \errBFGS
-%\end{tabular} 
-%}%
-%\\ \hline
-%\end{tabular}
-%\caption{\label{tab:optim3gris} Tableau récapitulatif des optimisations pour les 3 niveaux de gris}
-%\end{sidewaystable}
-%%\end{table}
-%
-%\begin{table}
-%\centering
-%%\begin{tabular}{c}
-%%\DTLdisplaydb{optim3_leg}
-%%\end{tabular}
-%\begin{tabular}{c}
-%N \qquad P \qquad S \\
-%\DTLdisplaydb{optim3_stat}
-%\end{tabular}
-%\caption{\label{tab:moyenne_optim_3gris} Moyenne des niveaux de gris optimaux présentés dans la Table~\ref{tab:optim3gris}}
-%\end{table}
-%\todo[noline]{tableau \ref{tab:moyenne_optim_3gris} a refaire}
-%
-%\DTLcleardb{optim3_leg}
-%\DTLcleardb{optim3_stat}
-%\DTLcleardb{optim3_stat}
+La résolution de l'équation~\eqref{eq:min_optim_grey} fournit donc le $\tau$ optimal. Examinons les différences lorsque l'on fait varier :
+\begin{itemize}
+\item le nombre d'images considérées
+\item les moments considérés
+\item l'algorithme d'optimisation lui-même
+\item la fonction coût utilisée
+\end{itemize}
+
+Dans tous les cas, on ne considèrera pas le premier scanner (numéro~0) car la condition initiale numérique EQREF \todo[noline]{EQREF} n'est pas prise de sorte à respecter la répartition des niveaux de gris du scanner. Evitons donc d'inclure dans l'optimisation une erreur de base qui serait incompressible.
+\todo[noline]{Presenter numerotation des scans}
 
 
 La Table~\ref{tab:optim3gris} synthétise l'ensemble des résultats d'optimisation obtenus sur les différents test qui ont été réalisé. 
@@ -185,6 +135,60 @@ Pour palier au problèmes rencontrés dans la section précédentes, nous allons
 \caption{\label{fig:contourage_sain}Contourage d'une zone saine -- Moyenne de la valeur des pixels dans ce périmètre : 134.5 HU (avec une échelle HU de \mbox{-135 à 215}).}
 \end{figure}
 
+%%%%%% Cout0
+\DTLloaddb{optim2_0grey}{../data/cout_0/optim2.csv}
+\DTLloaddb[noheader]{optim2_0leg}{../data/cout_0/optim2_leg.csv}
+\DTLloaddb{optim2_0stat}{../data/cout_0/optim2_stat.csv}
+\DTLsetheader{optim2_0leg}{Column1}{}
+\DTLsetheader{optim2_0leg}{Column2}{}
+\begin{table}[htbp]
+\footnotesize
+\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+\rowcolor{gray!70}
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
+\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+\rowcolor{gray!70}
+& \bfseries SLSQP
+& \bfseries GC 
+& \bfseries Neldear-Mead 
+& \bfseries BFGS \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+\DTLforeach*{optim2_0grey}{%
+\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \begin{tabular}{c}
+\col \\ \errcol
+\end{tabular} & \begin{tabular}{c}
+\CG \\ \errCG
+\end{tabular} & \begin{tabular}{c}
+\NM \\ \errNM
+\end{tabular} & \begin{tabular}{c}
+\BFGS \\ \errBFGS
+\end{tabular} 
+}%
+\DTLforeach*{optim2_0stat}{%
+\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+Moyenne : & \col & \CG & \NM & \BFGS  }
+\\ \hline
+\end{tabular}
+\caption{\label{tab:optim2gris0}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, PAS DE PENALISATION.}
+\end{table}
+\DTLcleardb{optim2_0leg}
+\DTLcleardb{optim2_0stat}
+\DTLcleardb{optim2_0stat}
+
+
 %%%%%% Cout1
 \DTLloaddb{optim2_1grey}{../data/cout_1/optim2.csv}
 \DTLloaddb[noheader]{optim2_1leg}{../data/cout_1/optim2_leg.csv}
@@ -193,21 +197,24 @@ Pour palier au problèmes rencontrés dans la section précédentes, nous allons
 \DTLsetheader{optim2_1leg}{Column2}{}
 \begin{table}[htbp]
 \footnotesize
-\hspace{-4mm} %%% Le tableau depasse sur les marges !
+\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 %%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
 \rowcolor{gray!70}
-& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algo d'optim} \\
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
 \hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
 \rowcolor{gray!70}
-\multirow{-2}{2cm}{\scriptsize \bfseries Scan choisis pour optim}
 & \bfseries SLSQP
 & \bfseries GC 
 & \bfseries Neldear-Mead 
-& \bfseries BFGS 
-%%\\ \hline &&
-%%\\ \multicolumn{3}{|c|}{\rule{3cm}{1pt}}
+& \bfseries BFGS \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
 \DTLforeach*{optim2_1grey}{%
 \scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
 \errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
@@ -240,6 +247,56 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 \DTLcleardb{optim2_1stat}
 
 
+%%%%%% Cout2
+\DTLloaddb{optim2_2grey}{../data/cout_2/optim2.csv}
+\DTLloaddb[noheader]{optim2_2leg}{../data/cout_2/optim2_leg.csv}
+\DTLloaddb{optim2_2stat}{../data/cout_2/optim2_stat.csv}
+\DTLsetheader{optim2_2leg}{Column1}{}
+\DTLsetheader{optim2_2leg}{Column2}{}
+\begin{table}[htbp]
+\footnotesize
+\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\rowcolor{gray!70}
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
+\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+\rowcolor{gray!70}
+& \bfseries SLSQP
+& \bfseries GC 
+& \bfseries Neldear-Mead 
+& \bfseries BFGS \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+\DTLforeach*{optim2_2grey}{%
+\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \begin{tabular}{c}
+\col \\ \errcol
+\end{tabular} & \begin{tabular}{c}
+\CG \\ \errCG
+\end{tabular} & \begin{tabular}{c}
+\NM \\ \errNM
+\end{tabular} & \begin{tabular}{c}
+\BFGS \\ \errBFGS
+\end{tabular} 
+}%
+\DTLforeach*{optim2_2stat}{%
+\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+Moyenne : & \col & \CG & \NM & \BFGS  }
+\\ \hline
+\end{tabular}
+\caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique \eqref{eq:penalisation_quad}.}
+\end{table}
+
+
 
 %%%%%% Cout3
 \DTLloaddb{optim2_grey}{../data/cout_3/optim2.csv}
@@ -249,21 +306,23 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 \DTLsetheader{optim2_leg}{Column2}{}
 \begin{table}[htbp]
 \footnotesize
-\hspace{-4mm} %%% Le tableau depasse sur les marges !
+\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
 \rowcolor{gray!70}
-& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algo d'optim} \\
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
 \hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
 \rowcolor{gray!70}
-\multirow{-2}{2cm}{\scriptsize \bfseries Scan choisis pour optim}
 & \bfseries SLSQP
 & \bfseries GC 
 & \bfseries Neldear-Mead 
-& \bfseries BFGS 
-%%\\ \hline &&
-%%\\ \multicolumn{3}{|c|}{\rule{3cm}{1pt}}
+& \bfseries BFGS \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
 \DTLforeach*{optim2_grey}{%
 \scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
 \errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
@@ -285,20 +344,53 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 Moyenne : & \col & \CG & \NM & \BFGS  }
 \\ \hline
 \end{tabular}
-%\centering
-%\begin{tabular}{cc}
-%\DTLdisplaydb{optim2_leg}
-%\end{tabular}
-\caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique.}
+\caption{\label{tab:optim2gris_pen_quad_reg}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique régularisée.}
 \end{table}
 
-\DTLcleardb{optim2_leg}
-\DTLcleardb{optim2_stat}
-\DTLcleardb{optim2_stat}
+\DTLcleardb{optim2_2leg}
+\DTLcleardb{optim2_2stat}
+\DTLcleardb{optim2_2stat}
 
-L'ensemble des résultats d'optimisation de $\tau_N$ et de $\tau_P$ avec $\tau_S$ fixé à~197 est fourni dans les Tables~\ref{tab:optim2gris}. Ici les niveaux de gris moyen fournis sont conformes aux attentes de le sens où l'on a $\tau_N$<$\tau_P$<$\tau_S$.
+L'ensemble des résultats d'optimisation de $\tau_N$ et de $\tau_P$ avec $\tau_S$ fixé à~197 est fourni dans la Table~\ref{tab:optim2gris}. Ici les niveaux de gris moyen fournis sont conformes aux attentes dans le sens où l'on a $\tau_N$<$\tau_P$<$\tau_S$.
 
-Il reste un petit bémol : on notera que dans certaines configurations, les algorithmes tendent vers un jeu de paramètres optimal qui s'approche du bord 0 ou du bord 255.
+Il reste un petit bémol : on notera que dans certaines configurations, les algorithmes tendent vers un jeu de paramètres optimal qui s'approche du bord 0 ou du bord 255, voire même qui est négatif (\ie non convergence de l'algorithme d'optimisation). Ce phénomène peut être dû notamment au fait que la pénalisation choisie \eqref{eq:penalisation_creneau} présente une discontinuité. Les algorithmes de descente fonctionnant sur une approximation du gradient peuvent ainsi être perturbé par cette discontinuité. Essayons alors une autre pénalisation :
+\begin{equation}
+\label{eq:penalisation_quad}
+\mathcal{P}(\tau) = \Big[ \big(  E(\tau) - 127.5 \big)^2-126^2 \Big]^+,
+\end{equation}
+où $[.]^+=\max(0,.)$ désigne la partie positive et où $E(\tau)$ est la composante de $\tau$ la plus éloignée du centre de l'intervalle autorisé (127.5 milieu de [0;255]):
+\begin{equation}
+\label{eq:tau_eloigne} E(\tau)= \arg\max_{i=1,2,3}( | \tau_i-127.5 | ).
+\end{equation} 
+L'aspect de cette pénalisation est présenté sur la Figure~\ref{fig:penal_quad}. Il s'agit d'une parabole dont on ignore la partie négative. 
+Ici la pénalisation intervient sur un intervalle un peu plus court que $[0;255]$, car de toute façon les valeurs de $\tau$ n'ont pas à s'approcher de ces bornes.
+\begin{figure}
+\centering
+\includegraphics[width=.75\textwidth]{penal_quad.png}
+\vspace{-3mm}
+\caption{\label{fig:penal_quad} Pénalisation via une parabole tronquée (\cf Eq.~\eqref{eq:penalisation_quad}). }
+\end{figure}
+Les résultats des optimisations faites avec la pénalisation~\eqref{eq:penalisation_quad} sont présenté dans la Table~\ref{tab:optim2gris_pen_quad}. Ici plus de valeur négative, cependant la borne 1.5 est atteinte à plusieurs reprises. La pénalisation considéré ici n'est que $\mathcal{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
 
+
+Essayons donc une troisième fonction de pénalisation qui est la régularisation de Moreau-Yosida de la pénalisation précédente.
+\todo[inline]{Blabla sur la transformée de Moreau Yosida}
+La fonction de pénalisation régularisée est alors donnée par :
+\begin{equation}
+\label{eq:penal_quad_regul}
+\mathcal{P}(\tau)=\left\{  \begin{aligned}
+0 & \textrm{ si } & E(\tau) - 127.5 \in [ 1.5;253.5 ] \\
+\dfrac{1}{2c} ( 126 - E(\tau) )^2 & \textrm{ si } & E(\tau)  \in [-126(2c+1) ; -126 [ \cup ] 126; 126(2c+1) ] \\
+\dfrac{(E(\tau))^2}{1+2c}-126^2 & \textrm{ si } & 127.5 < \frac{ E(\tau) }{ 2c+1 }
+\end{aligned}  \right.
+\end{equation}
+\todo[noline]{formulation de la penalisation a revoir}
+et est représentée sur la Figure~\ref{fig:penal_quad_regul}. Les niveaux de gris optimaux obtenus avec cette pénalisation sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
+\begin{figure}
+\centering
+\includegraphics[width=.75\textwidth]{penal_quad_regul.png}
+\vspace{-3mm}
+\caption{\label{fig:penal_quad_regul} Pénalisation via la régularisation de Moreau-Yosida d'une parabole tronquée (\cf Eq.~\eqref{eq:penal_quad_regul}). }
+\end{figure}
 
 \end{document}
