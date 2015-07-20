@@ -55,7 +55,7 @@ Après appréciation visuelle \footnote{\samepage Cette appréciation visuelle r
 Notons que \Nber est encore ici un cas très représentatif de ce que l'on cherche à étudier \ie corrélation entre \hetero et rechute imminente. En effet, ici l'\hetero croit avant même que le volume tumorale ne réaugmente, signe de la reprise d'activité cellulaire sur le pourtour de la métastase. Le coeur reste nécrosé et donc l'\hetero est accrue. Lorsque le volume tumorale fini par augmenter, le tissu proliférant à, en grande partie (si le centre de la tumeur est suffisament vascularisé), recoloniser la zone nécrosée. La croissance de la métastase est alors synonyme d'homogénéisation, puisque l'ensemble de la surface tumorale tend à être proliférante. Une homogénéisation a également lieu lorsque le traitement est efficace. Dans ce cas-ci, l'ensemble de la tumeur tend à être nécrosée.
 
 
-Bien que nous ayons 2 patients à notre disposition, je m'efforcerais de construire un critère qui reproduira convenablement la fonction objectif pour \Nber uniquement. Le second patient, \Chen, sera gardé pour valider le ou les critère(s) retenu(s) et non pour les construire. L'idéal serait bien sûr d'avoir à notre disposition une plus large cohorte de patient...
+Bien que nous ayons 2 patients à notre disposition, je m'efforcerais de construire un critère qui reproduira convenablement la fonction objectif pour \Nber uniquement. Le second patient, \Chen, sera gardé pour valider le ou les critère(s) retenu(s) et non pour le ou les construire. L'idéal serait bien sûr d'avoir à notre disposition une plus large cohorte de patient...
 
 \section{Premiers essais de critères}
 Examinons à présent, les informations que fournissent les quantités suivantes (qui pourraient être des quantificateurs de l'\hetero):
@@ -136,8 +136,12 @@ Les résultats présentés sur la Figure~\ref{fig:critere_dc_sur_dh} ne sont pas
 Plutôt que de considérer seulement 2 points (le sommet de chaque gaussienne), élargissons notre évantail de points caractéristiques. La Figure~\ref{fig:pts_carac_intersection_gaussienne} présente l'ensemble des points utilisés dans les critères d'évaluation de l'\hetero de cette section.
 
 \begin{figure}
-\centering
-\color{red}{FIGURE A METTRE}
+\subfloat[Cas où l'une des intersection se situe entre les centres des gaussiennes.]{
+\vspace{-3mm}
+\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss.png}}\qquad
+\subfloat[Cas où les 2 intersections sont à l'extérieure.]{
+\vspace{-3mm}
+\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss_v2.png}}
 \caption{\label{fig:pts_carac_intersection_gaussienne}Points caractéristiques de l'intersections de 2 gaussiennes.}
 \end{figure}
 
@@ -145,8 +149,18 @@ On regardera notamment ce que peut fournir l'étude des angles $\widehat{ARB}$, 
 
 \subsection{Ensemble des configurations d'un mélange bi-gaussien.}
 \begin{figure}
-\centering
-\color{red}{FIGURE A METTRE}
+\subfloat[Cas avec 2 intersections, l'une se situant entre les centres des gaussiennes.]{
+\vspace{-3mm}
+\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_config1.png}}\qquad
+\subfloat[Cas où les 2 intersections, toutes les deux en dehors de l'intervalle défini par le centre des gaussiennes.]{
+\vspace{-3mm}
+\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_config2.png}}\\
+\subfloat[Cas avec un seul et unique point d'intersection (ici $\sigma_1 = \sigma_2$).]{
+\vspace{-3mm}
+\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_config3.png}}\qquad
+\subfloat[Cas sans aucun point d'intersection.]{
+\vspace{-3mm}
+\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_config4.png}}
 \caption{\label{fig:config_intersection_gaussienne}Ensemble des configurations avec 2 gaussiennes.}
 \end{figure}
 
