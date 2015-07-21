@@ -205,12 +205,33 @@ Ce discriminant n'est pas nécessairement positif ! Donc il existe des cas où l
 \todo[inline]{analyse du signe du discriminant à compléter}
 
 \subsection{Etudes de différents critères}
+Différents critères seront étudiés dans cette section. Ils sont basés sur
 \begin{itemize}
-\item Basé sur intégrale commune
-\item Basé sur des angles
-\item Basé sur des positions relatives de point ...
+\item l'intégrale commune aux deux gaussiennes
+\item la valeur de certains angles
+%\item des positions relatives de point ...
 \end{itemize}
+
+\subsubsection{Critères basés sur la valeur d'angles particuliers.}
 \todo[inline]{A completer}
+
+
+\subsubsection{Critères basés sur des intégrales.}
+Dans la section précédente on a déjà examiner un critère qui compare l'aire des composantes entre elles. Il s'agit du critère $Qw$, l'aire (l'intégrale) de la i-ème composante valant $w_i$. 
+Ici, en observant les gaussiennes produite pour \Nber de plus près, on pourrait penser que l'aire commune aux deux gaussiennes (\cf schéma représentatif Figure~\ref{fig:gmm_aire_commune}) pourrait être un indicateur. Plus l'aire commune aux deux gaussiennes est élevé, et plus la tumeur semble homogène.  On s'intéresse ainsi aux critères suivants :
+\begin{align}
+\mathcal{H}_9 =& 1 - \dfrac{ 1 }{\min(w_1,w_2)}\int \min(g_1(x),g_2(x)) \dx, \\
+\mathcal{H}'_9 =& 1-\int \min(g_1(x),g_2(x)) \dx.
+\end{align}
+\begin{figure}
+\subfloat[\label{fig:gmm_aire_commune}Schéma représentatif de l'aire commune à deux gaussiennes.]{
+\includegraphics[width=.35\textwidth]{dessin_gauss/gmm_aire_commune.png}}
+\subfloat[\label{fig:crit_aire_commune}\Hetero fournit avec les critères $\mathcal{H}_9$ et $\mathcal{H}'_9$.]{
+\includegraphics[width=.65\textwidth]{graph_hetero/dcm_Nber/05-integ_commune.png}}
+\caption{Critères basés sur l'aire commune aux deux gaussiennes $\big($ donnée par : $\int_0^{255} \min \big(g_1(x),g_2(x) \big) \dx \big)$.}
+\end{figure}
+Les résultats pour ces deux critères sont présentés  Figure~\ref{fig:crit_aire_commune}. 
+Considérer l'aire commune relativement à l'aire de la plus petite des gaussiennes ($\mathcal{H}_9$) semble plus pertinent que de considérer l'aire commune seulement ($\mathcal{H}'_9$). Ce critère n'est pas des plus mauvais : l'ensemble des moments hétérogènes est capturé (premier pic avant traitement jour~119, second et troisième pics avant les rechutes (jour~776 et~1116). Cependant les homogénéisations ne sont pas très bien capturées : il y a notamment le plateau lors du premier traitement et le pic descendant lors du second traitement.
 
 \section{Critère retenu}
 \begin{figure}
