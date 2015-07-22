@@ -8,15 +8,16 @@
 ### Les ligne commençant par '#' sont des commentaires.
 ### Ignorer tous les fichiers nommés foo.txt
 # foo.txt
-### Ignorer tous les fichiers .aux
+### Ignorer tous les fichiers annexes (fichiers de compilation )
+###     se terminant par :
 *.aux
 *.synctex.gz
 *.log
 *.out
 *.bbl
-### Ignorer tous les fichier (ou dossier) commencant par essai_
+*.blg
+### Ignorer tous les fichier (ou dossier) commencant par :
 essai_*
-### Ignorer tous les fichier (ou dossier) commencant par essai_
 consignes*
 ### à l'exception de foo.html qui est maintenu à la main
 # !foo.html

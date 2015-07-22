@@ -57,7 +57,7 @@ Notons que \Nber est encore ici un cas très représentatif de ce que l'on cherc
 
 Bien que nous ayons 2 patients à notre disposition, je m'efforcerais de construire un critère qui reproduira convenablement la fonction objectif pour \Nber uniquement. Le second patient, \Chen, sera gardé pour valider le ou les critère(s) retenu(s) et non pour le ou les construire. L'idéal serait bien sûr d'avoir à notre disposition une plus large cohorte de patient...
 
-\section{Premiers essais de critères}
+\section{Premiers essais de critères\label{sec:premier_essai_critere}}
 Examinons à présent, les informations que fournissent les quantités suivantes (qui pourraient être des quantificateurs de l'\hetero):
 \begin{align}
 \mathcal{H}_1 =& \frac{|\Delta c |}{256}, \\
@@ -116,11 +116,12 @@ décrite entre le sommet des deux gaussiennes :
 \mathcal{H}_{10} = \dfrac{2}{\pi} \atan \left( \left| \dfrac{ \Delta c }{ \Delta h } \right| \right).
 \end{equation}
 \todo[noline]{l'arctangente ?}
-Notons que l'arctangente, n'est ni plus ni moins qu'une autre manière de saturer une quantité. En effet, comme le montre la Figure~\ref{fig:comp_saturation}, l'arctangente est proche de la saturation $\mathscr{S}$ définie par \eqref{eq:saturation_critere}.
+Notons que l'arctangente, n'est ni plus ni moins qu'une autre manière de saturer une quantité. En effet, comme le montre la Figure~\ref{fig:comp_saturation}, l'arctangente est proche de la saturation $\mathscr{S}$ définie par \eqref{eq:saturation_critere}. Ce graph montre d'ailleurs également que d'autre saturation sont également possibles et équivalentes à celles utilisées.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{comparaison_saturation.png}
+\vspace{-5mm}
 \caption{\label{fig:comp_saturation}Comparaison de différentes saturations}
 \end{figure}
 
@@ -133,19 +134,8 @@ Que la pente soit négative ou positive, à priori si les 2 composantes sont sem
 Les résultats présentés sur la Figure~\ref{fig:critere_dc_sur_dh} ne sont pas encore très convaincant en ce qui concerne la description de l'\hetero... D'autres critères doivent encore être explorés.
 
 \section{Critères basés sur la manière dont s'intersecte les gaussiennes}
-Plutôt que de considérer seulement 2 points (le sommet de chaque gaussienne), élargissons notre évantail de points caractéristiques. La Figure~\ref{fig:pts_carac_intersection_gaussienne} présente l'ensemble des points utilisés dans les critères d'évaluation de l'\hetero de cette section.
-
-\begin{figure}
-\subfloat[Cas où l'une des intersection se situe entre les centres des gaussiennes.]{
-\vspace{-3mm}
-\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss.png}}\qquad
-\subfloat[Cas où les 2 intersections sont à l'extérieure.]{
-\vspace{-3mm}
-\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss_v2.png}}
-\caption{\label{fig:pts_carac_intersection_gaussienne}Points caractéristiques de l'intersections de 2 gaussiennes.}
-\end{figure}
-
-On regardera notamment ce que peut fournir l'étude des angles $\widehat{ARB}$,  $\widehat{AHB}$, $\widehat{AGB}$ et $\widehat{MRB}$. Avant d'aller plus loin notons que la Figure~\ref{fig:pts_carac_intersection_gaussienne} présente le cas de gaussiennes dont l'abscisse de l'un des points d'intersection est situé entre les centres des deux gaussiennes ($R_x\in[c_1,c_2]$). Avant de regarder quel critère qu'il soit, étudions l'ensemble des configurations possibles entre 2 gaussiennes.
+Avant de proposer diverses critères, étudions de manière plus précise, la façon dont peuvent s'intersecter deux gaussiennes.
+%Avant de regarder quel critère qu'il soit, étudions l'ensemble des configurations possibles entre 2 gaussiennes.
 
 \subsection{Ensemble des configurations d'un mélange bi-gaussien.}
 \begin{figure}
@@ -213,12 +203,50 @@ Différents critères seront étudiés dans cette section. Ils sont basés sur
 \end{itemize}
 
 \subsubsection{Critères basés sur la valeur d'angles particuliers.}
-\todo[inline]{A completer}
+\begin{figure}
+\subfloat[{Cas où l'une des intersections se situe entre les centres des gaussiennes ($R_x \in [c_1;c_2] $).
+}]{\vspace{-3mm}
+\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss.png}}\qquad
+\subfloat[{Cas où les deux points d'intersections sont à l'extérieure ($R_x \notin [c_1;c_2] $).
+}]{\vspace{-3mm}
+\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss_v2.png}}
+\caption{\label{fig:pts_carac_intersection_gaussienne}Points caractéristiques d'un mélange de deux gaussiennes.}
+\end{figure}
 
+Plutôt que de considérer seulement 2 points (le sommet de chaque gaussienne), élargissons notre évantail de points caractéristiques. La Figure~\ref{fig:pts_carac_intersection_gaussienne} présente l'ensemble des points utilisés dans les critères d'évaluation de l'\hetero de cette section. Cet ensemble de points n'existe que dans le cas où les gaussiennes possède 2 points d'intersections. Comme montrer dans la section précédente, les cas avec aucun ou un seul point d'intersection sont relativement marginaux (plus ou moins selon la valeur de $\Delta c$ notamment). En plus des points $I$ et $J$ représentant le sommet de chaque composante ($I$ représentera toujours le sommet de la plus haute composante), on se servira de $A$ et $B$ qui représentent les valeurs du mélange gaussien en les centres des composantes : $c_1$ et $c_2$ ($A$ ayant même abscisse que $I$, et $B$ même abscisses que $J$). On notera également $R$ et $S$ les points d'intersections des composantes, $R$ étant le point le plus haut. Enfin, on considère $H$ la valeur du mélange gaussien à l'abscisse de $R$ et $M$ milieu de $[AB]$. 
+
+
+On regardera ici les informations que peuvent fournir l'étude des angles. Un large spectre d'angle sera examiné : $\widehat{ARB}$, $\widehat{MRB}$, $\widehat{MRA}$,  $\widehat{HRB}$, $\widehat{HRA}$, $\widehat{IRJ}$, $\widehat{MRJ}$, $\widehat{MRI}$, $\widehat{HRJ}$ et $\widehat{HRI}$. 
+On s'attend cependant à ce que certain d'entre eux soit équivalents, notamment ceux qui font intervenir des points sur la même verticale comme $\widehat{HRA}$ et $\widehat{HRI}$ par exemple avec à prioiri une variation un peu plus importante du critère d'\hetero qui sera basé sur $\widehat{HRA}$ que celui basé sur $\widehat{HRI}$.
+
+Tous ces angles ne seront pas calculés. On ne s'intéressera uniquement qu'à leur cosinus qui se calcule aisément de la manière suivante avec le produit scalaire :
+\begin{equation}
+\label{eq:cos_prod_scal}
+\cos(\widehat{BAC}) = \dfrac{ \overrightarrow{AB}.\overrightarrow{AC} }{ \| \overrightarrow{AB} \| \| \overrightarrow{AC} \|}.
+\end{equation}
+Notons que :
+\begin{itemize}
+\item Plus les angles définit ci-dessus sont petits, plus on s'attend à une tumeur homogène. Le critère d'\hetero doit donc avoir des variations inversée par rapport à celle du cosinus.
+\item Le critère doit être indépendant du signe de l'angle orienté. Tout critère basé sur le cosinus de l'angle respectera ceci, puisque le cosinus est une fonction paire.
+\item Le cosinus est à valeur dans [-1;1]. Le critère doit quant à lui être entre 0 et 1. Il faut donc adapter. Mais attention à la manière d'adapter. L'idée triviale de la valeur absolue ou du  carré ne peut pas être appliqué ici. En effet, le signe de l'angle est sans importance mais le signe de son cosinus l'est ! Si l'angle est obtu (donc grand, ce qui traduirait une \hetero) le cosinus de l'angle est négatif et donc il ne faut surtout pas le ramené à son équivalent aigu ! De même on ne veut qu'un angle droit traduise un cas limite ($\mathcal{H} = 0$ ou 1). L'angle droit doit être le cas de transition entre l'angle obtu et l'angle aigu.
+\end{itemize}
+On souhaite construire ici un critère qui varie de manière monotone en fonction de l'angle. Nous examinerons deux types d'adptation d'échelle :
+\begin{align}
+\mathcal{H}_5 (\theta) = &\dfrac{1-\cos \theta}{2} \\
+\mathcal{H}_6 (\theta) = &\sqrt{1-\left(  \dfrac{1+\cos \theta}{2}\right)^2}
+\end{align}
+\begin{figure}
+\subfloat[Avec adaptation $\mathcal{H}_5$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/04-angle_complet_rescaleL1.png}}\ 
+\subfloat[Avec adaptation $\mathcal{H}_6$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/04-angle_complet_rescaleL2.png}}
+\caption{\label{fig:crit_hetero_angle}Critères basés sur des angles entre points particuliers de l'histogramme des niveaux de gris.}
+\end{figure}
+Pour beaucoup d'angles les résultats fournis sont insatisfaisant : certains sont quasiment constant ($\mathcal{H}_{5,6}(\widehat{HRJ}$ par exemple), d'autres sont très chaotique (comme $\mathcal{H}_{5,6}(\widehat{ARB}$). Sur la Figure~\ref{fig:crit_hetero_angle} est présenté les critères d'\hetero restants (\ie non écarté pour les raisons précédentes). 
+Les critères basés sur l'angle $\widehat{MRI}$ semblent ne pas bien capturés le premier pic d'\hetero même si le second pic est capté ainsi que la remontée finale. Les critères basés sur l'angle $\widehat{HRB}$ semblent eux bien capté les moments hétérogènes. Les pics d'\hetero sont cependant assez faible et parfois assez peu différents des passages homogènes... Les critères basés sur l'angle $\widehat{MRA}$ quant à eux, capturent très bien les deux premiers pics d'\hetero. Les passages homogènes sont également bien traduit (plateau lors du premier traitement, et pic descendant lors du second traitement). La recroissance finale de l'\hetero semble un peu plus laborieuse à capturer dans le cas du critère $\mathcal{H}_5$.
+Explorons à présent d'autres critères encore.
 
 \subsubsection{Critères basés sur des intégrales.}
-Dans la section précédente on a déjà examiner un critère qui compare l'aire des composantes entre elles. Il s'agit du critère $Qw$, l'aire (l'intégrale) de la i-ème composante valant $w_i$. 
-Ici, en observant les gaussiennes produite pour \Nber de plus près, on pourrait penser que l'aire commune aux deux gaussiennes (\cf schéma représentatif Figure~\ref{fig:gmm_aire_commune}) pourrait être un indicateur. Plus l'aire commune aux deux gaussiennes est élevé, et plus la tumeur semble homogène.  On s'intéresse ainsi aux critères suivants :
+Dans cette section, on va s'intéresser à construire des critères basés sur des comparaisons  d'aires. Dans la section~\ref{sec:premier_essai_critere}, on a déjà examiner un critère qui compare l'aire des composantes entre elles. Il s'agit du critère $Qw$, l'aire (l'intégrale) de la i-ème composante valant $w_i$. 
+Ici, en observant les gaussiennes produite pour \Nber de plus près, on pourrait penser que l'aire commune aux deux gaussiennes (\cf schéma représentatif Figure~\ref{fig:gmm_aire_commune}) pourrait être un indicateur. Plus l'aire commune aux deux gaussiennes est élevée, et plus la tumeur semble homogène.  On s'intéresse ainsi aux critères suivants :
 \begin{align}
 \mathcal{H}_9 =& 1 - \dfrac{ 1 }{\min(w_1,w_2)}\int \min(g_1(x),g_2(x)) \dx, \\
 \mathcal{H}'_9 =& 1-\int \min(g_1(x),g_2(x)) \dx.
