@@ -1,4 +1,6 @@
 \documentclass[main.tex]{subfiles}
+
+
 \begin{document}
 
 %\custompart{Quantifier l'\hetero d'une tumeur à partir d'une image}{Comment ? Par quel biais? Exploration de différents critères.}{Dans cette partie, on propose d'examiner en détail le caractère \heterogene de nos images - les images médicales ainsi que les images produites numériquement avec le modèle EDP. Dans un premier temps, nous présenterons la construction d'histogrammes des niveaux de gris contenus dans l'image. Dans un second temps, nous décrirons ces histogrammes par un mélange de gaussienne. Enfin ce mélange gaussien sera utilisé pour calculer différents critères qui seront comparés. }
@@ -8,7 +10,79 @@
 %\todo[noline]{On peut employer le mot "fit" ?}
 
 
-\chapter{Critères quantifiant l'\hetero.}
+\chapter{Critère quantifiant l'\hetero.}
+%\lettrine[lines=2, lhang=0.33, loversize=0.25]{$\mathscr{D}$}{ans} 
+\lettrine[lines=2, lhang=0.33, loversize=0.25]{D}{ans} ce chapitre, nous allons construire un critère permettant permettant de quantifier l'\hetero d'une tumeur.
+A chaque image, on construira l'histogramme des niveaux de gris associés aux tumeurs. 
+Dans un premier temps, les images cliniques seront considérées. Les histogrammes associés à ces scanners (qu'on appelera par abus de langage \og histogramme clinique \fg) seront ensuite étudiés. Plusieurs quantités seront examinées afin de construire un quantificateur de l'\hetero.
+Dans un second temps, nous appliquerons le même traitement aux images produites par la simulation numérique du modèle EDP présenté précédemment. Les histogrammes des images produites numériquement (qu'on appelera aussi par abus de langage \og histogramme numérique \fg) seront présentés et comparés à ceux cliniques. De même, le quantificateur de l'\hetero que l'on a construit, sera appliqué aux histogrammes numériques et nous pourrons ainsi voir à quel point le modèle EDP est capable de reproduire les aspects homogènes et \heterogenes des tumeurs que l'on considère.
+\section{Construction des histogrammes de niveaux de gris.}
+Dans cette section, il s'agit, à partir d'une image donnée en niveaxu de gris et d'un contour donné, de reconstruire l'histogramme des niveaux de gris des pixels présent à l'intérieur du contour. Une telle zone est communément appelée ROI (de l'anglais: Region Of Interest). Dans la suite, pour une image donnée, on notera $p(\vecx)$ la valeur du pixel (comprise entre 0 et 255) situé en position $\vecx$. Ainsi les données de l'histogramme sont représenté par la liste (ensemble avec valeur multiples autorisées)~:
+\begin{equation}
+\label{eq:def_data_histo}
+X:=\{ \ p(\vecx) \  | \  \vecx \in \textrm{\small ROI} \ \},
+\end{equation}
+et l'histogramme lui-même, que l'on normalise, est donné par la fonction~:
+\begin{equation}
+\label{eq:def_histo}
+H(x) = \dfrac{ \# X_x  }{ \# X }, \qquad \forall x \in \{ 0,1,2,\ldots,255 \}
+\end{equation}
+où $x$ désigne un niveau de gris et $X_x$ désigne la partition de la liste $X$ qui ne contient que les éléments $x$.
+
+\subsection{Histogrammes cliniques}
+Les données dont nous disposons sont celles produites par le scanner. Beaucoup plus riche qu'une image, ces données au format DICOM, nécéssitent l'utilisation d'un outil adapté pour les visualiser. OsiriX est ainsi utilisé pour:
+\begin{itemize}
+\item Choisir une coupe pertinente sur chaque scanner et l'exporter (également au format DICOM) de sorte à avoir ensuite des données 2D à traiter.
+\item Contourer manuellement la métastase. OsiriX dispose d'un outil crayon adapté à ce type de contourage. Ce contourage définit une ROI, que l'on peut également exporter (au format .xml)
+\end{itemize}
+A partir de ces 2 fichiers, un code C++ (avec la librairie ITK qui traite entre autre le format DICOM), permet de parcourir l'ensemble des pixels contenus dans la ROI et ainsi de fournir l'histogramme des niveaux de gris.
+
+Remarquons que, comme montré sur la figure~\ref{fig:contourage_sain}, le logiciel OsiriX, permet de visualiser directement l'histogramme des niveaux de gris d'une ROI. Cependant, il n'y a aucune possibilité d'exporter ces histogrammes... De plus on souhaite appliquer autant que possible, un traitement similaire aux images cliniques et aux images numériques, images numériques qui ne peuvent être traiter avec OsiriX. Le développement d'un code pour réaliser ceci était donc nécessaire.
+
+\subsection{Histogrammes numériques}
+Pour les histogrammes numériques, seul une image est reconstruite par la simulation. Le contour quant à lui va être définit à partir des fichiers de sorties des simulations qui stockent la densité des différentes populations en chaque maille de notre modèle EDP. En utilisant la reconstruction en niveau de gris détaillée au chapitre précédent, on peut fournir une image en niveaux de gris à partir de ces valeurs. En ce qui concerne le contour, il sera définit par seuillage sur le tissu sain~: si la proportion de tissu sain est inférieur à un pourcentage donné, alors on considèrera que l'on est à l'intérieur de la tumeur, sinon on est à l'extérieure. Nous avons donc également dans cas, une image en niveaux de gris et une ROI. Le code C++ pour la partie clinique peut être réutilisé et produira ainsi les histogrammes numériques.
+
+\subsection{Traitements appliqués aux histogrammes~: fit par un mélange bi-gaussien}
+Le but de ce chapitre est de mettre en exergue l'aspect \heterogene de certaines tumeurs. Sur les scanners dont il est question d'\hetero, on voit clairement deux composantes distinctes de niveaux gris qui se dégagent au sein de la tumeur. Nous avons donc choisi de décrire chacun des histogrammes (que l'on a au préalable normalisés) à l'aide d'une somme de deux gaussiennes~:
+\begin{equation}
+\label{eq:decomp_gaussienne}
+g(x) = g_1(x)+g_2(x) \quad \textrm{avec} \quad g_i(x) = h_i\exp \left(\frac{-1}{2} \left( \dfrac{x-c_i}{\sigma_i}\right)^2  \right),
+\end{equation}
+où~:
+\begin{itemize}
+\item $c_i$ est le centre de chacune des gaussiennes,
+\item $\sigma_i$ est l'écart-type de chacune des composantes,
+\item $h_i$ est la hauteur de chaque composantes. Elles sont données par~:
+\begin{equation}
+\label{eq:hauteur_gaussienne}
+h_i := \dfrac{w_i}{\sigma_i \sqrt{2\pi}} \qquad i=1;2,
+\end{equation}
+où $w_i$ est le poids associées à chacune des composantes. Notez que les poids sont choisis de telle sorte que :
+\begin{equation}
+w_1+w_2=1.
+\end{equation}
+Ainsi, selon les besoins de l'écriture et pour mettre en évidence dans certains cas le nombre de paramètres, on pourra alléger les notations de la manière suivante~:
+\begin{equation}
+\label{eq:renomage_w}
+w_1 := w \quad \textrm{et} \quad w_2 = 1 - w.
+\end{equation}
+De même, lorsqu'on aura besoin d'écrire $g$ en fonction de ces paramètres, on écrira $g(x,\theta)$ avec $\theta =( c_1,c_2,\sigma_1,\sigma_2,w  )$.
+\end{itemize}
+L'optimisation des 5 paramètres $c_1,c_2,\sigma_1,\sigma_2$ et $w$ est réalisée grâce à une librairie Python nommée Scikit-learn, qui contient un module dédié aux mélanges gaussiens. Ce module procède d'abord à une clusterisation des données par la méthodes des K-moyennes afin d'estimer les centres des composantes. Le jeu de paramètres résultant est ensuite donné comme point de départ à une méthode de descente aléatoire qui cherche à maximiser la logvraissemblance. Par algorithme de descente aléatoire, on entends~:
+\begin{itemize}
+\item[1)] Un nouveau jeu de paramètres est choisi dans un certain périmètre (plus ou moins grand) autour du jeu de paramètres courrant.
+\item[2)] La logvraissemblance de ce nouvel ensemble de paramètres est calculée. Si elle est meilleure que celle du jeu de paramètres courrant, alors ce nouveau jeu de paramètres devient le jeu courrant. Sinon le jeu de paramètres courrants reste celui qu'il était.
+\item[3)] On recommence à 1).
+\end{itemize}
+La vraissemblance, dont on maximise le logarithme selon $\theta$, est quant à elle donnée par~:
+\begin{equation}
+\mathcal{L}(X,\theta) = \prod_{x \in X} g(x,\theta).
+\end{equation}
+Quelquesoit $\theta$, l'intégrale de $g$ vaut 1 (\cf REFF).
+\todo[noline]{demo ou ref : integ gaussienne = 1}
+Ainsi la vraissemblance est le produit des probabilités que chacun des éléments de $X$ appartiennent à la distribution définit par le paramètre $\theta$.
+
+\section{a revoir}
 %\lettrine[lines=2, lhang=0.33, loversize=0.25]{$\mathscr{D}$}{ans} 
 \lettrine[lines=2, lhang=0.33, loversize=0.25]{D}{ans} 
 tout ce chapitre, on considère l'approximation en un mélange de deux  gaussiennes d'un histogramme de niveau gris. Ce mélange gaussien est entièrement décrit par les paramètres suivants:
@@ -216,17 +290,17 @@ Différents critères seront étudiés dans cette section. Ils sont basés sur
 Plutôt que de considérer seulement 2 points (le sommet de chaque gaussienne), élargissons notre évantail de points caractéristiques. La Figure~\ref{fig:pts_carac_intersection_gaussienne} présente l'ensemble des points utilisés dans les critères d'évaluation de l'\hetero de cette section. Cet ensemble de points n'existe que dans le cas où les gaussiennes possède 2 points d'intersections. Comme montrer dans la section précédente, les cas avec aucun ou un seul point d'intersection sont relativement marginaux (plus ou moins selon la valeur de $\Delta c$ notamment). En plus des points $I$ et $J$ représentant le sommet de chaque composante ($I$ représentera toujours le sommet de la plus haute composante), on se servira de $A$ et $B$ qui représentent les valeurs du mélange gaussien en les centres des composantes : $c_1$ et $c_2$ ($A$ ayant même abscisse que $I$, et $B$ même abscisses que $J$). On notera également $R$ et $S$ les points d'intersections des composantes, $R$ étant le point le plus haut. Enfin, on considère $H$ la valeur du mélange gaussien à l'abscisse de $R$ et $M$ milieu de $[AB]$. 
 
 
-On regardera ici les informations que peuvent fournir l'étude des angles. Un large spectre d'angle sera examiné : $\widehat{ARB}$, $\widehat{MRB}$, $\widehat{MRA}$,  $\widehat{HRB}$, $\widehat{HRA}$, $\widehat{IRJ}$, $\widehat{MRJ}$, $\widehat{MRI}$, $\widehat{HRJ}$ et $\widehat{HRI}$. 
+On regardera ici les informations que peuvent fournir l'étude des angles. Un large spectre d'angle sera examiné : $\widehat{ARB}$, $\widehat{MRB}$, $\widehat{MRA}$,  $\widehat{HRB}$, $\widehat{HRA}$, $\widehat{IRJ}$, $\widehat{MRJ}$, $\widehat{MRI}$, $\widehat{HRJ}$, $\widehat{HRI}$, $\widehat{IRB}$ et $\widehat{ARJ}$. 
 On s'attend cependant à ce que certain d'entre eux soit équivalents, notamment ceux qui font intervenir des points sur la même verticale comme $\widehat{HRA}$ et $\widehat{HRI}$ par exemple avec à prioiri une variation un peu plus importante du critère d'\hetero qui sera basé sur $\widehat{HRA}$ que celui basé sur $\widehat{HRI}$.
 
-Tous ces angles ne seront pas calculés. On ne s'intéressera uniquement qu'à leur cosinus qui se calcule aisément de la manière suivante avec le produit scalaire :
+Tous ces angles ne seront pas calculés. On ne s'intéressera uniquement à leur cosinus qui se calcule aisément de la manière suivante avec le produit scalaire :
 \begin{equation}
 \label{eq:cos_prod_scal}
 \cos(\widehat{BAC}) = \dfrac{ \overrightarrow{AB}.\overrightarrow{AC} }{ \| \overrightarrow{AB} \| \| \overrightarrow{AC} \|}.
 \end{equation}
 Notons que :
 \begin{itemize}
-\item Plus les angles définit ci-dessus sont petits, plus on s'attend à une tumeur homogène. Le critère d'\hetero doit donc avoir des variations inversée par rapport à celle du cosinus.
+\item Plus les angles définit ci-dessus sont petits, plus on s'attend à une tumeur homogène. Le critère d'\hetero doit donc avoir des variations inversées par rapport à celle du cosinus.
 \item Le critère doit être indépendant du signe de l'angle orienté. Tout critère basé sur le cosinus de l'angle respectera ceci, puisque le cosinus est une fonction paire.
 \item Le cosinus est à valeur dans [-1;1]. Le critère doit quant à lui être entre 0 et 1. Il faut donc adapter. Mais attention à la manière d'adapter. L'idée triviale de la valeur absolue ou du  carré ne peut pas être appliqué ici. En effet, le signe de l'angle est sans importance mais le signe de son cosinus l'est ! Si l'angle est obtu (donc grand, ce qui traduirait une \hetero) le cosinus de l'angle est négatif et donc il ne faut surtout pas le ramené à son équivalent aigu ! De même on ne veut qu'un angle droit traduise un cas limite ($\mathcal{H} = 0$ ou 1). L'angle droit doit être le cas de transition entre l'angle obtu et l'angle aigu.
 \end{itemize}
@@ -241,7 +315,9 @@ On souhaite construire ici un critère qui varie de manière monotone en fonctio
 \caption{\label{fig:crit_hetero_angle}Critères basés sur des angles entre points particuliers de l'histogramme des niveaux de gris.}
 \end{figure}
 Pour beaucoup d'angles les résultats fournis sont insatisfaisant : certains sont quasiment constant ($\mathcal{H}_{5,6}(\widehat{HRJ}$ par exemple), d'autres sont très chaotique (comme $\mathcal{H}_{5,6}(\widehat{ARB}$). Sur la Figure~\ref{fig:crit_hetero_angle} est présenté les critères d'\hetero restants (\ie non écarté pour les raisons précédentes). 
-Les critères basés sur l'angle $\widehat{MRI}$ semblent ne pas bien capturés le premier pic d'\hetero même si le second pic est capté ainsi que la remontée finale. Les critères basés sur l'angle $\widehat{HRB}$ semblent eux bien capté les moments hétérogènes. Les pics d'\hetero sont cependant assez faible et parfois assez peu différents des passages homogènes... Les critères basés sur l'angle $\widehat{MRA}$ quant à eux, capturent très bien les deux premiers pics d'\hetero. Les passages homogènes sont également bien traduit (plateau lors du premier traitement, et pic descendant lors du second traitement). La recroissance finale de l'\hetero semble un peu plus laborieuse à capturer dans le cas du critère $\mathcal{H}_5$.
+Les critères basés sur l'angle $\widehat{MRI}$ ou sur l'angle $\widehat{MRA}$ semblent ne pas bien capturés le premier pic d'\hetero même si le second pic est capté ainsi que la remontée finale. Les critères basés sur l'angle $\widehat{HRB}$ semblent eux bien capté les moments hétérogènes. Les pics d'\hetero sont cependant %assez faible et parfois 
+assez peu différents de certains passages homogènes... 
+%Les critères basés sur l'angle $\widehat{MRA}$ quant à eux, capturent très bien les deux premiers pics d'\hetero. Les passages homogènes sont également bien traduit (plateau lors du premier traitement, et pic descendant lors du second traitement). La recroissance finale de l'\hetero semble un peu plus laborieuse à capturer dans le cas du critère $\mathcal{H}_5$.
 Explorons à présent d'autres critères encore.
 
 \subsubsection{Critères basés sur des intégrales.}

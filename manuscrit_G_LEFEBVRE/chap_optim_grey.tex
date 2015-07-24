@@ -3,6 +3,9 @@
 \setlength{\retraittableau}{-4mm}
 \newlength{\firstcolwidth} %% on ne peut mettre ni chiffre ni caractere special dans le nom d'une longueur
 \setlength{\firstcolwidth}{22mm}
+
+%\setcounter{chapter}{1}
+
 \begin{document}
 \chapter{Optimisation de la reconstruction d'image scanner}
 \lettrine[lines=2, lhang=0.33, loversize=0.25]{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons nous sur la manière de reconstruire une image en niveau de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités $N(t,x)$, $P(t,x)$ et $S(t,x)$ (toutes comprises entre 0 et 1). On tentera, dans ce chapitre, d'optimiser les niveaux de gris $\tau_N, \tau_P$ et $\tau_S$ de l'interpolation EQREF \todo[noline]{eqref} afin de rapprocher au maximum la visualisation des résultas numériques de la visualisation des scanners médicaux.
@@ -191,7 +194,7 @@ Pour essayer de palier aux problèmes rencontrés dans la section précédentes,
 
 \begin{figure}
 \includegraphics[width=\textwidth]{OsiriX_gris_sain_rognee.png}
-\caption{\label{fig:contourage_sain}Contourage d'une zone saine -- Moyenne de la valeur des pixels dans ce périmètre : 134.5 HU (avec une échelle HU de \mbox{-135 à 215}).}
+\caption{\label{fig:contourage_sain}Contourage d'une zone saine réalisée à l'aide du logicielle OsiriX -- Moyenne de la valeur des pixels dans ce périmètre : 134.5 HU (avec une échelle HU de \mbox{-135 à 215}).}
 \end{figure}
 
 %%%%%%% Cout0
