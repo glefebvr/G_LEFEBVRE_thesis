@@ -22,6 +22,7 @@
 \usepackage{mathabx} %% Pour avoir proprement le grand symbole \sqrt notamment
 \usepackage{mathtools}
 \usepackage{subfig}%% \subfloat
+%%\usepackage{stackengine}
 \usepackage{xspace}
 \usepackage{lipsum}
 \usepackage{booktabs} %% midrule
@@ -79,6 +80,11 @@
 %\color[gray]{0.5}
 }
 
+%%%%%%% Personnalisation des legendes
+%\captionsetup[figure]{labelfont=it,textfont={bf,it}}
+%\captionsetup[subfigure]{labelfont=bf,textfont=normalfont,justification=raggedright}
+ 
+
 \newcommand{\custompart}[3]{
 \part{ 
 #1 \\ {
@@ -101,6 +107,8 @@
 
 \newcommand{\hetero}{hétérogénéité\xspace}
 \newcommand{\Hetero}{Hétérogénéité\xspace}
+\newcommand{\heteros}{hétérogénéité\xspace}
+\newcommand{\Heteros}{Hétérogénéité\xspace}
 \newcommand{\heterogene}{hétérogène\xspace}
 \newcommand{\heterogenes}{hétérogènes\xspace}
 \newcommand{\Nber}{Patient~A\xspace}

@@ -16,7 +16,7 @@ A chaque image, on construira l'histogramme des niveaux de gris associés aux tu
 Dans un premier temps, les images cliniques seront considérées. Les histogrammes associés à ces scanners (qu'on appelera par abus de langage \og histogramme clinique \fg) seront ensuite étudiés. Plusieurs quantités seront examinées afin de construire un quantificateur de l'\hetero.
 Dans un second temps, nous appliquerons le même traitement aux images produites par la simulation numérique du modèle EDP présenté précédemment. Les histogrammes des images produites numériquement (qu'on appelera aussi par abus de langage \og histogramme numérique \fg) seront présentés et comparés à ceux cliniques. De même, le quantificateur de l'\hetero que l'on a construit, sera appliqué aux histogrammes numériques et nous pourrons ainsi voir à quel point le modèle EDP est capable de reproduire les aspects homogènes et \heterogenes des tumeurs que l'on considère.
 \section{Construction des histogrammes de niveaux de gris.}
-Dans cette section, il s'agit, à partir d'une image donnée en niveaxu de gris et d'un contour donné, de reconstruire l'histogramme des niveaux de gris des pixels présent à l'intérieur du contour. Une telle zone est communément appelée ROI (de l'anglais: Region Of Interest). Dans la suite, pour une image donnée, on notera $p(\vecx)$ la valeur du pixel (comprise entre 0 et 255) situé en position $\vecx$. Ainsi les données de l'histogramme sont représenté par la liste (ensemble avec valeur multiples autorisées)~:
+Dans cette section, il s'agit, à partir d'une image donnée en niveaux de gris et d'un contour donné, de reconstruire l'histogramme des niveaux de gris des pixels présents à l'intérieur du contour. Une telle zone est communément appelée ROI (de l'anglais: Region Of Interest). Dans la suite, pour une image donnée, on notera $p(\vecx)$ la valeur du pixel (comprise entre 0 et 255) situé en position $\vecx$. Ainsi les données de l'histogramme sont représenté par la liste (ensemble avec valeur multiples autorisées)~:
 \begin{equation}
 \label{eq:def_data_histo}
 X:=\{ \ p(\vecx) \  | \  \vecx \in \textrm{\small ROI} \ \},
@@ -29,69 +29,158 @@ H(x) = \dfrac{ \# X_x  }{ \# X }, \qquad \forall x \in \{ 0,1,2,\ldots,255 \}
 où $x$ désigne un niveau de gris et $X_x$ désigne la partition de la liste $X$ qui ne contient que les éléments $x$.
 
 \subsection{Histogrammes cliniques}
+\todo[noline]{Description du processus médical pour les scanners: ajout ici ?}
 Les données dont nous disposons sont celles produites par le scanner. Beaucoup plus riche qu'une image, ces données au format DICOM, nécéssitent l'utilisation d'un outil adapté pour les visualiser. OsiriX est ainsi utilisé pour:
 \begin{itemize}
 \item Choisir une coupe pertinente sur chaque scanner et l'exporter (également au format DICOM) de sorte à avoir ensuite des données 2D à traiter.
 \item Contourer manuellement la métastase. OsiriX dispose d'un outil crayon adapté à ce type de contourage. Ce contourage définit une ROI, que l'on peut également exporter (au format .xml)
 \end{itemize}
-A partir de ces 2 fichiers, un code C++ (avec la librairie ITK qui traite entre autre le format DICOM), permet de parcourir l'ensemble des pixels contenus dans la ROI et ainsi de fournir l'histogramme des niveaux de gris.
+A partir de ces 2 fichiers, un code C++, s'appuyant sur la librairie ITK qui traite entre autre le format DICOM, permet de :
+\begin{itemize}
+\item Construire l'histogramme des niveaux de gris en parcourant  l'ensemble des pixels du scanner contenus uniquement dans la ROI. 
+A titre indicatif, l'ensemble des histogrammes cliniques de \Nber et de \Chen sont présentés Figure~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen}. Nous les commenterons plus tard.
+\todo[noline]{Commenter les histogrammes}
+\item Produire des images sur lesquelles le contour est visible. L'ensemble des contourages effectués pour \Nber et pour \Chen sont présentés respectivement Figure~\ref{fig:contourageNber} et~\ref{fig:contourageChen}.
+\todo[noline]{Commenter les contourages?}
+\end{itemize}
+
 
 Remarquons que, comme montré sur la figure~\ref{fig:contourage_sain}, le logiciel OsiriX, permet de visualiser directement l'histogramme des niveaux de gris d'une ROI. Cependant, il n'y a aucune possibilité d'exporter ces histogrammes... De plus on souhaite appliquer autant que possible, un traitement similaire aux images cliniques et aux images numériques, images numériques qui ne peuvent être traiter avec OsiriX. Le développement d'un code pour réaliser ceci était donc nécessaire.
 
+
 \subsection{Histogrammes numériques}
-Pour les histogrammes numériques, seul une image est reconstruite par la simulation. Le contour quant à lui va être définit à partir des fichiers de sorties des simulations qui stockent la densité des différentes populations en chaque maille de notre modèle EDP. En utilisant la reconstruction en niveau de gris détaillée au chapitre précédent, on peut fournir une image en niveaux de gris à partir de ces valeurs. En ce qui concerne le contour, il sera définit par seuillage sur le tissu sain~: si la proportion de tissu sain est inférieur à un pourcentage donné, alors on considèrera que l'on est à l'intérieur de la tumeur, sinon on est à l'extérieure. Nous avons donc également dans cas, une image en niveaux de gris et une ROI. Le code C++ pour la partie clinique peut être réutilisé et produira ainsi les histogrammes numériques.
+Pour les histogrammes numériques, seule une image est reconstruite par la simulation. Le contour quant à lui va être définit à partir des fichiers de sorties des simulations qui stockent la densité des différentes populations en chaque maille de notre modèle EDP. En utilisant la reconstruction en niveau de gris détaillée au chapitre précédent, on peut fournir une image en niveaux de gris à partir de ces valeurs. En ce qui concerne le contour, il sera définit par seuillage sur le tissu sain~: si la proportion de tissu sain est inférieur à un pourcentage donné, alors on considèrera que l'on est à l'intérieur de la tumeur, sinon on est à l'extérieure. Nous avons donc également dans cas, une image en niveaux de gris et une ROI. Le code C++ pour la partie clinique peut être réutilisé et produira ainsi les histogrammes numériques.
 
 \subsection{Traitements appliqués aux histogrammes~: fit par un mélange bi-gaussien}
 
 \newlength{\largeurfignber}
 \setlength{\largeurfignber}{0.19\textwidth}
+%\begin{figure}
+%\centering
+%\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_05_20_scan_contour.png}}\ 
+%\subfloat[Jour 119]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_09_16_scan_contour.png}}\ 
+%\subfloat[Jour 209]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_12_15_scan_contour.png}}\ 
+%\subfloat[Jour 275]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_02_19_scan_contour.png}}\ 
+%\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_04_16_scan_contour.png}}\ 
+%\subfloat[Jour 406]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_06_30__slice-244_85_scan_contour.png}}\ 
+%\subfloat[Jour 493]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_09_25_scan_contour.png}}\ 
+%\subfloat[Jour 535]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_11_06_scan_contour.png}}\ 
+%\subfloat[Jour 611]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_01_21_scan_contour.png}}\ 
+%\subfloat[Jour 688]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_04_08_scan_contour.png}}\ 
+%\subfloat[Jour 776]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_07_05__slice-263_20_scan_contour.png}}\ 
+%\subfloat[Jour 867]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_04__slice-239_40_scan_contour.png}}\ 
+%\subfloat[Jour 888]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_25__slice-246_60_scan_contour.png}}\ 
+%\subfloat[Jour 927]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_12_03_scan_contour.png}}\ 
+%\subfloat[Jour 962]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_01_07__slice-221_20_scan_contour.png}}\ 
+%\subfloat[Jour 990]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_02_04_scan_contour.png}}\ 
+%\subfloat[Jour 1053]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_04_08_scan_contour.png}}\ 
+%\subfloat[Jour 1116]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_06_10_scan_contour.png}}\ 
+%\subfloat[Jour 1179]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_08_12_scan_contour.png}}
+%\caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
+%\end{figure}
+
 \begin{figure}
-\centering
-\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_05_20_scan_contour.png}}\ 
-\subfloat[Jour 119]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_09_16_scan_contour.png}}\ 
-\subfloat[Jour 209]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_12_15_scan_contour.png}}\ 
-\subfloat[Jour 275]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_02_19_scan_contour.png}}\ 
-\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_04_16_scan_contour.png}}\ 
-\subfloat[Jour 406]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_06_30__slice-244_85_scan_contour.png}}\ 
-\subfloat[Jour 493]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_09_25_scan_contour.png}}\ 
-\subfloat[Jour 535]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_11_06_scan_contour.png}}\ 
-\subfloat[Jour 611]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_01_21_scan_contour.png}}\ 
-\subfloat[Jour 688]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_04_08_scan_contour.png}}\ 
-\subfloat[Jour 776]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_07_05__slice-263_20_scan_contour.png}}\ 
-\subfloat[Jour 867]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_04__slice-239_40_scan_contour.png}}\ 
-\subfloat[Jour 888]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_25__slice-246_60_scan_contour.png}}\ 
-\subfloat[Jour 927]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_12_03_scan_contour.png}}\ 
-\subfloat[Jour 962]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_01_07__slice-221_20_scan_contour.png}}\ 
-\subfloat[Jour 990]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_02_04_scan_contour.png}}\ 
-\subfloat[Jour 1053]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_04_08_scan_contour.png}}\ 
-\subfloat[Jour 1116]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_06_10_scan_contour.png}}\ 
+\setlength{\tabcolsep}{1mm} %%% padding horizontal
+\begin{tabular}{ccccc}
+\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_05_20_scan_contour.png}}&
+\subfloat[Jour 119]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_09_16_scan_contour.png}}&
+\subfloat[Jour 209]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_12_15_scan_contour.png}}&
+\multicolumn{2}{c}{%
+\multirow{2}{*}[15mm]{
+\captionsetup[subfigure]{labelformat=empty}
+\vspace{-3cm}
+\subfloat[Position des points]{\includegraphics[width=2\largeurfignber]{evo_tps/henbert_listing_point.png}}
+\captionsetup[subfigure]{labelformat=parens}
+\addtocounter{subfigure}{-1}
+}}\\
+\subfloat[Jour 275]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_02_19_scan_contour.png}}&
+\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_04_16_scan_contour.png}}&
+\subfloat[Jour 406]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_06_30__slice-244_85_scan_contour.png}}&
+\multicolumn{2}{c}{}\\
+\subfloat[Jour 493]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_09_25_scan_contour.png}}&
+\subfloat[Jour 535]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_11_06_scan_contour.png}}&
+\subfloat[Jour 611]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_01_21_scan_contour.png}}&
+\subfloat[Jour 688]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_04_08_scan_contour.png}}& 
+\subfloat[Jour 776]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_07_05__slice-263_20_scan_contour.png}}\\
+\subfloat[Jour 867]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_04__slice-239_40_scan_contour.png}}&
+\subfloat[Jour 888]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_25__slice-246_60_scan_contour.png}}&
+\subfloat[Jour 927]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_12_03_scan_contour.png}}&
+\subfloat[Jour 962]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_01_07__slice-221_20_scan_contour.png}}&
+\subfloat[Jour 990]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_02_04_scan_contour.png}}\\
+&\subfloat[Jour 1053]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_04_08_scan_contour.png}}&
+\subfloat[Jour 1116]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_06_10_scan_contour.png}}&
 \subfloat[Jour 1179]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_08_12_scan_contour.png}}
+\end{tabular}
 \caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
 \end{figure}
 
+%\begin{figure}
+%\begin{tabular}{ccccc}
+%\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_05_23_scan_contour.png}}&
+%\subfloat[Jour 93]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_08_24_scan_contour.png}}&
+%\subfloat[Jour 182]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_11_21_scan_contour.png}}\\
+%\subfloat[Jour 279]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_02_26_scan_contour.png}}&
+%\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_04_18_scan_contour.png}}&
+%\subfloat[Jour 429]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_07_25_scan_contour.png}}&
+%\captionsetup[subfigure]{labelformat=empty}
+%\subfloat[Position des points]{\includegraphics[width=2\largeurfignber]{evo_tps/chen_listing_point.png}}\\
+%\captionsetup[subfigure]{labelformat=parens}
+%\addtocounter{subfigure}{-1}
+%\subfloat[Jour 614]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_01_26_scan_contour.png}}&
+%\subfloat[Jour 715]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_05_07_scan_contour.png}}&
+%\subfloat[Jour 845]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_09_14_scan_contour.png}}&
+%\subfloat[Jour 936]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_12_14_scan_contour.png}}&
+%\subfloat[Jour 1009]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_02_25_scan_contour.png}}\\
+%\subfloat[Jour 1049]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_04_06_scan_contour.png}}&
+%\subfloat[Jour 1093]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_05_20_scan_contour.png}}&
+%\subfloat[Jour 1161]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_07_27_scan_contour.png}}&
+%\subfloat[Jour 1224]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_09_28_scan_contour.png}}&
+%\subfloat[Jour 1296]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_12_09_scan_contour.png}}\\
+%\subfloat[Jour 1377]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_02_28_scan_contour.png}}& 
+%\subfloat[Jour 1415]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_04_07_scan_contour.png}}&
+%\subfloat[Jour 1458]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_05_20_scan_contour.png}}& 
+%\subfloat[Jour 1510]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_07_11_scan_contour.png}}
+%\end{tabular}
+%\caption{\label{fig:contourageChen} Contourage manuel de la tumeur de \Chen. }
+%\end{figure}
+
 \begin{figure}
-\centering
-\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_05_23_scan_contour.png}}\ 
-\subfloat[Jour 93]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_08_24_scan_contour.png}}\ 
-\subfloat[Jour 182]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_11_21_scan_contour.png}}\ 
-\subfloat[Jour 279]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_02_26_scan_contour.png}}\ 
-\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_04_18_scan_contour.png}}\ 
-\subfloat[Jour 429]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_07_25_scan_contour.png}}\ 
-\subfloat[Jour 614]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_01_26_scan_contour.png}}\ 
-\subfloat[Jour 715]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_05_07_scan_contour.png}}\ 
-\subfloat[Jour 845]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_09_14_scan_contour.png}}\ 
-\subfloat[Jour 936]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_12_14_scan_contour.png}}\ 
-\subfloat[Jour 1009]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_02_25_scan_contour.png}}\ 
-\subfloat[Jour 1049]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_04_06_scan_contour.png}}\ 
-\subfloat[Jour 1093]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_05_20_scan_contour.png}}\ 
-\subfloat[Jour 1161]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_07_27_scan_contour.png}}\ 
-\subfloat[Jour 1224]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_09_28_scan_contour.png}}\ 
-\subfloat[Jour 1296]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_12_09_scan_contour.png}}\ 
-\subfloat[Jour 1377]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_02_28_scan_contour.png}}\ 
-\subfloat[Jour 1415]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_04_07_scan_contour.png}}\ 
-\subfloat[Jour 1458]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_05_20_scan_contour.png}}\ 
-\subfloat[Jour 1510]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_07_11_scan_contour.png}}\ 
-\subfloat[Jour 1533]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_08_03_scan_contour.png}}\ 
+\setlength{\tabcolsep}{1mm} %%% padding horizontal
+\begin{tabular}{ccccc}
+%%% \renewcommand{\arraystretch}{3} %%%% padding vertical (ne semble pas fonctionner
+\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_05_23_scan_contour.png}}&
+\subfloat[Jour 93]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_08_24_scan_contour.png}}&
+\subfloat[Jour 182]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_11_21_scan_contour.png}}
+&\multicolumn{2}{c}{%
+\multirow{2}{*}[15mm]{
+\captionsetup[subfigure]{labelformat=empty}
+\vspace{-3cm}
+\subfloat[Position des points]{\includegraphics[width=2\largeurfignber]{evo_tps/chen_listing_point.png}}
+\captionsetup[subfigure]{labelformat=parens}
+\addtocounter{subfigure}{-1}
+}}\\
+\subfloat[Jour 279]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_02_26_scan_contour.png}}&
+\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_04_18_scan_contour.png}}&
+\subfloat[Jour 429]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_07_25_scan_contour.png}}&
+\multicolumn{2}{c}{}\\
+\subfloat[Jour 614]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_01_26_scan_contour.png}}&
+\subfloat[Jour 715]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_05_07_scan_contour.png}}&
+\subfloat[Jour 845]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_09_14_scan_contour.png}}&
+\subfloat[Jour 936]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_12_14_scan_contour.png}}&
+\subfloat[Jour 1009]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_02_25_scan_contour.png}}\\
+\subfloat[Jour 1049]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_04_06_scan_contour.png}}&
+\subfloat[Jour 1093]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_05_20_scan_contour.png}}&
+\subfloat[Jour 1161]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_07_27_scan_contour.png}}&
+\subfloat[Jour 1224]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_09_28_scan_contour.png}}&
+\subfloat[Jour 1296]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_12_09_scan_contour.png}}
+\end{tabular}
+\begin{tabular}{cccc}
+\subfloat[Jour 1377]{
+\hspace{.5\largeurfignber}\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_02_28_scan_contour.png}}& 
+\subfloat[Jour 1415]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_04_07_scan_contour.png}}&
+\subfloat[Jour 1458]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_05_20_scan_contour.png}}& 
+\subfloat[Jour 1510]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_07_11_scan_contour.png}}
+\end{tabular}
 \caption{\label{fig:contourageChen} Contourage manuel de la tumeur de \Chen. }
 \end{figure}
 
@@ -141,8 +230,7 @@ Pour les histogrammes numériques, seul une image est reconstruite par la simula
 \subfloat[Jour 1377]{\includegraphics[width=\largeurfignber]{histo_dcm/Chen_2011_02_28_histo.png}}\ 
 \subfloat[Jour 1415]{\includegraphics[width=\largeurfignber]{histo_dcm/Chen_2011_04_07_histo.png}}\ 
 \subfloat[Jour 1458]{\includegraphics[width=\largeurfignber]{histo_dcm/Chen_2011_05_20_histo.png}}\ 
-\subfloat[Jour 1510]{\includegraphics[width=\largeurfignber]{histo_dcm/Chen_2011_07_11_histo.png}}\ 
-\subfloat[Jour 1533]{\includegraphics[width=\largeurfignber]{histo_dcm/Chen_2011_08_03_histo.png}}\ 
+\subfloat[Jour 1510]{\includegraphics[width=\largeurfignber]{histo_dcm/Chen_2011_07_11_histo.png}}\
 \caption{\label{fig:histo_dcm_Chen} Histogramme clinique de la tumeur de \Chen. }
 \end{figure}
 
@@ -187,9 +275,7 @@ Quelquesoit $\theta$, l'intégrale de $g$ vaut 1 (\cf REFF).
 \todo[noline]{demo ou ref : integ gaussienne = 1}
 Ainsi la vraissemblance est le produit des probabilités que chacun des éléments de $X$ appartiennent à la distribution définit par le paramètre $\theta$.
 
-
-Sur la Figure~\ref{fig:contourageNber}, sont présentés l'ensemble des contourages réalisé --- avec les histogrammes associés, eux même représenté par un mélange bi-gaussien.
-
+\todo[noline]{Img + histo numérique ?}
 
 \section{Définition d'une fonction objectif à reproduire}
 On considère désormais l'approximation en un mélange de deux gaussiennes les histogrammes de niveau gris provenant de nos images. 
@@ -445,8 +531,33 @@ Considérer l'aire commune relativement à l'aire de la plus petite des gaussien
 }
 \caption{\label{fig:pente_gaussienne_identique}Deux configurations très différentes mais fournissant la même pente entre les gaussiennes.}
 \end{figure}
-L'idée de ce dernier critère m'est venu de la constation suivante.
-En repartant du critère de la pente décrite entre le sommet des gaussiennes, sur la Figure~\ref{fig:pente_gaussienne_identique} est présenté deux configurations très différentes, mais présentant la même pente. Pourtant la Figure~\ref{fig:pente_gaussienne_identique_a} est très clairement représentative d'une image \heterogene alors que la Figure~\ref{fig:pente_gaussienne_identique_a} serait plutôt représentative de qqch d'homogène puisque l'approximation par une seule et unique gaussienne ne serait pas des plus mauvaise. 
+%\begin{figure}
+%\centering
+%\subfloat[\label{fig:critere_dc2_sur_dh} Critères basés sur $(\Delta c)^2 / \Delta h$ ]{
+%\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh.png}
+%}
+%\subfloat[\label{fig:critere_dc2_sur_dh} Critères basés sur $(\Delta c)^2 / \Delta w$ ]{
+%\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/07-dc2_sur_dw.png}
+%}
+%\caption{\label{fig:critere_avec_dc2}Critères dans lesquels $\Delta c$ joue un rôle prépondérant.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.75\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh.png}
+%\caption{\label{fig:critere_dc2_sur_dh_Chen} Critères basés sur $(\Delta c)^2 / \Delta h$ sur \Chen }
+%\end{figure}
+\begin{figure}
+\centering
+\subfloat[\label{fig:critere_dc2_sur_dh_nber} \Nber ]{
+\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh.png}
+}
+\subfloat[\label{fig:critere_dc2_sur_dh_chen} \Chen ]{
+\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh.png}
+}
+\caption{\label{fig:critere_dc2_sur_dh}\Hetero clinique fournit par le critère $\mathcal{H}_{12}$ dans lequel $\Delta c$ joue un rôle prépondérant.}
+\end{figure}
+L'idée de ce dernier critère m'est venu de la constation suivante en repartant du critère basé sur la pente décrite entre le sommet des gaussiennes. Sur la Figure~\ref{fig:pente_gaussienne_identique} est présenté deux configurations très différentes, mais présentant la même pente. Pourtant la Figure~\ref{fig:pente_gaussienne_identique_a} est très clairement représentative d'une image \heterogene alors que la Figure~\ref{fig:pente_gaussienne_identique_a} serait plutôt représentative de qqch d'homogène puisque l'approximation par une seule et unique gaussienne ne serait pas des plus mauvaise. 
 Comment différencier ces deux cas ? Cet exemple mis en exergue nous invite à dire que $\Delta c$ doit avoir plus de poids que $\Delta h$ dans le calcul du critère de l'\hetero. Ainsi, j'ai décidé de regarder le critère suivant :
 \begin{equation}
 \label{eq:criteres_finaux}
@@ -454,28 +565,21 @@ Comment différencier ces deux cas ? Cet exemple mis en exergue nous invite à d
 \quad {\rm et } \quad
 \mathcal{H}_{2} = \mathscr{S} \left( \left| \dfrac{(\Delta c /256)^2}{\Delta h} \right| \right)
 \end{equation}
-\begin{figure}
-\centering
-\subfloat[\label{fig:critere_dc2_sur_dh} Critères basés sur $(\Delta c)^2 / \Delta h$ ]{
-\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh.png}
-}
-\subfloat[\label{fig:critere_dc2_sur_dh} Critères basés sur $(\Delta c)^2 / \Delta w$ ]{
-\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/07-dc2_sur_dw.png}
-}
-\caption{\label{fig:critere_avec_dc2}Critères dans lesquels $\Delta c$ joue un rôle prépondérant.}
-\end{figure}
 
 
-\begin{figure}
-\centering
-\includegraphics[width=0.75\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh.png}
-\caption{\label{fig:critere_dc2_sur_dh_Chen} Critères basés sur $(\Delta c)^2 / \Delta h$ sur \Chen }
-\end{figure}
+L'\hetero clinique, pour \Nber, fournit par le critère~$\mathcal{H}_{11}$ est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_nber}. Ici, le critère reproduit bien les pics d'\heteros (jour~119 et jour~776). La regain d'\hetero final, qui démarre avant la rechute au second traitement, et qui se poursuit pendant la rechute, est également bien capturé. Les phases homogènes sont également relativement bien reproduit. L'évaluation visuelle qui amenait à considérer l'\hetero constante du jour~209 au jour~688 est ainsi précisée par le critère. Manifestement le jour~331 est donc légèrement plus \hetero. Notons que bien écartés, plusieurs autre critères (notament $\mathcal{H}???$ ) 
+\todo[noline]{critere avec pic sur plateau}
+avaient aussi capté cette subtilité. Enfin la forte homogénéistion causée par le second traitement est également bien traduite.
+Nous avons donc trouvé un critère qui semble quantifier de manière acceptable l'\hetero clinique de \Nber. Cela dit ce critère a été construit pour! Pour le valider regardons ce qu'il en est sur notre second patient~: \Chen.
 
+
+L'\hetero clinique, pour \Chen, fournit par le critère~$\mathcal{H}_{11}$ est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_chen}. Ici aussi, la retranscription est aussi tout a fait acceptable. Les phases où il y a regain d'\hetero sont toutes correctement bien décrites. Au tout début (jusqu'au jour~279) la métastase est très petite. Il est donc difficile d'apprécier visuellement l'\hetero. De plus, le quantificateur sera aussi plus sensible aux erreurs dues au contourage. La tendance réelle à une baisse de l'\hetero est tout à fait plausible. D'autant plus que c'est le comportement attendu lorsqu'on traite de manière efficace : l'ensemble de la métastase tends à se nécroser, et donc l'ensemble s'homogénéise.
+L'homogénéisation lors du second traitement est également très bien capturée.
+\todo[inline]{commentaire de figure a terminer}
 \section{L'\hetero sur les simulations numériques}
 \todo[noline]{Nouveau chapitre ?}
 \todo[noline]{Titre sous-section ?}
-\subsection{Titre ....}
+\subsection{Présentation}
 Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), faisons parler ce critère sur nos simulations numériques. En ce qui concerne cet aspect, les images  résultantes (gouvernées par EQREF \todo[noline]{eqref} ) des simulations numériques dépendent de 3 paramètres : $\tau_N, \tau_P$ et $\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveau de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit : $\tau_N=38, \tau_P=166$ et $\tau_S=204$.
 \todo[noline]{Et l'optim du niveau de gris faite entre temps ?}
 Dans un second temps, on pourra faire varier ces paramètres pour examiner l'influence de ceux-ci sur l'\hetero numérique.
