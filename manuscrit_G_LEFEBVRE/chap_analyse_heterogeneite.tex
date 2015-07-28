@@ -112,7 +112,7 @@ Pour les histogrammes numériques, seule une image est reconstruite par la simul
 \subfloat[Jour 1179]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_08_12_scan_contour.png}}
 \end{tabular}
 \caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
-\todo[inline]{Indicateur pour presenter l'echelle sur chaque scan ?}
+\todo[inline]{Numeroter avec des chiffres commencant à 0 plutot, pour etre coherent avec la numerotation des acnas dans les tableaux d'optim de gris }
 \end{figure}
 
 %\begin{figure}
@@ -423,7 +423,7 @@ qui amène à la résolution d'un polynome du second degré en $x$:
 \begin{aligned}
 \label{eq:g1=g2}
 g_1(x)=g_2(x) \quad \Longleftrightarrow & \quad  Ax^2 + 2B'x + C =0 \\
-{\rm avec :} \quad &A=\sigma_2^2 - \sigma_1^1, \\
+{\rm avec :} \quad &A=\sigma_2^2 - \sigma_1^2, \\
 & B'=c_2\sigma_1^2-c_1\sigma_2^2,\\
 & C= c_1^2\sigma_2^2-c_2^2\sigma_1^2 +  2\sigma_1^2\sigma_2^2 \ln( h_2 / h_1 ).
 \end{aligned}
@@ -443,7 +443,7 @@ Dans ce cas, l'équation~\eqref{eq:g1=g2} se réécrit :
 x=\dfrac{c_1+c_2}{2}-\dfrac{\sigma^2}{\Delta c}\ln \left( \dfrac{1-w}{w} \right).
 \end{equation}
 \end{itemize}
-\paragraph{Cas général.} Il convient ici de calculer le discriminant réduit:
+\paragraph{Cas général.} Il convient ici de calculer le discriminant réduit~:
 \begin{equation}
 \label{eq:discr_reduit}
 \Delta' := B'^2 - AC = \sigma_1^2 \sigma_2^2 \left[ (\Delta c)^2 - 2(\sigma_2^2-\sigma_1^2) \ln (h_2/h_1)  \right].

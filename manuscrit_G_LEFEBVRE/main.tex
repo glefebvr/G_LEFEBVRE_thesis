@@ -1,11 +1,13 @@
 %\documentclass[12pt,a4paper,twoside]{memoir}
-%\documentclass[a4paper,twoside]{book} %%% twoside pour final
+%\documentclass[a4paper,twoside,final]{book} %%% twoside pour final
+%\documentclass[a4paper,oneside,draft]{book} %%% draft pour voir tout ce qui depasse dans les marges
 \documentclass[a4paper,oneside]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage[francais,frenchb]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm} %% \newtheorem
 \usepackage{graphicx}
 
 \usepackage{lmodern} %% latin modern font
@@ -34,6 +36,7 @@
 %%%% http://texdoc.net/texmf-dist/doc/latex/datatool/datatool-user.pdf
 \usepackage{pict2e}
 \usepackage{slashbox}
+\usepackage{xfrac}
 \usepackage{hhline}
 \usepackage{spreadtab}
 \usepackage{rotating}
@@ -52,6 +55,8 @@
 \usepackage{tcolorbox}
 \usepackage{subfiles}
 %%\usepackage{etoolbox}
+\usepackage{tikz,tkz-tab}
+\usepackage{pgfplots}
 
 %%%%% fncychap predefini
 %\usepackage[Glenn]{fncychap}
@@ -65,6 +70,13 @@
 \graphicspath{{../img/}} %%
 
 \setlength\doublerulesep{2mm} %% hauteur entre 2 \hline successifs
+
+\theoremstyle{definition}
+\newtheorem{thm}{Théorème}[section]
+\newtheorem{dfn}[thm]{Definition}
+\newtheorem{prop}[thm]{Propriété}
+\newtheorem{lemme}[thm]{Lemme}
+\newtheorem{coro}[thm]{Corollaire}
 
 \DeclareMathOperator{\atan}{atan}
 \DeclareMathOperator{\atanh}{atanh}
@@ -122,6 +134,7 @@
 \newcommand{\intperso}[1]{\!\!\int\limits_{#1}\!\!\!}
 %%\newcommand{\trans}{\,^t}
 \newcommand{\trans}[1]{\prescript{\mathit{t\!}}{}{#1}}
+\newcommand{\ssi}{si et seulement si\xspace}
 
 \newcommand{\CFL}{{\mathrm{CFL}}}
 \newcommand{\Id}{{\mathds 1}}
@@ -132,6 +145,8 @@
 \newcommand{\Grm}{{\rm G}}
 \newcommand{\Hrm}{{\rm H}}
 \newcommand{\crm}{{\rm c}}
+
+\newcommand{\reel}{\mathbb{R}}
 
 \newcommand{\treat}{\mathcal{T}}
 \newcommand{\TI}{{\mathcal T_1}}
@@ -189,6 +204,17 @@
 
 %%%%%% DEBUT DU DOCUMENT %%%%%%%%
 \begin{document}
+%%\maketitle
+
+\frontmatter % Le prologue du livre
+ 
+%\chapter{Avant-propos}
+%\chapter{Remerciements}
+%\chapter{Introduction}
+
+
+\mainmatter % Corps du livre
+
 %%%\newcommand{\mainfile}{} % we use the existence of this command to see if we're compiling the whole thesis or just a chapter
 
 
@@ -209,6 +235,19 @@
 %\subfile{chap1}
 \subfile{chap_optim_grey}
 \subfile{chap_analyse_heterogeneite}
+
+\appendix %%%% Les annexes
+\subfile{annexe_gaussienne}
+%\subfile{annexe_tableaux_graphiques_complementaires}
+
+\backmatter  %%%% l'épilogue du document
+%%\chapter{Conclusion et discussion}
+
+% Les différentes tables
+%\tableofcontents    % Table des matières
+%\listoffigures        % Liste des figures
+%\listoftables        % Liste des tableaux
+
 
 %%%% Bibliographie
 %\nocite{*}
