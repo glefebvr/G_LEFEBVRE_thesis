@@ -66,10 +66,14 @@
 %\usepackage{fncychap}
 %%\usepackage{fancyhdr} %%%% incompatible avec la class memoir
 
-%%%%%% MES MACROS %%%%%%%%
+%%%%%% Variable d'environnement %%%%%%%%
 \graphicspath{{../img/}} %%
 
 \setlength\doublerulesep{2mm} %% hauteur entre 2 \hline successifs
+\newlength{\retraittableau}
+\setlength{\retraittableau}{-4mm}
+\newlength{\firstcolwidth} %% on ne peut mettre ni chiffre ni caractere special dans le nom d'une longueur
+\setlength{\firstcolwidth}{22mm}
 
 \theoremstyle{definition}
 \newtheorem{thm}{Théorème}[section]
@@ -96,6 +100,8 @@
 %\captionsetup[figure]{labelfont=it,textfont={bf,it}}
 %\captionsetup[subfigure]{labelfont=bf,textfont=normalfont,justification=raggedright}
  
+
+%%%%%% MES MACROS %%%%%%%%
 
 \newcommand{\custompart}[3]{
 \part{ 

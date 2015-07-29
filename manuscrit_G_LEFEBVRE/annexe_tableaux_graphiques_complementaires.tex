@@ -1,5 +1,171 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
-\chapter{Tableaux et graphiques complémentaires}
-hep
+%%\chapter{Tableaux et graphiques complémentaires}
+========= DEBUT ANNEXE TABLEAUX ET GRAPHIQUES =====
+
+%%\section{Tableaux d'optimisation sur les niveaux de gris}
+%%%%%%% Cout0
+%\DTLloaddb{optim2_0grey}{../data/cout_0/optim2.csv}
+%\DTLloaddb[noheader]{optim2_0leg}{../data/cout_0/optim2_leg.csv}
+%\DTLloaddb{optim2_0stat}{../data/cout_0/optim2_stat.csv}
+%\DTLsetheader{optim2_0leg}{Column1}{}
+%\DTLsetheader{optim2_0leg}{Column2}{}
+%\begin{table}[htbp]
+%\footnotesize
+%\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
+%\begin{tabular}{|c|c|c|c|c|}
+%\hline
+%%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+%\rowcolor{gray!70}
+%& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
+%\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+%\rowcolor{gray!70}
+%& \bfseries SLSQP
+%& \bfseries GC 
+%& \bfseries Neldear-Mead 
+%& \bfseries BFGS \\
+%\rowcolor{gray!70}
+%\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+%& $\tau_N, \qquad \tau_P$
+%& $\tau_N, \qquad \tau_P$
+%& $\tau_N, \qquad \tau_P$
+%& $\tau_N, \qquad \tau_P$
+%\DTLforeach*{optim2_0grey}{%
+%\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+%\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+%\\
+%\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+%\scan & \begin{tabular}{c}
+%\col \\ \errcol
+%\end{tabular} & \begin{tabular}{c}
+%\CG \\ \errCG
+%\end{tabular} & \begin{tabular}{c}
+%\NM \\ \errNM
+%\end{tabular} & \begin{tabular}{c}
+%\BFGS \\ \errBFGS
+%\end{tabular} 
+%}%
+%\DTLforeach*{optim2_0stat}{%
+%\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+%\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+%Moyenne : & \col & \CG & \NM & \BFGS  }
+%\\ \hline
+%\end{tabular}
+%\caption{\label{tab:optim2gris0}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, PAS DE PENALISATION.}
+%\end{table}
+%\DTLcleardb{optim2_0leg}
+%\DTLcleardb{optim2_0stat}
+%\DTLcleardb{optim2_0stat}
+
+
+%%%%%% Cout1
+\DTLloaddb{optim2_1grey}{../data/cout_1/optim2.csv}
+\DTLloaddb[noheader]{optim2_1leg}{../data/cout_1/optim2_leg.csv}
+\DTLloaddb{optim2_1stat}{../data/cout_1/optim2_stat.csv}
+\DTLsetheader{optim2_1leg}{Column1}{}
+\DTLsetheader{optim2_1leg}{Column2}{}
+\begin{table}[htbp]
+%\vspace{-35mm}
+\footnotesize
+\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+\rowcolor{gray!70}
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
+\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+\rowcolor{gray!70}
+& \bfseries SLSQP
+& \bfseries GC 
+& \bfseries Neldear-Mead 
+& \bfseries BFGS \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+\DTLforeach*{optim2_1grey}{%
+\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \begin{tabular}{c}
+\col \\ \errcol
+\end{tabular} & \begin{tabular}{c}
+\CG \\ \errCG
+\end{tabular} & \begin{tabular}{c}
+\NM \\ \errNM
+\end{tabular} & \begin{tabular}{c}
+\BFGS \\ \errBFGS
+\end{tabular} 
+}%
+\DTLforeach*{optim2_1stat}{%
+\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+Moyenne : & \col & \CG & \NM & \BFGS  }
+\\ \hline
+\end{tabular}
+%\centering
+%\begin{tabular}{cc}
+%\DTLdisplaydb{optim2_leg}
+%\end{tabular}
+\caption{\label{tab:optim2gris}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec un créneau comme pénalisation de l'intervalle.}
+\vspace{-4cm}
+\end{table}
+\DTLcleardb{optim2_1leg}
+\DTLcleardb{optim2_1stat}
+\DTLcleardb{optim2_1stat}
+
+
+%%%%%% Cout2
+\DTLloaddb{optim2_2grey}{../data/cout_2/optim2.csv}
+\DTLloaddb[noheader]{optim2_2leg}{../data/cout_2/optim2_leg.csv}
+\DTLloaddb{optim2_2stat}{../data/cout_2/optim2_stat.csv}
+\DTLsetheader{optim2_2leg}{Column1}{}
+\DTLsetheader{optim2_2leg}{Column2}{}
+\begin{table}[htbp]
+\footnotesize
+\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\rowcolor{gray!70}
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
+\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+\rowcolor{gray!70}
+& \bfseries SLSQP
+& \bfseries GC 
+& \bfseries Neldear-Mead 
+& \bfseries BFGS \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+\DTLforeach*{optim2_2grey}{%
+\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \begin{tabular}{c}
+\col \\ \errcol
+\end{tabular} & \begin{tabular}{c}
+\CG \\ \errCG
+\end{tabular} & \begin{tabular}{c}
+\NM \\ \errNM
+\end{tabular} & \begin{tabular}{c}
+\BFGS \\ \errBFGS
+\end{tabular} 
+}%
+\DTLforeach*{optim2_2stat}{%
+\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+Moyenne : & \col & \CG & \NM & \BFGS  }
+\\ \hline
+\end{tabular}
+\caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique \eqref{eq:penalisation_quad}.}
+\end{table}
+
+
 \end{document}

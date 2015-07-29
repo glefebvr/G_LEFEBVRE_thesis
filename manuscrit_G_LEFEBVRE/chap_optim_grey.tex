@@ -1,8 +1,4 @@
 \documentclass[main.tex]{subfiles}
-\newlength{\retraittableau}
-\setlength{\retraittableau}{-4mm}
-\newlength{\firstcolwidth} %% on ne peut mettre ni chiffre ni caractere special dans le nom d'une longueur
-\setlength{\firstcolwidth}{22mm}
 
 %\setcounter{chapter}{1}
 
@@ -118,8 +114,8 @@ où la pénalisation $\mathcal{P}$ permet d'assurer que les optima respectent le
 \DTLsetheader{optim3_0leg}{Column1}{}
 \DTLsetheader{optim3_0leg}{Column2}{}
 \begin{sidewaystable}
-\footnotesize\smaller[0.5]
-%\scriptsize
+%\footnotesize\smaller[0.5]
+\scriptsize
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -196,206 +192,12 @@ On note également que la combinaison $[1,9,11]$ ne semble pas pertinente pour c
 Pour essayer de palier aux problèmes rencontrés dans la section précédentes, nous allons fixer $\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de 0 à 255). Cette valeur a été fixée en réalisant un contourage d'une zone en tissu sain dans OsiriX (cf. Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de 134.5 HU. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, 134.5~HU équivaut à un gris de 77\% soit un gris de niveau~197.
 
 
-\begin{figure}
-\centering
-\begin{tikzpicture}
-  \shade[left color=black, right color=white] (0,0) rectangle (10,1);   
-  \draw (0,1.2) -- (10,1.2) ;
-  \draw (0,2.2) -- (10,2.2) ;
-  \draw (0,3.2) -- (10,3.2) ;
-  \foreach \x/\xtexta/\xtextb/\xtextc in {0/0/0/-135\ \ \ \ \  ,
-  1/0.1/26/-100\ \ , %%%pour forcer des espaces
-  2/0.2/51/-65\ , 
-  3/0.3/77/-30\ , 
-  4/0.4/103/5, 
-  5/0.5/128/40, 
-  6/0.6/154/75, 
-  7/0.7/179/110, 
-  8/0.8/205/145, 
-  9/0.9/230/180, 
-  10/1/255/215}{
-    \draw[shift={(\x,1.2)}] (0pt,4pt) -- (0pt,0pt) node[above] {$\xtextb$};    
-    \draw[shift={(\x,2.2)}] (0pt,4pt) -- (0pt,0pt) node[above] {$\xtexta$};
-    \draw[shift={(\x,3.2)}] (0pt,4pt) -- (0pt,0pt) node[above] {$\xtextc$};
-    }
-  \foreach \x in {0,1,2,3,4,5,6,7,8,9}{
-  	\draw[shift={(\x+0.5,1.2)}] (0pt,2pt) -- (0pt,0pt) ; 
-  	\draw[shift={(\x+0.5,2.2)}] (0pt,2pt) -- (0pt,0pt) ;
-  	\draw[shift={(\x+0.5,3.2)}] (0pt,2pt) -- (0pt,0pt) ;
-  	}
-  	\draw (10.7,3.4) node[right] {HU};   
-  	\draw (10.7,2.4) node[right] { \% gris}; 
-  	\draw (10.7,1.4) node[right] {niveaux de gris};     
-\end{tikzpicture}
-\caption{\label{fig:schema_correspondance_gris} Correspondance des niveaux de gris }
-\end{figure}
-\todo[noline]{Titre figure \ref{fig:schema_correspondance_gris} à revoir ...}
+\input{tex_pictures/tikz_schema_correspondance_gris.tex}
 
 \begin{figure}
 \includegraphics[width=\textwidth]{OsiriX_gris_sain_rognee.png}
 \caption{\label{fig:contourage_sain}Contourage d'une zone saine réalisée à l'aide du logicielle OsiriX -- Moyenne de la valeur des pixels dans ce périmètre : 134.5 HU (avec une échelle HU de \mbox{-135 à 215}).}
 \end{figure}
-
-%%%%%%% Cout0
-%\DTLloaddb{optim2_0grey}{../data/cout_0/optim2.csv}
-%\DTLloaddb[noheader]{optim2_0leg}{../data/cout_0/optim2_leg.csv}
-%\DTLloaddb{optim2_0stat}{../data/cout_0/optim2_stat.csv}
-%\DTLsetheader{optim2_0leg}{Column1}{}
-%\DTLsetheader{optim2_0leg}{Column2}{}
-%\begin{table}[htbp]
-%\footnotesize
-%\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
-%\begin{tabular}{|c|c|c|c|c|}
-%\hline
-%%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
-%\rowcolor{gray!70}
-%& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
-%\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
-%\rowcolor{gray!70}
-%& \bfseries SLSQP
-%& \bfseries GC 
-%& \bfseries Neldear-Mead 
-%& \bfseries BFGS \\
-%\rowcolor{gray!70}
-%\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
-%& $\tau_N, \qquad \tau_P$
-%& $\tau_N, \qquad \tau_P$
-%& $\tau_N, \qquad \tau_P$
-%& $\tau_N, \qquad \tau_P$
-%\DTLforeach*{optim2_0grey}{%
-%\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
-%\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
-%\\
-%\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-%\scan & \begin{tabular}{c}
-%\col \\ \errcol
-%\end{tabular} & \begin{tabular}{c}
-%\CG \\ \errCG
-%\end{tabular} & \begin{tabular}{c}
-%\NM \\ \errNM
-%\end{tabular} & \begin{tabular}{c}
-%\BFGS \\ \errBFGS
-%\end{tabular} 
-%}%
-%\DTLforeach*{optim2_0stat}{%
-%\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
-%\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-%Moyenne : & \col & \CG & \NM & \BFGS  }
-%\\ \hline
-%\end{tabular}
-%\caption{\label{tab:optim2gris0}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, PAS DE PENALISATION.}
-%\end{table}
-%\DTLcleardb{optim2_0leg}
-%\DTLcleardb{optim2_0stat}
-%\DTLcleardb{optim2_0stat}
-
-
-%%%%%% Cout1
-\DTLloaddb{optim2_1grey}{../data/cout_1/optim2.csv}
-\DTLloaddb[noheader]{optim2_1leg}{../data/cout_1/optim2_leg.csv}
-\DTLloaddb{optim2_1stat}{../data/cout_1/optim2_stat.csv}
-\DTLsetheader{optim2_1leg}{Column1}{}
-\DTLsetheader{optim2_1leg}{Column2}{}
-\begin{table}[htbp]
-\footnotesize
-\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
-\rowcolor{gray!70}
-& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
-\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
-\rowcolor{gray!70}
-& \bfseries SLSQP
-& \bfseries GC 
-& \bfseries Neldear-Mead 
-& \bfseries BFGS \\
-\rowcolor{gray!70}
-\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
-& $\tau_N, \qquad \tau_P$
-& $\tau_N, \qquad \tau_P$
-& $\tau_N, \qquad \tau_P$
-& $\tau_N, \qquad \tau_P$
-\DTLforeach*{optim2_1grey}{%
-\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
-\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
-\\
-\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-\scan & \begin{tabular}{c}
-\col \\ \errcol
-\end{tabular} & \begin{tabular}{c}
-\CG \\ \errCG
-\end{tabular} & \begin{tabular}{c}
-\NM \\ \errNM
-\end{tabular} & \begin{tabular}{c}
-\BFGS \\ \errBFGS
-\end{tabular} 
-}%
-\DTLforeach*{optim2_1stat}{%
-\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
-\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-Moyenne : & \col & \CG & \NM & \BFGS  }
-\\ \hline
-\end{tabular}
-%\centering
-%\begin{tabular}{cc}
-%\DTLdisplaydb{optim2_leg}
-%\end{tabular}
-\caption{\label{tab:optim2gris}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197.}
-\end{table}
-\DTLcleardb{optim2_1leg}
-\DTLcleardb{optim2_1stat}
-\DTLcleardb{optim2_1stat}
-
-
-%%%%%% Cout2
-\DTLloaddb{optim2_2grey}{../data/cout_2/optim2.csv}
-\DTLloaddb[noheader]{optim2_2leg}{../data/cout_2/optim2_leg.csv}
-\DTLloaddb{optim2_2stat}{../data/cout_2/optim2_stat.csv}
-\DTLsetheader{optim2_2leg}{Column1}{}
-\DTLsetheader{optim2_2leg}{Column2}{}
-\begin{table}[htbp]
-\footnotesize
-\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\rowcolor{gray!70}
-& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
-\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
-\rowcolor{gray!70}
-& \bfseries SLSQP
-& \bfseries GC 
-& \bfseries Neldear-Mead 
-& \bfseries BFGS \\
-\rowcolor{gray!70}
-\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
-& $\tau_N, \qquad \tau_P$
-& $\tau_N, \qquad \tau_P$
-& $\tau_N, \qquad \tau_P$
-& $\tau_N, \qquad \tau_P$
-\DTLforeach*{optim2_2grey}{%
-\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
-\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
-\\
-\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-\scan & \begin{tabular}{c}
-\col \\ \errcol
-\end{tabular} & \begin{tabular}{c}
-\CG \\ \errCG
-\end{tabular} & \begin{tabular}{c}
-\NM \\ \errNM
-\end{tabular} & \begin{tabular}{c}
-\BFGS \\ \errBFGS
-\end{tabular} 
-}%
-\DTLforeach*{optim2_2stat}{%
-\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
-\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-Moyenne : & \col & \CG & \NM & \BFGS  }
-\\ \hline
-\end{tabular}
-\caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique \eqref{eq:penalisation_quad}.}
-\end{table}
 
 
 
@@ -449,9 +251,9 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 \caption{\label{tab:optim2gris_pen_quad_reg}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique régularisée.}
 \end{table}
 
-\DTLcleardb{optim2_2leg}
-\DTLcleardb{optim2_2stat}
-\DTLcleardb{optim2_2stat}
+\DTLcleardb{optim2_leg}
+\DTLcleardb{optim2_stat}
+\DTLcleardb{optim2_grey}
 
 L'ensemble des résultats d'optimisation de $\tau_N$ et de $\tau_P$ avec $\tau_S$ fixé à~197 est fourni dans la Table~\ref{tab:optim2gris}. Ici les niveaux de gris moyen fournis sont conformes aux attentes dans le sens où l'on a $\tau_N$<$\tau_P$<$\tau_S$.
 
