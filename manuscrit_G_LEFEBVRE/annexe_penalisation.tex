@@ -1,0 +1,190 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\chapter{Exploration de différentes pénalisations sur la fonction coût utilsée pour optimiser les niveaux de gris. }
+%\mylettrine{B}{labla}
+
+\section{Régularisation de Moreau-Yosida}
+\subsection{Présentation de la régularisation et propriétés.}
+\begin{dfn}\label{dfn:moreau_yosida}
+Soit $J : \reel^n \longrightarrow \reel$ une fonction. La transformée (ou régularisée) de Moreau-Yosida de $J$ est définie à l'aide d'un paramètre $c>0$ par
+\begin{equation}
+J_c(u) := \min_{v\in \reel^n} \left( J(v) + \frac{1}{2c} \|v-u\|^2 \right).
+\end{equation}
+\end{dfn}
+
+En prenant $v=u$ dans le minimum, on obtiens que~:
+\begin{prop}
+$\forall c>0, \quad \forall u \in \reel^n, \quad J_c(u) \leq J(u) .$
+\end{prop}
+Si $J$ est une fonction à minimiser, alors la propriété suivante est utile~:
+\begin{prop}
+Soit $a$ le minimum de $J$. Soit $u$ l'un des antécédants de $a$. Alors $u$ minimise aussi $J_c$ et on a $J_c(u)=J(u)=a$ quelque soit $c>0$.
+\end{prop}
+\begin{proof}Notons $f_u(v) := J(v) + \frac{1}{2c} \| v-u \|^2$.
+\begin{itemize}
+\item[$\Rightarrow$)] Soit $u_0$, un point en lequel $J$ atteint son minimum. \\
+On a alors $f_{u_0}(u_0) = J(u_0)\leq J(u) \leq J(u) + \frac{1}{2c} \| u-u_0 \|^2  = f_{u_0}(u), \ \forall u $, \\
+d'où $J_c(u_0) = \min_u f_{u_0}(u) = J(u_0) $. On a donc égalité des fonctions $J$ et $J_c$ en $u_0$. Reste à montrer que $u_0$ est bien un point de minimum pour $J_c$. Comme $u_0$ minimise $J$, on a $J(u_0)\leq J(v), \ \forall v$. \\
+d'où $ J(u_0) + \frac{1}{2c}\|v-u\|^2 \leq J(v) + \frac{1}{2c}\| v-u \|^2, \ \forall u, \forall v$.\\
+Ainsi $ \min_v ( J(u_0) + \frac{1}{2c}\|v-u\|^2 ) \leq \min_v ( J(v) + \frac{1}{2c}\| v-u \|^2)=J_c(u) \ \forall u$. \\
+Or $\min_v ( J(u_0) + \frac{1}{2c}\|v-u\|^2 )=J(u_0)$ et $J(u_0)=J_c(u_0)$\\ donc $J_c(u_0) \leq J(u), \ \forall u $.
+et ainsi $u_0$ minimise $J_c$.
+\item[$\Leftarrow$)] Supposons que $u_0$ minimise $J_c$. On a alors
+\begin{center}
+$J_c(u_0) \leq J_c(u) = \min_v f_u(v) \leq f_u(u) = J(u) \quad \forall u.$
+\end{center}
+Mais $J_c(u_0) = J(u_0)$. Ainsi $J(u_0) \leq J(u), \ \forall u$ 
+et donc $u_0$ minimise $J$.
+\end{itemize}
+\end{proof}
+Ainsi minimiser la fonction $J$ est équivalent à minimiser la fonction $J_c$. 
+L'avantage de la fonction $J_c$, c'est qu'elle est construite de sorte à être  différentiable aux abords du point de minimum même si $J$ ne l'est pas ($J$ peut même être discontinue). Le principal désavantage, c'est que le problème $\min_u J_c(u)$ est infiniment plus complexe à résoudre que le problème $\min_u J(u)$ puisque la fonction $J_c$ nécessite le calcul d'un minimum à chaque évaluation. Qu'à cela ne tienne. Dans notre cas, nous connaissons explicitement $J$. La transformée de Moreau-Yosida n'est appliquée que pour gagner en régularité. Ainsi, on peut calculer explicitement $J_c$. Avant de fournir un exemple, remarquons que 
+\begin{prop}
+Si la fonction $J$ est paire, alors sa régularisée $J_c$ l'est aussi.
+\end{prop}
+\begin{proof}
+\begin{align*}
+J_c(-u)  & = \min_{v\in \reel} \left( J(v) + \frac{1}{2c} \| v+u \|^2 \right) \\
+& =\min_{s\in \reel} \left( J(-s) + \frac{1}{2c} \| -s+u \|^2 \right) \qquad \textrm{en posant } s=-v \\
+& = \min_{s\in \reel} \left( J(s) + \frac{1}{2c} \|s-u \|^2 \right) = J_c(u) \qquad \textrm{( car $J$ et $\|.\|^2$ sont paires )}.
+\end{align*}
+\end{proof}
+
+Ceci va nous permettre d'alléger les calculs. Regardons en exemple, le calcul de la régularisée d'une fonction créneau.
+
+\begin{multicols}{2}
+\paragraph{Exemple :} Considérons la fonction créneau :
+$$J(u)= \left\{  \begin{aligned}
+0 \quad & \textrm{si } u \in [-a;a], \\ 1 \quad & \textrm{sinon}. 
+\end{aligned}   \right. $$
+On pose $f_u(v) = J(v) + \sfrac{\| v-u \|^2}{2c}$.
+On a $f'_u(v) = (v-u)/c, \ \forall u \in \reel \setminus \{ -a, a \}. $
+En $\pm a$, la dérivée n'est pas définie. \\
+Puisque $J$ est paire, nous pouvons limiter l'étude de sa régularisée aux $u$ positifs. La fonction étant dicontinue en $a$, il faut distinguer 2 cas~:
+\begin{center}
+\includegraphics[width=.5\textwidth]{penal_quad.png}
+\captionof{figure}{\label{fig:regul_creneau} Régularisation de Moreau-Yosida d'une fonction créneau. }
+\end{center}
+\end{multicols}
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\bullet$} 
+\item Cas 1 : $a < u$
+\begin{center}
+\begin{tikzpicture}
+\tkzTabInit[espcl=2.8]{$v$/.7,$f_u'(v)$/.7,$f_u(v)$/1.7}{$0$, $a$, $u$, $+\infty$}
+\tkzTabLine{,-,d,-,z,+}
+\tkzTabVar{+/$\sfrac{u^2}{2c}$ , -CD+/$\sfrac{(a-u)^2}{2c}$/$ {\tiny 1+} \sfrac{(a-u)^2}{2c}$,-/$1$, +/$+\infty$ }
+\end{tikzpicture}
+\end{center}
+Ici, $u\leq a \Rightarrow \min_v f_u(v) = \min \left(1, \sfrac{(a-u)^2}{2c} \right)  $. Ainsi $J_c$ vaut 1 si $\sfrac{(a-u)^2}{2c} \geq 1$, \ie si $u\leq a+\sqrt{2c}$; si $u>a+\sqrt{2c}$ alors $J_c(u)=\sfrac{(a-u)^2}{2c}$.
+\item Cas 2 : $ a \geq u$. Ici tout les points $u$ tel que $0\leq u \leq a$ minimise $J$. Donc $J_c(u)=J(u)=0$ sur cet intervalle. On peut s'en rassurer avec le tableau de variation suivant~:
+\begin{center}
+\begin{tikzpicture}
+\tkzTabInit[espcl=2.8]{$v$/.7,$f_u'(v)$/.7,$f_u(v)$/1.7}{$0$, $u$, $a$, $+\infty$}
+\tkzTabLine{,-,z,-,d,+}
+\tkzTabVar{+/$\sfrac{u^2}{2c}$,-/$0$,  +CD-/$\sfrac{(a-u)^2}{2c}$/$ {\tiny 1+} \sfrac{(a-u)^2}{2c}$, +/$+\infty$ }
+\end{tikzpicture}
+\end{center}
+qui nous donne bien $J_c(u) = \min_v f_u(v) = 0$.
+\end{itemize}
+
+\underline{Bilan :} On a une expression explicite de la régularisée (que l'on complète par parité de la fonction)~:
+\begin{equation*}
+J_c(u) = \left\{  \begin{aligned}
+&1 && \textrm{ si } u\in ]-\infty;-a-\sqrt{2c}] \cup [a+\sqrt{2c};+\infty[  \\
+&\sfrac{(a-u)^2}{2c} && \textrm{ si } u \in ]-a-\sqrt{2c};-a[ \cup ]a;a+\sqrt{2c} [ \\
+&0 && \textrm{ si } u\in [-a;a]
+\end{aligned}  \right.
+\end{equation*}
+L'allure de la fonction créneau~$J$ et de sa régularisée~$J_c$, sont présentées Figure~\ref{fig:regul_creneau}.
+
+Notons que la fonction n'est régulière qu'aux abords des minimums. La valeur 0 est raccordé de manière dérivable, mais pas de dérivabilité pour le raccord en~$1$.
+
+Remarquons également que plus le paramètre $c$ est grand, plus l'intervalle sur lequel agit la régularisation est large.
+
+
+On pourrait aller beaucoup plus loin dans l'étude des propriétés de cette régularisation. De nombreuses publications ont été faite notament dans des cas où l'on ne connait pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
+
+%%%%%%%%%%%%%%%%%
+\subsection{Régularisation de Moreau-Yosida appliquée à une parabole tronquée.}
+On considère dans cette section, la parabole tronquée suivante
+\begin{equation}\label{eq:para_tronquee}
+J(u) = [ u^2 - a^2 ]^+
+\end{equation}
+où $a^2$ est le minimum de la parabole d'origine, et où $[x]^+ = \max(x,0).$ De la même manière que dans l'exemple de la section précédente, nous allons construire explicitement la régularisée de cette fonction. On a ici~:
+\begin{equation}
+f_u(v) = [v^2-a^2]^+ + \frac{1}{2c}\|v-u\|^2.
+\end{equation}
+De plus, comme la fonction $J$ est paire, on restreint l'étude à l'ensemble $\reel_+$. Ainsi la dérivée est caractérisée sur $\reel_+$ par
+\begin{equation}
+f'_u(v) = \left\{  \begin{aligned}
+&\frac{v-u}{c} && \textrm{ si } v<a,  \\
+&\textrm{ non définie } && \textrm{ si } v=a, \\
+& 2v+\frac{v-u}{c} && \textrm{ si } v>a.
+\end{aligned}  \right.
+\end{equation}
+Ainsi
+ \begin{equation} f'_u(v)=0
+\Longleftrightarrow \left\{  \begin{aligned}
+&v=u && \textrm{ si } v<a,  \\
+& v=\frac{u}{2c+1} && \textrm{ si } v>a.
+\end{aligned}  \right.
+\end{equation}
+Les cas suivants sont donc à considérer~(remarquer que comme $c>0$ et $u>0$ on a toujours $\frac{u}{2c+1}<u$):
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\bullet$} 
+\item Cas 1 : $0 < \frac{u}{2c+1} < u \leq a$\\ % \qquad$ 
+%\raisebox{-20mm}{
+%\begin{tikzpicture}
+%\tkzTabInit[espcl=1.3]{$v$/.7,$f_u'(v)$/.7,$f_u(v)$/1}{$0$, $\frac{u}{2c+1}$ ,$u$, $a$, $+\infty$}
+%\tkzTabLine{,-,,-,z,-,d,+}
+%\tkzTabVar{+/ , R/ ,-/,  R/ , +/ }
+%%%\tkzTabVal{1}{2}{0.5}{$\frac{u}{2c+1}$}{}
+%\end{tikzpicture}}\\
+%Ici, $\min_v f_u(v) = f(u) = [u^2-a^2]^+ = 0$
+Dans ce cas là $u$ minimise $J$. Donc $J_c(u)=J(u)=0, \ \forall u \leq a$.
+
+\item Cas 2 : $0 < \frac{u}{2c+1} < a < u \qquad$ 
+\raisebox{-20mm}{
+\begin{tikzpicture}
+\tkzTabInit[espcl=1.3]{$v$/.7,$f_u'(v)$/.7,$f_u(v)$/1}{$0$, $\frac{u}{2c+1}$ ,$a$, $u$, $+\infty$}
+\tkzTabLine{,-,,-,d,+,,+}
+\tkzTabVar{+/ , R/ ,-/,  R/ , +/ }
+%%\tkzTabVal{1}{2}{0.5}{$\frac{u}{2c+1}$}{}
+\end{tikzpicture}}\\
+Ici, $\min_v f_u(v) = f(a) = \frac{1}{2c} \| a-u\|^2, \ \forall u \in ]a,a(2c+1)[.$
+\item Cas 2 : $0 < a < \frac{u}{2c+1} < u \qquad$ 
+\raisebox{-20mm}{
+\begin{tikzpicture}
+\tkzTabInit[espcl=1.3]{$v$/.7,$f_u'(v)$/.7,$f_u(v)$/1}{$0$,$a$ , $\frac{u}{2c+1}$, $u$, $+\infty$}
+\tkzTabLine{,-,d,-,z,+,,+}
+\tkzTabVar{+/ , R/ ,-/,  R/ , +/ }
+%%\tkzTabVal{1}{2}{0.5}{$\frac{u}{2c+1}$}{}
+\end{tikzpicture}}\\
+\begin{align*}
+\textrm{Ici}, \min_v f_u(v) &= f\left( \frac{u}{2c+1} \right) = \left[ \left( \frac{u}{2c+1} \right)^2 -a^2 \right]^+ + \frac{1}{2c} \left\| \frac{u}{2c+1}-u \right\|^2 \\
+& = \left( \frac{u}{2c+1} \right)^2 -a^2 + \frac{1}{2c} \left( \frac{-2cu}{2c+1} \right)^2 \\
+& = \frac{u^2}{2c+1} -a^2, \quad \forall u \in ]a(2c+1),+\infty[.
+\end{align*}
+\end{itemize}
+\begin{figure}
+\centering
+\includegraphics[width=.75\textwidth]{penal_quad.png}
+\caption{\label{fig:regul_para_coupee} Régularisation de Moreau-Yosida d'une parabole tronquée. }
+\end{figure}
+Ainsi l'expression de la régularisée de la parabole tronquée~\ref{eq:para_tronquee} est donnée par
+\begin{equation}\label{eq:regul_parabole_coupee}
+J_c(u) = \left\{  \begin{aligned}
+&\frac{u^2}{1+2c}-a^2 && \textrm{ si } u\in ]-\infty;-a(2c+1)] \cup [a(2c+1);+\infty[  \\
+&\frac{1}{2c}\|a-u\|^2 && \textrm{ si } u \in ]-a(2c+1);-a[ \cup ]a;a(2c+1) [ \\
+&0 && \textrm{ si } u\in [-a;a],
+\end{aligned}  \right.
+\end{equation}
+et son allure est présentée sur la Figure~\ref{fig:regul_para_coupee}.
+
+%%%%%%%%%%%
+%%%%%%%%%%%
+%%%%%%%%%%%
+\section{Optimisation des niveaux de gris~: essais de diverses pénalisations sur la fonction coût}
+
+\end{document}
