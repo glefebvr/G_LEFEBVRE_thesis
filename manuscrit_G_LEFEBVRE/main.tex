@@ -102,6 +102,8 @@
 %\color[gray]{0.5}
 }
 
+\renewcommand{\qedsymbol}{$\blacksquare$} %%% Personnalisation du symbole de fin de preuve
+
 %%%%%%% Personnalisation des legendes
 %\captionsetup[figure]{labelfont=it,textfont={bf,it}}
 %\captionsetup[subfigure]{labelfont=bf,textfont=normalfont,justification=raggedright}
@@ -205,6 +207,8 @@
 \newcommand{\Tgend}{{T_g}_{end}}
 \newcommand{\twinweno}{twin-WENO5}
 \newcommand{\Twinweno}{Twin-WENO5}
+
+\newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
 
 \newcommand{\rect}[4]{
 \multiput(#1,#2)(0,#4){2}{\line(1,0){#3}}

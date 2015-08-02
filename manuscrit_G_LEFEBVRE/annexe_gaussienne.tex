@@ -7,14 +7,14 @@
 On considère une gaussienne définie selon deux paramètres, son écart-type~$\sigma$ et son centre~$c$ (qui est aussi l'espérence notée plutôt $\mu$ lorsqu'on fait des statistiques)~:
 \begin{equation}
 \label{eq:anxe_gaussienne}
-g(x)=\dfrac{1}{\sigma \sqrt{2\pi}} \exp\left( \frac{-1}{2}  \left(  \dfrac{x-c}{\sigma} \right)^2  \right).
+f(x)=\dfrac{1}{\sigma \sqrt{2\pi}} \exp\left( \frac{-1}{2}  \left(  \dfrac{x-c}{\sigma} \right)^2  \right).
 \end{equation}
 
 \begin{prop}
 Les dérivées d'une gaussiennes sont données par~:
 \begin{itemize}
-\item pour la dérivée première~: $g'(x)= -\dfrac{x-c}{\sigma^2}g(x), $
-\item pour la dérivée seconde~: $g''(x)= \dfrac{(x-c+\sigma)(x-c-\sigma)}{\sigma^2}g(x). $
+\item pour la dérivée première~: $f'(x)= -\dfrac{x-c}{\sigma^2}f(x), $
+\item pour la dérivée seconde~: $f''(x)= \dfrac{(x-c+\sigma)(x-c-\sigma)}{\sigma^2}f(x). $
 \end{itemize}
 \end{prop}
 
@@ -25,19 +25,19 @@ Une gaussienne étant toujours positive (car l'exponentielle l'est toujours), la
 La gaussienne $g$ définie ci-dessus est normalisée \ie
 \begin{equation}
 \label{eq:anxe_integ_gauss}
-\int\limits_{-\infty}^{+\infty} g(x) \dx = 1
+\int\limits_{-\infty}^{+\infty} f(x) \dx = 1
 \end{equation}
 \todo[noline]{demo integ = 1}
 \end{prop}
 
 
 \section{Comment s'intersectent deux gaussiennes ?}
-Dans cette section on ne considère plus $g$ comme une seule et unique gaussienne, mais comme un mélange bi-gaussien. Il est décrit par la somme de deux gaussiennes pondérées par les poids~$w_1$ et $w_2$~:
+Dans cette section on ne considère plus une seule et unique gaussienne, mais un mélange bi-gaussien. Il est décrit par la somme de deux gaussiennes pondérées par les poids~$w_1$ et $w_2$~:
 \begin{equation}
 \label{eq:anxe_bi_gauss}
-g(x)= w_1 g_1(x)+ w_2 g_2(x) \quad \textrm{avec} \quad w_1 + w_2=1,
+g(x)= g_1(x)+ g_2(x) \quad \textrm{où} \quad g_i(x)=w_if_i(x), \ w_i\in ]0;1[  \quad \textrm{avec} \quad w_1 + w_2=1,
 \end{equation}
-où $g_1$ et $g_2$ sont des gaussiennes définies respectivement en fonction des paramètres~$c1,\sigma_1$ et~$c_2,\sigma_2$ via la formulation~\eqref{eq:anxe_gaussienne}. Comme la somme des poids est de 1, la Propriété~\ref{prop:integ1} reste valable pour un mélange gaussien.
+où $f_1$ et $f_2$ sont deux gaussiennes définies respectivement en fonction des paramètres~$c1,\sigma_1$ et~$c_2,\sigma_2$ via la formulation~\eqref{eq:anxe_gaussienne}. Comme la somme des poids est de 1, la Propriété~\ref{prop:integ1} reste valable pour un mélange gaussien.
 
 Comme présenter dans le chapitre REFF ??, le calcul de l'intersection des deux composantes se résume à~:
 \begin{equation}
@@ -54,51 +54,56 @@ Le discriminant réduit de ce polynôme est donné par~:
 \label{eq:anxe_discr_reduit}
 \Delta' := B'^2 - AC = \sigma_1^2 \sigma_2^2 \left[ (\Delta c)^2 - 2(\sigma_2^2-\sigma_1^2) \ln (h_2/h_1)  \right].
 \end{equation}
-On peut réécrire cela en posant $\bar{c}=(c_1+c_2)/2$, $\Delta c = c_2-c_1$ et $\sigma_2=\sigma$ avec $\sigma_1=\beta \sigma$. Ceci donne~:
-\begin{equation}
-\begin{aligned}
-\label{eq:anxe_polynome2}
-&g_1(x)=g_2(x) \quad \Longleftrightarrow  \quad  Ax^2 + 2B'x + C =0 \\
-{\rm avec :} \quad &A=1-\beta^2, \\
-& B'=\bar{c}(\beta^2-1)+ \frac{\Delta c}{2}(1+\beta^2),\\
-& C= (\bar{c}^2+(\Delta c)^2 ) (1-\beta^2) -\bar{c}\Delta c (1+\beta^2) + 2 \beta^2 \sigma^2 \ln \left( \frac{1-w}{w}\beta \right).
-\end{aligned}
-\end{equation}
-Si $\sigma_1 \neq \sigma_2$ \ie $\beta \neq 1$, alors on peut simplifier  l'écriture :
+Le cas particulier $\sigma_1 = \sigma_2$ ayant déjà traité (\cf REF page REF\todo{ref}), écartons le. 
+En posant $\bar{c}=(c_1+c_2)/2$, $\Delta c = c_2-c_1$ et $\sigma_2=\sigma$ avec $\sigma_1=\beta \sigma$ où $\beta\neq 1$, on peut ainsi réécrire~\ref{eq:anxe_discr_reduit}~:
+%\begin{equation}
+%\begin{aligned}
+%\label{eq:anxe_polynome2}
+%&g_1(x)=g_2(x) \quad \Longleftrightarrow  \quad  Ax^2 + 2B'x + C =0 \\
+%{\rm avec :} \quad &A=1-\beta^2, \\
+%& B'=\bar{c}(\beta^2-1)+ \frac{\Delta c}{2}(1+\beta^2),\\
+%& C= (\bar{c}^2+(\Delta c)^2 ) (1-\beta^2) -\bar{c}\Delta c (1+\beta^2) + 2 \beta^2 \sigma^2 \ln \left( \frac{1-w}{w}\beta \right).
+%\end{aligned}
+%\end{equation}
+%
 \begin{equation}
 \begin{aligned}
 \label{eq:anxe_polynome3}
 &g_1(x)=g_2(x) \quad \Longleftrightarrow  \quad  x^2 + 2B'x + C =0 \\
-{\rm avec :} & B'=\frac{\Delta c}{2} \frac{1+\beta^2}{1-\beta^2}-\bar{c},\\
+{\rm avec :}\ & B'=\frac{\Delta c}{2} \frac{1+\beta^2}{1-\beta^2}-\bar{c},\\
 & C= \bar{c}^2+(\Delta c)^2 -\bar{c}\Delta c \frac{1+\beta^2}{1-\beta^2} + 2 \frac{\beta^2}{1-\beta^2} \sigma^2 \ln \left( \frac{1-w}{w}\beta \right).
 \end{aligned}
 \end{equation}
 Le discriminant réduit de ce polynôme est donné par~:
 \begin{equation}
 \label{eq:anxe_discr_reduit}
-\Delta' := B'^2 - AC = \sigma_1^2 \sigma_2^2 \left[ (\Delta c)^2 - 2(\sigma_2^2-\sigma_1^2) \ln (h_2/h_1)  \right].
+\Delta' := B'^2 - C = \left( \frac{1+\beta^2}{1-\beta^2} \right)^2 \frac{(\Delta c)^2}{4} - (\Delta c)^2  - 2 \frac{\beta^2}{1-\beta^2} \sigma^2 \ln (h_2/h_1).
 \end{equation}
 
 
+\begin{dfn} On considère un mélange bi-gaussien. 
+Un point d'intersection (entre les composantes du mélange) est qualifié d'\emph{interne} si son abscisse est situé entre les centres des gaussiennes. Il sera qualifié d'\emph{externe} sinon.
+\end{dfn}
 
 \begin{thm}\label{thm:anxe_pt_unique}
-Il ne peut y avoir qu'un seul et unique point d'intersection situé entre les centres des deux composantes d'un mélange bi-gaussien.
+Pour un mélange bi-gaussien, il ne peut y avoir qu'un seul et unique point d'intersection interne. 
+%situé entre les centres des deux composantes d'un mélange bi-gaussien.
 \end{thm}
 
 \begin{proof}
 Considérons la différence des deux composantes $d(x)=g_2(x)-g_1(x)$ et supposons sans perte de généralité que $c_1<c_2$. On a alors~:
 $$d'(x) = \frac{c_2-x}{\sigma_2^2}g_2(x) - \frac{c_1-x}{\sigma_1^2} g_1(x) >0 \quad \forall x \in [c_1; c_2] $$
-Ainsi $d$ est strictement croissante sur $[c_;,c_2]$. La fonction $d$ étant de plus continue, elle ne peut donc s'annuler qu'au plus une fois sur l'intervalle $[c_1;c_2]$.
+Ainsi $d$ est strictement croissante sur $[c_1;c_2]$. La fonction $d$ étant de plus continue, elle ne peut donc s'annuler qu'au plus une fois sur l'intervalle $[c_1;c_2]$.
 \end{proof}
 
-Une autre démonstration que nous allons présenter, consiste à considérer la valeur des points d'intersections eux mêmes (on se place dans le cas où ces points existent), donnée via le polynôme~\ref{eq:anxe_polynome}~:
+Une autre démonstration que nous allons présenter, consiste à considérer la valeur des points d'intersections eux mêmes (on se place dans le cas où ces points existent), donnée via le polynôme~\eqref{eq:anxe_polynome}~:
 \begin{equation}
 \label{eq:anxe_racines}
 x_\pm = -B' \pm \sqrt{\Delta'},
 \end{equation}
-et à montrer par l'absurde que les deux racines ne peuvent être toutes les deux comprises entre $c_1$ et $c_2$. Tout d'abord commençons par énoncé deux lemmes.
+et à montrer par l'absurde que les deux racines ne peuvent être toutes les deux comprises entre $c_1$ et $c_2$. Tout d'abord commençons par énoncé trois lemmes.
 \begin{lemme} \label{lem:distance_milieu}
-Un point $x$ appartient à un intervalle $[c_1;c_2]$ \ssi sa distance avec le milieu de l'intervalle est inférieure à la moitié de la longueur de cet intrevalle~:
+Un point $x$ appartient à un intervalle $[c_1;c_2]$ \ssi sa distance avec le milieu de l'intervalle est inférieure à la moitié de la longueur de cet intervalle~:
 \begin{equation}
 x \in [c_1;c_2]
  \quad \Longleftrightarrow \quad 
@@ -139,8 +144,7 @@ Il suffit d'analyser la fonction $t \mapsto f(t):= \frac{1+t^2}{1-t^2}$.
 Ce qui fournit ainsi l'inégalité voulue, avec égalité uniquement dans le cas où~\mbox{$t=0$}.
 \end{proof}
 
-
-Pour démontrer le théorème~\ref{thm:anxe_pt_unique}, montrons par l'absurde qu'on ne peut avoir simultanément $x_-$ et $x_+$ à l'intérieur de $[c_1;c_2]$.
+\begin{proof}[Démonstration du théorème~\ref{thm:anxe_pt_unique}.] Montrons par l'absurde qu'on ne peut avoir simultanément $x_-$ et $x_+$ à l'intérieur de $[c_1;c_2]$.
 Supposons donc, que  $x_-\in[c_1;c_2]$ et $x_+\in[c_1;c_2]$. Par le lemme~\ref{lem:distance_milieu}, ceci revient à considérer que
 $$| x_\pm-\bar{c} | \leq \Delta c / 2 $$
 et ainsi, on a~:
@@ -155,14 +159,16 @@ ce qui conduit à
 & > \frac{(\Delta c)^2}{4} \left( \left( \frac{1+\beta^2}{1-\beta^2} \right)^2 - 1 \right) \qquad \textrm{car}\ \Delta' > 0 \\
 &> 0  \qquad \textrm{par le lemme~\ref{lem:ineg}}.
 \end{align*}
+La moyenne de $E_-$ et de $E_+$ ne peut donc pas être négative, ce qui clôture la démonstration.
+\end{proof}
 
-Maintenant que l'on a montrer que l'on ne peut qu'avoir un seul et unique point d'intersection entre les centres des gaussiennes, exhibons un critère qui nous garantisse son existence (sinon on sera dans le cas aucune racine ou bien 2 racines à l'extérieur de l'intervalle $[c_1;c_2]$).
+Maintenant qu'il a été montré qu'on ne peut qu'avoir un seul et unique point d'intersection interne, exhibons un critère qui nous garantisse son existence (sinon on sera dans le cas aucune racine ou bien 2 racines externes ).
 \begin{thm}
-Les composantes d'un mélange bi-gaussien possède un point d'intersection  dont l'abscisse est situé strictement entre les centres de chacune des composantes \ssi
+Les composantes d'un mélange bi-gaussien possède un point d'intersection  strictement interne \ssi
 $$(\Delta c)^2 > \max \left( -2\sigma_1^2 \ln(h_2/h_1) , 2\sigma_2^2 \ln(h_2/h_1) \right). $$
 \end{thm}
 \begin{proof}
-On reprend la fonction différence, utilisée pour montrer l'unicité de ce point lorsqu'il existe. On suppose toujours, sans perte de généralités, que $c_1$ < $c_2$. On a existence d'un point d'intersection INTERNE \todo[noline]{pt d'intersec interne, externe --> definition ?} si et seulement si la différence $d$ s'annule sur l'intervalle $[c_1;c_2]$. La fonction $d$ étant strictement croissante, il faut et il suffit que
+On reprend la fonction différence, utilisée pour montrer l'unicité de ce point lorsqu'il existe. On suppose toujours, sans perte de généralités, que $c_1$ < $c_2$. On a existence d'un point d'intersection interne si et seulement si la différence $d$ s'annule sur l'intervalle $[c_1;c_2]$. La fonction $d$ étant strictement croissante, il faut et il suffit que
 \begin{equation*}
 \begin{aligned}
 \left\{
@@ -190,8 +196,48 @@ h_2 \  - h_1\ e^{ -\frac{1}{2} \frac{(\Delta c)^2}{\sigma_1^2} }>0
 \subfloat[$\Delta c >C$]{\includegraphics[width=.33\textwidth]{dessin_gauss/gmm_translation3.png}}
 \caption{\label{fig:influence_dc} Influence de $\Delta c$ sur la position des points d'intersections (\mbox{$C=\max \left( -2\sigma_1^2 \ln(h_2/h_1) , 2\sigma_2^2 \ln(h_2/h_1) \right)$}).}
 \end{figure}
+Sur la Figure~\ref{fig:influence_dc}, on peut voir l'influence de $\Delta c$ sur la position des points d'intersections. Le graphique illustre bien le critère donné par le théorème~\ref{thm:anxe_pt_unique}. Ce critère est cependant relativement restrictif.\todo{Graphique de la condition racine intrene ?} On ne peut donc pas compter sur la présence systématique d'un point d'intersection interne pour établir un critère d'\hetero. Peux-t-on au moins espérer avoir toujours 2 points d'intersections ?
 
-\todo[inline]{Graphique ligne de niveaux, etc ...}
 
-On peut voir l'influence de $\Delta c$ sur la position des points d'intersections.
+\subsection*{Analyse du discriminant.}
+Intéressons nous maintenant de plus près au discriminant~\eqref{eq:anxe_discr_reduit}. Pour cela fixons $\sigma_2=a$ et posons $\sigma_1=\sigma$. On a donc à étudier~:
+\begin{equation}\label{eq:discr_v2}
+\Delta'(\sigma,w,\Delta c) = a^2 \sigma^2 \left[ (\Delta c)^2 + 2(\sigma^2-a^2)\ln\left( \frac{(1-w)\sigma}{wa} \right) \right]
+\end{equation}
+Remarquons que les points d'annulation de ce discriminant correspondent au ligne de niveaux négatives de la fonction
+$$f( \sigma,w ) := (\sigma^2-a^2)\ln\left( \frac{(1-w)\sigma}{wa} \right). $$
+Etudions donc la fonction $f( \sigma,w )$.
+
+\begin{figure}
+\centering
+\includegraphics[width=.75\textwidth]{dessin_gauss/discriminant2.png}
+\vspace{-5mm}
+\caption{\label{fig:courbe_nvx_discrim}Courbes de niveaux du discriminant donné par l'équation~\eqref{eq:discr_v2} -- Ici, $a=5$ et $\Delta c=5$.}
+\end{figure}
+\paragraph{Points critiques de $f( \sigma,w )$.}
+Le gradient de $f$ est donné par~:
+\begin{equation}
+\nabla f = \begin{pmatrix}
+\diff{f}{\sigma} \\ \diff{f}{w}
+\end{pmatrix}=\begin{pmatrix}
+2\sigma \ln\left( \frac{(1-w)\sigma}{wa} \right) + \frac{\sigma^2-a^2}{\sigma}\\ \frac{a^2-\sigma^2}{w(1-w)}
+\end{pmatrix}.
+\end{equation}
+Ainsi, à $\sigma$ fixé, $\diff{f}{w}$ est toujours du signe de $a^2-\sigma^2$. Il ne s'annule donc jamais. Il n'y a donc pas de point stationnaire. Pour $\sigma$ fixé~:
+\begin{itemize}
+\item $f$ est croissante si $\sigma < a$
+\item $f$ est décroissante si $a<\sigma$
+\item $f(\sigma=a, w) \equiv 0$.
+\end{itemize}
+\paragraph{Lignes de niveaux de $f( \sigma,w )$.}
+Soit $w_k(\sigma)$ la ligne de niveau correspondant à $f(\sigma,w)=-k$, avec $k= (\Delta c ^2) /2$. On a donc~:
+\begin{align*}
+f(\sigma,w)=-k & \Leftrightarrow \ln\left( \left( \frac{1}{w}-1 \right) \frac{\sigma}{a}  \right) = \frac{-k}{\sigma^2-a^2} \\
+& \Leftrightarrow w_k(\sigma) = \left[ \frac{a}{\sigma} \exp \left( \frac{-k}{\sigma^2-a^2} \right) +1\right]^{-1}
+\end{align*}
+Une analyse des variations de $w_k(\sigma)$ permet de tracer l'allure du discriminant, qui est présenté sur la Figure~\ref{fig:courbe_nvx_discrim}.
+
+
+Les cas où le discriminant est négatif sont donc minoritaire. Ceci explique en partie, qu'en pratique nous n'avons rencontré aucun cas de gaussienne qui ne s'intersectent pas. Construire un critère d'\hetero basé sur la position de ces 2 points (ou de l'un de ces deux points) n'est donc pas insensé.
+
 \end{document}
