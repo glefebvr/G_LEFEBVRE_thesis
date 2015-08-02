@@ -7,7 +7,7 @@
 \lettrine[lines=2, lhang=0.33, loversize=0.25]{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons nous sur la manière de reconstruire une image en niveau de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités $N(t,x)$, $P(t,x)$ et $S(t,x)$ (toutes comprises entre 0 et 1). On tentera, dans ce chapitre, d'optimiser les niveaux de gris $\tau_N, \tau_P$ et $\tau_S$ de l'interpolation EQREF \todo[noline]{eqref} afin de rapprocher au maximum la visualisation des résultas numériques de la visualisation des scanners médicaux.
 
 \section{Présentation de l'approche}
-Pour un patient donné, on considère $n$ instants auxquels on possède des scanners (aux temps $t_i, i\in \{ 1,...,n \}$). Sur ces $n$ images, on propose d'optimiser les coefficients de l'interpolation $\tau_N N + \tau_P P + \tau_S S$:
+Pour un patient donné, on considère $n$ instants auxquels on possède des scanners (aux temps $t_i, i\in \{ 1,...,n \}$). Sur ces $n$ images, on propose d'optimiser les coefficients (niveaux de gris) de l'interpolation $\tau_N N + \tau_P P + \tau_S S$ où $N, P$ et $S$ sont les populations définies dans le modèle présenté précédement. Sur l'ensemble de ces images, on fait correspondre le niveau de gris moyen des images numériques à celui moyen des scanners, ce qui s'écrit~:
 \begin{equation}
 \label{eq:optim_grey_integ_aire}
 \begin{aligned}
@@ -32,20 +32,23 @@ En utilisant la discrétisation, aussi bien sur les simulations numériques que 
 \end{aligned}
 \end{equation}
 où $\mathcal{N}(Z)$ désigne le nombre de pixel contenu dans la zone $Z$. On a donc un système linéaire de 3 inconnues à $n$ équations que l'on peut réécrire :
-\begin{equation}
+\begin{equation} \label{eq:Atau_egal_B}
 A\tau=B,
 \end{equation}
 avec $\tau= \trans(\tau_N,\tau_P,\tau_S)$, $A$ matrice de taille $n\times 3$ et $B$ vecteur colonne de taille $n$.
 
 Pour ne pas se limiter au cas $n=3$ qui clos le système, on le résoud par la minimisation suivante :
 \begin{equation}\label{eq:min_optim_grey}
-\min_{\tau} \left( \dfrac{\| A\tau - B \|^2_{\ell^2}}{\|B\|^2_{\ell^2}} + \mathcal{P}(\tau) \right),
+\min_{\tau} J(\tau) \ \textrm{ avec } \ J(\tau)= \dfrac{\| A\tau - B \|^2_{\ell^2}}{\|B\|^2_{\ell^2}} + \mathcal{P}(\tau),
 \end{equation}
-où la pénalisation $\mathcal{P}$ permet d'assurer que les optima respectent les bornes~0 à~255 :
+où $\mathcal{P}$ pénalise la fonction coût~$J$ lorsque l'une des composante de ~$\tau$ est en dehors de l'intervalle~$[0;255]$. Dans la section qui suit, nous démarrerons avec une pénalisation en créneau
 \begin{equation}
 \label{eq:penalisation_creneau}
 \mathcal{P}(\tau) = 1e7 \times ( \tau \notin  [0;255]^3 ).
 \end{equation}
+Dans la section d'après, la régularisée de Moreau-Yosida d'une parabole tronquée sera considérée comme pénalisation. Cette méthode de régularisation est décrite dans l'annexe REF page REF \todo[noline]{ref anex + page}. Dans cette annexe également, on examinera l'influence du choix de la fonction de pénalisation sur les optima fournit.
+%permet d'assurer que les optima respectent les bornes~0 à~255 :
+
 
 \section{Optimisation sur 3 paramètres}
 %\DTLloaddb{optim3_0grey}{../data/cout_1/optim3.csv}
@@ -162,23 +165,36 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 \DTLcleardb{optim3_0leg}
 \DTLcleardb{optim3_0stat}
 \DTLcleardb{optim3_0stat}
-La résolution de l'équation~\eqref{eq:min_optim_grey} fournit donc le $\tau$ optimal. Examinons les différences lorsque l'on fait varier :
+La résolution de l'équation~\eqref{eq:min_optim_grey} fournit le $\tau$ optimal. Il y a cependant plusieurs manières de calculer cet optimum. On peut  faire varier :
 \begin{itemize}
 \item le nombre d'images considérées
 \item les moments considérés
 \item l'algorithme d'optimisation lui-même
-\item la fonction coût utilisée
+%\item la fonction coût utilisée
 \end{itemize}
 
-Dans tous les cas, on ne considèrera pas le premier scanner (numéro~0) car la condition initiale numérique EQREF \todo[noline]{EQREF} n'est pas prise de sorte à respecter la répartition des niveaux de gris du scanner. Evitons donc d'inclure dans l'optimisation une erreur de base qui serait incompressible.
+\todo[noline]{Presenter les algo}
+Dans tous les cas, on ne considèrera pas le premier scanner (numéro~0) car la condition initiale numérique EQREF \todo[noline]{EQREF} n'est pas prise de sorte à respecter la répartition des niveaux de gris du scanner. Evitons donc d'inclure dans l'optimisation une erreur de base qui serait incompressible. On regardera des situations avec seulement 2 images (problème sous-déterminé) ou 3 images (problème fermé) ou plus (problème sur-déterminé).
+
+En ce qui concerne les algorithmes d'optimisations utilisés, nous en choisirons quatre~:
+\begin{itemize}
+\item SLSQP (Sequential Least SQuares Programming)~: Méthodes des moindres carrés 
+\item GC~: Gradient Conjugué
+\item Neldear-Mead~: Algorithme basé sur une méthode du Simplex.
+\item BFGS (Broyden, Fletcher, Goldfarb, and Shanno)~: Méthode quasi newtonnienne basé également sur une approximation de la dérivée.
+\todo[inline]{Ref : Piocher ref algo : \url{http://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.optimize.minimize.html} }
+\end{itemize}
+Ces algorithmes seront initialisés avec les paramètres $\tau_N, \tau_P$ et~$\tau_S$ de l'estimation visuelle du chapitre REF SECTION ET/OU PAGE \todo[noline]{ref section}. Lorsqu'il sont nécessaire, les gradients (voire les hessiennes) sont approximés par les algorithmes eux-même. Outre un vecteur de paramètre initial et la fonction coût à optimiser~\ref{eq:min_optim_grey}, aucune information supplémentaire n'est fournie à ces différents algorithmes.
+
+
+
+
 \todo[noline]{Presenter numerotation des scans}
-
-
 La Table~\ref{tab:optim3gris} synthétise l'ensemble des résultats d'optimisation obtenus sur les différents tests qui ont été réalisés. 
 On remarque que plus le nombre d'image considérées est grand, plus l'erreur à convergence est grande. Ce comportement est attendu et ne pose pas de problème tant que l'erreur reste acceptable (de l'ordre de quelques pourcents). Augmenter le nombre d'images considérées s'avère utile pour rendre les optima moins sensibles aux perturbations éventuelles qu'il y a sur les données (bruit, marge d'erreur de segmentation manuelle, etc ...).
 
 
-On peut de plus remarquer que selon les images choisies et selon les algorithmes choisis les résultats sont assez variables. Les moyennes des optima trouvés selon l'algorithme sont présentés sur la dernière ligne de la Table~\ref{tab:optim3gris}. Seul l'algorithme SLSQP se démarque des autres qui ont une valeur moyenne de $\tau_P$ non seulement proche de $\tau_S$ - ce qui ne facilite pas du tout le contraste du tissu proliférant avec le tissu sain - mais aussi supérieur à $\tau_S$ alors qu'on s'attendrait plutôt à l'inverse... De plus, des images ont été reconstituées avec des valeurs de $\tau_S$ aux alentours de 140 et 150. Il apparaît que la couleur du tissu sain n'est pas bonne~: il est beaucoup trop foncé.
+On peut de plus remarquer que selon les images choisies et selon les algorithmes choisis les résultats sont assez variables. Les moyennes des optima trouvés selon l'algorithme sont présentés sur la dernière ligne de la Table~\ref{tab:optim3gris}. Seul l'algorithme SLSQP se démarque des autres qui ont une valeur moyenne de $\tau_P$ non seulement proche de $\tau_S$ -- ce qui ne facilite pas du tout le contraste du tissu proliférant avec le tissu sain -- mais aussi supérieur à $\tau_S$ alors qu'on s'attendrait plutôt à l'inverse... De plus, des images ont été reconstituées avec des valeurs de $\tau_S$ aux alentours de 140 et 150. Il apparaît que la couleur du tissu sain n'est pas bonne~: il est beaucoup trop foncé.
 
 
 Pour expliquer l'erreur commise sur~$\tau_S$, on aurait pu penser à une large variabilité permise sur ce paramètre dûe à la présence très minoritaire de tissu sain dans la tumeur. Ainsi $\tau_S$ serait très peu influent dans le calcul de l'erreur~\eqref{eq:min_optim_grey}. Cependant après avoir examiné de plus près les valeurs des intégrales de l'équation~\eqref{eq:optim_grey_integ_aire}, il y a toujours au moins 10\% de cellules saines. La plupart du temps, elles sont réparties sur le pourtour de la tumeur, dans la zone de transition sur laquelle il y a un mélange de tissu sain et de tissu tumoral. Ceci écarte donc l'hypothèse avancée. On pourrait alors avancer des variations dans les données (bruit dans les images, erreur sur le contourage, variation du temps d'acquisition du scanner qui impacte sur les niveaux de gris, ... ) pour justifier cela, mais les impacts sont difficiles à mesurer. 
@@ -189,30 +205,33 @@ On note également que la combinaison $[1,9,11]$ ne semble pas pertinente pour c
 
 %%%%%  ---- SECTION  OPTIM SUR 2 NVX DE GRIS ----- %%%%%
 \section{Optimisation sur 2 paramètres, $\tau_S$ fixé}
-Pour essayer de palier aux problèmes rencontrés dans la section précédentes, nous allons fixer $\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de 0 à 255). Cette valeur a été fixée en réalisant un contourage d'une zone en tissu sain dans OsiriX (cf. Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de 134.5 HU. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, 134.5~HU équivaut à un gris de 77\% soit un gris de niveau~197.
-
+Pour essayer de palier aux problèmes rencontrés dans la section précédentes, nous allons fixer $\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de 0 à 255). Cette valeur a été fixée en réalisant un contourage d'une zone de tissu sain dans OsiriX (\cf  Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de 134.5 HU. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, 134.5~HU équivaut à un gris de 77\% soit un gris de niveau~197.
 
 \input{tex_pictures/tikz_schema_correspondance_gris.tex}
 
 \begin{figure}
 \includegraphics[width=\textwidth]{OsiriX_gris_sain_rognee.png}
-\caption{\label{fig:contourage_sain}Contourage d'une zone saine réalisée à l'aide du logicielle OsiriX -- Moyenne de la valeur des pixels dans ce périmètre : 134.5 HU (avec une échelle HU de \mbox{-135 à 215}).}
+\caption{\label{fig:contourage_sain}Contourage d'une zone saine réalisée à l'aide du logiciel OsiriX -- Moyenne de la valeur des pixels dans ce périmètre : 134.5 HU (avec une échelle HU de \mbox{-135 à 215}).}
 \end{figure}
 
+%%%%%% Cout1
+%\DTLloaddb{optim2_1grey}{../data/cout_1/optim2.csv}
+%\DTLloaddb[noheader]{optim2_1leg}{../data/cout_1/optim2_leg.csv}
+%\DTLloaddb{optim2_1stat}{../data/cout_1/optim2_stat.csv}
+\DTLloaddb{optim2_1grey}{../data/cout_1_good/optim2.csv}
+\DTLloaddb[noheader]{optim2_1leg}{../data/cout_1_good/optim2_leg.csv}
+\DTLloaddb{optim2_1stat}{../data/cout_1_good/optim2_stat.csv}
 
 
-%%%%%% Cout3
-\DTLloaddb{optim2_grey}{../data/cout_3/optim2.csv}
-\DTLloaddb[noheader]{optim2_leg}{../data/cout_3/optim2_leg.csv}
-\DTLloaddb{optim2_stat}{../data/cout_3/optim2_stat.csv}
-\DTLsetheader{optim2_leg}{Column1}{}
-\DTLsetheader{optim2_leg}{Column2}{}
-\begin{table}[htbp]
-%\footnotesize
-\scriptsize
+\DTLsetheader{optim2_1leg}{Column1}{}
+\DTLsetheader{optim2_1leg}{Column2}{}
+\begin{table}[h]
+%\vspace{-35mm}
+\footnotesize
 \hspace{\retraittableau} %%% Le tableau depasse sur les marges !
 \begin{tabular}{|c|c|c|c|c|}
 \hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
 \rowcolor{gray!70}
 & \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
 \hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
@@ -227,7 +246,7 @@ Pour essayer de palier aux problèmes rencontrés dans la section précédentes,
 & $\tau_N, \qquad \tau_P$
 & $\tau_N, \qquad \tau_P$
 & $\tau_N, \qquad \tau_P$
-\DTLforeach*{optim2_grey}{%
+\DTLforeach*{optim2_1grey}{%
 \scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
 \errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
 \\
@@ -242,62 +261,166 @@ Pour essayer de palier aux problèmes rencontrés dans la section précédentes,
 \BFGS \\ \errBFGS
 \end{tabular} 
 }%
-\DTLforeach*{optim2_stat}{%
+\DTLforeach*{optim2_1stat}{%
 \NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
 \\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
 Moyenne : & \col & \CG & \NM & \BFGS  }
 \\ \hline
 \end{tabular}
-\caption{\label{tab:optim2gris_pen_quad_reg}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique régularisée.}
+%\centering
+%\begin{tabular}{cc}
+%\DTLdisplaydb{optim2_leg}
+%\end{tabular}
+\caption{\label{tab:optim2gris}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec un créneau comme pénalisation de l'intervalle.}
+%%\vspace{-4cm}
 \end{table}
+\DTLcleardb{optim2_1leg}
+\DTLcleardb{optim2_1stat}
+\DTLcleardb{optim2_1grey}
 
-\DTLcleardb{optim2_leg}
-\DTLcleardb{optim2_stat}
-\DTLcleardb{optim2_grey}
 
-L'ensemble des résultats d'optimisation de $\tau_N$ et de $\tau_P$ avec $\tau_S$ fixé à~197 est fourni dans la Table~\ref{tab:optim2gris}. Ici les niveaux de gris moyen fournis sont conformes aux attentes dans le sens où l'on a $\tau_N$<$\tau_P$<$\tau_S$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Il reste un petit bémol : on notera que dans certaines configurations, les algorithmes tendent vers un jeu de paramètres optimal qui s'approche du bord 0 ou du bord 255, voire même qui est négatif (\ie non convergence de l'algorithme d'optimisation). Ce phénomène peut être dû notamment au fait que la pénalisation choisie \eqref{eq:penalisation_creneau} présente une discontinuité. Les algorithmes de descente fonctionnant sur une approximation du gradient peuvent ainsi être perturbé par cette discontinuité. Essayons alors une autre pénalisation :
-\begin{equation}
-\label{eq:penalisation_quad}
-\mathcal{P}(\tau) = \Big[ \big(  E(\tau) - 127.5 \big)^2-126^2 \Big]^+,
-\end{equation}
-où $[.]^+=\max(0,.)$ désigne la partie positive et où $E(\tau)$ est la composante de $\tau$ la plus éloignée du centre de l'intervalle autorisé (127.5 milieu de [0;255]):
-\begin{equation}
-\label{eq:tau_eloigne} E(\tau)= \arg\max_{i=1,2,3}( | \tau_i-127.5 | ).
-\end{equation} 
-L'aspect de cette pénalisation est présenté sur la Figure~\ref{fig:penal_quad}. Il s'agit d'une parabole dont on ignore la partie négative. 
-Ici la pénalisation intervient sur un intervalle un peu plus court que $[0;255]$, car de toute façon les valeurs de $\tau$ n'ont pas à s'approcher de ces bornes.
-\begin{figure}
+\DTLloaddb{optim2_1bgrey}{../data/cout_1_bad/optim2.csv}
+
+\begin{table}[h]
+%\vspace{-35mm}
+\footnotesize
+\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+\rowcolor{gray!70}
+& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
+\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
+\rowcolor{gray!70}
+& \bfseries SLSQP
+& \bfseries GC 
+& \bfseries Neldear-Mead 
+& \bfseries BFGS \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+& $\tau_N, \qquad \tau_P$
+\DTLforeach*{optim2_1bgrey}{%
+\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
+\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \begin{tabular}{c}
+\col \\ \errcol
+\end{tabular} & \begin{tabular}{c}
+\CG \\ \errCG
+\end{tabular} & \begin{tabular}{c}
+\NM \\ \errNM
+\end{tabular} & \begin{tabular}{c}
+\BFGS \\ \errBFGS
+\end{tabular} 
+}%
+\\ \hline
+\end{tabular}
+\caption{\label{tab:optim2gris_bad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec un créneau comme pénalisation de l'intervalle BAD.}
+%%\vspace{-4cm}
+\end{table}
+\DTLcleardb{optim2_1bgrey}
+
+%%%%%%% Tableau conditionnement
+\DTLloaddb{optim2_1bcond}{../data/cout_1_bad/optim2_cond.csv}
+\DTLloaddb{optim3_1bcond}{../data/cout_1_bad/optim3_cond.csv}
+\DTLloaddb{optim2_1gcond}{../data/cout_1_good/optim2_cond.csv}
+\DTLloaddb{optim3_1gcond}{../data/cout_1_good/optim3_cond.csv}
+\begin{table}[h]
 \centering
-\includegraphics[width=.75\textwidth]{penal_quad.png}
-\vspace{-3mm}
-\caption{\label{fig:penal_quad} Pénalisation via une parabole tronquée (\cf Eq.~\eqref{eq:penalisation_quad}). }
-\end{figure}
-Les résultats des optimisations faites avec la pénalisation~\eqref{eq:penalisation_quad} sont présenté dans la Table~\ref{tab:optim2gris_pen_quad}. Ici plus de valeur négative, cependant la borne 1.5 est atteinte à plusieurs reprises. La pénalisation considéré ici n'est que $\mathcal{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
+%\vspace{-35mm}
+\footnotesize
+\hspace{\retraittableau} %%% Le tableau depasse sur les marges !
+\begin{tabular}{|c|m{3cm}|}
+\hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+\rowcolor{gray!70} & \\
+\rowcolor{gray!70} &  \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& \multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Conditionnement matrice 3x3}
+\DTLforeach*{optim3_1bcond}{%
+\scan=scan, \condi=ratio_s}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \condi
+}%
+\\ \hline \hline
+\DTLforeach*{optim3_1gcond}{%
+\scan=scan, \condi=ratio_s}{%
+\DTLiffirstrow{}{\\ \DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}} }
+\scan & \condi
+}%
+\\ \hline
+\end{tabular}\hspace{4mm}
+\begin{tabular}{|c|m{3cm}|}
+\hline
+%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
+\rowcolor{gray!70} & \\
+\rowcolor{gray!70} &  \\
+\rowcolor{gray!70}
+\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
+& \multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Conditionnement matrice 2x2}
+\DTLforeach*{optim2_1bcond}{%
+\scan=scan, \condi=ratio_s}{%
+\\
+\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+\scan & \condi
+}%
+\\ \hline \hline
+\DTLforeach*{optim2_1gcond}{%
+\scan=scan, \condi=ratio_s}{%
+\DTLiffirstrow{}{\\ \DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}} }
+\scan & \condi
+}%
+\\ \hline
+\end{tabular}
+\caption{\label{tab:condi2} Conditionnement BAD.}
+%%\vspace{-4cm}
+\end{table}
+\DTLcleardb{optim2_1bcond}
+\DTLcleardb{optim3_1bcond}
+\DTLcleardb{optim2_1gcond}
+\DTLcleardb{optim3_1gcond}
 
 
-Essayons donc une troisième fonction de pénalisation qui est la régularisation de Moreau-Yosida de la pénalisation précédente.
-\todo[inline]{Blabla sur la transformée de Moreau Yosida}
-La fonction de pénalisation régularisée est alors donnée par :
+
+
+Ainsi nous résolvons toujours~\eqref{eq:Atau_egal_B}, mais ici avec
 \begin{equation}
-\label{eq:penal_quad_regul}
-\mathcal{P}(\tau)=\left\{  \begin{aligned}
-0 & \textrm{ si } & E(\tau) - 127.5 \in [ 1.5;253.5 ] \\
-\dfrac{1}{2c} ( 126 - E(\tau) )^2 & \textrm{ si } & E(\tau)  \in [-126(2c+1) ; -126 [ \cup ] 126; 126(2c+1) ] \\
-\dfrac{(E(\tau))^2}{1+2c}-126^2 & \textrm{ si } & 127.5 < \frac{ E(\tau) }{ 2c+1 }
-\end{aligned}  \right.
+\label{eq:corresp_A_integ}
+\begin{aligned}
+A_{i,...}.\tau & = \frac{1}{\mathcal{N}\big(Z_1(t_i)\big)}\left( \tau_N\!\!\sum_{x\in Z_1(t_i)}\!\!N(t_i,x) + \tau_P\!\!\sum_{x\in Z_1(t_i)}\!\!P(t_i,x) \right), \\
+B_i &= \frac{1}{\mathcal{N}\big(Z_2(t_i)\big)} \sum_{x\in Z_2(t_i)}\!\! s(t_i,x,z_0) - \bar{\tau_S}\!\!\sum_{x\in Z_1(t_i)}\!\!S(t_i,x) \qquad i \in \{1,...,n\},
+\end{aligned}
 \end{equation}
-\todo[noline]{formulation de la penalisation a revoir}
-et est représentée sur la Figure~\ref{fig:penal_quad_regul}. Les niveaux de gris optimaux obtenus avec cette pénalisation sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
-\begin{figure}
-\centering
-\includegraphics[width=.75\textwidth]{penal_quad_regul.png}
-\vspace{-3mm}
-\caption{\label{fig:penal_quad_regul} Pénalisation via la régularisation de Moreau-Yosida d'une parabole tronquée (\cf Eq.~\eqref{eq:penal_quad_regul}). }
-\end{figure}
+où $A_{i,...}$ désigne la i-ème ligne de la matrice $A$ et où $\bar{\tau_S}$ est fixé à~197.
 
-Visiblement rien ne semble y faire : il y a toujours des valeurs de $\tau_N$ qui s'approche de 0 et les cas où l'on considère les images $[3,5,7]$ et $[3,7,9]$ fournissent $\tau_N >> \tau_S$ ce qui est aberrant. 
-En ce qui concerne l'aberration, cela peut venir du fait que les images 5,7 et 9 sont petites, et donc le bruit est très important et l'image numéro 3, de taille moyenne n'arrive pas à rattraper ce bruit. Il faut donc éviter de prendre en compte les images où la tumeur est trop petite, et si l'on en prend il faut que ces images soient minoritaires devant les autres.
+
+Les premiers essais ont été réalisés avec la même fonction coût \eqref{eq:min_optim_grey} que pour l'optimisation sur 3 paramètres. 
+L'ensemble des résultats d'optimisation de $\tau_N$ et de $\tau_P$ avec $\tau_S$ fixé à~197 et (( avec une parabole tronquée régularisée comme pénalisation ))\todo{penalisation} est fourni dans la Table~\ref{tab:optim2gris}. Ici les niveaux de gris moyen fournis sont conformes aux attentes dans le sens où l'on a plus souvent \todo{a quantifer !} $\tau_N$<$\tau_P$<$\tau_S$.
+
+Cependant dans certaines configurations, les algorithmes tendent vers un jeu de paramètres optimal qui s'approche du bord 0 ou du bord 255, voire même qui est négatif (\ie non convergence de l'algorithme d'optimisation). 
+
+
+Ce phénomène pourrait être dû notamment au fait que la pénalisation choisie \eqref{eq:penalisation_creneau} présente une discontinuité. Les algorithmes de descente fonctionnant sur une approximation du gradient peuvent ainsi être perturbé par cette discontinuité. En annexe REF\todo{ref} est détaillé l'enquête menée sur les fonctions de pénalisations. Des pénalisations plus régulières ont été testées (parabole tronquée et parabole tronquée régularisée) mais n'améliorent que très peu le résultat final. Ceci nous amène à penser que ce n'est donc pas la régularité de la pénalisation qui est à mettre en cause mais les données elles-mêmes. Certaines combinaisons d'images fourniraient donc de mauvais résultats. 
+
+
+
+Même en écartant le fait que certaines configurations tendent vers le bord~0, il reste encore quelques combinaisons qui paraissent très pathologiques. Dans les cas où l'on considère les images $[3,5,7]$ et $[3,7,9]$ fournissent $\tau_N >> \tau_S$ ce qui est aberrant. 
+
+
+
+Pour une combinaison de 2 ou 3 images, on s'attends à ce que l'optimum soit la solution exacte du système linéaire, et ce indépendemment de l'algorithme choisi. Dans là mesure où ce n'est pas le cas, nous devons nous interroger si les systèmes sont bien conditionné. S'il ne le sont pas, alors une petite perturbation des données entraine un très grand écart sur la solution du système. Bien que nous ne résolvons pas directement le système, mais que nous effectuons une minimisation, ces problèmes de sensibilité aux données n'ont aucune raisons de ne pas se reporter. La Table~\ref{tab:condi2} présente les conditionnements associés aux différentes combinaison d'image que nous avons examinés. Pour les cas ayant bien convergés, le conditionnement reste raisonnable (excepté peut-être pour le cas [1,2,3]). Maintenant si on examine les cas ayant mal convergés, on constate des conditionnements très élevés (supérieur à $10^3$). Seul le cas $[3,7,9]$ est de l'ordre de $10^2$. Le conditionnement semble donc expliquer la plupart des configurations non convergentes avec 2 ou 3 images. Pour les configurations où l'on considère un plus grand nombres d'images, si un sous-ensemble d'images fournit une configurations instable, alors il y a de fortes chances que l'image (ou les 2 images) supplémentaires ne parviennent pas à contrebalancer cette instabilité. 
+
+
+Pour les configuration contenant l'image 11, on peut même avancer que le modèle EDP n'est pas proche de la réalité en terme de volume tumorale. Bien qu'ici les niveaux de gris soit moyennés, il y a sûrement d'autres erreurs...\todo{a reformuler} Par exemple [1,2,5,7] avec [2,5,7].. ou bien [1,3,5,7] avec [3,5,7] ou [1,2,5,7] avec [2,5,7].
+
+
 
 \end{document}
