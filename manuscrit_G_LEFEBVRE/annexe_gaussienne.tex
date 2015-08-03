@@ -1,7 +1,7 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
-\chapter{Ananlyse de mélanges bi-gaussien}
-\lettrine[lines=2, lhang=0.33, loversize=0.25]{D}{ans} tout ce chapitre dédié à l'analyse d'un mélange bi-gaussien sous toutes les coutures, nous considèrerons les mêmes notations que celles utilisées dans le chapitre REFF ??? \todo[noline]{ref chap}.
+\chapter{Ananlyse de mélanges bi-gaussien \label{chap:anx_gmm}}
+\lettrine[lines=2, lhang=0.33, loversize=0.25]{D}{ans} tout ce chapitre dédié à l'analyse d'un mélange bi-gaussien sous toutes les coutures, nous considèrerons les mêmes notations que celles utilisées dans le chapitre~\ref{chap:crit_hetero}.
 
 \section{Propriétés d'une gaussienne}
 On considère une gaussienne définie selon deux paramètres, son écart-type~$\sigma$ et son centre~$c$ (qui est aussi l'espérence notée plutôt $\mu$ lorsqu'on fait des statistiques)~:
@@ -39,7 +39,7 @@ g(x)= g_1(x)+ g_2(x) \quad \textrm{où} \quad g_i(x)=w_if_i(x), \ w_i\in ]0;1[  
 \end{equation}
 où $f_1$ et $f_2$ sont deux gaussiennes définies respectivement en fonction des paramètres~$c1,\sigma_1$ et~$c_2,\sigma_2$ via la formulation~\eqref{eq:anxe_gaussienne}. Comme la somme des poids est de 1, la Propriété~\ref{prop:integ1} reste valable pour un mélange gaussien.
 
-Comme présenter dans le chapitre REFF ??, le calcul de l'intersection des deux composantes se résume à~:
+Comme présenter dans la section~\ref{sec:config_gmm}, le calcul de l'intersection des deux composantes se résume à~:
 \begin{equation}
 \begin{aligned}
 \label{eq:anxe_polynome}
@@ -54,7 +54,7 @@ Le discriminant réduit de ce polynôme est donné par~:
 \label{eq:anxe_discr_reduit}
 \Delta' := B'^2 - AC = \sigma_1^2 \sigma_2^2 \left[ (\Delta c)^2 - 2(\sigma_2^2-\sigma_1^2) \ln (h_2/h_1)  \right].
 \end{equation}
-Le cas particulier $\sigma_1 = \sigma_2$ ayant déjà traité (\cf REF page REF\todo{ref}), écartons le. 
+Le cas particulier $\sigma_1 = \sigma_2$ ayant déjà traité (\cf section~\ref{sec:config_gmm} page~\pageref{para:cas_partic_polynome}), écartons le. 
 En posant $\bar{c}=(c_1+c_2)/2$, $\Delta c = c_2-c_1$ et $\sigma_2=\sigma$ avec $\sigma_1=\beta \sigma$ où $\beta\neq 1$, on peut ainsi réécrire~\ref{eq:anxe_discr_reduit}~:
 %\begin{equation}
 %\begin{aligned}
@@ -196,7 +196,7 @@ h_2 \  - h_1\ e^{ -\frac{1}{2} \frac{(\Delta c)^2}{\sigma_1^2} }>0
 \subfloat[$\Delta c >C$]{\includegraphics[width=.33\textwidth]{dessin_gauss/gmm_translation3.png}}
 \caption{\label{fig:influence_dc} Influence de $\Delta c$ sur la position des points d'intersections (\mbox{$C=\max \left( -2\sigma_1^2 \ln(h_2/h_1) , 2\sigma_2^2 \ln(h_2/h_1) \right)$}).}
 \end{figure}
-Sur la Figure~\ref{fig:influence_dc}, on peut voir l'influence de $\Delta c$ sur la position des points d'intersections. Le graphique illustre bien le critère donné par le théorème~\ref{thm:anxe_pt_unique}. Ce critère est cependant relativement restrictif.\todo{Graphique de la condition racine intrene ?} On ne peut donc pas compter sur la présence systématique d'un point d'intersection interne pour établir un critère d'\hetero. Peux-t-on au moins espérer avoir toujours 2 points d'intersections ?
+Sur la Figure~\ref{fig:influence_dc}, on peut voir l'influence de $\Delta c$ sur la position des points d'intersections. Le graphique illustre bien le critère donné par le théorème~\ref{thm:anxe_pt_unique}. Ce critère est cependant relativement restrictif.\todo{Graphique de la condition racine interne ?} On ne peut donc pas compter sur la présence systématique d'un point d'intersection interne pour établir un critère d'\hetero. Peux-t-on au moins espérer avoir toujours 2 points d'intersections ?
 
 
 \subsection*{Analyse du discriminant.}

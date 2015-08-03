@@ -9,7 +9,7 @@
 %\todo[noline]{On peut employer le mot "fit" ?}
 
 
-\chapter{Critère quantifiant l'\hetero.}
+\chapter{Critère quantifiant l'\hetero. \label{chap:crit_hetero}}
 %\lettrine[lines=2, lhang=0.33, loversize=0.25]{$\mathscr{D}$}{ans} 
 \lettrine[lines=2, lhang=0.33, loversize=0.25]{D}{ans} ce chapitre, nous allons construire un critère permettant permettant de quantifier l'\hetero d'une tumeur.
 A chaque image, on construira l'histogramme des niveaux de gris associés aux tumeurs. 
@@ -80,6 +80,9 @@ Pour les histogrammes numériques, seule une image est reconstruite par la simul
 %\end{figure}
 
 \begin{figure}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
 \setlength{\tabcolsep}{1mm} %%% padding horizontal
 \begin{tabular}{ccccc}
 \subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_05_20_scan_contour.png}}&
@@ -112,10 +115,11 @@ Pour les histogrammes numériques, seule une image est reconstruite par la simul
 \subfloat[Jour 1179]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_08_12_scan_contour.png}}
 \end{tabular}
 \caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
-\todo[inline]{Numeroter avec des chiffres commencant à 0 plutot, pour etre coherent avec la numerotation des acnas dans les tableaux d'optim de gris }
 \end{figure}
 
 %\begin{figure}
+%\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+%\addtocounter{subfigure}{-1} %% Commence a 0
 %\begin{tabular}{ccccc}
 %\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_05_23_scan_contour.png}}&
 %\subfloat[Jour 93]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_08_24_scan_contour.png}}&
@@ -146,6 +150,9 @@ Pour les histogrammes numériques, seule une image est reconstruite par la simul
 %\end{figure}
 
 \begin{figure}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
 \setlength{\tabcolsep}{1mm} %%% padding horizontal
 \begin{tabular}{ccccc}
 %%% \renewcommand{\arraystretch}{3} %%%% padding vertical (ne semble pas fonctionner
@@ -189,6 +196,9 @@ Pour les histogrammes numériques, seule une image est reconstruite par la simul
 \setlength{\largeurhisto}{0.24\textwidth}
 
 \begin{figure}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
 \centering
 \subfloat[Jour 0]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2008_05_20_histo.png}}\ 
 \subfloat[Jour 119]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2008_09_16_histo.png}}\ 
@@ -213,6 +223,9 @@ Pour les histogrammes numériques, seule une image est reconstruite par la simul
 \end{figure}
 
 \begin{figure}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
 \centering
 \subfloat[Jour 0]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2007_05_23_histo.png}}\ 
 \subfloat[Jour 93]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2007_08_24_histo.png}}\ 
@@ -397,7 +410,7 @@ Les résultats présentés sur la Figure~\ref{fig:critere_dc_sur_dh} ne sont pas
 Avant de proposer diverses critères, étudions de manière plus précise, la façon dont peuvent s'intersecter deux gaussiennes.
 %Avant de regarder quel critère qu'il soit, étudions l'ensemble des configurations possibles entre 2 gaussiennes.
 
-\subsection{Ensemble des configurations d'un mélange bi-gaussien.}
+\subsection{Ensemble des configurations d'un mélange bi-gaussien. \label{sec:config_gmm}}
 \begin{figure}
 \subfloat[Cas avec 2 intersections, l'une se situant entre les centres des gaussiennes.]{
 \vspace{-3mm}
@@ -431,7 +444,7 @@ g_1(x)=g_2(x) \quad \Longleftrightarrow & \quad  Ax^2 + 2B'x + C =0 \\
 & C= c_1^2\sigma_2^2-c_2^2\sigma_1^2 +  2\sigma_1^2\sigma_2^2 \ln( h_2 / h_1 ).
 \end{aligned}
 \end{equation}
-\paragraph{Cas particulier.}
+\paragraph{Cas particulier. \label{para:cas_partic_polynome}}
 Ecartons tout de suite le cas particulier $\sigma_1=\sigma_2$. %, que l'on notera génériquement $\sigma$. 
 Dans ce cas, l'équation~\eqref{eq:g1=g2} se réécrit :
 \begin{equation}
@@ -451,8 +464,7 @@ x=\dfrac{c_1+c_2}{2}-\dfrac{\sigma^2}{\Delta c}\ln \left( \dfrac{1-w}{w} \right)
 \label{eq:discr_reduit}
 \Delta' := B'^2 - AC = \sigma_1^2 \sigma_2^2 \left[ (\Delta c)^2 - 2(\sigma_2^2-\sigma_1^2) \ln (h_2/h_1)  \right].
 \end{equation}
-Ce discriminant n'est pas nécessairement positif ! Donc il existe des cas où les gaussiennes ne s'intersectent pas.
-\todo[inline]{analyse du signe du discriminant à compléter}
+Ce discriminant n'est pas nécessairement positif ! Donc il existe des cas où les gaussiennes ne s'intersectent pas. L'annexe~\ref{chap:anx_gmm} page~\pageref{chap:anx_gmm} présente une étude détaillée de la manière dont peuvent s'intersecter 2 gaussiennes. On y montre que le discriminant est positif dans une large majorité de cas, ce qui appuie le fait qu'en pratique nous n'ayons jamais été confronté à des cas de gaussiennes ne s'intersectant pas (ou s'intersectant en un seul et unique point).
 
 \subsection{Etudes de différents critères}
 Différents critères seront étudiés dans cette section. Ils sont basés sur
@@ -473,7 +485,7 @@ Différents critères seront étudiés dans cette section. Ils sont basés sur
 \caption{\label{fig:pts_carac_intersection_gaussienne}Points caractéristiques d'un mélange de deux gaussiennes.}
 \end{figure}
 
-Plutôt que de considérer seulement 2 points (le sommet de chaque gaussienne), élargissons notre évantail de points caractéristiques. La Figure~\ref{fig:pts_carac_intersection_gaussienne} présente l'ensemble des points utilisés dans les critères d'évaluation de l'\hetero de cette section. Cet ensemble de points n'existe que dans le cas où les gaussiennes possède 2 points d'intersections. Comme montrer dans la section précédente, les cas avec aucun ou un seul point d'intersection sont relativement marginaux (plus ou moins selon la valeur de $\Delta c$ notamment). En plus des points $I$ et $J$ représentant le sommet de chaque composante ($I$ représentera toujours le sommet de la plus haute composante), on se servira de $A$ et $B$ qui représentent les valeurs du mélange gaussien en les centres des composantes : $c_1$ et $c_2$ ($A$ ayant même abscisse que $I$, et $B$ même abscisses que $J$). On notera également $R$ et $S$ les points d'intersections des composantes, $R$ étant le point le plus haut. Enfin, on considère $H$ la valeur du mélange gaussien à l'abscisse de $R$ et $M$ milieu de $[AB]$. 
+Plutôt que de considérer seulement 2 points (le sommet de chaque gaussienne), élargissons notre évantail de points caractéristiques. La Figure~\ref{fig:pts_carac_intersection_gaussienne} présente l'ensemble des points utilisés dans les critères d'évaluation de l'\hetero de cette section. Cet ensemble de points n'existe que dans le cas où les gaussiennes possèdent 2 points d'intersections. Comme montrer dans l'annexe~\ref{chap:anx_gmm}, les cas avec aucun ou un seul point d'intersection sont relativement marginaux (plus ou moins selon la valeur de $\Delta c$ notamment). En plus des points $I$ et $J$ représentant le sommet de chaque composante ($I$ représentera toujours le sommet de la plus haute composante), on se servira de $A$ et $B$ qui représentent les valeurs du mélange gaussien en les centres des composantes : $c_1$ et $c_2$ ($A$ ayant même abscisse que $I$, et $B$ même abscisses que $J$). On notera également $R$ et $S$ les points d'intersections des composantes, $R$ étant le point le plus haut. Enfin, on considère $H$ la valeur du mélange gaussien à l'abscisse de $R$ et $M$ milieu de $[AB]$. 
 
 
 On regardera ici les informations que peuvent fournir l'étude des angles. Un large spectre d'angle sera examiné : $\widehat{ARB}$, $\widehat{MRB}$, $\widehat{MRA}$,  $\widehat{HRB}$, $\widehat{HRA}$, $\widehat{IRJ}$, $\widehat{MRJ}$, $\widehat{MRI}$, $\widehat{HRJ}$, $\widehat{HRI}$, $\widehat{IRB}$ et $\widehat{ARJ}$. 

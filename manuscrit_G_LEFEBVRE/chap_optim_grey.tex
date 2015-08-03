@@ -3,7 +3,7 @@
 %\setcounter{chapter}{1}
 
 \begin{document}
-\chapter{Optimisation de la reconstruction d'image scanner}
+\chapter{Optimisation de la reconstruction d'image scanner \label{chap:optim_grey}}
 \lettrine[lines=2, lhang=0.33, loversize=0.25]{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons nous sur la manière de reconstruire une image en niveau de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités $N(t,x)$, $P(t,x)$ et $S(t,x)$ (toutes comprises entre 0 et 1). On tentera, dans ce chapitre, d'optimiser les niveaux de gris $\tau_N, \tau_P$ et $\tau_S$ de l'interpolation EQREF \todo[noline]{eqref} afin de rapprocher au maximum la visualisation des résultas numériques de la visualisation des scanners médicaux.
 
 \section{Présentation de l'approche}
@@ -41,12 +41,14 @@ Pour ne pas se limiter au cas $n=3$ qui clos le système, on le résoud par la m
 \begin{equation}\label{eq:min_optim_grey}
 \min_{\tau} J(\tau) \ \textrm{ avec } \ J(\tau)= \dfrac{\| A\tau - B \|^2_{\ell^2}}{\|B\|^2_{\ell^2}} + \mathcal{P}(\tau),
 \end{equation}
-où $\mathcal{P}$ pénalise la fonction coût~$J$ lorsque l'une des composante de ~$\tau$ est en dehors de l'intervalle~$[0;255]$. Dans la section qui suit, nous démarrerons avec une pénalisation en créneau
+où $\mathcal{P}$ pénalise la fonction coût~$J$ lorsque l'une des composante de ~$\tau$ est en dehors de l'intervalle~$[0;255]$. 
+%Dans la section qui suit, nous démarrerons avec une pénalisation en créneau
+Une pénalisation en créneau sera considéree ici
 \begin{equation}
 \label{eq:penalisation_creneau}
 \mathcal{P}(\tau) = 1e7 \times ( \tau \notin  [0;255]^3 ).
 \end{equation}
-Dans la section d'après, la régularisée de Moreau-Yosida d'une parabole tronquée sera considérée comme pénalisation. Cette méthode de régularisation est décrite dans l'annexe REF page REF \todo[noline]{ref anex + page}. Dans cette annexe également, on examinera l'influence du choix de la fonction de pénalisation sur les optima fournit.
+%Dans la section d'après, la régularisée de Moreau-Yosida d'une parabole tronquée sera considérée comme pénalisation. Cette méthode de régularisation est décrite dans l'annexe REF page REF \todo[noline]{ref anex + page}. Dans cette annexe également, on examinera l'influence du choix de la fonction de pénalisation sur les optima fournit.
 %permet d'assurer que les optima respectent les bornes~0 à~255 :
 
 
@@ -118,7 +120,7 @@ Dans la section d'après, la régularisée de Moreau-Yosida d'une parabole tronq
 \DTLsetheader{optim3_0leg}{Column2}{}
 \begin{sidewaystable}
 %\footnotesize\smaller[0.5]
-\scriptsize
+\scriptsize\smaller[2]
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -408,7 +410,7 @@ L'ensemble des résultats d'optimisation de $\tau_N$ et de $\tau_P$ avec $\tau_S
 Cependant dans certaines configurations, les algorithmes tendent vers un jeu de paramètres optimal qui s'approche du bord 0 ou du bord 255, voire même qui est négatif (\ie non convergence de l'algorithme d'optimisation). 
 
 
-Ce phénomène pourrait être dû notamment au fait que la pénalisation choisie \eqref{eq:penalisation_creneau} présente une discontinuité. Les algorithmes de descente fonctionnant sur une approximation du gradient peuvent ainsi être perturbé par cette discontinuité. En annexe REF\todo{ref} est détaillé l'enquête menée sur les fonctions de pénalisations. Des pénalisations plus régulières ont été testées (parabole tronquée et parabole tronquée régularisée) mais n'améliorent que très peu le résultat final. Ceci nous amène à penser que ce n'est donc pas la régularité de la pénalisation qui est à mettre en cause mais les données elles-mêmes. Certaines combinaisons d'images fourniraient donc de mauvais résultats. 
+Ce phénomène pourrait être dû notamment au fait que la pénalisation choisie \eqref{eq:penalisation_creneau} présente une discontinuité. Les algorithmes de descente fonctionnant sur une approximation du gradient peuvent ainsi être perturbé par cette discontinuité. Dans l'annexe~\ref{chap:anx_penalisation} page~\pageref{chap:anx_penalisation} est détaillé l'enquête menée sur les fonctions de pénalisations. Des pénalisations plus régulières ont été testées (parabole tronquée et parabole tronquée régularisée) mais n'améliorent que très peu le résultat final. Ceci nous amène à penser que ce n'est donc pas la régularité de la pénalisation qui est à mettre en cause mais les données elles-mêmes. Certaines combinaisons d'images fourniraient donc de mauvais résultats. 
 
 
 
