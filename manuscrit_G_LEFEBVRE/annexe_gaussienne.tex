@@ -31,28 +31,28 @@ La gaussienne $f$ définie ci-dessus par~\eqref{eq:anxe_gaussienne} est normalis
 \begin{proof} Cette preuve est divisée en deux étapes.
 %%Posons $y=\frac{x-c}{\sigma\sqrt{2}}$ et 
 \paragraph{Etape 1 :} 
-Montrons dans un premier temps que la fonction $h$ définie par $h(x):=e^{-x^2}$, vérifie $\int\limits_{-\infty}^{+\infty} h(x) \dx=\sqrt{\pi}$. Considérons la fonction~:
-\vspace{-3mm}
-$$ k(x):=\int\limits_0^x e^{-u^2} \du. $$
-\vspace{-6mm}
-\begin{flalign*}
-\textrm{On a alors~:}  \qquad \big( k^2(x) \big)' &= 2k(x)k'(x) = 2 e^{-x^2} \int\limits_0^x e^{-u^2} \du &\\
-& \overset{u=tx}{=} 2 e^{-x^2} \int\limits_0^1 e^{-(tx)^2} x \dt = \int\limits_0^1 2xe^{-x^2(1+t^2)} \dt. &
-\end{flalign*}
-En primitivant, on obtient grâce au théorème de Fubini qui nous permet d'intervertir les intégrales~:
-$$k^2(x)= \int\limits_0^x \int\limits_0^1 2xe^{-x^2(1+t^2)} \dt \dx =  \int\limits_0^1 \int\limits_0^x 2xe^{-x^2(1+t^2)} \dx \dt =  \int\limits_0^1 \frac{-e^{-x^2(1+t^2)}}{1+t^2} \dt. $$
-La fonction $t\mapsto  \frac{-e^{-x^2(1+t^2)}}{1+t^2} $ est en valeur absolue bornée par $t\mapsto \frac{1}{1+t^2} $ qui est intégrable. Le théorème de convergence dominée de Lebesgue nous donne ainsi~:
-\vspace{-5mm}
+Montrons dans un premier temps que $\int\limits_{-\infty}^{+\infty} e^{-x^2} \dx=\sqrt{\pi}$. La fonction $x\mapsto e^{-x^2}$ étant paire, il suffit de montrer que~:
+\vspace{-2mm}
+$$\lim_{x\to +\infty} k(x) = \frac{\sqrt{\pi}}{2} \qquad \textrm{avec} \  k(x):=\int\limits_0^x e^{-u^2} \du. $$
+On a~:%%\vspace{-7mm}
 \begin{align*}
-\lim_{x\to +\infty} k^2(x) & = \lim_{x\to +\infty} \int\limits_0^1 \frac{-e^{-x^2(1+t^2)}}{1+t^2} \dt = \int\limits_0^1 \lim_{x\to +\infty}  \frac{-e^{-x^2(1+t^2)}}{1+t^2} \dt \\
-& = \int\limits_0^1  \frac{1}{1+t^2} \dt = [\arctan t]_0^1 = \frac{\pi}{4}.
+\big( k^2(x) \big)' &= 2k(x)k'(x) = 2 e^{-x^2} \int\limits_0^x e^{-u^2} \du \overset{u=tx}{=} 2 e^{-x^2} \int\limits_0^1 e^{-(tx)^2} x \dt\\
+&  = \int\limits_0^1 2xe^{-x^2(1+t^2)} \dt = - \int\limits_0^1 \diff{H}{x}(t,x) \dx \qquad \textrm{où}\ H(t,x):=\frac{e^{-x^2(1+t^2)}}{1+t^2}.
 \end{align*}
-\vspace{-5mm}
+Grâce au théorème de Fubini qui nous permet d'intervertir les intégrales, on peut primitiver~:
+\begin{align*}
+k^2(x) &= -\int\limits_0^x \int\limits_0^1 \diff{H}{v}(t,v) \dt \dv =  -\int\limits_0^1 \int\limits_0^x \diff{H}{v}(t,v)  \dv \dt =  -\int\limits_0^1 \left[ H(t,v) \right]_{v=0}^{v=x} \dt  \\
+& =  -\int\limits_0^1 H(t,x) \dt +  \int\limits_0^1 H(t,0)  \dt. 
+\end{align*}\vspace{-9mm}
 \begin{flalign*}
-\textrm{Ainsi :}& \qquad \lim_{x\to +\infty} k(x) = \int\limits_0^{+\infty} h(u) \du = \int\limits_{0}^{+\infty} e^{-u^2}\du  = \sqrt{\pi}/2.& %%% derniere colonne requise pour que l'alignement a gauche prenne effet
+\textrm{Or} \hphantom{d'ou} \qquad & \int\limits_0^1 H(t,0) \dt =  \int\limits_0^1 \frac{1}{1+t^2} \dt = [\arctan t]_0^1 = \frac{\pi}{4}, & \\
+\textrm{d'où}\hphantom{Or} \qquad & \frac{\pi}{4}-k^2(x) = \int\limits_0^1 H(t,x) \dt. \tag{$\star$}\label{eq:dem_gauss1}
 \end{flalign*}
-La fonction $h$ étant paire, on a~:
-$$ \int\limits_{-\infty}^{+\infty} h(u) \du = 2 \int\limits_0^{+\infty} h(u) \du = \sqrt{\pi}. $$
+Or la fonction $H$ est positive quelquesoit $t$ et $x$. Son intégrale est donc positive. De plus on peut majorer $H$, et donc son intégrale~:
+$$0\leq \int\limits_0^1 H(t,x) \dt \leq \int\limits_0^1 \frac{e^{-x^2}}{1+t^2} \dt = e^{-x^2} \int\limits_0^1 \frac{1}{1+t^2} \dt = \frac{\pi}{4} e^{-x^2} \quad \forall x \in \reel.$$
+Par passage à la limite sur l'encadrement ci-dessus, il en découle que
+$$ \lim_{x\to +\infty} \int\limits_0^1 H(t,x) \dt = 0. $$
+Ainsi, \eqref{eq:dem_gauss1} nous amène à~: $ \lim_{x\to +\infty} k^2(x) = \frac{\pi}{4}$, ce qui fournit le résultat escompté.
 \paragraph{Etape 2 :} Le résultat de l'étape~1 nous permet de conclure  en effectuant le changement de variable $x=\frac{u-c}{\sigma \sqrt{2}}$~:
 \begin{equation*}
  \int\limits_{-\infty}^{+\infty} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{u-c}{\sigma}\right)^2} \du
