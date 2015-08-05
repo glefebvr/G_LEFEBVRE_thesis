@@ -25,7 +25,7 @@
 \usepackage{mathtools}
 \usepackage{caption} %% Permet d'utiliser \captionof sans etre dans un environnement figure
 \usepackage{subfig}%% \subfloat
-%\usepackage{wrapfig}%% \begin{wrapfigure}
+\usepackage{wrapfig}%% \begin{wrapfigure}
 %%\usepackage{stackengine}
 \usepackage{xspace}
 \usepackage{lipsum}
@@ -215,6 +215,8 @@
 \newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
 
 \newcommand{\rect}[4]{
+%% #1 et #2 --> coordonnee du coin en bas a gauche
+%% #3 et #4 --> largeur et hauteur
 \multiput(#1,#2)(0,#4){2}{\line(1,0){#3}}
 \multiput(#1,#2)(#3,0){2}{\line(0,1){#4}}
 }
@@ -227,6 +229,8 @@
 %%\maketitle
 
 \frontmatter % Le prologue du livre
+
+\tableofcontents    % Table des matières
  
 %\chapter{Avant-propos}
 %\chapter{Remerciements}
@@ -253,6 +257,7 @@
 %\custompart{Modèles EDPs de croissance tumorale}{Cas des métastases hépatiques}{Description de la partie.... }
 
 %\subfile{chap1}
+\subfile{chap_biologie_du_cancer}
 \subfile{chap_optim_grey}
 \subfile{chap_analyse_heterogeneite}
 
