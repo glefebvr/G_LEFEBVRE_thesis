@@ -4,7 +4,7 @@
 
 \begin{document}
 \chapter{Optimisation de la reconstruction d'image scanner \label{chap:optim_grey}}
-\lettrine[lines=2, lhang=0.33, loversize=0.25]{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons nous sur la manière de reconstruire une image en niveau de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités $N(t,x)$, $P(t,x)$ et $S(t,x)$ (toutes comprises entre 0 et 1). On tentera, dans ce chapitre, d'optimiser les niveaux de gris $\tau_N, \tau_P$ et $\tau_S$ de l'interpolation EQREF \todo[noline]{eqref} afin de rapprocher au maximum la visualisation des résultas numériques de la visualisation des scanners médicaux.
+\mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons nous sur la manière de reconstruire une image en niveau de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités $N(t,x)$, $P(t,x)$ et $S(t,x)$ (toutes comprises entre 0 et 1). On tentera, dans ce chapitre, d'optimiser les niveaux de gris $\tau_N, \tau_P$ et $\tau_S$ de l'interpolation EQREF \todo[noline]{eqref} afin de rapprocher au maximum la visualisation des résultas numériques de la visualisation des scanners médicaux.
 
 \section{Présentation de l'approche}
 Pour un patient donné, on considère $n$ instants auxquels on possède des scanners (aux temps $t_i, i\in \{ 1,...,n \}$). Sur ces $n$ images, on propose d'optimiser les coefficients (niveaux de gris) de l'interpolation $\tau_N N + \tau_P P + \tau_S S$ où $N, P$ et $S$ sont les populations définies dans le modèle présenté précédement. Sur l'ensemble de ces images, on fait correspondre le niveau de gris moyen des images numériques à celui moyen des scanners, ce qui s'écrit~:
@@ -209,7 +209,13 @@ On note également que la combinaison $[1,9,11]$ ne semble pas pertinente pour c
 \section{Optimisation sur 2 paramètres, $\tau_S$ fixé}
 Pour essayer de palier aux problèmes rencontrés dans la section précédentes, nous allons fixer $\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de 0 à 255). Cette valeur a été fixée en réalisant un contourage d'une zone de tissu sain dans OsiriX (\cf  Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de 134.5 HU. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, 134.5~HU équivaut à un gris de 77\% soit un gris de niveau~197.
 
+\begin{figure}
+\centering
 \input{tex_pictures/tikz_schema_correspondance_gris.tex}
+\caption{\label{fig:schema_correspondance_gris} Correspondance des niveaux de gris }
+\end{figure}
+\todo[noline]{Titre figure \ref{fig:schema_correspondance_gris} à revoir ...}
+
 
 \begin{figure}
 \includegraphics[width=\textwidth]{OsiriX_gris_sain_rognee.png}
