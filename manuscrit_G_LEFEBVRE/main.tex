@@ -1,7 +1,7 @@
 %\documentclass[12pt,a4paper,twoside]{memoir}
-%\documentclass[a4paper,twoside,final]{book} %%% twoside pour final
+\documentclass[a4paper,twoside,final]{book} %%% twoside pour final
 %\documentclass[a4paper,oneside,draft]{book} %%% draft pour voir tout ce qui depasse dans les marges
-\documentclass[a4paper,oneside]{book}
+%%\documentclass[a4paper,oneside]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage[francais,frenchb]{babel}
@@ -21,12 +21,47 @@
 %\usepackage{frcursive} %fournit l'environnement cursive, qui imite une écriture manuelle
 \usepackage{relsize}
 \usepackage{lettrine}
+
+\usepackage[titles]{tocloft}
+\setlength{\cftchapnumwidth}{0pt}
+\setlength{\cftbeforechapskip}{\baselineskip}
+\renewcommand{\cftchapaftersnum}{.}
+\renewcommand{\cftchapaftersnumb}{\newline}
+%%\renewcommand{\cftchappresnum}{\chaptername\ }
+%\makeatletter%
+%\ifx\@chapapp\appendixname%
+%\renewcommand{\cftchappresnum}{Annexe\ }%
+%\else%
+%\renewcommand{\cftchappresnum}{\chaptername\ }%
+%\fi%
+%\makeatother%
+\makeatletter
+\newcommand*\updatechaptername{%
+        \addtocontents{toc}{\protect\renewcommand*\protect\cftchappresnum{\@chapapp\ }}%
+}
+\makeatother
+
+
+%%%\usepackage[titletoc,title]{appendix}
+%\usepackage[toc,page]{appendix} %% option toc quio ne marche pas --> appel manuel a \addappheadtotoc
+\usepackage[page]{appendix}
+\renewcommand{\appendixtocname}{Annexes}
+%\renewcommand{\appendixpagename}{Annexes}
+\def\appendixpage{\vspace*{9cm}
+\begin{center}
+\Huge\textbf{Annexes}
+\end{center}
+\thispagestyle{empty}
+}
+
+
 \usepackage{mathabx} %% Pour avoir proprement le grand symbole \sqrt notamment
 \usepackage{mathtools}
 \usepackage{caption} %% Permet d'utiliser \captionof sans etre dans un environnement figure
 \usepackage{subfig}%% \subfloat
 \usepackage{wrapfig}%% \begin{wrapfigure}
 %%\usepackage{stackengine}
+\usepackage{placeins} %%% Fournit \FloatBarrier
 \usepackage{xspace}
 \usepackage{lipsum}
 \usepackage{booktabs} %% midrule
@@ -44,22 +79,36 @@
 \usepackage{spreadtab}
 \usepackage{rotating}
 
+\frenchbsetup{StandardLists=true} %% Resolves conflict between babel and enumitem
+\usepackage{enumitem} %%% Personalisation des puces pour les listes 
+%%\usepackage{enumerate}
+
 \usepackage{xcolor}
-\usepackage{showkeys} %%% Pour faire afficher les label utilisés
+%%\usepackage{showkeys} %%% Pour faire afficher les label utilisés
 %%%%%\usepackage[plain]{fancyref}
 \usepackage{xr}
 \usepackage{hyperref} %%% Les premieres compilations fournisse une erreur. recompiler plsrs fois ...
-\usepackage[textwidth=25mm]{todonotes} %%% Ajuster le textwidth en fct de la marge
-%\usepackage[disable]{todonotes}
+
 %%% Dimension page pour final
 %\usepackage[left=35mm,right=25mm,top=30mm,bottom=30mm]{geometry} 
 %%% Dimension page pour todonote a droite
-\usepackage[left=20mm,right=40mm,top=30mm,bottom=30mm]{geometry}
+\usepackage[left=40mm,right=20mm,top=30mm,bottom=30mm]{geometry}
+\usepackage[textwidth=30mm]{todonotes} %%% Ajuster le textwidth en fct de la marge
+%\usepackage[disable]{todonotes}
+\reversemarginpar %%% pour que les notes alterne au niveau des marges (mode twoside)
+\setlength{\marginparwidth}{3cm}%%% pour regler la posiition des notes sur page impaire
+
 \usepackage{tcolorbox}
 \usepackage{subfiles}
 %%\usepackage{etoolbox}
 \usepackage{tikz,tkz-tab}
 \usepackage{pgfplots}
+
+%\usepackage{titletoc}
+%\dottedcontents{subsection}[9em]{}{3em}{.5pc}
+%\dottedcontents{section}[6.5em]{}{2em}{.5pc}
+%\dottedcontents{chapter}[4em]{\vspace{7mm}}{2em}{.5pc}
+
 
 %%%%% fncychap predefini
 %\usepackage[Glenn]{fncychap}
@@ -68,8 +117,71 @@
 %\usepackage[Peters]{fncychap}
 %\usepackage{fncychap}
 %%\usepackage{fancyhdr} %%%% incompatible avec la class memoir
+\usepackage{fancyhdr}
 
-%%%%%% Variable d'environnement %%%%%%%%
+%%%%%% Parametrage des entetes et pied de page %%%%%%%%
+\pagestyle{fancy}
+%\fancyhead{}% efface le contenu de l'en-tete
+%\fancyfoot{}% efface le contenu du pied de page
+
+\renewcommand{\chaptermark}[1]{\markboth{{\sc \chaptername } \thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\addtolength{\footskip}{7mm}%
+ 
+%\lhead[]{\leftmark}
+%\rhead[\rightmark]{}
+%\lfoot[Guillaume Lefebvre]{\thepage}
+%\rfoot[\thepage]{Guillaume Lefebvre}
+%%\renewcommand{\headheight}{15pt}
+%%\renewcommand{\headsep}{16pt}
+%%\renewcommand{\footskip}{40pt}
+%%\makeatletter
+%%\let\ps@plain=\ps@fancy
+%%\makeatother
+%\fancypagestyle{plain}{
+%\lhead[]{}
+%\renewcommand{\headrulewidth}{0pt}%
+%}
+
+\fancypagestyle{main}{%
+  \fancyhf{}%
+  \lhead[\leftmark]{}
+  \rhead[]{\rightmark}
+  \fancyfoot[LE,RO]{{\normalsize \thepage}}%
+  \fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+%  \lhead[\leftmark]{}
+%  \rhead[]{\rightmark}
+  \fancyfoot[LE,RO]{{\normalsize \thepage}}%
+  \fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  %%\addtolength{\footskip}{7mm}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+\fancypagestyle{prefacestyle}{%
+  \fancyhf{}%
+%  \lhead[\leftmark]{}
+%  \rhead[]{\rightmark}
+  \fancyhead[LE,RO]{~\chaptername~}
+  \fancyfoot[LE,RO]{{\normalsize \thepage}}%
+  \fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  %%\addtolength{\footskip}{7mm}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+}
+
+\appto\frontmatter{\pagestyle{prefacestyle}}
+%\appto\frontmatter{\pagestyle{main}}
+\appto\mainmatter{\pagestyle{main}}
+\appto\backmatter{\pagestyle{main}}
+
+
+
+
+%%%%%%% Variables d'environnement
 \graphicspath{{../img/}} %%
 
 
@@ -81,6 +193,16 @@
 \newlength{\defaultcolumnsep}
 \setlength{\defaultcolumnsep}{25pt}
 \setlength\columnsep{\defaultcolumnsep}
+
+%\setlist[enumerate,1]{label=\arabic*)}
+%\setlist[enumerate,2]{label=\alph*.}
+%\setlist[itemize,1]{label=$\circ$}
+\newenvironment{myitemize}[1][]{%
+\itemize[label=\textbullet ,noitemsep, topsep=0pt,partopsep=0pt, #1 ]%
+}{\enditemize}
+\newenvironment{myenumerate}[1][]{%
+\enumerate[label=\arabic*. ,noitemsep, topsep=.5\topsep, #1 ]%
+}{\endenumerate}
 
 \theoremstyle{definition}
 \newtheorem{thm}{Théorème}[section]
@@ -112,10 +234,12 @@
 \newcommand{\mylettrine}[2]{\lettrine[lines=2, lhang=0.33, loversize=0.25]{#1}{#2}} 
 %\newcommand{\mylettrine}[2]{\lettrine[lines=2, lhang=0.33, loversize=0.25]{$\mathscr{#1}$}{#2}} 
 
-
-%%%%%% MES MACROS %%%%%%%%
-
 \newcommand{\custompart}[3]{
+%%%% A voir : \setpartpreamble[taille_facultative]{texte du preambule} du package Koma-script
+%%% Fournit aussi : 
+%% \renewcommand*{\dictumauthorformat}[1]{\color{blue} \bfseries #1}
+%% \dictum[auteur de l’aphorisme]{le texte de l’aphorisme}
+%% cf. http://bertrandmasson.free.fr/index.php?categorie5/latex-koma-script
 \part{ 
 #1 \\ {
 % \bf %% bold
@@ -135,113 +259,49 @@
 %\cleardoublepage
 }
 
-\newcommand{\hetero}{hétérogénéité\xspace}
-\newcommand{\Hetero}{Hétérogénéité\xspace}
-\newcommand{\heteros}{hétérogénéité\xspace}
-\newcommand{\Heteros}{Hétérogénéité\xspace}
-\newcommand{\heterogene}{hétérogène\xspace}
-\newcommand{\heterogenes}{hétérogènes\xspace}
-\newcommand{\Nber}{Patient~A\xspace}
-\newcommand{\Chen}{Patient~B\xspace}
-\newcommand{\ie}{{\it i.e.}\xspace}
-\newcommand{\cf}{{\it cf.}\xspace}
-\newcommand{\etal}{{\it et al.}\xspace}
-\newcommand{\dx}{\;{\rm d}x\xspace}
-\newcommand{\dy}{\;{\rm d}y\xspace}
-\newcommand{\dt}{\;{\rm d}t\xspace}
-\newcommand{\du}{\;{\rm d}u\xspace}
-\newcommand{\dv}{\;{\rm d}v\xspace}
-\newcommand{\vol}{\mathcal{V}}
-\newcommand{\aire}{\mathcal{A}}
-\newcommand{\intperso}[1]{\!\!\int\limits_{#1}\!\!\!}
-%%\newcommand{\trans}{\,^t}
-\newcommand{\trans}[1]{\prescript{\mathit{t\!}}{}{#1}}
-\newcommand{\ssi}{si et seulement si\xspace}
 
-\newcommand{\CFL}{{\mathrm{CFL}}}
-\newcommand{\Id}{{\mathds 1}}
-
-\newcommand{\W}{{\bf W}}
-
-\newcommand{\Frm}{{\rm F}}
-\newcommand{\Grm}{{\rm G}}
-\newcommand{\Hrm}{{\rm H}}
-\newcommand{\crm}{{\rm c}}
-
-\newcommand{\reel}{\mathbb{R}}
-
-\newcommand{\treat}{\mathcal{T}}
-\newcommand{\TI}{{\mathcal T_1}}
-\newcommand{\TS}{{\mathcal T_2}}
-\newcommand{\Tini}[1]{\rm{T}_{ini}^#1}
-\newcommand{\Tend}[1]{\rm{T}_{end}^#1}
-\newcommand{\chii}{\chi_{\rm i}}
-\newcommand{\chiI}{\chi_1}
-\newcommand{\chiS}{\chi_2}
-\newcommand{\dive}{\nabla\cdot}
-
-\newcommand{\Amin}{\mathcal{A}_{\rm min}}
-
-\newcommand{\TPFS}{{\rm T_{PFS}}}
-\newcommand{\Td}{{\rm T_{double}}}
-
-\newcommand{\muI}{\mu_1}
-\newcommand{\muS}{\mu_2}
-\newcommand{\nuS}{\nu_2}
-\newcommand{\muN}{\delta}
-
-\newcommand{\RR}{{\mathbb{R}}}
-
-\newcommand{\nn}{{\bf n}}
-\newcommand{\GG}{{\bf G}}
-
-\newcommand{\ang}{{\mathfrak{a}}}
-\newcommand{\ex}{{\bf e}_x}
-\newcommand{\ey}{{\bf e}_y}
-
-\newcommand{\er}{{\bf e}_r}
-\newcommand{\et}{{\bf e}_{\theta}}
-
-\newcommand{\gammapp}{\gamma_{pp}}
-\newcommand{\gammapd}{\gamma_{pd}}
-\newcommand{\gammasd}{\gamma_{sd}}
-\newcommand{\Ms}{M_{th}}
-\newcommand{\vit}{\mathbf{v}}
-\newcommand{\vecx}{\mathbf{x}}
-\newcommand{\vecy}{\mathbf{y}}
-\newcommand{\Tfini}{{T_f}_{ini}}
-\newcommand{\Tgini}{{T_g}_{ini}}
-\newcommand{\Tfend}{{T_f}_{end}}
-\newcommand{\Tgend}{{T_g}_{end}}
-\newcommand{\twinweno}{twin-WENO5}
-\newcommand{\Twinweno}{Twin-WENO5}
-
-\newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
-
-\newcommand{\rect}[4]{
-%% #1 et #2 --> coordonnee du coin en bas a gauche
-%% #3 et #4 --> largeur et hauteur
-\multiput(#1,#2)(0,#4){2}{\line(1,0){#3}}
-\multiput(#1,#2)(#3,0){2}{\line(0,1){#4}}
+\newcommand{\specialchap}[1]{%
+%%%% Chapitre sans sections
+\chapter{#1}%
+\pagestyle{prefacestyle}%
+\renewcommand\chaptername{#1}%
 }
 
 
+\input{mes_macros.tex}
 
 
-%%%%%% DEBUT DU DOCUMENT %%%%%%%%
+%%%===============================%%%%
+%%%       DEBUT DU DOCUMENT      %%%%
+%%%===============================%%%%
 \begin{document}
+\renewcommand{\contentsname}{Sommaire}
+\renewcommand*{\listtablename}{Liste des tableaux}
+\renewcommand*{\listfigurename}{Liste des figures}
+
+%%\thispagestyle{empty}
 %%\maketitle
 
 \frontmatter % Le prologue du livre
-
+%%\updatechaptername
+%%\renewcommand\chaptername{Sommaire}
+\pagestyle{plain}
+%%\setcounter{tocdepth}{5}
+\addcontentsline{toc}{chapter}{Sommaire}
 \tableofcontents    % Table des matières
- 
+
+\specialchap{Avant-propos}
 %\chapter{Avant-propos}
-%\chapter{Remerciements}
+%\pagestyle{prefacestyle}
+%\renewcommand\chaptername{Avant-Propos}
+\lipsum[1-11]
+
+\specialchap{Introduction}
 %\chapter{Introduction}
 
-
 \mainmatter % Corps du livre
+\renewcommand\chaptername{Chapitre}
+\updatechaptername
 
 %%%\newcommand{\mainfile}{} % we use the existence of this command to see if we're compiling the whole thesis or just a chapter
 
@@ -266,17 +326,53 @@
 \subfile{chap_analyse_heterogeneite}
 
 \appendix %%%% Les annexes
+\addappheadtotoc %%% Pour la page debutant les annexes apparaisse dans la toc
+\updatechaptername
+%%\renewcommand\thechapter{\appendixname~\Alph{chapter}}
+\renewcommand\chaptername{Annexe}
+%%\renewcommand\chaptername{}
+%\renewcommand*{\cftchappresnum}{Annexe~}
+\begin{appendices}
 \subfile{annexe_penalisation}
 \subfile{annexe_gaussienne}
 \subfile{annexe_tableaux_graphiques_complementaires}
+\end{appendices}
 
 \backmatter  %%%% l'épilogue du document
+\specialchap{Test}
+%\updatechaptername
+%\renewcommand\chaptername{Test}
+%\chapter{Test} %%%pour allonger le sommaire (pour faire des tests)
+\subsubsection{test1}\paragraph{hep}
+\subsubsection{test2}\paragraph{hep}
+\subsubsection{test3}\paragraph{hep}
+\subsubsection{test4}\paragraph{hep}
+\subsubsection{test5}\paragraph{hep}
+\subsubsection{test6}\paragraph{hep}
+\subsubsection{test7}\paragraph{hep}
+\subsubsection{test8}\paragraph{hep}
+\subsubsection{test9}\paragraph{hep}
+\subsubsection{test10}\paragraph{hep}
+\subsubsection{test11}\paragraph{hep}
+\subsubsection{test12}\paragraph{hep}
+\subsubsection{test13}\paragraph{hep}
+\subsubsection{test14}\paragraph{hep}
+
+\specialchap{Remerciements}
+%\chapter{Remerciements}
+%\renewcommand\chaptername{Remerciements}
+\lipsum
+
 %%\chapter{Conclusion et discussion}
 
 % Les différentes tables
 %\tableofcontents    % Table des matières
 %\listoffigures        % Liste des figures
 %\listoftables        % Liste des tableaux
+%------------ Acronyms List ----------------------------------
+%\thispagestyle{fancyplain}
+%\chapter*{List of Acronyms}
+%\addcontentsline{toc}{chapter}{List of Acronyms}
 
 
 %%%% Bibliographie

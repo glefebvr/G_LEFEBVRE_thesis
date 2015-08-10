@@ -1,0 +1,91 @@
+%%%%%% MES MACROS %%%%%%%%
+
+\newcommand{\hetero}{hétérogénéité\xspace}
+\newcommand{\Hetero}{Hétérogénéité\xspace}
+\newcommand{\heteros}{hétérogénéité\xspace}
+\newcommand{\Heteros}{Hétérogénéité\xspace}
+\newcommand{\heterogene}{hétérogène\xspace}
+\newcommand{\heterogenes}{hétérogènes\xspace}
+\newcommand{\Nber}{Patient~A\xspace}
+\newcommand{\Chen}{Patient~B\xspace}
+\newcommand{\ie}{{\it i.e.}\xspace}
+\newcommand{\cf}{{\it cf.}\xspace}
+\newcommand{\etal}{{\it et al.}\xspace}
+\newcommand{\dx}{\;{\rm d}x\xspace}
+\newcommand{\dy}{\;{\rm d}y\xspace}
+\newcommand{\dt}{\;{\rm d}t\xspace}
+\newcommand{\du}{\;{\rm d}u\xspace}
+\newcommand{\dv}{\;{\rm d}v\xspace}
+\newcommand{\vol}{\mathcal{V}}
+\newcommand{\aire}{\mathcal{A}}
+\newcommand{\intperso}[1]{\!\!\int\limits_{#1}\!\!\!}
+%%\newcommand{\trans}{\,^t}
+\newcommand{\trans}[1]{\prescript{\mathit{t\!}}{}{#1}}
+\newcommand{\ssi}{si et seulement si\xspace}
+
+\newcommand{\CFL}{{\mathrm{CFL}}}
+\newcommand{\Id}{{\mathds 1}}
+
+\newcommand{\W}{{\bf W}}
+
+\newcommand{\Frm}{{\rm F}}
+\newcommand{\Grm}{{\rm G}}
+\newcommand{\Hrm}{{\rm H}}
+\newcommand{\crm}{{\rm c}}
+
+\newcommand{\reel}{\mathbb{R}}
+
+\newcommand{\treat}{\mathcal{T}}
+\newcommand{\TI}{{\mathcal T_1}}
+\newcommand{\TS}{{\mathcal T_2}}
+\newcommand{\Tini}[1]{\rm{T}_{ini}^#1}
+\newcommand{\Tend}[1]{\rm{T}_{end}^#1}
+\newcommand{\chii}{\chi_{\rm i}}
+\newcommand{\chiI}{\chi_1}
+\newcommand{\chiS}{\chi_2}
+\newcommand{\dive}{\nabla\cdot}
+
+\newcommand{\Amin}{\mathcal{A}_{\rm min}}
+
+\newcommand{\TPFS}{{\rm T_{PFS}}}
+\newcommand{\Td}{{\rm T_{double}}}
+
+\newcommand{\muI}{\mu_1}
+\newcommand{\muS}{\mu_2}
+\newcommand{\nuS}{\nu_2}
+\newcommand{\muN}{\delta}
+
+\newcommand{\RR}{{\mathbb{R}}}
+
+\newcommand{\nn}{{\bf n}}
+\newcommand{\GG}{{\bf G}}
+
+\newcommand{\ang}{{\mathfrak{a}}}
+\newcommand{\ex}{{\bf e}_x}
+\newcommand{\ey}{{\bf e}_y}
+
+\newcommand{\er}{{\bf e}_r}
+\newcommand{\et}{{\bf e}_{\theta}}
+
+\newcommand{\gammapp}{\gamma_{pp}}
+\newcommand{\gammapd}{\gamma_{pd}}
+\newcommand{\gammasd}{\gamma_{sd}}
+\newcommand{\Ms}{M_{th}}
+\newcommand{\vit}{\mathbf{v}}
+\newcommand{\vecx}{\mathbf{x}}
+\newcommand{\vecy}{\mathbf{y}}
+\newcommand{\Tfini}{{T_f}_{ini}}
+\newcommand{\Tgini}{{T_g}_{ini}}
+\newcommand{\Tfend}{{T_f}_{end}}
+\newcommand{\Tgend}{{T_g}_{end}}
+\newcommand{\twinweno}{twin-WENO5}
+\newcommand{\Twinweno}{Twin-WENO5}
+
+\newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
+
+\newcommand{\rect}[4]{
+%% #1 et #2 --> coordonnee du coin en bas a gauche
+%% #3 et #4 --> largeur et hauteur
+\multiput(#1,#2)(0,#4){2}{\line(1,0){#3}}
+\multiput(#1,#2)(#3,0){2}{\line(0,1){#4}}
+}

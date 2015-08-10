@@ -30,18 +30,18 @@ où $x$ désigne un niveau de gris et $X_x$ désigne la partition de la liste $X
 \subsection{Histogrammes cliniques}
 \todo[noline]{Description du processus médical pour les scanners: ajout ici ?}
 Les données dont nous disposons sont celles produites par le scanner. Beaucoup plus riche qu'une image, ces données au format DICOM, nécéssitent l'utilisation d'un outil adapté pour les visualiser. OsiriX est ainsi utilisé pour:
-\begin{itemize}
+\begin{myitemize}
 \item Choisir une coupe pertinente sur chaque scanner et l'exporter (également au format DICOM) de sorte à avoir ensuite des données 2D à traiter.
 \item Contourer manuellement la métastase. OsiriX dispose d'un outil crayon adapté à ce type de contourage. Ce contourage définit une ROI, que l'on peut également exporter (au format .xml)
-\end{itemize}
+\end{myitemize}
 A partir de ces 2 fichiers, un code C++, s'appuyant sur la librairie ITK qui traite entre autre le format DICOM, permet de :
-\begin{itemize}
+\begin{myitemize}
 \item Construire l'histogramme des niveaux de gris en parcourant  l'ensemble des pixels du scanner contenus uniquement dans la ROI. 
 A titre indicatif, l'ensemble des histogrammes cliniques de \Nber et de \Chen sont présentés Figure~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen}. Nous les commenterons plus tard.
 \todo[noline]{Commenter les histogrammes}
 \item Produire des images sur lesquelles le contour est visible. L'ensemble des contourages effectués pour \Nber et pour \Chen sont présentés respectivement Figure~\ref{fig:contourageNber} et~\ref{fig:contourageChen}.
 \todo[noline]{Commenter les contourages?}
-\end{itemize}
+\end{myitemize}
 
 
 Remarquons que, comme montré sur la figure~\ref{fig:contourage_sain}, le logiciel OsiriX, permet de visualiser directement l'histogramme des niveaux de gris d'une ROI. Cependant, il n'y a aucune possibilité d'exporter ces histogrammes... De plus on souhaite appliquer autant que possible, un traitement similaire aux images cliniques et aux images numériques, images numériques qui ne peuvent être traiter avec OsiriX. Le développement d'un code pour réaliser ceci était donc nécessaire.
@@ -257,7 +257,7 @@ Le but de ce chapitre est de mettre en exergue l'aspect \heterogene de certaines
 g(x) = g_1(x)+g_2(x) \quad \textrm{avec} \quad g_i(x) = h_i\exp \left(\frac{-1}{2} \left( \dfrac{x-c_i}{\sigma_i}\right)^2  \right),
 \end{equation}
 où~:
-\begin{itemize}
+\begin{myitemize}
 \item $c_i$ est le centre de chacune des gaussiennes,
 \item $\sigma_i$ est l'écart-type de chacune des composantes,
 \item $h_i$ est la hauteur de chaque composantes. Elles sont données par~:
@@ -275,13 +275,13 @@ Ainsi, selon les besoins de l'écriture et pour mettre en évidence dans certain
 w_1 := w \quad \textrm{et} \quad w_2 = 1 - w.
 \end{equation}
 De même, lorsqu'on aura besoin d'écrire $g$ en fonction de ces paramètres, on écrira $g(x,\theta)$ avec $\theta =( c_1,c_2,\sigma_1,\sigma_2,w  )$.
-\end{itemize}
+\end{myitemize}
 L'optimisation des 5 paramètres $c_1,c_2,\sigma_1,\sigma_2$ et $w$ est réalisée grâce à une librairie Python nommée Scikit-learn, qui contient un module dédié aux mélanges gaussiens. Ce module procède d'abord à une clusterisation des données par la méthodes des K-moyennes afin d'estimer les centres des composantes. Le jeu de paramètres résultant est ensuite donné comme point de départ à une méthode de descente aléatoire qui cherche à maximiser la logvraissemblance. Par algorithme de descente aléatoire, on entends~:
-\begin{itemize}
+\begin{myitemize}
 \item[1)] Un nouveau jeu de paramètres est choisi dans un certain périmètre (plus ou moins grand) autour du jeu de paramètres courrant.
 \item[2)] La logvraissemblance de ce nouvel ensemble de paramètres est calculée. Si elle est meilleure que celle du jeu de paramètres courrant, alors ce nouveau jeu de paramètres devient le jeu courrant. Sinon le jeu de paramètres courrants reste celui qu'il était.
 \item[3)] On recommence à 1).
-\end{itemize}
+\end{myitemize}
 La vraissemblance, dont on maximise le logarithme selon $\theta$, est quant à elle donnée par~:
 \begin{equation}
 \mathcal{L}(X,\theta) = \prod_{x \in X} g(x,\theta).
@@ -307,13 +307,13 @@ Q :  u \longmapsto Qu := \dfrac{ \min( u_2 , u_1) }{ \max( u_2 , u_1)  }.
 
 
 Afin de correctement traduire l'\hetero, il est nécessaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero $\mathscr{H}$ :
-\begin{itemize}
+\begin{myitemize}
 \item $\mathscr{H}=0.9$ : très \heterogene
 \item $\mathscr{H}=0.7$ : plutôt \heterogene
 \item $\mathscr{H}=0.5$ : cas intermédiaire ou difficile à caractériser
 \item $\mathscr{H}=0.3$ : plutôt homogène
 \item  $\mathscr{H}=0.1$ : très homogène
-\end{itemize}
+\end{myitemize}
 Après appréciation visuelle \footnote{\samepage Cette appréciation visuelle reste ma perception personnelle même si je me suis efforcer de rester le plus objectif possible. Mettre à contribution les membres de l'équipe de recherche par exemple, pour leur demander une catégorisation aurait pu permettre de confronter l'évolution de l'\hetero au cours du temps que je perçois à celle que perçoivent les autres. La fonction objectif finale pourrait ainsi être la moyenne de celles que chacun obtient. On aurait donc un peu plus de nuances : des valeurs intermédiaires aux 5 paliers notamment ainsi que des barres d'erreur pour chaque valeur}
 %(la fonction objectif sera appelée \hetero visuelle)
 , voici ce que donne les fonctions objectifs pour $\mathscr{H}$ (\cf  Figure~\ref{fig:hetero_visuelle} ).
@@ -398,10 +398,10 @@ Notons que l'arctangente, n'est ni plus ni moins qu'une autre manière de sature
 \end{figure}
 
 Que la pente soit négative ou positive, à priori si les 2 composantes sont semblables, alors l'\hetero est la même. Sur la Figure~\ref{fig:critere_dc_sur_dh} est également tracé le critère qui dépend du signe de la pente, pour voir si ce signe pourrait apporter de l'information supplémentaire. Chose que nous pouvons espérer car :
-\begin{itemize}
+\begin{myitemize}
 \item une pente positive va traduire qu'on a une majorité de proliférantes,
 \item une pente négative va traduire qu'on a une majorité de tissu nécrosé.
-\end{itemize}
+\end{myitemize}
 
 Les résultats présentés sur la Figure~\ref{fig:critere_dc_sur_dh} ne sont pas encore très convaincant en ce qui concerne la description de l'\hetero... D'autres critères doivent encore être explorés.
 
@@ -450,14 +450,14 @@ Dans ce cas, l'équation~\eqref{eq:g1=g2} se réécrit :
 \label{eq:g1=g2_cas_part}
 2\Delta c \; x + c_1^2-c_2^2 +  2 \sigma^2 \ln \big( (1-w) / w \big) = 0
 \end{equation}
-\begin{itemize}
+\begin{myitemize}
 \item Si de plus $\Delta c=0$, alors \eqref{eq:g1=g2_cas_part} implique que $h_1=h_2$, et donc les deux gaussiennes sont absolument identiques et superposées.
 \item Si $\Delta c\neq0$, alors on a un seul et unique point de croisement, dont l'abscisse est :
 \begin{equation}
 \label{eq:pt_croisement_unique}
 x=\dfrac{c_1+c_2}{2}-\dfrac{\sigma^2}{\Delta c}\ln \left( \dfrac{1-w}{w} \right).
 \end{equation}
-\end{itemize}
+\end{myitemize}
 \paragraph{Cas général.} Il convient ici de calculer le discriminant réduit~:
 \begin{equation}
 \label{eq:discr_reduit}
@@ -467,11 +467,11 @@ Ce discriminant n'est pas nécessairement positif ! Donc il existe des cas où l
 
 \subsection{Etudes de différents critères}
 Différents critères seront étudiés dans cette section. Ils sont basés sur
-\begin{itemize}
+\begin{myitemize}
 \item l'intégrale commune aux deux gaussiennes
 \item la valeur de certains angles
 %\item des positions relatives de point ...
-\end{itemize}
+\end{myitemize}
 
 \subsubsection{Critères basés sur la valeur d'angles particuliers.}
 \begin{figure}
@@ -496,11 +496,11 @@ Tous ces angles ne seront pas calculés. On ne s'intéressera uniquement à leur
 \cos(\widehat{BAC}) = \dfrac{ \overrightarrow{AB}.\overrightarrow{AC} }{ \| \overrightarrow{AB} \| \| \overrightarrow{AC} \|}.
 \end{equation}
 Notons que :
-\begin{itemize}
+\begin{myitemize}
 \item Plus les angles définit ci-dessus sont petits, plus on s'attend à une tumeur homogène. Le critère d'\hetero doit donc avoir des variations inversées par rapport à celle du cosinus.
 \item Le critère doit être indépendant du signe de l'angle orienté. Tout critère basé sur le cosinus de l'angle respectera ceci, puisque le cosinus est une fonction paire.
 \item Le cosinus est à valeur dans [-1;1]. Le critère doit quant à lui être entre 0 et 1. Il faut donc adapter. Mais attention à la manière d'adapter. L'idée triviale de la valeur absolue ou du  carré ne peut pas être appliqué ici. En effet, le signe de l'angle est sans importance mais le signe de son cosinus l'est ! Si l'angle est obtu (donc grand, ce qui traduirait une \hetero) le cosinus de l'angle est négatif et donc il ne faut surtout pas le ramené à son équivalent aigu ! De même on ne veut qu'un angle droit traduise un cas limite ($\mathcal{H} = 0$ ou 1). L'angle droit doit être le cas de transition entre l'angle obtu et l'angle aigu.
-\end{itemize}
+\end{myitemize}
 On souhaite construire ici un critère qui varie de manière monotone en fonction de l'angle. Nous examinerons deux types d'adptation d'échelle :
 \begin{align}
 \mathcal{H}_5 (\theta) = &\dfrac{1-\cos \theta}{2} \\
@@ -608,16 +608,16 @@ On ne montrera ici que l'\hetero numérique de \Nber. Celle de \Chen n'a absolum
 
 Sur la Figure~\ref{fig:hetero_nber_simu} est présenté l'\hetero numérique de \Nber.
 La fonction objectif pour l'\hetero clinique ainsi que l'évolution de l'aire tumorale sont ici rappelées sur ce graphique à titre comparatif. La phase avec imatinib est  correctement décrite :
-\begin{itemize}
+\begin{myitemize}
 \item Présence d'un pic d'\hetero jour~119.
 \item Décroissance de l'\hetero lorsque l'imatinib agit de manière efficace.
 \item Saut important de l'\hetero qui grandit juste avant la recroissance de l'aire tumorale.
-\end{itemize}
+\end{myitemize}
 En ce qui concerne la partie avec sunitinib, au début de l'administration du traitement l'\hetero décroit. Cependant :
-\begin{itemize}
+\begin{myitemize}
 \item La recroissance de l'\hetero numérique a lieu un peu tôt par rapport à celle constatée cliniquement.
 \item Sur la partie finale (lors de la rechute au sunitinib, après le jour~1116), l'\hetero numérique décroit alors que celle clinique continue d'augmenter. 
-\end{itemize}
+\end{myitemize}
 En ce qui concerne le deuxième point, cela peut venir soit de la manière dont on calcule l'\hetero, soit du modèle EDP lui même qui ne retranscrirait pas bien l'évolution de l'\hetero. La Figure~\ref{fig:baisse_hetero_fin_simu} tends à dire que c'est plutôt le modèle EDP puisque le jour~1120 est beaucoup plus \hetero que le 
 jour~1227. En effet, le contraste entre les deux masses dominantes (pourtour et intérieur de la tumeur) 
 est beaucoup plus important jour~1120 que jour~1227. De plus le rapport du volume de ces dominantes est beaucoup plus proche de 1 au jour~1120 qu'au jour~1227 (si le ratio est égal à 1 alors les masses sont de volume égal). Ces impressions visuelles sont confirmées par les histogrammes également présentés sur la Figure~\ref{fig:baisse_hetero_fin_simu}. 

@@ -1,28 +1,32 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 \chapter{Le cancer~: aspects biologique et clinique.}\todo[noline]{tumeur en general ou GIST?}
-\mylettrine{L}{a} biologie du cancer est encore à ce jour non entièrement connue. Sa complexité n'étant pas des moindres, on présentera dans ce chapitre uniquement les points clés nécéssaire à l'élaboration des modèles mathématiques présentés dans ce manuscrit. On présentera tout d'abord sommairement comment croît une tumeur, puis comment elle se répand dans l'organisme. Nous aborderons ensuite les traitements actuels. Enfin, nous examinerons de plus près le fonctionnement d'un scanner; les scanners constituant la seule et unique information médicale dont nous disposons. 
+\mylettrine{L}{a} biologie du cancer est encore à ce jour non entièrement connue. Sa complexité n'étant pas des moindres, on présentera dans ce chapitre uniquement les points clés nécéssaire à l'élaboration des modèles mathématiques présentés dans ce manuscrit. On présentera tout d'abord sommairement comment croît une tumeur, puis comment elle se répand dans l'organisme. Nous aborderons ensuite les traitements actuels. Enfin, nous examinerons de plus près le fonctionnement d'un scanner; les scanners constituant le seul et unique support d'informations médicales dont nous disposons. 
 
 \section{Croissance tumorale}
 %\todo[noline]{La tumeur en grandissant, va pousser vers l'extérieur le réseau sanguin qui l'alimente ! (La tumeur exerçant une pression sur celui-ci) --> valable que pour les méta, tumeur primit = infiltrante}
 Une tumeur est un ensemble de cellules de l'organisme se multipliant de manière dégénérée. Certains scientifiques s'accordent à dire que cela partirait d'une seule cellule (pour l'instant aucune preuve de cela n'a encore été apportée~: le sujet reste ouvert). Chaque cellule fille est alors à son tour dégénérée et se multiplie encore et encore. La tumeur pourrait alors grandir exponentiellement. En réalité, la croissance tumorale est limitée par les besoins de glucose et d'oxygène. En effet, à force de se multiplier les cellules sont en surpopulation. Les nutriments et l'oxygène viennent à manquer : c'est l'\emph{hypoxie}. Les cellules du bord de la tumeur consomment tout et n'en laissent pas assez pour celles situées plus au centre. C'est dans ces cas là que l'on peut voir sur les scanners des tumeurs avec 2 nuances de gris~:
-\begin{itemize}
+\begin{myitemize}
 \item un gris foncé au centre, emplacement du tissu en partie nécrosé
 \item un gris plus clair sur le pourtour, lieu de la prolifération
-\end{itemize}
-
-\newpage
+\end{myitemize}
 \begin{wrapfigure}[18]{R}{.5\textwidth}
 \includegraphics[width=.5\textwidth]{schema/angiogenese.jpg}
-\captionof{figure}{\label{fig:schema_angio} Schéma descriptif de l'angiogénèse générant la néovascularisation \cite{web1}.}
+\caption{\label{fig:schema_angio} Schéma descriptif de l'angiogénèse générant la néovascularisation \cite{web1}.}
 \end{wrapfigure}
-Les cellules en hypoxie vont alors entrer dans un état de quiescence et vont sécréter des \emph{facteurs de croissance}, dont le VEGF (Vascular Endothelial Growth Factor). Ces protéïnes commandent la création de nouveaux vaisseaux sanguins, processus appellé \emph{angiogenèse}. Les cellules endothéliales, cellules qui recouvrent la paroi intérieure des vaisseaux sanguins et destinataires de ces facteurs de croissance, vont alors construirent des nouveaux vaisseaux sanguins par chimiotactisme c-à-d que les nouveaux vaisseaux sanguins sont orientés dans le sens où la concentration de facteur de croissance est la plus forte. Ainsi la tumeur se créée son propre réseau sanguin~: la \emph{néovascularisation}. La nourriture et l'oxygène redeviennent de nouveau abondants. 
-Les cellules qui étaient en hypoxie vont alors se remettre à proliférer jusqu'à ce que de nouveau, il y ait surpopulation. Et ainsi de suite, le cycle continue. On peut visualiser ce cycle sur le schéma présenter Figure~\ref{fig:schema_angio}. Notez qu'une cellule saine n'est en général jamais quiescente~: si les conditions extérieures ne sont pas bonnes (surpopulation, manque de nutriments, etc ...), elle va activer son auto-destruction~: c'est l'\emph{apoptose}. A cause de mutation, les cellules cancéreuses sont nettement moins (voire pas) sensible à ce mécanisme. 
+%\newpage
+Les cellules en hypoxie vont alors entrer dans un état de quiescence et vont sécréter des \emph{facteurs de croissance}, dont le VEGF (Vascular Endothelial Growth Factor). Ces protéïnes commandent la création de nouveaux vaisseaux sanguins, processus appellé \emph{angiogenèse}. 
+
+%%%% Il faut fair un paragraphe pour que wrapfigure puisse se fixer là
+%%%% Pour ne pas que ca ait l'apparence d'un paragraphe, on supprime l'indentation
+\noindent Les cellules endothéliales, cellules qui recouvrent la paroi intérieure des vaisseaux sanguins et destinataires de ces facteurs de croissance, vont alors construirent des nouveaux vaisseaux sanguins par chimiotactisme c'est à dire que les nouveaux vaisseaux sanguins sont orientés dans le sens où la concentration de facteur de croissance est la plus forte. Ainsi la tumeur se créé son propre réseau sanguin~: la \emph{néovascularisation}. La nourriture et l'oxygène redeviennent de nouveau abondants. 
+Les cellules qui étaient en hypoxie vont alors se remettre à proliférer jusqu'à ce que de nouveau, il y ait surpopulation. Et ainsi de suite, le cycle continue. On peut visualiser ce cycle sur le schéma présenté Figure~\ref{fig:schema_angio}. Notez qu'une cellule saine n'est en général jamais quiescente~: si les conditions extérieures ne sont pas bonnes (surpopulation, manque de nutriments, etc ...), elle va activer son auto-destruction~: c'est l'\emph{apoptose}. A cause de mutation, les cellules cancéreuses sont nettement moins (voire pas) sensibles à ce mécanisme. 
+%\lipsum[1]
 
 \section{Dissémination des métastases}
-\begin{wrapfigure}[17]{l}{.5\textwidth} %%% L : Left flottant / l: left non flottant (pas de pagebreak)
+\begin{wrapfigure}[16]{l}{.5\textwidth} %%% L : Left flottant / l: left non flottant (pas de pagebreak)
 \setlength{\unitlength}{.005\textwidth}
-\vspace{-9mm}
+\vspace{-12mm}
 \begin{picture}(100,93)
 \tiny 
 \put(0,2){\includegraphics[width=.5\textwidth]{schema/cellules_tumorales_circulantes_copyright.jpg}}
@@ -31,33 +35,34 @@ Les cellules qui étaient en hypoxie vont alors se remettre à proliférer jusqu
 \end{picture}
 \captionof{figure}{\label{fig:schema_dissemination_metastase} Dissémination des métastases.}
 \end{wrapfigure}
-L'ensemble du processus métastatique est résumé sur le schéma présenté Figure~\ref{fig:schema_dissemination_metastase}. Décrivons le. La tumeur primaire  cherche continuement à se vasculariser toujours plus, mais paradoxalement, sa croissance va endommager le réseau sanguin qui l'irrigue. Une partie des cellules tumorales (cellules invasives) va alors pouvoir pénétrer dans les voies sanguines. La plupart de ces essaims seront éliminés par le système immunitaire. Une partie arrivera à s'installer dans un autre organe~: elle forme des tumeurs filles appelées~\emph{métastases}. 
+L'ensemble du processus métastatique est résumé sur le schéma présenté Figure~\ref{fig:schema_dissemination_metastase}. Décrivons le. La tumeur primaire  cherche continuement à se vasculariser toujours plus, mais paradoxalement, sa croissance va endommager le réseau sanguin qui l'irrigue. Une partie des cellules tumorales (cellules invasives) va alors pouvoir pénétrer dans les voies sanguines. La plupart de ces essaims seront éliminés par le système immunitaire. Une partie arrivera à s'installer dans un autre organe~: elle forme des tumeurs filles appelées~\emph{métastases}. Chaque type de cancer a une préférence métastatique~: le GIST\todo[noline]{\url{http://www.nature.com/nrc/journal/v9/n4/abs/nrc2622.html} + Langely 2011}, le cancer du pancréas ou du colon migre au foie; le cancer du sein, du rein, de la vessie et de l'estomac migre dans les poumons; le cancer de la prostate migre dans les os. Les métastases s'installent généralement dans des endroits bien vascularisé~:  les poumons et le foie sont les 2 organes les plus touchés [REF].
 
-De simple cellules ne pourraient pas nicher dans un autre organe que celui auquel elles appartenaient au départ. Les cellules tumorales le peuvent, car à force de division elles s'indifférencient. C'est-à-dire qu'elles s'approchent de ce qu'elles étaient au stade embreyonnaire~: des cellules souches qui en se différenciant formeront aussi bien des cellules de l'intestin que des cellules du foie. Ce type de cellules, bien que provenant de l'intestin, n'est donc pas reconnu comme étranger au foie et la métastase peut s'installer. La métastase créera ensuite son réseau néovasculaire tout comme une tumeur primaire.
+
+De simple cellules ne pourraient pas nicher dans un autre organe que celui auquel elles appartenaient au départ. Les cellules tumorales le peuvent, car à force de divisions elles s'indifférencient. Autrement dit, elles s'approchent de ce qu'elles étaient au stade embryonnaire~: des cellules souches qui en se différenciant formeront aussi bien des cellules de l'intestin que des cellules du foie. Ce type de cellules, bien que provenant de l'intestin, n'est donc pas reconnu comme étranger au foie et la métastase peut s'installer. La métastase créera ensuite son propre réseau néovasculaire tout comme une tumeur primaire.
 
 \section{Les traitements}
 A l'heure actuelle aucun traitement ne permet de guérir de manière sûre les cancers, d'autant plus s'ils sont avancés.  Cependant plusieurs techniques existent pour prolonger et/ou améliorer la vie des patients.
 \paragraph{La chirurgie} ne peut-être réalisée que sur des cancers primaires, non métastasés et donc détectés tôt. C'est la première option considérée par le corps médical (bien que la chirurgie elle-même puisse être source de dissémination de métastase, \cf par exemple  \url{http://www.sciencedirect.com/science/article/pii/S0748798305000089}).
 
-\paragraph{L'ablation par radiofréquence} permet, à l'aide d'une sonde électromagnétique à haute fréquence, de bruler une région définie par le médecin. On peut ainsi réaliser une ablation sans avoir à opérer le patient. Cette technique  
-ne peut cependant être utilisée que pour de petite tumeur, ne dépassant pas une certaine taille (de l'ordre du centimètre \todo{A verif, ref?}) et n'étant pas à proximité d'organes sensibles. 
+\paragraph{L'ablation par radiofréquence} permet, à l'aide d'une sonde électromagnétique à haute fréquence, de brûler une région définie par le médecin. On peut ainsi réaliser une ablation sans avoir à opérer le patient. Cette technique  
+ne peut cependant être utilisée que pour de petites tumeurs, ne dépassant pas une certaine taille (de l'ordre du centimètre\todo{A verif, ref?}) et n'étant pas à proximité d'organes sensibles. 
 
-\paragraph{La radiothérapie} consiste à irradier une zone de l'organisme par une forte dose de rayons X. Ceci a pour effet de détruire les cellules qui se multiplient, et donc par voie de conséquence, les cellules cancéreuses. Cette méthode présente les mêmes limitations que la radiofréquence à savoir que son efficacité est limité à des petites tumeurs. La radiothérapie est souvent utilisé à titre paliatif sur des petites métastases (pulmonaires notamment).
+\paragraph{La radiothérapie} consiste à irradier une zone de l'organisme par une forte dose de rayons X. Ceci a pour effet de détruire les cellules qui se multiplient  et donc, par voie de conséquence, les cellules cancéreuses. Cette méthode présente les mêmes limitations que la radiofréquence à savoir que son efficacité est limitée à des petites tumeurs. La radiothérapie est souvent utilisée à titre paliatif sur des petites métastases (pulmonaires notamment).
 
-\paragraph{La chimiothérapie} est un médicamment \emph{cytotoxique} (\ie qui détruit les cellules) administré en intraveineuse. Elle est suffisament petite pour pénétrer à l'intérieur des cellules. Elle agit sur toutes les cellules en division trop rapide en affectant soit directement la mitose, soit la duplication de l'ADN. Ceci explique ses principaux effets secondaires car elle va impacter aussi sur des cellules saines à division naturellement rapide comme les cellules responsables de la pousse des cheveux, les cellules intestinales (de l'épithélium), les cellules sanguines (à l'origine d'affaiblissement du système immunitaire et d'anémies notamment) ou encore les gamètes.
+\paragraph{La chimiothérapie} est un médicamment \emph{cytotoxique} (\ie qui détruit les cellules) administré en intraveineuse. 
+Ce type de molécules est suffisament petit pour pénétrer à l'intérieur des cellules. Elle agit sur toutes les cellules en division trop rapide en affectant soit directement la mitose, soit la duplication de l'ADN. Ceci explique ses principaux effets secondaires car elle va impacter aussi sur des cellules saines à division naturellement rapide comme les cellules responsables de la pousse des cheveux, les cellules intestinales (de l'épithélium), les cellules sanguines (à l'origine d'affaiblissement du système immunitaire et d'anémies notamment) ou encore les gamètes.
 
-\todo[noline]{section RECIST ?}
-\paragraph{Les thérapies ciblées} sont également des médicamments administrés par voies intraveineuses. Bien qu'étant diffusées dans tout l'organisme, ces thérapies  ciblent un type spécifique de voie moléculaire (ou de récepteur), voie moléculaire généralement caratéristique des cellules malignes. Ce peut-être des anticorps (X-mab) ou bien de petites molécules ciblant les fonctions tyrosine kinase (X-inib), fonctions impliquées dans l'activité cellulaire et la mitose. 
+\paragraph{Les thérapies ciblées}\todo[noline]{section RECIST ?} sont également des médicamments administrés par voies intraveineuses. Des versions systémiques commencent également à voir le jour (\ie sous forme de comprimés à prendre à heures fixes). Bien qu'étant diffusées dans tout l'organisme, ces thérapies  ciblent un type spécifique de voie moléculaire (ou de récepteur), voie moléculaire généralement caratéristique des cellules malignes. Ce peut être des anticorps (X-mab) ou bien de petites molécules ciblant les fonctions tyrosines kinases (X-inib), fonctions impliquées dans l'activité cellulaire et la mitose. 
 
-En exemple on pourra citer l'\emph{imatinib} (Glivec) qui se fixe sur les récepteurs cellulaires (récepteurs de tyrosine kinase, RTK) commandant l'activité intra cellulaire. En inhibant ces récepteurs, l'apoptose tends à se réactiver dans les cellules défectuesues. On peut également citer le \emph{bevacizumab} (Avastin), qui inhibe l'angiogenèse, en se fixant sur les récepteurs de VEGF. D'autres molécules, comme  le sorafenib ou le sunitinib, ont des effets multiples. 
+En exemple on pourra citer l'\emph{imatinib} (Glivec) qui se fixe sur les récepteurs cellulaires (récepteurs de tyrosine kinase, RTK) commandant l'activité intra cellulaire. En inhibant ces récepteurs, l'apoptose tend à se réactiver dans les cellules défectueuses. On peut également citer le \emph{bevacizumab} (Avastin), qui inhibe l'angiogenèse, en se fixant sur les récepteurs de VEGF (que l'on abrège communément VEGFR). D'autres molécules, comme  le sorafenib ou le sunitinib, ont des effets multiples. 
 Le \emph{sorafenib} (Nexavar) est un inhibiteur, à la fois, de VEGFR et de Raf-kinase (tyrosine kinase intervenant dans la cascade de kinases activées lors de la mitose). 
-Le \emph{sunitinib} (Sutent) inhibe également les VEGFRs ainsi que les KIT-kinases (protéïne CD117, qui est une tyrosine kinase très souvent exprimées dans le cas de GIST, kinases normalement produites uniquement par les cellules souches).
+Le \emph{sunitinib} (Sutent) inhibe également les VEGFRs ainsi que les KIT-kinases (protéïnes CD117, qui sont des tyrosines kinases très souvent exprimées dans le cas de GIST, kinases normalement produites uniquement par les cellules souches).
 \todo[noline]{Kit --> commande la survie, la prolif, ou la division cellulaire}
 
 
 Tous les cas cliniques que nous étudions dans cet ouvrage ont été traités avec ce type de traitement. Dans le cas de métastases de GIST, l'imatinib est recommandé en première ligne. Si celui-ci devient inefficace (ce qui arrive très souvent, des cellules résistantes se développant), le sunitinb est utilisé en seconde ligne. (REF)\todo[noline]{\url{http://www.sciencedirect.com/science/article/pii/S0140673606694464}}
 \todo[noline]{\url{http://jco.ascopubs.org/content/25/30/4793.short}}
-Dans certains cas de mutation génétique (du gène KIT notamment), il a même été montrer une résistance à l'imatinib plus accrue que chez les autres patients [???].
+Dans certains cas de mutation génétique (du gène KIT notamment), il a même été montré une résistance à l'imatinib plus accrue que chez les autres patients [???].
 
 %============= deb rapportstage M2 ==============\\
 %
@@ -78,7 +83,7 @@ Dans certains cas de mutation génétique (du gène KIT notamment), il a même �
 
 \section{Fonctionnement du scanner}
 \subsection{Le scanner en général}
-Le scanner est un examen médicale qui permet d'acquérir des images d'une partie de l'organisme par le biais d'une irradiation aux Rayons~X. Oui, oui, une irradiation ! Cependant l'irradiation est faible et de plus en plus d'études mettent en avant des méthodes pour la réduire  \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2743386/} ). Le bénéfice est donc très important devant les risques marginaux. C'est certainement l'une des raisons pour laquelle le scanner (tout comme la radio, ou l'IRM) est aujourd'hui très utilisé pour diagnostiquer une maladie, ou ne serait-ce même que pour contrôler la santé d'un patient.
+Le scanner est un examen médical qui permet d'acquérir des images d'une partie de l'organisme par le biais d'une irradiation aux rayons~X. Oui, oui, une irradiation ! Cependant l'irradiation est faible et de plus en plus d'études mettent en avant des méthodes pour la réduire  \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2743386/} ). Le bénéfice est donc très important devant les risques marginaux. C'est certainement l'une des raisons pour laquelle le scanner (tout comme la radio, ou l'IRM) est aujourd'hui très utilisé pour diagnostiquer une maladie, ou ne serait-ce même que pour contrôler la santé d'un patient.
 
 
 \begin{wrapfigure}[18]{r}{.3\textwidth} %%% L : Left flottant / l: left non flottant (pas de pagebreak)
@@ -102,13 +107,13 @@ Le scanner est un examen médicale qui permet d'acquérir des images d'une parti
 \captionof{figure}{\label{fig:schema_coupe} Plans de coupe du corps humain.}
 \end{wrapfigure}
 Un scanner procède par acquisition d'images en couches. En ce qui concerne le scanner du thorax, le patient est \og découpé \fg{} de part en part 
-\url{http://www.impactscan.org/download/msctdose.pdf} selon le plan axial. 
+\url{http://www.impactscan.org/download/msctdose.pdf} selon le plan axial (\cf Figure~\ref{fig:schema_coupe} présentant l'orientation des plans de coupe). 
 Sur chacun de ces plans on mesure l'absorption aux rayons~X~: la \emph{tomodensitométrie}. Cette absorption dépend de la densité du tissu mais pas seulement~: elle dépend aussi de sa nature. 
-Chaque constituant de l'organisme à sa propre tomodensimétrie. La tomodensimétrie se mesure en \emph{unité Hounsfield}~(HU). Sur cette échelle, l'absorption au Rayons~X de l'eau est définie comme étant zéro. Toute autre tomodensimétrie est alors exprimée relativement à cette absorption de référence. Par exemple l'air a une tomodensimétrie de -1\,000\,HU, le poumon de -500\,HU, la graisse de -100 à -50\,HU, le foie autour de 50\,HU, les os entre +700 et +3\,000\,HU selon s'ils sont spongieux ou non. La tomodensimétrie est donc très variable. Pour pouvoir visualiser cette quantité, il est nécessaire de choisir une échelle adaptée à ce que l'on veut regarder. L'échelle sera défini par~:
-\begin{itemize}
+Chaque constituant de l'organisme à sa propre tomodensimétrie. La tomodensimétrie se mesure en \emph{unité Hounsfield}~(HU). Sur cette échelle, l'absorption au rayons~X de l'eau est définie comme étant zéro. Toute autre tomodensimétrie est alors exprimée relativement à cette absorption de référence. Par exemple l'air a une tomodensimétrie de -1\,000\,HU, le poumon de -500\,HU, la graisse de -100 à -50\,HU, le foie autour de 50\,HU, les os entre +700 et +3\,000\,HU selon s'ils sont spongieux ou non. La tomodensimétrie est donc très variable. Pour pouvoir visualiser cette quantité, il est nécessaire de choisir une échelle adaptée à ce que l'on veut regarder. L'échelle sera défini par~:
+\begin{myitemize}
 \item deux absorptions limites que l'on choisi. Le noir est associé à la plus petites de ces bornes, le blanc à l'autre. Au delà de ces bornes aucune nuance de couleur n'apparaitra.
 \item une fonction qui va définir la manière dont on passe du noir au blanc. Généralement, une fonction linéaire est considéree c-à-d que la variation du noir au blanc est constante.
-\end{itemize}
+\end{myitemize}
 Par exemple, si l'on s'intéresse aux poumons, on pourra fixer l'échelle entre -1\,200 et 200\,HU (qui est l'échelle sugérée par le logiciel OsiriX dans le cas du poumon). Avec cette échelle le foie apparait tout blanc avec très peu de nuances. Elle donc inadaptée si l'on souhaite observer le foie~! Pour le foie, une échelle allant de -135 à +215\,HU par exemple, sera beaucoup plus adaptée. 
 Une telle échelle est illustrée plus loin dans ce manuscrit, \cf Figure~\ref{fig:schema_correspondance_gris} page~\pageref{fig:schema_correspondance_gris}.
 Cependant pour le foie les variations de tomodensimétrie sont assez faible, même en cas de maladie (métastases notamment). Les médecins ont alors recours a une méthode particulière pour augmenter le constrate des images~: le scanner avec produit de contraste iodé (PCI).
@@ -116,18 +121,30 @@ Cependant pour le foie les variations de tomodensimétrie sont assez faible, mê
 
 \subsection{Le scanner avec produit de contraste iodé (PCI)}
 \begin{figure}[h]
-\input{tex_pictures/schema_irrigation_foie.tex}
+\centering
 \vspace{-10mm}
+\scalebox{.7}{\input{tex_pictures/schema_irrigation_foie.tex}}
+%%\vspace{-10mm}
 \caption{\label{fig:schema_irrig_foie} Schéma de l'irrigation du foie.}
+\vspace{-10mm}
 \end{figure}
-
-Pour réaliser ce type d'examen, on procède comme pour un simple scanner avec le même équipement. La différence réside dans l'injection en intraveineuse d'un produit de contraste iodé (PCI), juste avant l'examen. L'iode ayant un fort taux absorption  des rayons~X, il va éclaircir l'ensemble des zones dans lequel il se trouve. En ce qui concerne le foie, pour comprendre pourquoi le foie sain est plus éclaircit par le PCI que les métastases, nous devons nous intéressé à la manière dont arrive le PCI au foie et à la tumeur. La Figure~\ref{fig:schema_irrig_foie} présente le schéma général de la vascularisation du foie. Le foie possède une double vascularisation. La première est apportée directement depuis le coeur par l'artère hépatique. Du sang riche en nutriments (glucose et oygène) vient ainsi irriguer les cellules hépatiques? La seconde provient d'une dérivation. Le sang veineux en provenance du système digestif ne retourne pas directement au coeur~: il est envoyé au foie par la veine porte. Ce sang bien qu'étant pauvre en oxygène, est riche en glucose puisqu'il contient l'ensemble des éléments digérés. Dans un foie sain, la vascularisation portale est de l'ordre 70\% et la vascularisation artérielle de l'ordre de 30\%. Dans une tumeur hépatique, ce ratio est inversé~! REFF\todo{ref} En effet, en grandissant la tumeur va accroître ces besoins en glucose mais aussi en oxygène~: la néovascularisation se fait donc principalement depuis la vascularisation artérielle. 
+%\begin{wrapfigure}[18]{r}{.5\textwidth}
+%\scalebox{.5}{\input{tex_pictures/schema_irrigation_foie.tex}}
+%\vspace{-10mm}
+%\caption{\label{fig:schema_irrig_foie} Schéma de l'irrigation du foie.}
+%\end{wrapfigure}
+Pour réaliser ce type d'examen, on procède comme pour un simple scanner avec le même équipement. La différence réside dans l'injection en intraveineuse d'un produit de contraste iodé (PCI), juste avant l'examen. L'iode ayant un fort taux absorption  des rayons~X, il va éclaircir l'ensemble des zones dans lequel il se trouve. En ce qui concerne le foie, pour comprendre pourquoi le foie sain est plus éclaircit par le PCI que les métastases, nous devons nous intéressé à la manière dont arrive le PCI au foie et à la tumeur. La Figure~\ref{fig:schema_irrig_foie} présente le schéma général de la vascularisation du foie. Il possède une double vascularisation. La première est apportée directement depuis le coeur par l'artère hépatique. Du sang riche en nutriments (glucose et oygène) vient ainsi irriguer les cellules hépatiques. La seconde provient d'une dérivation. Le sang veineux en provenance du système digestif ne retourne pas directement au coeur~: il est envoyé au foie par la veine porte. Ce sang bien qu'étant pauvre en oxygène, est riche en glucose puisqu'il contient l'ensemble des éléments digérés. Dans un foie sain, la vascularisation portale est de l'ordre 70\% et la vascularisation artérielle de l'ordre de 30\%. Dans une tumeur hépatique, ce ratio est inversé~! REFF\todo{ref} En effet, en grandissant la tumeur va accroître ces besoins en glucose mais aussi en oxygène~: la néovascularisation se fait donc principalement depuis la vascularisation artérielle. 
 
 
 Revenons au PCI. Dans la mesure où il y a deux voies sanguine pour accéder au foie, il y a deux temps caractéristiques~:
-\begin{itemize}
-\item Le \emph{temps artériel.} C'est le temps après l'injection, que le PCI met pour parvenir au foie par la voie artérielle. Il est d'environ 30 secondes. 
+\begin{myitemize}
+\item Le \emph{temps artériel.} C'est le temps après l'injection, que le PCI met pour parvenir au foie par la voie artérielle. Il est d'environ 30 secondes.\todo{Ref}
 \item Le \emph{temps portal.} C'est le temps après l'injection, que le PCI met pour parvenir au foie par la voie portale. Il est d'environ 70 secondes. 
-\end{itemize}
-Les scanners réalisés avec PCI, sont effectué au temps portal. Ainsi au moment de l'acquisition de l'image, le PCI se trouve majoritairement dans les tissus vascularisées par la voie portale \ie le foie sain. Le tissu tumoral, beaucoup moins irriguer par voie portal contiendra donc nettement moins de PCI. Ceci se traduit directement sur le contraste de l'image médicale~: le tissu sain ayant fortement éclaircit, le tissu tumoral apparait de manière beaucoup plus évidente, en sombre. On pourra même distinguer des nuances au sein même de la tumeur (entre le centre et le pourtour notamment), ce qui va particulièrement nous intéressé pour tout ce qui concerne l'\hetero tumorale. L'ensemble des scanners présenté dans cet ouvrage a été réalisé avec un PCI.
+\end{myitemize}
+Les scanners réalisés avec PCI, sont effectués au temps portal. Ainsi au moment de l'acquisition de l'image, le PCI se trouve majoritairement dans les tissus vascularisées par la voie portale \ie le foie sain. Le tissu tumoral, beaucoup moins irriguer par voie portal contiendra donc nettement moins de PCI. Ceci se traduit directement sur le contraste de l'image médicale~: le tissu sain ayant fortement éclaircit, le tissu tumoral apparait de manière beaucoup plus évidente, en sombre. On pourra même distinguer des nuances au sein même de la tumeur (entre le centre et le pourtour notamment), ce qui va particulièrement nous intéressé pour tout ce qui concerne l'\hetero tumorale. L'ensemble des scanners présentés dans cet ouvrage a été réalisé avec un PCI.
+\begin{myenumerate}
+\item hep
+\item hop
+\end{myenumerate}
+
 \end{document}

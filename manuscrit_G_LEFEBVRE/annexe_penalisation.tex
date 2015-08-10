@@ -1,6 +1,7 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 \chapter{Exploration de différentes pénalisations sur la fonction coût utilsée pour optimiser les niveaux de gris. \label{chap:anx_penalisation} }
+\chaptermark{Exploration de différentes pénalisations} %%% Titre court pour l'entete
 %\mylettrine{B}{labla}
 
 \section{Régularisation de Moreau-Yosida}
@@ -21,7 +22,7 @@ Si $J$ est une fonction à minimiser, alors la propriété suivante est utile~:
 Soit $a$ le minimum de $J$. Soit $u$ l'un des antécédants de $a$. Alors $u$ minimise aussi $J_c$ et on a $J_c(u)=J(u)=a$ quelque soit $c>0$.
 \end{prop}
 \begin{proof}Notons $f_u(v) := J(v) + \frac{1}{2c} \| v-u \|^2$.
-\begin{itemize}
+\begin{myitemize}
 \item[$\Rightarrow$)] Soit $u_0$, un point en lequel $J$ atteint son minimum. \\
 On a alors $f_{u_0}(u_0) = J(u_0)\leq J(u) \leq J(u) + \frac{1}{2c} \| u-u_0 \|^2  = f_{u_0}(u), \ \forall u $, \\
 d'où $J_c(u_0) = \min_u f_{u_0}(u) = J(u_0) $. On a donc égalité des fonctions $J$ et $J_c$ en $u_0$. Reste à montrer que $u_0$ est bien un point de minimum pour $J_c$. Comme $u_0$ minimise $J$, on a $J(u_0)\leq J(v), \ \forall v$. \\
@@ -35,7 +36,7 @@ $J_c(u_0) \leq J_c(u) = \min_v f_u(v) \leq f_u(u) = J(u) \quad \forall u.$
 \end{center}
 Mais $J_c(u_0) = J(u_0)$. Ainsi $J(u_0) \leq J(u), \ \forall u$ 
 et donc $u_0$ minimise $J$.
-\end{itemize}
+\end{myitemize}
 \end{proof}
 Ainsi minimiser la fonction $J$ est équivalent à minimiser la fonction $J_c$. 
 L'avantage de la fonction $J_c$, c'est qu'elle est construite de sorte à être  différentiable aux abords du point de minimum même si $J$ ne l'est pas ($J$ peut même être discontinue). Le principal désavantage, c'est que le problème $\min_u J_c(u)$ est infiniment plus complexe à résoudre que le problème $\min_u J(u)$ puisque la fonction $J_c$ nécessite le calcul d'un minimum à chaque évaluation. Qu'à cela ne tienne. Dans notre cas, nous connaissons explicitement $J$. La transformée de Moreau-Yosida n'est appliquée que pour gagner en régularité. Ainsi, on peut calculer explicitement $J_c$. Avant de fournir un exemple, remarquons que 
@@ -67,7 +68,7 @@ Puisque $J$ est paire, nous pouvons limiter l'étude de sa régularisée aux $u$
 \end{center}
 \end{multicols}
 \todo[noline]{Mettre la bonne figure}
-\begin{itemize}
+\begin{myitemize}
 \renewcommand{\labelitemi}{\scriptsize$\bullet$} 
 \item Cas 1 : $a < u$
 \begin{center}
@@ -87,7 +88,7 @@ Ici, $u\leq a \Rightarrow \min_v f_u(v) = \min \left(1, \sfrac{(a-u)^2}{2c} \rig
 \end{tikzpicture}
 \end{center}
 qui nous donne bien $J_c(u) = \min_v f_u(v) = 0$.
-\end{itemize}
+\end{myitemize}
 
 \underline{Bilan :} On a une expression explicite de la régularisée (que l'on complète par parité de la fonction)~:
 \begin{equation*}
@@ -132,7 +133,7 @@ Ainsi
 \end{aligned}  \right.
 \end{equation}
 Les cas suivants sont donc à considérer~(remarquer que comme $c>0$ et $u>0$ on a toujours $\frac{u}{2c+1}<u$):
-\begin{itemize}
+\begin{myitemize}
 \renewcommand{\labelitemi}{\scriptsize$\bullet$} 
 \item Cas 1 : $0 < \frac{u}{2c+1} < u \leq a$\\ % \qquad$ 
 %\raisebox{-20mm}{
@@ -167,7 +168,7 @@ Ici, $\min_v f_u(v) = f(a) = \frac{1}{2c} \| a-u\|^2, \ \forall u \in ]a,a(2c+1)
 & = \left( \frac{u}{2c+1} \right)^2 -a^2 + \frac{1}{2c} \left( \frac{-2cu}{2c+1} \right)^2 \\
 & = \frac{u^2}{2c+1} -a^2, \quad \forall u \in ]a(2c+1),+\infty[.
 \end{align*}
-\end{itemize}
+\end{myitemize}
 \begin{figure}
 \centering
 \subfloat[\label{fig:para_tronquee} Parabole tronquée {$J(u)=[ u^2-a^2 ]^+ $}]{\includegraphics[width=.49\textwidth]{penal_quad.png}}

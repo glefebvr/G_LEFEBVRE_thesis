@@ -15,14 +15,14 @@ Pour un patient donné, on considère $n$ instants auxquels on possède des scan
 &= \frac{1}{\aire\big(Z_2(t_i)\big)} \ \intperso{Z_2(t_i)} s(t_i,x,z_0) \dx \qquad i \in \{1,...,n\}
 \end{aligned}
 \end{equation}
-où : \begin{itemize}
+où : \begin{myitemize}
 \item $\aire(Z)$ est l'aire de la zone $Z$.
 \item $Z_1(t_i)$ est la zone correspondant à la tumeur dans les simulations numériques au temps $t_i$. Elle est définie par un seuillage sur $S$.
 \todo[noline]{specifier le seuillage ?}
 \item $Z_2(t_i)$ est la zone tumorale sur le scanner réalisé au temps $t_i$. Cette zone a été définie par contourage manuel à l'aide du logiciel OsiriX.
 \item $z_0$ est la coupe que l'on choisie d'étudier dans les scanners. Cette coupe est approximativement la même au cours du temps.
 \item $s(t_i,x,z_0)$ est la valeur du niveaux de gris du pixel en position $x$ sur la coupe $z_0$ du scanner effectué au temps $t_i$.
-\end{itemize}
+\end{myitemize}
 En utilisant la discrétisation, aussi bien sur les simulations numériques que sur les scanners, on obtient :
 \begin{equation}
 \label{eq:optim_grey_eq_discr}
@@ -168,24 +168,24 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 \DTLcleardb{optim3_0stat}
 \DTLcleardb{optim3_0stat}
 La résolution de l'équation~\eqref{eq:min_optim_grey} fournit le $\tau$ optimal. Il y a cependant plusieurs manières de calculer cet optimum. On peut  faire varier :
-\begin{itemize}
+\begin{myitemize}
 \item le nombre d'images considérées
 \item les moments considérés
 \item l'algorithme d'optimisation lui-même
 %\item la fonction coût utilisée
-\end{itemize}
+\end{myitemize}
 
 \todo[noline]{Presenter les algo}
 Dans tous les cas, on ne considèrera pas le premier scanner (numéro~0) car la condition initiale numérique EQREF \todo[noline]{EQREF} n'est pas prise de sorte à respecter la répartition des niveaux de gris du scanner. Evitons donc d'inclure dans l'optimisation une erreur de base qui serait incompressible. On regardera des situations avec seulement 2 images (problème sous-déterminé) ou 3 images (problème fermé) ou plus (problème sur-déterminé).
 
 En ce qui concerne les algorithmes d'optimisations utilisés, nous en choisirons quatre~:
-\begin{itemize}
+\begin{myitemize}
 \item SLSQP (Sequential Least SQuares Programming)~: Méthodes des moindres carrés 
 \item GC~: Gradient Conjugué
 \item Neldear-Mead~: Algorithme basé sur une méthode du Simplex.
 \item BFGS (Broyden, Fletcher, Goldfarb, and Shanno)~: Méthode quasi newtonnienne basé également sur une approximation de la dérivée.
 \todo[inline]{Ref : Piocher ref algo : \url{http://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.optimize.minimize.html} }
-\end{itemize}
+\end{myitemize}
 Ces algorithmes seront initialisés avec les paramètres $\tau_N, \tau_P$ et~$\tau_S$ de l'estimation visuelle du chapitre REF SECTION ET/OU PAGE \todo[noline]{ref section}. Lorsqu'il sont nécessaire, les gradients (voire les hessiennes) sont approximés par les algorithmes eux-même. Outre un vecteur de paramètre initial et la fonction coût à optimiser~\ref{eq:min_optim_grey}, aucune information supplémentaire n'est fournie à ces différents algorithmes.
 
 
