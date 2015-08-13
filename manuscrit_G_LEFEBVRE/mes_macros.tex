@@ -11,6 +11,7 @@
 \newcommand{\ie}{{\it i.e.}\xspace}
 \newcommand{\cf}{{\it cf.}\xspace}
 \newcommand{\etal}{{\it et al.}\xspace}
+\newcommand{\dvecx}{\;{\rm d}\vecx\xspace}
 \newcommand{\dx}{\;{\rm d}x\xspace}
 \newcommand{\dy}{\;{\rm d}y\xspace}
 \newcommand{\dt}{\;{\rm d}t\xspace}
@@ -83,9 +84,26 @@
 
 \newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
 
+
+%%%%%% Commande de dessins
 \newcommand{\rect}[4]{
-%% #1 et #2 --> coordonnee du coin en bas a gauche
-%% #3 et #4 --> largeur et hauteur
-\multiput(#1,#2)(0,#4){2}{\line(1,0){#3}}
-\multiput(#1,#2)(#3,0){2}{\line(0,1){#4}}
+	%% #1 et #2 --> coordonnee du coin en bas a gauche
+	%% #3 et #4 --> largeur et hauteur
+	\multiput(#1,#2)(0,#4){2}{\line(1,0){#3}}
+	\multiput(#1,#2)(#3,0){2}{\line(0,1){#4}}
+}
+
+\newcommand{\mesh}[6]{
+	%% #1 : x0  , #2 : dx , #3 : Nx (nombre de maille)
+	%% #4 : y0  , #5 : dy , #6 : Ny
+	%% lignes horizontales
+	\put(#1,#4){\multiput(0,#5)(0,#5){#6}{\multiput(0,0)(#2,0){#3}{\line(1,0){#2}}}}
+	\multiput(#1,#4)(#2,0){#3}{\line(1,0){#2}}
+	%% lignes verticales
+	\put(#1,#4){\multiput(#2,0)(#2,0){#3}{\multiput(0,0)(0,#5){#6}{\line(0,1){#5}}}}
+	\multiput(#1,#4)(0,#5){#6}{\line(0,1){#5}}
+}
+
+\newcommand{\squaremesh}[3]{
+	\mesh{#1}{#2}{#3}{#1}{#2}{#3}
 }

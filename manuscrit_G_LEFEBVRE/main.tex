@@ -19,6 +19,7 @@
 %\changefontsizes[20pt]{16pt}
 \usepackage[fontsize=13pt]{scrextend}
 %\usepackage{frcursive} %fournit l'environnement cursive, qui imite une écriture manuelle
+%%%\usepackage{microtype} %% Permet de reduire l'espace entre les caracteres
 \usepackage{relsize}
 \usepackage{lettrine}
 
@@ -83,7 +84,9 @@
 \usepackage{enumitem} %%% Personalisation des puces pour les listes 
 %%\usepackage{enumerate}
 
-\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{tablefootnote}
+%%\usepackage{xcolor} (repetition)
 %%\usepackage{showkeys} %%% Pour faire afficher les label utilisés
 %%%%%\usepackage[plain]{fancyref}
 \usepackage{xr}
@@ -226,6 +229,8 @@
 }
 
 \renewcommand{\qedsymbol}{$\blacksquare$} %%% Personnalisation du symbole de fin de preuve
+%%%% Commande jouent le role inverse de \nonumber dans les environnement avec * (align* par ex.)
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
 %%%%%%% Personnalisation des legendes
 %\captionsetup[figure]{labelfont=it,textfont={bf,it}}
@@ -322,6 +327,8 @@
 
 %\subfile{chap1}
 \subfile{chap_biologie_du_cancer}
+\subfile{chap_modeleEDP}
+\subfile{chap_trefle}
 \subfile{chap_optim_grey}
 \subfile{chap_analyse_heterogeneite}
 
@@ -333,6 +340,7 @@
 %%\renewcommand\chaptername{}
 %\renewcommand*{\cftchappresnum}{Annexe~}
 \begin{appendices}
+\subfile{annexe_schema_mixte_EFVF}
 \subfile{annexe_penalisation}
 \subfile{annexe_gaussienne}
 \subfile{annexe_tableaux_graphiques_complementaires}

@@ -1,0 +1,34 @@
+\setlength{\unitlength}{0.01\textwidth}
+\begin{picture}(110,105)
+%%%\rect{0}{0}{110}{105} %%% cadre
+
+\huge
+\color{gray!130}
+\put(25,20){%% calc du maillage
+	\squaremesh{0}{40}{2}
+	%%%\rect{0}{0}{10}{10}
+	\put(10,10){$\mathcal{M}_{i-1}^{j-1}$}
+	\put(60,70){$\mathcal{M}_{i}^{j}$}
+	\put(10,70){$\mathcal{M}_{i-1}^{j}$}
+	\put(60,10){$\mathcal{M}_{i}^{j-1}$}
+	\color{black}
+	%%%% decalage bizarre ....
+	\multiput(-2,0)(0,40){3}{ \multiput(0,0)(-2,0){4}{ \line(-1,0){1} }} % pointilles horizontaux	
+	\put(-20,-2){$y_{j-1}$}
+	\put(-14,38){$y_j$}
+	\put(-20,78){$y_{j+1}$}
+	\multiput(-2,0)(40,0){3}{ \multiput(0,0)(0,-2){6}{ \line(0,-1){1} }} % pointilles verticaux
+	\put(-6,-17){$x_{i-1}$}
+	\put(38,-17){$x_i$}
+	\put(71,-17){$x_{i+1}$}
+
+	\put(20,20){%%% calque du maillage dual
+		\rect{0}{0}{40}{40}
+		\put(25,2){$\Gamma_1$}
+		\put(25,42){$\Gamma_3$}
+		\put(2,30){$\Gamma_4$}
+		\put(42,25){$\Gamma_2$}
+	}
+}
+
+\end{picture}

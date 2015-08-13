@@ -1,0 +1,242 @@
+\documentclass[main.tex]{subfiles}
+\pagestyle{main}%%%
+\begin{document}
+\chapter{\label{chap:anx_methode_mixte_VFEF}Schéma mixte volumes finis/éléments finis pour résoudre l'équation de Poisson}
+\chaptermark{Schéma mixte VF/EF} %%% Titre court pour l'entete
+
+\allowdisplaybreaks[1]
+\mylettrine{O}{n} propose ici une méthode mixte volumes finis/éléments finis pour résoudre l'équation de Poisson~:
+\begin{equation}\label{eq:anx_poisson}
+\left\{
+\begin{aligned}
+-\dive ( k \nabla \Pi(\vecx) ) &= F(\vecx) & \quad \textrm{ dans }  \Omega , \\
+\Pi(\vecx) &=0 & \quad \textrm{ sur  } \partial \Omega,
+\end{aligned}
+\right.
+\end{equation}
+où $F(\vecx)$ est une fonction source connue. Pour des raisons pratiques, dans l'ensemble de cette annexe nous noterons $\Pi_i^j := \Pi(x_i,y_j)$ (pas de confusion possible avec un exposant traduisant un indice temporel, ici il n'y a pas de variations temporelles). Les ordonnées seront de la même manière notées en exposant pour toutes les quantités attachées à une maille $\mathcal{M}_i^j$.
+
+\section{Description de la méthode}
+Plaçons nous dans un volume de contrôle $V_c$, maille du maillage dual.  La formulation volume fini donne alors~:
+\begin{equation}
+\int_{V_c} -\dive ( k \nabla \Pi(x,y) ) \dx\dy = \int_{V_c}F(x,y) \dx\dy.
+\end{equation}
+\begin{figure}
+\centering
+\resizebox{.7\textwidth}{!}{\input{tex_pictures/methode_mixte_EFVF.tex}}
+\caption{\label{fig:methode_mixte_EFVF}Méthode mixte éléments finis/volumes finis.}
+\end{figure}
+Notons $\Gamma=\displaystyle \bigcup_{i=1,2,3,4} \Gamma_i$ le bord du volume de contrôle~$V_c$, comme montré sur la Figure~\ref{fig:methode_mixte_EFVF}. La formule de Stockes nous permet alors d'écrire~:
+\begin{equation}
+\int_{\Gamma_1}k \partial_y \Pi \dx - \int_{\Gamma_2}k \partial_x \Pi \dy - \int_{\Gamma_3}k \partial_y \Pi \dx + \int_{\Gamma_4}k \partial_x \Pi \dy = \int_{V_c}F \dx \dy.
+\end{equation}
+Le point $(x_i,y_j)$ étant le centre du volume de contrôle, le membre de droite est approximer de la manière suivante~:
+\begin{equation}
+\int_{V_c}F \dx \dy = \Delta x \Delta y F_i^j \quad \textrm{dans chaque volume de contrôle~} V_c.
+\end{equation}
+Pour ce qui est du membre de gauche, dans chaque maille~$\mathcal{M}_i^j$ on approxime~$\Pi$ par~$\tilde{\Pi}$ de manière~$\mathds{Q}1$ \ie~:
+\begin{equation}\label{eq:anx_form_var_pr_eq_poisson}
+\tilde{\Pi}_i^j(x,y) = \delta_i^j + \gamma_i^jx + \beta_i^jy + 2\alpha_i^jxy  \qquad \forall (x,y) \in \mathcal{M}_i^j.
+\end{equation}
+
+\section{Calcul des coefficients du polynôme $\mathbb{Q}1$~: inversion de matrice}
+L'approximation polynomiale $\tilde{\Pi}$ est telle qu'elle soit exacte en chacun des sommets des mailles. Les coefficients $\alpha, \beta, \gamma$ et $\delta$ sont ainsi solution du système suivant~:
+\begin{equation}
+A_i^j\begin{pmatrix}
+\delta_i^j \\  \gamma_i^j \\ \beta_i^j \\ \alpha_i^j
+\end{pmatrix}
+= \begin{pmatrix}
+\Pi_i^j \\ \Pi_{i+1}^j \\ \Pi_i^{j+1} \\ \Pi_{i+1}^{j+1}
+\end{pmatrix} \qquad \textrm{dans chacune des mailles~} \mathcal{M}_i^j
+\end{equation}
+où
+\begin{equation}
+A_i^j=
+\begin{pmatrix}
+1 & x_i & y_j & 2 x_i y_j \\
+1 & x_{i+1}  & y_j & 2x_{i +1} y_j \\
+1 & x_i  & y_{j+ 1} & 2x_i  y_{j + 1} \\
+1 & x_{i + 1} & y_{j+1} & 2x_{i +1} y_{j + 1}
+\end{pmatrix}
+\end{equation}
+Il s'agit donc maintenant d'inverser la matrice $A$. 
+Appliquons l'algorithme d'élimination de Gauss-Jordan pour en trouver l'inverse~:
+$$\medmuskip=1mu \left(
+\begin{array}{cccc|cccc}
+1 & x_i & y_j & 2 x_i y_j & 1 & 0 & 0 & 0\\
+1 & x_{i+1} & y_j & 2x_{i +1} y_j  & 0 & 1 & 0 & 0\\
+1 & x_i  & y_{j+1} & 2x_i  y_{j +1} & 0 & 0 & 1 & 0 \\
+1 & x_{i +1} & y_{j +1}& 2x_{i +1} y_{j +1}& 0 & 0 & 0 & 1
+\end{array}\right) \begin{array}{l}
+L_1 \\ L_2 \\ L_3 \\ L_4
+\end{array}  $$ 
+$$\medmuskip=1mu \left(
+\begin{array}{cccc|cccc}
+1 & x_i & y_j & 2 x_i y_j & 1 & 0 & 0 & 0\\
+0 &  \Delta x & 0 & 2 y_j\Delta x   & -1 & 1 & 0 & 0\\
+0 & 0  &  \Delta y & 2x_i \Delta y & -1 & 0 & 1 & 0 \\
+0 & 0 & 0 & 2 \Delta x \Delta y & 1 & -1 & -1 & 1
+\end{array}\right) \begin{array}{l}
+L_1 \\
+L_2 \leftarrow L_2 - L_1 \\
+L_3 \leftarrow L_3- L_1 \\
+L_4 \leftarrow  L_4 + L_1 - L_2 - L_3
+\end{array} $$
+$$\medmuskip=1mu \left( \begin{array}{cccc|cccc}
+1 & x_i & y_j & 2 x_i y_j & 1 & 0 & 0 & 0\\
+0 &  1 & 0 & 2 y_j   & -1/\Delta x & 1/\Delta x & 0 & 0\\
+0 & 0  &  1 & 2x_i  & -1/\Delta y & 0 & 1/\Delta y & 0 \\
+0 & 0 & 0 & 2 & \frac{1}{p} & \frac{-1}{p} & \frac{-1}{p}& \frac{1}{p}
+\end{array}\right) \begin{array}{l}
+L_1 \\
+L_2 \leftarrow L_2  / \Delta x \\
+L_3 \leftarrow L_3/ \Delta y \\
+L_4 \leftarrow  L_4 / p
+\end{array}  $$
+avec $p=\Delta x\Delta y$.
+%%{\setlength{\thickmuskip}{0mu}
+$$\medmuskip=1mu \left( \begin{array}{cccc|cccc}
+1 & 0 & 0 & 0 & 1+ \frac{x_i}{\Delta x} + \frac{y_j}{\Delta y} + \frac{x_iy_j}{p} & \frac{-x_i}{\Delta x}- \frac{x_iy_j}{p} & \frac{-y_j}{\Delta y}- \frac{x_iy_j}{p} & \frac{x_iy_j}{p}\\
+0 &  1 & 0 & 0   & \frac{-1}{\Delta x} - \frac{y_j}{p} & \frac{1}{\Delta x} + \frac{y_j}{p} &  \frac{y_j}{p} & \frac{-y_j}{p}\\
+0 & 0  &  1 & 0  & \frac{-1}{\Delta y} - \frac{x_i}{p} & \frac{x_i}{p} & \frac{1}{\Delta y} + \frac{x_i}{p} & - \frac{x_i}{p} \\
+0 & 0 & 0 & 1 & \frac{1}{2p} & \frac{-1}{2p} & \frac{-1}{2p}& \frac{1}{2p}
+\end{array}\right) 
+\begin{array}{l}
+\hspace{-3mm}\begin{array}{l}
+L_1 \leftarrow  L_1-x_iL_2 \vspace{-1mm}\\ \hspace{4mm}  - y_j L_3 +x_iy_j L_4
+\end{array} \\
+L_2 \leftarrow L_2 -y_j L_4 \\
+L_3 \leftarrow L_3 - x_i L_4 \\
+L_4 \leftarrow L_4 /2
+\end{array} \\
+$$
+En remarquant que :
+\begin{align*}
+\frac{1}{\Delta y} + \frac{x_i}{p} &= \frac{1}{p} (\Delta x + x_i) = \frac{x_{i+1}}{p}, \\
+\frac{1}{\Delta x} + \frac{y_j}{p} &= \frac{1}{p} (\Delta y + y_j) = \frac{y_{j+1}}{p}, \\
+ 1+ \frac{x_i}{\Delta x} + \frac{y_j}{\Delta y} + \frac{x_iy_j}{p} & = \frac{1}{p}( \Delta x \Delta y + \Delta y x_i + \Delta x y_j + x_i y_j ) = \frac{1}{p} x_{i+1}y_{j+1},
+\end{align*}
+on a ainsi :
+\begin{equation}
+\medmuskip=1mu A^{-1} = \dfrac{1}{p}\left( \begin{array}{cccc}
+ x_{i+1}y_{j+1} & - x_iy_{j+1} & - x_{i+1}y_j & x_iy_j\\
+ -  y_{j+1} & y_{j+1} &  y_j & - y_j\\
+ -  x_{i+1} & x_i & x_{i+1} & -  x_i \\
+1 / 2 & -1 / 2 & -1 / 2& 1 / 2
+\end{array}\right).
+\end{equation}
+
+
+%%%%%%%%%%%%%%%%%%
+\section{Ecriture de la méthode comme un schéma à 9 points.}
+
+Chacune des intégrales de bord du problème variationnel~\ref{eq:anx_form_var_pr_eq_poisson} est approximée avec~:
+\begin{align*}
+\int \partial_x \tilde{\Pi}_i^j \dy &= \int (2\alpha_i^jy + \gamma_i^j) \dy = [\alpha_i^jy^2 + \gamma_i^j y ] = \alpha_i^j [y^2] + \gamma_i^j [y]. \\
+\int \partial_y \tilde{\Pi}_i^j \dx &= \int (2\alpha_i^jx + \beta_i^j) \dx = [\alpha_i^jx^2 + \beta_i^j x ] = \alpha_i^j [x^2] + \beta_i^j [x ].
+\end{align*}
+On découpe alors chacun des bords~$\Gamma_i$ sur les deux mailles qu'il traverse :
+\begin{align}
+\int\limits_{\Gamma_2 \cap \mathcal{M}_i^j} k \partial_x \tilde{\Pi} \dy & =  k_{i+\frac{1}{2}}^j \big( \alpha_i^j ( y^2_{j+\frac{1}{2}} - y^2_j) + \gamma_i^j ( y_{j+\frac{1}{2}} - y_j)\big) \nonumber\\
+& = \frac{\Delta y}{2}  k_{i+\frac{1}{2}}^j \big( \alpha_i^j ( 2y_j + \Delta y/2 ) + \gamma_i^j \big) 
+\\
+\int\limits_{\Gamma_2 \cap \mathcal{M}_i^{j-1}} k \partial_x \tilde{\Pi} \dy  & =  k_{i+\frac{1}{2}}^j \big( \alpha_i^{j-1} (  y^2_j -  y^2_{j-\frac{1}{2}} ) + \gamma_i^{j-1} ( y_j - y_{j-\frac{1}{2}})\big) \nonumber \\  
+& = \frac{\Delta y}{2} k_{i+\frac{1}{2}}^j \big( \alpha_i^{j-1} (  2y_j -  \Delta y / 2 ) + \gamma_i^{j-1} \big)
+\\
+\int\limits_{\Gamma_4 \cap \mathcal{M}_{i-1}^j} k \partial_x \tilde{\Pi} \dy  & =  k_{i-\frac{1}{2}}^j \big( \alpha_{i-1}^j ( y^2_{j+\frac{1}{2}} - y^2_j) + \gamma_{i-1}^j ( y_{j+\frac{1}{2}} - y_j)\big)  \nonumber \\
+ & = \frac{\Delta y}{2} k_{i-\frac{1}{2}}^j \big( \alpha_{i-1}^j ( 2 y_j + \Delta y/2) + \gamma_{i-1}^j \big) 
+\\
+\int\limits_{\Gamma_4 \cap \mathcal{M}_{i-1}^{j-1}} k \partial_x \tilde{\Pi} \dy & =  k_{i-\frac{1}{2}}^j \big( \alpha_{i-1}^{j-1} (  y^2_j -  y^2_{j-\frac{1}{2}} ) + \gamma_{i-1}^{j-1} ( y_j - y_{j-\frac{1}{2}})\big)  \nonumber \\
+& = \frac{\Delta y}{2}  k_{i-\frac{1}{2}}^j \big( \alpha_{i-1}^{j-1} (  2 y_j - \Delta y /2 ) + \gamma_{i-1}^{j-1} \big) 
+\\
+\int\limits_{\Gamma_1 \cap \mathcal{M}_i^{j-1}} k \partial_y \tilde{\Pi} \dx  & =  k_i^{j-\frac{1}{2}} \big( \alpha_i^{j-1} ( x^2_{i+\frac{1}{2}} - x^2_i) + \beta_i^{j-1} ( x_{i+\frac{1}{2}} - x_i)\big)  \nonumber \\
+ & = \frac{\Delta x}{2} k_i^{j-\frac{1}{2}} \big( \alpha_i^{j-1} (  2x_i + \Delta x /2 ) + \beta_i^{j-1} \big)
+\\
+\int\limits_{\Gamma_1 \cap \mathcal{M}_{i-1}^{j-1}} k \partial_y \tilde{\Pi} \dx  & =  k_i^{j-\frac{1}{2}} \big( \alpha_{i-1}^{j-1} (  x^2_i - x^2_{i-\frac{1}{2}}) + \beta_{i-1}^{j-1} ( x_i - x_{i-\frac{1}{2}} )\big)  \nonumber \\
+& = \frac{\Delta x}{2} k_i^{j-\frac{1}{2}} \big( \alpha_{i-1}^{j-1} (2 x_i - \Delta x /2 ) + \beta_{i-1}^{j-1} \big) 
+\\
+\int\limits_{\Gamma_3 \cap \mathcal{M}_i^j} k \partial_y \tilde{\Pi} \dx  & =  k_i^{j+\frac{1}{2}} \big( \alpha_i^j ( x^2_{i+\frac{1}{2}} - x^2_i) + \beta_i^j ( x_{i+\frac{1}{2}} - x_i)\big)  \nonumber \\
+ & = \frac{\Delta x}{2} k_i^{j+\frac{1}{2}} \big( \alpha_i^j ( 2x_i + \Delta x /2) + \beta_i^j \big)  
+\\
+\int\limits_{\Gamma_3 \cap \mathcal{M}_{i-1}^j} k \partial_y \tilde{\Pi} \dx  & =  k_i^{j+\frac{1}{2}} \big( \alpha_{i-1}^j (  x^2_i - x^2_{i-\frac{1}{2}}) + \beta_{i-1}^j ( x_i - x_{i-\frac{1}{2}} )\big)  \nonumber \\
+ & = \frac{\Delta x}{2}  k_i^{j+\frac{1}{2}} \big( \alpha_{i-1}^j (  2x_i - \Delta x /2) + \beta_{i-1}^j \big)
+\end{align}
+L'intégrale sur chacun des bords vaut donc :
+
+\begin{align}
+\int_{\Gamma_1} k \partial_y \tilde{\Pi} \dx & = \frac{\Delta x}{2} k_i^{j-\frac{1}{2}} \left( \frac{\Delta x}{2} (\alpha_i^{j-1}-\alpha_{i-1}^{j-1}) + 2x_i (\alpha_i^{j-1}+\alpha_{i-1}^{j-1}) + \beta_i^{j-1} + \beta_{i-1}^{j-1} \right) \label{eq:bord1}\\
+\int_{\Gamma_3} k \partial_y \tilde{\Pi} \dx & = \frac{\Delta x}{2} k_i^{j+\frac{1}{2}} \left( \frac{\Delta x}{2} (\alpha_i^j-\alpha_{i-1}^j) + 2x_i (\alpha_i^j+\alpha_{i-1}^j) + \beta_i^j + \beta_{i-1}^j \right) \label{eq:bord2}\\
+\int_{\Gamma_2} k \partial_x \tilde{\Pi} \dy & = \frac{\Delta y}{2} k_{i+\frac{1}{2}}^j  \left(\frac{\Delta y}{2} (\alpha_i^j - \alpha_i^{j-1}) +  2y_j (\alpha_i^j + \alpha_i^{j-1}) + \gamma_i^j + \gamma_i^{j-1} \right) \label{eq:bord3} \\
+\int_{\Gamma_4} k \partial_x \tilde{\Pi} \dy & = \frac{\Delta y}{2} k_{i-\frac{1}{2}}^j  \left( \frac{\Delta y}{2} (\alpha_{i-1}^j-\alpha_{i-1}^{j-1}) + 2y_j(\alpha_{i-1}^j+\alpha_{i-1}^{j-1}) + \gamma_{i-1}^j + \gamma_{i-1}^{j-1} \right) \label{eq:bord4}
+\end{align}
+
+Or le calcul de l'inverse de $A$ nous fournit les coefficients $\alpha, \beta, \gamma$ et $\delta$ en fonction de $\Pi$. On peut ainsi les substituer dans les équations~\eqref{eq:bord1}-\eqref{eq:bord4}.
+
+
+Pour faciliter la compréhension des calculs, présentons-les dans des tableaux. 
+Les lignes décrivant seulement $\alpha,\beta$ ou $\gamma$ ne sont que des réécritures des lignes de $A^{-1}$. Les autres lignes sont des combinaisons des précédentes. La première colonne indique la combinaison effectuée.
+$$\medmuskip=1mu
+\begin{array}{cc|c|c|c|c|c|c}
+&\textrm{Bord } \Gamma_2  & \Pi_i^{j-1} & \Pi_{i+1}^{j-1} & \Pi_i^j & \Pi_{i+1}^j & \Pi_i^{j+1} & \Pi_{i+1}^{j+1} \\
+\hline \hline
+ & \alpha_i^j & && 1/2p & -1 /2p & -1 /2p & 1/2p \\
+ & \alpha_i^{j-1} & 1 /2p & -1 /2p & -1 /2p & 1/2p && \\
+(a) &  \alpha_i^j + \alpha_i^{j-1} & 1 /2p & -1 /2p & &&-1 /2p & 1 /2p \\
+(b) &  \alpha_i^j - \alpha_i^{j-1} & 1 /2p & -1 /2p &1/p &-1/p &-1/2p & 1/2p \\
+\hline \hline
+ &  \gamma_i^j &&& -y_{j+1}/p & y_{j+1}/p &  y_{j}/p & -y_{j}/p \\
+ &  \gamma_i^{j-1} & - y_{j}/p & y_{j}/p & y_{j-1}/p & - y_{j-1}/p && \\
+(c) & \gamma_i^j + \gamma_i^{j-1} & -y_{j}/p & y_{j}/p & -2 \Delta y/p & 2 \Delta y/p & y_{j}/p & - y_{j}/p \\
+\hline \hline
+ &  2y_j(a) +(c)  & & & -2 \Delta y/p & 2\Delta y/p & & \\
+ & \hspace{-7mm}\dfrac{\Delta y}{2} (b) +2y_j(a) +(c)  & -\dfrac{\Delta y}{4p} & \dfrac{\Delta y}{4p} & -\dfrac{3}{2} \dfrac{\Delta y}{p} & \dfrac{3}{2} \dfrac{\Delta y}{p} & -\dfrac{\Delta y}{4p} & \dfrac{\Delta y}{4p} \\
+\end{array}
+$$
+Ainsi :
+\begin{equation}
+\int_{\Gamma_2} k \partial_x \tilde{\Pi} \dy  = \frac{\Delta y^2}{8p} k_{i+\frac{1}{2}}^j  \Big(  -\Pi_i^{j-1} + \Pi_{i+1}^{j-1} -6 \Pi_i^j +6 \Pi_{i+1}^j - \Pi_i^{j+1} + \Pi_{i+1}^{j+1} \Big)  \\
+\end{equation}
+De la même manière (juste en décalant l'indice $i$ d'un cran) on a :
+\begin{equation}
+\int_{\Gamma_4} k \partial_x \tilde{\Pi} \dy  = \frac{\Delta y^2}{8p} k_{i-\frac{1}{2}}^j  \Big(  -\Pi_{i-1}^{j-1} + \Pi_i^{j-1} -6 \Pi_{i-1}^j +6 \Pi_i^j - \Pi_{i-1}^{j+1} + \Pi_i^{j+1} \Big)  \\
+\end{equation}
+
+$$\medmuskip=1mu
+\begin{array}{cc|c|c|c|c|c|c}
+&\textrm{Bord } \Gamma_3  & \Pi_{i-1}^j & \Pi_i^j & \Pi_{i+1}^j & \Pi_{i-1}^{j+1} & \Pi_i^{j+1} & \Pi_{i+1}^{j+1} \\
+\hline \hline
+ & \alpha_i^j & & 1 /2p & -1 /2p && -1 /2p & 1 /2p \\
+ & \alpha_{i-1}^j & 1/2p & -1/2p && -1 /2p & 1/2p & \\
+(a) &  \alpha_i^j + \alpha_{i-1}^j & 1 /2p && -1 /2p &-1 /2p && 1 /2p \\
+(b) &  \alpha_i^j - \alpha_{i-1}^j & -1/2p & 1/p &-1/2p &1/2p &-1/p & 1 /2p \\
+\hline \hline
+ &  \beta_i^j && - x_{i+1}/p & x_{i}/p && x_{i+1}/p & - x_{i}/p \\
+ &  \beta_{i-1}^j & - x_{i}/p & x_{i-1}/p && x_{i}/p & - x_{i-1}/p & \\
+(c) & \beta_i^j + \beta_i^{j-1} & -x_{i}/p &-2\Delta x/p & x_{i}/p &  x_{i}/p & 2\Delta x/p &  - x_{i}/p \\
+\hline \hline
+ &  2x_i(a) +(c)  & &  -2\Delta x/p & && 2 \Delta x/p & \\
+ & \hspace{-7mm} \dfrac{\Delta x}{2} (b) +2x_i(a) +(c)  & -\dfrac{\Delta x}{4p} & -\dfrac{3}{2} \dfrac{\Delta x}{p}  & -\dfrac{\Delta x}{4p}  &  \dfrac{\Delta x}{4p} & \dfrac{3}{2} \dfrac{\Delta x}{p} & \dfrac{ \Delta x}{4p} \\
+\end{array}
+$$
+Ainsi :
+\begin{equation}
+\int_{\Gamma_3} k \partial_y \tilde{\Pi} \dx = \frac{\Delta x^2}{8p} k_i^{j+\frac{1}{2}} \Big( -\Pi_{i-1}^j -6 \Pi_i^j - \Pi_{i+1}^j + \Pi_{i-1}^{j+1} +6 \Pi_i^{j+1} + \Pi_{i+1}^{j+1}  \Big)
+\end{equation}
+Et de la même manière, on a :
+\begin{equation}
+\int_{\Gamma_1} k \partial_y \tilde{\Pi} \dx = \frac{\Delta x^2}{8p} k_i^{j-\frac{1}{2}} \Big( -\Pi_{i-1}^{j-1} -6 \Pi_i^{j-1} - \Pi_{i+1}^{j-1} + \Pi_{i-1}^j +6 \Pi_i^j + \Pi_{i+1}^j  \Big) \\
+\end{equation}
+
+
+
+Dans le cas particulier où $k\equiv1$ et où $\Delta x = \Delta y := h$ alors l'opérateur de discrétisation prend une forme plus simple. La formulation variationnel~\eqref{eq:anx_form_var_pr_eq_poisson} devient alors :
+\begin{align*}
+\dfrac{1}{8} \Big[ \Big( & -\Pi_{i-1}^{j-1} -6 \Pi_i^{j-1} - \Pi_{i+1}^{j-1} + \Pi_{i-1}^j +6 \Pi_i^j + \Pi_{i+1}^j  \Big) \\
+&-\Big(  -\Pi_i^{j-1} + \Pi_{i+1}^{j-1} -6 \Pi_i^j +6 \Pi_{i+1}^j - \Pi_i^{j+1} + \Pi_{i+1}^{j+1} \Big)  \\
+&-\Big( -\Pi_{i-1}^j -6 \Pi_i^j - \Pi_{i+1}^j + \Pi_{i-1}^{j+1} +6 \Pi_i^{j+1} + \Pi_{i+1}^{j+1}  \Big) \\
+&+\Big(  -\Pi_{i-1}^{j-1} + \Pi_i^{j-1} -6 \Pi_{i-1}^j +6 \Pi_i^j - \Pi_{i-1}^{j+1} + \Pi_i^{j+1} \Big) \Big]  = h^2 F_i^j  \\
+\Leftrightarrow \dfrac{1}{4h^2} \Big[  & -\Pi_{i-1}^{j-1} -2 \Pi_i^{j-1} - \Pi_{i+1}^{j-1} - 2\Pi_{i-1}^j + 12 \Pi_i^j \\
+& \hspace{3cm} - 2\Pi_{i+1}^j - \Pi_{i-1}^{j+1} -2 \Pi_i^{j+1} - \Pi_{i+1}^{j+1} \Big]  = F_i^j \numberthis
+\end{align*}
+Le schéma présenté ici est donc équivalent à un schéma à 9 points, comme illustré sur la Figure~\ref{fig:schema_laplace_9pts_custom}.
+\end{document}

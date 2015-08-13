@@ -1,0 +1,17 @@
+\setlength{\unitlength}{0.01\textwidth}
+\begin{picture}(110,105)
+%%\rect{0}{0}{110}{105}
+
+\Huge
+\squaremesh{10}{40}{2}
+\multiput(10, 10)(0, 40){3}{\multiput(0, 0)(40, 0){3}{\circle*{5}}}
+
+\put(12,3){%%% calque des legendes de noeuds
+\multiput(0, 0)(0, 80){2}{\multiput(0, 0)(80, 0){2}{$-1$}}
+\multiput(40, 0)(0, 80){2}{$-2$}
+\multiput(0, 40)(80,0){2}{$-2$}
+\put(40,40){$12$}
+}
+\put(85,95){\scalebox{2}{$\times \sfrac{1}{4h^2}$}}
+
+\end{picture}
