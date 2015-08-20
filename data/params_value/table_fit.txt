@@ -1,0 +1,22 @@
+$\gamma_0$ & Taux de croissance des cellules cancéreuses & $d^{-1}$ & 2.0e-2 & 6.33e-3 \\
+$\gamma_1$ & Taux d'apoptose des cellules cancéreuses & $d^{-1}$ & 8.0e-3 & 4.46e-2 \\
+$C_S$ & Taux d'apoptose du tissu sain relativement à~$\gamma_1$ & - & 10 & 10 \\
+$M_{th}$ & Seuil d'hypoxie & - & 2 & 2 \\
+$\muN$ & Taux d'élimination de la nécrose par le \mbox{système} \mbox{immunitaire} & $d^{-1}$ & 1.33e-2 & 8.19e-2 \\
+$\psi$ & Taux de diffusion des nutriments & $cm^2.d^{-1}$ & 1.33e-2 & 3.33e-3 \\
+$\eta$ & Taux de consommation des cellules cancéreuses & $d^{-1}$ & 6.67e-2 & 8.05e-3 \\
+$\alpha$ & Excitabilité angiogénique & $d^{-1}$ & 1.11e-3 & 8.0e-3 \\
+$\lambda$ & Taux d'élimination du signal de facteurs de \mbox{croissance} \mbox{angiogénique} & $d^{-1}$ & 2.0e-2 & 0.68 \\
+$C_0$ & Capacité angiogénique du tissu sain & $d^{-1}$ & 3.33e-2 & 3.33e-2 \\
+$k$ & Perméabilité du tissu & $kg^{-1}.cm^3.d$ & 1 & 1 \\
+$\Tini{1}$ & Début (en jours) de l'administration du \mbox{traitement}~$\TI$ & d & 119 & 0 \\
+$\Tend{1}$ & Fin (en jours) de l'administration du \mbox{traitement}~$\TI$  & d & 867 & 845 \\
+$\Tini{2}$ & Début (en jours) de l'administration du \mbox{traitement}~$\TS$ & d & 867 & 1049 \\
+$\Tend{2}$ & Fin (en jours) de l'administration du \mbox{traitement}~$\TS$  & d & 1298 & 1600 \\
+$\muI$ & Taux de mortalité des cellules proliférantes dû au \mbox{traitement}~$\TI$ & $d^{-1}$ & 7.17e-3 & 3.45e-3 \\
+$\nuS$ & Taux d'inhibition de \mbox{l'angiogenèse} par le \mbox{traitement}~$\TS$ & - & 0.8 & 0.90 \\
+$\muS$ & Taux de mortalité des cellules proliférantes dû au \mbox{traitement}~$\TS$ & $d^{-1}$ & 4.27e-3 & 3.0e-4 \\
+$\epsilon_{th}$ & Proportion minimale de cellules cancéreuses pouvant être \mbox{détectée} sur les scanners -- Seuil minimal pour la \mbox{localisation} \mbox{numérique} de la tumeur & - & 1.0e-2 & 0.1 \\
+$\Sigma_{ini}$ & Proportion de cellules résistantes à \mbox{l'imatinib} à~$t=0$ -- \mbox{Equivalent} à $(P_2+P_3)_{t=0}$ & - & 3e-06 & 0.10 \\
+$q_{ini}$ & Proportion des cellules résistantes à \mbox{l'imatinib} qui sont aussi résistante au sunitinib à~$t=0$ -- \mbox{Equivalent} à $(P_3/P_2)_{t=0}$ & - & 7.5e-3 & 0.41 \\
+$\xi_{ini}$ & Signal de facteur de croissance angiogénique à~$t=0$ & $cm.d^{-1}$ & 3.33e-3 & 0 \\

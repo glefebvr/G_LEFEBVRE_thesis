@@ -18,7 +18,7 @@
 \end{myitemize}
 
 
-\noindent Un correctif sera finalement proposé. 
+\noindent Une fois le défaut identifié, un correctif sera finalement proposé. 
 
 \section{Présentation du problème}
 Sans plus tardez, présentons le problème en image. Sur la Figure~\ref{fig:trefle}, est présenté une simulation numérique du modèle EDP construit au chapitre précédent avec~:
@@ -85,6 +85,7 @@ Sur chaque maille $\mathcal{M}$, une approximation par un polynôme $\mathbb{Q}_
 Ici encore le trèfle persiste. Explorons alors une autre piste.
 
 \section{Le schéma de transport}
+\subsection{Reproduction du problème sur un modèle (très) réduit}
 Afin de démontrer que le responsable du trèfle est le schéma de transport, travaillons sur un modèle plus simple, le plus simple possible. Il sera à priori incapable de reproduire la biologie que l'on souhaite décrire mais il aura l'avantage de toujours présenter cette forme en trèfle. 
 Ce nouveau modèle est construit à partir du modèle complet présenté au chapitre précédent, en faisant les simplifications suivantes~:
 \begin{myitemize}
@@ -101,8 +102,38 @@ Le modèle complet en est alors réduit à~:
 \end{aligned} \right.
 \end{equation}
 Notez qu'en injectant la seconde égalité dans la première équation, on obtient~:
-\begin{equation}
+\begin{equation}\label{eq:mod_reduit_test_transp}
 \partial_t P + \vit \nabla P = -P^2
 \end{equation}
-Pour pouvoir incriminer le schéma de transport
+Pour pouvoir incriminer le schéma de transport, réalisons une dernière simplification~: donnons nous une vitesse. Ainsi seule l'équation~\ref{eq:mod_reduit_test_transp} ci-dessus. La vitesse est choisie de sorte à reproduire au mieux la vitesse du système complet. Le champ est d'abord dilatant (pour reproduire la croissance lors de la rechute au premier traitement) puis contractant (lorsque le second traitement agit). La transition entre les deux comportements est une phase dans laquelle on a un mélange des deux comportements~:
+\begin{myitemize}
+\item dilatant sur le pourtour de la tumeur,
+\item contractant à l'intérieur de la tumeur.
+\end{myitemize}
+La vitesse est alors choisie comme suit en fonction du rayon $r(\vecx)=\| \vecx - \vecx_c \|$ uniquement ($\vecx_c$ étant le centre du domaine de calcul de taille $L\times L$)~:
+\begin{equation}
+\vit(t,\vecx)=v\big(t,r(\vecx)\big)\frac{\vecx}{\|\vecx \|} \quad \textrm{avec} \quad v(t,r) = e^{-t} v_+(r) - v_-(r),
+\end{equation}
+où $v_-$ et $v_+$ sont respectivement les vitesses contractantes et dilatantes
+\begin{align}
+v_+(r)&=\exp\left( \frac{-1}{10} \left(\frac{r-L/4}{L/16} \right)^2 \right), \\
+v_-(r)&= \frac{1}{550} \exp\left( \frac{-1}{10} \left(\frac{r-L/8}{L/8} \right)^2 \right).
+\end{align}
+Le profil de ces 2 vitesses est présenté à titre indicatif sur la Figure~\ref{fig:vitesse+et-imposees}.
+\begin{figure}
+\centering
+\includegraphics[width=.7\textwidth]{vitesse_imposee.png}
+\caption{Vitesses imposées dans l'équation de transport~\eqref{eq:mod_reduit_test_transp}\label{fig:vitesse+et-imposees} }
+\end{figure}\todo[noline]{graphique \ref{fig:vitesse+et-imposees} a refaire}
+Avec ce modèle extrêmement minimaliste, le trèfle à 4 feuilles apparaît une fois de plus, comme on peut le constater sur la Figure~\ref{fig:evo_test_transp}.
+\begin{figure}
+FIGURE
+\caption{Evolution de la densité $P$, solution numérique du modèle réduit~\eqref{eq:mod_reduit_test_transp}.\label{fig:evo_test_transp}}
+\end{figure}
+
+\subsection{Méthode pour améliorer la préservation de l'invariance par rotation~: le \twinweno}
+De la même manière que nous avons procédé pour l'équation de Poisson, proposons un schéma dont le stencil n'est pas uniquement réparti selon 2 directions. Le nouveau schéma, baptisé \twinweno consiste à combiner le WENO5 standard avec un autre WENO5 basé sur les directions diagonales. Ainsi l'ordre de convergence du WENO5 est préservé.\todo{ref biblio pour WENO5}
+
+Détaillons un peu plus la manière dont se présente ce schéma. Son stencil est présenté sur la Figure ...
+
 \end{document}

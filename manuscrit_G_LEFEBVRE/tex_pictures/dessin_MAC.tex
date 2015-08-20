@@ -1,0 +1,32 @@
+\setlength{\unitlength}{1mm}
+\begin{picture}(95,50)
+
+
+\rect{20}{10}{30}{30} %% \rect est defini dans mes macros
+
+\multiput(16,10)(0,15){3}{\multiput(0,0)(1.5,0){26}{\line(1,0){0.5}}}
+\multiput(20,6)(15,0){3}{\multiput(0,0)(0,1.5){26}{\line(0,1){0.5}}}
+
+\multiput(20,25)(30,0){2}{\oval(4,2)}
+\multiput(35,10)(0,30){2}{\oval(2,4)}
+\rect{33.5}{23.5}{3}{3}
+\put(4,27){$(i-\frac{1}{2},j)$}
+\put(36,20){$(i,j)$}
+\put(51,20){$(i+\frac{1}{2},j)$}
+\put(35.5,42){$(i,j+\frac{1}{2})$}
+\put(35.5,6){$(i,j-\frac{1}{2})$}
+
+\put(15,5){\vector(1,0){9}}
+\put(15,5){\vector(0,1){9}}
+\put(14,15){$\ey$}
+\put(25,4){$\ex$}
+
+%% legende
+\rect{63.5}{39.5}{3}{3}
+\put(65,36){\oval(4,2)}
+\put(65,31){\oval(2,4)}
+\put(69,40){$P_1,P_2,P_3,N,S,M$}
+\put(69,35){$v_x$}
+\put(69,31){$v_y$}
+
+\end{picture}
