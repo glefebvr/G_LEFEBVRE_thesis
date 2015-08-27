@@ -1,4 +1,6 @@
 \documentclass[main.tex]{subfiles}
+\pagestyle{main}
+
 \begin{document}
 \chapter{Exploration de différentes pénalisations sur la fonction coût utilsée pour optimiser les niveaux de gris. \label{chap:anx_penalisation} }
 \chaptermark{Exploration de différentes pénalisations} %%% Titre court pour l'entete
@@ -12,12 +14,11 @@ Soit $J : \reel^n \longrightarrow \reel$ une fonction. La transformée (ou régu
 J_c(u) := \min_{v\in \reel^n} \left( J(v) + \frac{1}{2c} \|v-u\|^2 \right).
 \end{equation}
 \end{dfn}
-
-En prenant $v=u$ dans le minimum, on obtiens que~:
+\noindent En prenant $v=u$ dans le minimum, on obtiens que~:
 \begin{prop}
 $\forall c>0, \quad \forall u \in \reel^n, \quad J_c(u) \leq J(u) .$
 \end{prop}
-Si $J$ est une fonction à minimiser, alors la propriété suivante est utile~:
+\noindent Si $J$ est une fonction à minimiser, alors la propriété suivante est utile~:
 \begin{prop}
 Soit $a$ le minimum de $J$. Soit $u$ l'un des antécédants de $a$. Alors $u$ minimise aussi $J_c$ et on a $J_c(u)=J(u)=a$ quelque soit $c>0$.
 \end{prop}
@@ -63,11 +64,10 @@ On a $f'_u(v) = (v-u)/c, \ \forall u \in \reel \setminus \{ -a, a \}. $
 En $\pm a$, la dérivée n'est pas définie. \\
 Puisque $J$ est paire, nous pouvons limiter l'étude de sa régularisée aux $u$ positifs. La fonction étant dicontinue en $a$, il faut distinguer 2 cas~:
 \begin{center}
-\includegraphics[width=.5\textwidth]{penal_quad.png}
-\captionof{figure}{\label{fig:regul_creneau} Régularisation de Moreau-Yosida d'une fonction créneau. }
+\includegraphics[width=.5\textwidth]{creneau.png}
+\captionof{figure}{\label{fig:regul_creneau} Régularisation de Moreau-Yosida d'une fonction créneau avec~$c=4$. }
 \end{center}
 \end{multicols}
-\todo[noline]{Mettre la bonne figure}
 \begin{myitemize}
 \renewcommand{\labelitemi}{\scriptsize$\bullet$} 
 \item Cas 1 : $a < u$
@@ -171,11 +171,10 @@ Ici, $\min_v f_u(v) = f(a) = \frac{1}{2c} \| a-u\|^2, \ \forall u \in ]a,a(2c+1)
 \end{myitemize}
 \begin{figure}
 \centering
-\subfloat[\label{fig:para_tronquee} Parabole tronquée {$J(u)=[ u^2-a^2 ]^+ $}]{\includegraphics[width=.49\textwidth]{penal_quad.png}}
-\subfloat[\label{fig:regul_para_coupee} Régularisée de Moreau-Yosida d'une parabole tronquée.]{\includegraphics[width=.49\textwidth]{penal_quad.png}}
+\subfloat[\label{fig:para_tronquee} Parabole tronquée \newline $J(u)=$  {$[ u^2-a^2 ]^+ $} (avec $a=127.5$).]{\includegraphics[width=.49\textwidth]{penal_quad.png}} 
+\subfloat[\label{fig:regul_para_coupee} Régularisée de Moreau-Yosida d'une parabole tronquée ($c=0.1$).]{\includegraphics[width=.49\textwidth]{penal_quad_regul.png}}
 \caption{\label{fig:regul_yosida} Exemple d'une régularisation de Moreau-Yosida.}
 \end{figure}
-\todo[noline]{Mettre la bonne figure}
 Ainsi l'expression de la régularisée de la parabole tronquée~\ref{eq:para_tronquee} est donnée par
 \begin{equation}\label{eq:regul_parabole_coupee}
 J_c(u) = \left\{  \begin{aligned}
@@ -192,13 +191,14 @@ et son allure est présentée sur la Figure~\ref{fig:regul_para_coupee}.
 \section{Optimisation des niveaux de gris~: essais de diverses pénalisations sur la fonction coût}
 
 %%%%%% Cout2
-\DTLloaddb{optim2_2grey}{../data/cout_2/optim2.csv}
-\DTLloaddb[noheader]{optim2_2leg}{../data/cout_2/optim2_leg.csv}
-\DTLloaddb{optim2_2stat}{../data/cout_2/optim2_stat.csv}
+\DTLloaddb{optim2_2grey}{../data/cout_2_bad/optim2.csv}
+\DTLloaddb[noheader]{optim2_2leg}{../data/cout_2_bad/optim2_leg.csv}
+\DTLloaddb{optim2_2stat}{../data/cout_2_bad/optim2_stat.csv}
 \DTLsetheader{optim2_2leg}{Column1}{}
 \DTLsetheader{optim2_2leg}{Column2}{}
 \begin{table}[htbp]
 \footnotesize
+\centering
 \hspace{\retraittableau} %%% Le tableau depasse sur les marges !
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -222,25 +222,26 @@ et son allure est présentée sur la Figure~\ref{fig:regul_para_coupee}.
 \\
 \DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
 \scan & \begin{tabular}{c}
-\col \\ \errcol
+\col \\ Err : \errcol
 \end{tabular} & \begin{tabular}{c}
-\CG \\ \errCG
+\CG \\ Err : \errCG
 \end{tabular} & \begin{tabular}{c}
-\NM \\ \errNM
+\NM \\ Err : \errNM
 \end{tabular} & \begin{tabular}{c}
-\BFGS \\ \errBFGS
+\BFGS \\Err : \errBFGS
 \end{tabular} 
 }%
-\DTLforeach*{optim2_2stat}{%
-\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
-\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-Moyenne : & \col & \CG & \NM & \BFGS  }
-\\ \hline
+%\DTLforeach*{optim2_2stat}{%
+%\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+%\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+%Moyenne : & \col & \CG & \NM & \BFGS  }
+%\\ \hline
 \end{tabular}
-\caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique \eqref{eq:penalisation_quad}.}
+
+\caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique \eqref{eq:penalisation_quad} (\cf Figure~\ref{fig:para_tronquee}), pour les combinaisons défavorables de la Table~\ref{tab:optim2gris_bad}, page~\pageref{tab:optim2gris_bad}.}
 \end{table}
 
-Comme montré dans le chapitre REF\todo{REF} (\cf notemment Table REF), les algorithmes d'optimisations sur les niveaux de gris tendent, dans certaines configurations,  vers des jeux de paramètres optimals qui s'approchent du bord 0 ou du bord 255, voire même qui sont négatifs (\ie non convergence de l'algorithme d'optimisation). Ce phénomène pourrait être dû notamment au fait que la pénalisation en créneau \eqref{eq:penalisation_creneau} présente une discontinuité. Les algorithmes de descente notamment fonctionnant sur une approximation du gradient peuvent ainsi être perturbé par cette discontinuité. Essayons alors une pénalisation continue~: une parabole coupée
+Comme montré dans le chapitre \ref{chap:optim_grey} (\cf notamment Table~\ref{tab:optim2gris} et surtout dans la Table~\ref{tab:optim2gris_bad} ), les algorithmes d'optimisations sur les niveaux de gris tendent, dans certaines configurations,  vers des jeux de paramètres optimaux qui s'approchent du bord~0 ou du bord~255, voire même qui sont négatifs (\ie non convergence de l'algorithme d'optimisation). Ce phénomène pourrait être dû notamment au fait que la pénalisation en créneau \eqref{eq:penalisation_creneau} présente une discontinuité. Les algorithmes de descente notamment fonctionnant sur une approximation du gradient peuvent ainsi être perturbé par cette discontinuité. Examinons ceci de plus près. Essayons une pénalisation continue~: une parabole coupée
 \begin{equation}
 \label{eq:penalisation_quad}
 \mathcal{P}(\tau) = \Big[ \big(  E(\tau) - 127.5 \big)^2-126^2 \Big]^+,
@@ -249,8 +250,8 @@ où $[.]^+=\max(0,.)$ désigne la partie positive et où $E(\tau)$ est la compos
 \begin{equation}
 \label{eq:tau_eloigne} E(\tau)= \arg\max_{i=1,2,3}( | \tau_i-127.5 | ).
 \end{equation} 
-L'aspect de cette pénalisation est présenté sur la Figure~\ref{fig:para_tronquee} (avec $a=126; u=E(\tau)-127.5$). Il s'agit d'une parabole dont on ignore la partie négative. 
-Ici la pénalisation intervient sur un intervalle un légèrement plus court que $[0;255]$, car de toute façon les valeurs de $\tau$ n'ont pas à s'approcher de ces bornes (la pénalisation est non nulle en dehors de $[1.5;253.5]$).
+L'aspect de cette pénalisation est présenté sur la Figure~\ref{fig:para_tronquee} (avec~$a=126; u=E(\tau)-127.5$). Il s'agit d'une parabole dont on ignore la partie négative. 
+Ici la pénalisation intervient sur un intervalle légèrement plus court que~$[0;255]$, car de toute façon les valeurs de~$\tau$ n'ont pas à s'approcher de ces bornes (la pénalisation est non nulle en dehors de~$[1.5;253.5]$).
 
 
 
@@ -260,18 +261,20 @@ Ici la pénalisation intervient sur un intervalle un légèrement plus court que
 %\vspace{-3mm}
 %\caption{\label{fig:penal_quad} Pénalisation via une parabole tronquée (\cf Eq.~\eqref{eq:penalisation_quad}). }
 %\end{figure}
-Les résultats des optimisations de niveaux de gris faites avec la pénalisation~\eqref{eq:penalisation_quad} sont présentés dans la Table~\ref{tab:optim2gris_pen_quad}. Ici plus de valeurs négatives, cependant la borne 1.5 est atteinte à plusieurs reprises. La pénalisation considérée ici n'est que $\mathcal{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
+Les résultats des optimisations de niveaux de gris faites avec la pénalisation~\eqref{eq:penalisation_quad} sont présentés dans la Table~\ref{tab:optim2gris_pen_quad}. Ici plus de valeurs négatives, cependant la borne 1.5 est atteinte à plusieurs reprises. De même les résultats entre les algorithmes sont très variables. Ainsi, ici, il est difficile de dire s'il y a eu une amélioration ou non par rapport à la pénalisation en créneau. 
+La pénalisation considérée ici n'est que~$\mathcal{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
 
 
 %%%%%% Cout3
-\DTLloaddb{optim2_grey}{../data/cout_3/optim2.csv}
-\DTLloaddb[noheader]{optim2_leg}{../data/cout_3/optim2_leg.csv}
-\DTLloaddb{optim2_stat}{../data/cout_3/optim2_stat.csv}
+\DTLloaddb{optim2_grey}{../data/cout_3_bad/optim2.csv}
+\DTLloaddb[noheader]{optim2_leg}{../data/cout_3_bad/optim2_leg.csv}
+\DTLloaddb{optim2_stat}{../data/cout_3_bad/optim2_stat.csv}
 \DTLsetheader{optim2_leg}{Column1}{}
 \DTLsetheader{optim2_leg}{Column2}{}
-\begin{table}[htbp]
-%\footnotesize
-\scriptsize
+\begin{table}[htpb]
+\footnotesize
+\centering
+%\scriptsize
 \hspace{\retraittableau} %%% Le tableau depasse sur les marges !
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -295,22 +298,22 @@ Les résultats des optimisations de niveaux de gris faites avec la pénalisation
 \\
 \DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
 \scan & \begin{tabular}{c}
-\col \\ \errcol
+\col \\ Err : \errcol
 \end{tabular} & \begin{tabular}{c}
-\CG \\ \errCG
+\CG \\ Err : \errCG
 \end{tabular} & \begin{tabular}{c}
-\NM \\ \errNM
+\NM \\ Err : \errNM
 \end{tabular} & \begin{tabular}{c}
-\BFGS \\ \errBFGS
+\BFGS \\ Err : \errBFGS
 \end{tabular} 
 }%
-\DTLforeach*{optim2_stat}{%
-\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
-\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-Moyenne : & \col & \CG & \NM & \BFGS  }
-\\ \hline
+%\DTLforeach*{optim2_stat}{%
+%\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+%\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+%Moyenne : & \col & \CG & \NM & \BFGS  }
+%\\ \hline
 \end{tabular}
-\caption{\label{tab:optim2gris_pen_quad_reg}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pour pénalisation une parabole tronquée régularisée (\cf Figure REF page XXX ).}
+\caption{\label{tab:optim2gris_pen_quad_reg}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pour pénalisation une parabole tronquée régularisée (\cf Figure~\ref{fig:regul_para_coupee}), pour les configurations défavorables de la Table~\ref{tab:optim2gris_bad}, page~\pageref{tab:optim2gris_bad}.}
 \end{table}
 \todo{ref fig}
 
@@ -318,11 +321,11 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 \DTLcleardb{optim2_stat}
 \DTLcleardb{optim2_grey}
 
-Essayons donc une troisième fonction de pénalisation qui soit~$\mathcal{C}^1$. Considérons la régularisation de Moreau-Yosida de la pénalisation précédente. La courbe de la régularisée d'une parabole tronquée est représentée sur la Figure~\ref{fig:regul_para_coupee} (on prend ici également $a=126; u=E(\tau)-127.5$). Les niveaux de gris optimaux obtenus avec cette nouvelle pénalisation plus régulière sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
+Essayons donc une troisième fonction de pénalisation qui soit~$\mathcal{C}^1$. Considérons la régularisation de Moreau-Yosida de la pénalisation précédente. La courbe de la régularisée d'une parabole tronquée est représentée sur la Figure~\ref{fig:regul_para_coupee} (on prend ici $a=126; u=E(\tau)-127.5$). Les niveaux de gris optimaux obtenus avec cette nouvelle pénalisation plus régulière sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
 
 
-Visiblement rien ne semble y faire : il y a toujours des valeurs de $\tau_N$ qui s'approche des bornes autorisées et les cas où l'on considère les images $[3,5,7]$ et $[3,7,9]$ fournissent $\tau_N >> \tau_S$ ce qui est aberrant\todo{Parle-t-on de l'ordre ici ?}.
-La régularité de la pénalisation ne semblent donc pas en cause ici. Le problème semble venir d'ailleurs (\cf retour au chapitre dans la section \todo{REF section}  ).
+Visiblement rien ne semble y faire : il y a toujours des valeurs de~$\tau_N$ qui s'approchent des bornes autorisées et les cas où l'on considère les images~$[2,5,7]$ et~$[3,7,9]$ par exemple  fournissent des résultats très différents selon les algorithmes d'optimisation utilisés, qui de plus font apparaître~$\tau_N$>>$\tau_S$ ce qui est aberrant.
+La régularité de la pénalisation ne semblent donc pas en cause ici. Le problème semble donc venir d'ailleurs (\cf fin de la section~\ref{sec:optim_2_param} traitant des problèmes de mauvais  conditionnement de nos systèmes).
 
 %En ce qui concerne l'aberration, cela peut venir du fait que les images 5,7 et 9 sont petites, et donc le bruit est très important et l'image numéro 3, de taille moyenne n'arrive pas à rattraper ce bruit. Il faut donc éviter de prendre en compte les images où la tumeur est trop petite, et si l'on en prend il faut que ces images soient minoritaires devant les autres.
 
