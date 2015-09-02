@@ -18,6 +18,7 @@
 \usepackage{mathrsfs} %% fournit \mathsrc (majuscules rondes)
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 \DeclareMathAlphabet{\matheus}{U}{eus}{m}{n}
+\DeclareTextFontCommand{\textpzc}{\fontfamily{pzc}\fontseries{m}\fontshape{n}\selectfont}
 
 %\usepackage{scrextend} %%% http://tex.stackexchange.com/questions/5339/how-to-specify-font-size-less-than-10pt-or-more-than-12pt
 %\changefontsizes[20pt]{16pt}
@@ -50,12 +51,16 @@
 %%%\usepackage[titletoc,title]{appendix}
 %\usepackage[toc,page]{appendix} %% option toc quio ne marche pas --> appel manuel a \addappheadtotoc
 \usepackage[page]{appendix}
-\renewcommand{\appendixtocname}{Annexes}
+\renewcommand{\appendixtocname}{{\fontfamily{pzc}\selectfont \Large  Annexes}}
 %\renewcommand{\appendixpagename}{Annexes}
-\def\appendixpage{\vspace*{9cm}
+\def\appendixpage{\newpage\vspace*{9cm}
 \begin{center}
-\Huge\textbf{Annexes}
+%\Huge\textbf{Annexes}
+%\textpzc{\fontsize{2cm}{1em}\selectfont ANNEXES}
+\textpzc{\fontsize{3cm}{1em}\selectfont Annexes}
 \end{center}
+%%$$\Huge\mathcal{Annexes}$$
+%$$\Huge\mathpzc{\sc Annexes}$$
 \thispagestyle{empty}
 }
 
@@ -349,10 +354,10 @@
 %%\renewcommand\chaptername{}
 %\renewcommand*{\cftchappresnum}{Annexe~}
 \begin{appendices}
+\subfile{annexe_tableaux_graphiques_complementaires}
 \subfile{annexe_schema_mixte_EFVF}
 \subfile{annexe_penalisation}
 \subfile{annexe_gaussienne}
-\subfile{annexe_tableaux_graphiques_complementaires}
 \end{appendices}
 
 \backmatter  %%%% l'épilogue du document

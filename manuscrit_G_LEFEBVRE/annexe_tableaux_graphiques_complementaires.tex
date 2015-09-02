@@ -1,8 +1,209 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
-%%\chapter{Tableaux et graphiques complémentaires \label{chap:nax_img_complement}}
-\newpage
-========= DEBUT ANNEXE TABLEAUX ET GRAPHIQUES =====
+\chapter{Tableaux et graphiques complémentaires \label{chap:anx_img_complement}}
+
+\newlength{\largeurfignber}
+\setlength{\largeurfignber}{0.19\textwidth}
+%\begin{figure}
+%\centering
+%\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_05_20_scan_contour.png}}\ 
+%\subfloat[Jour 119]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_09_16_scan_contour.png}}\ 
+%\subfloat[Jour 209]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_12_15_scan_contour.png}}\ 
+%\subfloat[Jour 275]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_02_19_scan_contour.png}}\ 
+%\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_04_16_scan_contour.png}}\ 
+%\subfloat[Jour 406]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_06_30__slice-244_85_scan_contour.png}}\ 
+%\subfloat[Jour 493]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_09_25_scan_contour.png}}\ 
+%\subfloat[Jour 535]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_11_06_scan_contour.png}}\ 
+%\subfloat[Jour 611]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_01_21_scan_contour.png}}\ 
+%\subfloat[Jour 688]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_04_08_scan_contour.png}}\ 
+%\subfloat[Jour 776]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_07_05__slice-263_20_scan_contour.png}}\ 
+%\subfloat[Jour 867]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_04__slice-239_40_scan_contour.png}}\ 
+%\subfloat[Jour 888]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_25__slice-246_60_scan_contour.png}}\ 
+%\subfloat[Jour 927]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_12_03_scan_contour.png}}\ 
+%\subfloat[Jour 962]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_01_07__slice-221_20_scan_contour.png}}\ 
+%\subfloat[Jour 990]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_02_04_scan_contour.png}}\ 
+%\subfloat[Jour 1053]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_04_08_scan_contour.png}}\ 
+%\subfloat[Jour 1116]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_06_10_scan_contour.png}}\ 
+%\subfloat[Jour 1179]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_08_12_scan_contour.png}}
+%\caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
+%\end{figure}
+
+\begin{figure}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
+\setlength{\tabcolsep}{1mm} %%% padding horizontal
+\begin{tabular}{ccccc}
+\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_05_20_scan_contour.png}}&
+\subfloat[Jour 119]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_09_16_scan_contour.png}}&
+\subfloat[Jour 209]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2008_12_15_scan_contour.png}}&
+\multicolumn{2}{c}{%
+\multirow{2}{*}[15mm]{
+\captionsetup[subfigure]{labelformat=empty}
+\vspace{-3cm}
+\subfloat[Position des points]{\includegraphics[width=2\largeurfignber]{evo_tps/henbert_listing_point.png}}
+\captionsetup[subfigure]{labelformat=parens}
+\addtocounter{subfigure}{-1}
+}}\\
+\subfloat[Jour 275]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_02_19_scan_contour.png}}&
+\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_04_16_scan_contour.png}}&
+\subfloat[Jour 406]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_06_30__slice-244_85_scan_contour.png}}&
+\multicolumn{2}{c}{}\\
+\subfloat[Jour 493]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_09_25_scan_contour.png}}&
+\subfloat[Jour 535]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2009_11_06_scan_contour.png}}&
+\subfloat[Jour 611]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_01_21_scan_contour.png}}&
+\subfloat[Jour 688]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_04_08_scan_contour.png}}&
+\subfloat[Jour 776]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_07_05__slice-263_20_scan_contour.png}}\\
+\subfloat[Jour 867]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_04__slice-239_40_scan_contour.png}}&
+\subfloat[Jour 888]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_10_25__slice-246_60_scan_contour.png}}&
+\subfloat[Jour 927]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2010_12_03_scan_contour.png}}&
+\subfloat[Jour 962]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_01_07__slice-221_20_scan_contour.png}}&
+\subfloat[Jour 990]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_02_04_scan_contour.png}}\\
+&\subfloat[Jour 1053]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_04_08_scan_contour.png}}&
+\subfloat[Jour 1116]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_06_10_scan_contour.png}}&
+\subfloat[Jour 1179]{\includegraphics[width=\largeurfignber]{dcm_img/Nber_2011_08_12_scan_contour.png}}
+\end{tabular}
+\caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
+\end{figure}
+
+%\begin{figure}
+%\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+%\addtocounter{subfigure}{-1} %% Commence a 0
+%\begin{tabular}{ccccc}
+%\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_05_23_scan_contour.png}}&
+%\subfloat[Jour 93]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_08_24_scan_contour.png}}&
+%\subfloat[Jour 182]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_11_21_scan_contour.png}}\\
+%\subfloat[Jour 279]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_02_26_scan_contour.png}}&
+%\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_04_18_scan_contour.png}}&
+%\subfloat[Jour 429]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_07_25_scan_contour.png}}&
+%\captionsetup[subfigure]{labelformat=empty}
+%\subfloat[Position des points]{\includegraphics[width=2\largeurfignber]{evo_tps/chen_listing_point.png}}\\
+%\captionsetup[subfigure]{labelformat=parens}
+%\addtocounter{subfigure}{-1}
+%\subfloat[Jour 614]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_01_26_scan_contour.png}}&
+%\subfloat[Jour 715]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_05_07_scan_contour.png}}&
+%\subfloat[Jour 845]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_09_14_scan_contour.png}}&
+%\subfloat[Jour 936]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_12_14_scan_contour.png}}&
+%\subfloat[Jour 1009]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_02_25_scan_contour.png}}\\
+%\subfloat[Jour 1049]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_04_06_scan_contour.png}}&
+%\subfloat[Jour 1093]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_05_20_scan_contour.png}}&
+%\subfloat[Jour 1161]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_07_27_scan_contour.png}}&
+%\subfloat[Jour 1224]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_09_28_scan_contour.png}}&
+%\subfloat[Jour 1296]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_12_09_scan_contour.png}}\\
+%\subfloat[Jour 1377]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_02_28_scan_contour.png}}& 
+%\subfloat[Jour 1415]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_04_07_scan_contour.png}}&
+%\subfloat[Jour 1458]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_05_20_scan_contour.png}}& 
+%\subfloat[Jour 1510]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_07_11_scan_contour.png}}
+%\end{tabular}
+%\caption{\label{fig:contourageChen} Contourage manuel de la tumeur de \Chen. }
+%\end{figure}
+
+\begin{figure}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
+\setlength{\tabcolsep}{1mm} %%% padding horizontal
+\begin{tabular}{ccccc}
+%%% \renewcommand{\arraystretch}{3} %%%% padding vertical (ne semble pas fonctionner
+\subfloat[Jour 0]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_05_23_scan_contour.png}}&
+\subfloat[Jour 93]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_08_24_scan_contour.png}}&
+\subfloat[Jour 182]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2007_11_21_scan_contour.png}}
+&\multicolumn{2}{c}{%
+\multirow{2}{*}[15mm]{
+\captionsetup[subfigure]{labelformat=empty}
+\vspace{-3cm}
+\subfloat[Position des points]{\includegraphics[width=2\largeurfignber]{evo_tps/chen_listing_point.png}}
+\captionsetup[subfigure]{labelformat=parens}
+\addtocounter{subfigure}{-1}
+}}\\
+\subfloat[Jour 279]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_02_26_scan_contour.png}}&
+\subfloat[Jour 331]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_04_18_scan_contour.png}}&
+\subfloat[Jour 429]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2008_07_25_scan_contour.png}}&
+\multicolumn{2}{c}{}\\
+\subfloat[Jour 614]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_01_26_scan_contour.png}}&
+\subfloat[Jour 715]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_05_07_scan_contour.png}}&
+\subfloat[Jour 845]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_09_14_scan_contour.png}}&
+\subfloat[Jour 936]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2009_12_14_scan_contour.png}}&
+\subfloat[Jour 1009]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_02_25_scan_contour.png}}\\
+\subfloat[Jour 1049]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_04_06_scan_contour.png}}&
+\subfloat[Jour 1093]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_05_20_scan_contour.png}}&
+\subfloat[Jour 1161]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_07_27_scan_contour.png}}&
+\subfloat[Jour 1224]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_09_28_scan_contour.png}}&
+\subfloat[Jour 1296]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2010_12_09_scan_contour.png}}
+\end{tabular}\\
+\begin{tabular}{p{.5\largeurfignber}cccc}
+& \subfloat[Jour 1377]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_02_28_scan_contour.png}}& 
+\subfloat[Jour 1415]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_04_07_scan_contour.png}}&
+\subfloat[Jour 1458]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_05_20_scan_contour.png}}& 
+\subfloat[Jour 1510]{\includegraphics[width=\largeurfignber]{dcm_img/Chen_2011_07_11_scan_contour.png}}
+\end{tabular}
+\caption{\label{fig:contourageChen} Contourage manuel de la tumeur de \Chen. }
+\end{figure}
+
+
+\newlength{\largeurhisto}
+\setlength{\largeurhisto}{0.24\textwidth}
+
+\begin{figure}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
+\centering
+\subfloat[Jour 0]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2008_05_20_histo.png}}\ 
+\subfloat[Jour 119]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2008_09_16_histo.png}}\ 
+\subfloat[Jour 209]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2008_12_15_histo.png}}\ 
+\subfloat[Jour 275]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2009_02_19_histo.png}}\ 
+\subfloat[Jour 331]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2009_04_16_histo.png}}\ 
+\subfloat[Jour 406]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2009_06_30__slice-244_85_histo.png}}\ 
+\subfloat[Jour 493]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2009_09_25_histo.png}}\ 
+\subfloat[Jour 535]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2009_11_06_histo.png}}\ 
+\subfloat[Jour 611]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2010_01_21_histo.png}}\ 
+\subfloat[Jour 688]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2010_04_08_histo.png}}\ 
+\subfloat[Jour 776]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2010_07_05__slice-263_20_histo.png}}\ 
+\subfloat[Jour 867]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2010_10_04__slice-239_40_histo.png}}\ 
+\subfloat[Jour 888]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2010_10_25__slice-246_60_histo.png}}\ 
+\subfloat[Jour 927]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2010_12_03_histo.png}}\ 
+\subfloat[Jour 962]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2011_01_07__slice-221_20_histo.png}}\ 
+\subfloat[Jour 990]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2011_02_04_histo.png}}\ 
+\subfloat[Jour 1053]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2011_04_08_histo.png}}\ 
+\subfloat[Jour 1116]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2011_06_10_histo.png}}\ 
+\subfloat[Jour 1179]{\includegraphics[width=\largeurhisto]{histo_dcm/Nber_2011_08_12_histo.png}}
+\caption{\label{fig:histo_dcm_Nber} Histogramme clinique de la tumeur de \Nber. }
+\end{figure}
+
+\begin{figure}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
+\centering
+\subfloat[Jour 0]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2007_05_23_histo.png}}\ 
+\subfloat[Jour 93]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2007_08_24_histo.png}}\ 
+\subfloat[Jour 182]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2007_11_21_histo.png}}\ 
+\subfloat[Jour 279]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2008_02_26_histo.png}}\ 
+\subfloat[Jour 331]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2008_04_18_histo.png}}\ 
+\subfloat[Jour 429]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2008_07_25_histo.png}}\ 
+\subfloat[Jour 614]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2009_01_26_histo.png}}\ 
+\subfloat[Jour 715]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2009_05_07_histo.png}}\ 
+\subfloat[Jour 845]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2009_09_14_histo.png}}\ 
+\subfloat[Jour 936]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2009_12_14_histo.png}}\ 
+\subfloat[Jour 1009]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2010_02_25_histo.png}}\ 
+\subfloat[Jour 1049]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2010_04_06_histo.png}}\ 
+\subfloat[Jour 1093]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2010_05_20_histo.png}}\ 
+\subfloat[Jour 1161]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2010_07_27_histo.png}}\ 
+\subfloat[Jour 1224]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2010_09_28_histo.png}}\ 
+\subfloat[Jour 1296]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2010_12_09_histo.png}}\ 
+\subfloat[Jour 1377]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2011_02_28_histo.png}}\ 
+\subfloat[Jour 1415]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2011_04_07_histo.png}}\ 
+\subfloat[Jour 1458]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2011_05_20_histo.png}}\ 
+\subfloat[Jour 1510]{\includegraphics[width=\largeurhisto]{histo_dcm/Chen_2011_07_11_histo.png}}\
+\caption{\label{fig:histo_dcm_Chen} Histogramme clinique de la tumeur de \Chen. }
+\end{figure}
+
+
+
+%\mylettrine{D}{ans} tout ce chapitre 
+%\newpage
+%========= DEBUT ANNEXE TABLEAUX ET GRAPHIQUES =====
 
 %%\section{Tableaux d'optimisation sur les niveaux de gris}
 %%%%%%% Cout0
