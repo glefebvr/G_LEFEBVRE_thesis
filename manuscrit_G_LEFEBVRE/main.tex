@@ -64,6 +64,8 @@
 \thispagestyle{empty}
 }
 
+%%%\usepackage{afterpage}%  %%% Evite le comportement grande figure sur une seule et unique page
+\usepackage{float}% Fournit l'option H pour les figures
 
 \usepackage{mathabx} %% Pour avoir proprement le grand symbole \sqrt notamment
 \usepackage{mathtools}
@@ -195,7 +197,7 @@
 
 
 %%%%%%% Variables d'environnement
-\graphicspath{{../img/}} %%
+\graphicspath{{../img/}{../img_publi_GIST/}} %%
 
 
 \setlength\doublerulesep{2mm} %% hauteur entre 2 \hline successifs

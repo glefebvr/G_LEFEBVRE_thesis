@@ -1,6 +1,15 @@
 \documentclass[main.tex]{subfiles}
+\pagestyle{main}
+
 \begin{document}
 \chapter{Tableaux et graphiques complémentaires \label{chap:anx_img_complement}}
+
+\section{Ensemble des données}
+L'ensemble des données utilisées pour réaliser ces travaux sont présentées dans cette section. L'ensemble des scanners des 2 patients, \Nber et \Chen, sont présentés ici. On présentera ensuite l'ensemble des histogrammes des niveaux de gris, correspondant à la zone tumorale contourée manuellement sur les scanners.
+\newpage
+%%\section{Ensemble des données}
+\subsection{Scanners de \Nber}
+\Nber est traité avec de l'imatinib du jour 119 au jour 867, jour où la rechute est constatée. Le sunitinib est ensuite administré, et là aussi le traitement est efficace avant une rechute débutant au jour~1116. Sur la figure ci-dessous, on peut visualiser l'ensemble des scanners réalisés sur ce patient. \vspace{-1cm}
 
 \newlength{\largeurfignber}
 \setlength{\largeurfignber}{0.19\textwidth}
@@ -28,7 +37,7 @@
 %\caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
 %\end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \captionsetup[subfigure]{labelformat=simple, labelsep=colon}
 \renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
 \addtocounter{subfigure}{-1} %% Commence a 0
@@ -66,6 +75,8 @@
 \caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
 \end{figure}
 
+\FloatBarrier
+\subsection{Scanners de \Chen}
 %\begin{figure}
 %\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
 %\addtocounter{subfigure}{-1} %% Commence a 0
@@ -98,7 +109,9 @@
 %\caption{\label{fig:contourageChen} Contourage manuel de la tumeur de \Chen. }
 %\end{figure}
 
-\begin{figure}
+\Chen est d'abord traité à l'imatinib, du jour 0 au jour 845. Après une rechute, le sunitinib est utilisé mais il est totalement inefficace. Au jour~1600, le troisième traitement (sorafenib) est démarré. 
+Sur la figure ci-dessous, on peut visualiser l'ensemble des scanners réalisés sur ce patient. \vspace{-1cm}
+\begin{figure}[h!]
 \captionsetup[subfigure]{labelformat=simple, labelsep=colon}
 \renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
 \addtocounter{subfigure}{-1} %% Commence a 0
@@ -140,11 +153,15 @@
 \caption{\label{fig:contourageChen} Contourage manuel de la tumeur de \Chen. }
 \end{figure}
 
+\FloatBarrier
+%%\section{Histogrammes cliniques}
+\subsection{Histogrammes cliniques de \Nber}
+Ci-dessous est présenté l'ensemble des histogrammes numérique de \Nber, correspondant au niveaux de gris des régions contourées sur les scanners (\cf Figure~\ref{fig:contourageNber}).\vspace{-10mm}
 
 \newlength{\largeurhisto}
 \setlength{\largeurhisto}{0.24\textwidth}
 
-\begin{figure}
+\begin{figure}[h!]
 \captionsetup[subfigure]{labelformat=simple, labelsep=colon}
 \renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
 \addtocounter{subfigure}{-1} %% Commence a 0
@@ -171,7 +188,11 @@
 \caption{\label{fig:histo_dcm_Nber} Histogramme clinique de la tumeur de \Nber. }
 \end{figure}
 
-\begin{figure}
+\FloatBarrier
+\subsection{Histogrammes cliniques de \Chen}
+Ci-dessous est présenté l'ensemble des histogrammes numérique de \Nber, correspondant au niveaux de gris des régions contourées sur les scanners (\cf Figure~\ref{fig:contourageNber}).\vspace{-10mm}
+
+\begin{figure}[h!]
 \captionsetup[subfigure]{labelformat=simple, labelsep=colon}
 \renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
 \addtocounter{subfigure}{-1} %% Commence a 0
@@ -258,5 +279,35 @@
 %\DTLcleardb{optim2_0leg}
 %\DTLcleardb{optim2_0stat}
 %\DTLcleardb{optim2_0stat}
+
+\FloatBarrier
+\section{Valeur des paramètres pour les simulations numériques de la Figure~\ref{fig:possibilites}~:}
+
+L'ensemble des paramètres utilisés pour réaliser la simulation numérique présentée Figure~\ref{fig:possibilites} de la section~\ref{section_possibilites} 
+est présenté dans la Table~\ref{table_param_possibilites}.
+
+\begin{table}[h]
+\hspace{-2mm}
+\centering
+\rowcolors{2}{gray!40}{white}
+{\small
+\begin{tabular}{|*{8}{p{15mm}|}}
+\hline
+\rowcolor[gray]{0.7} 
+Nom & a) & b) & c) &d) &e) &f) &g) \\
+\hline
+\input{../data/params_value/table_possibilites.txt}
+\hline \hline \hline
+$L,D$ &6 &6 &6 &6 & 6 & 6 &6 \\
+$N_x,N_y$ & 120 &120 & 120 &120 &120 &120&120\\
+$r_1,r_2$ & 0.62& 0.62& 0.62& 0.62& 0.62& 0.62 & 0.62\\
+$e$ & 0 &0&0&0&0&0&0\\
+$\beta$ & 0 &0&0&0&0&0&0\\
+\hline
+\end{tabular}
+}
+\caption{\label{table_param_possibilites}Valeur des paramètres pour les courbes présentées Figure~\ref{fig:possibilites}.}
+\end{table}
+
 
 \end{document}
