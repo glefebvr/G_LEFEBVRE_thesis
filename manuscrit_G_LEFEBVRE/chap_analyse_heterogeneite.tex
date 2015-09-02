@@ -1,4 +1,5 @@
 \documentclass[main.tex]{subfiles}
+\pagestyle{main}
 
 \begin{document}
 
@@ -12,10 +13,10 @@
 \chapter{Critère quantifiant l'\hetero. \label{chap:crit_hetero}}
 \mylettrine{D}{ans} ce chapitre, nous allons construire un critère permettant permettant de quantifier l'\hetero d'une tumeur.
 A chaque image, on construira l'histogramme des niveaux de gris associés aux tumeurs. 
-Dans un premier temps, les images cliniques seront considérées. Les histogrammes associés à ces scanners (qu'on appelera par abus de langage \og histogramme clinique \fg) seront ensuite étudiés. Plusieurs quantités seront examinées afin de construire un quantificateur de l'\hetero.
-Dans un second temps, nous appliquerons le même traitement aux images produites par la simulation numérique du modèle EDP présenté précédemment. Les histogrammes des images produites numériquement (qu'on appelera aussi par abus de langage \og histogramme numérique \fg) seront présentés et comparés à ceux cliniques. De même, le quantificateur de l'\hetero que l'on aura construit, sera appliqué aux histogrammes numériques et nous pourrons ainsi voir à quel point le modèle EDP est capable de reproduire les aspects homogènes et \heterogenes des tumeurs que l'on considère.
+Dans un premier temps, les images cliniques seront considérées. Les histogrammes associés à ces scanners (que l'on appellera par abus de langage \og histogramme clinique \fg) seront ensuite étudiés. Plusieurs quantités seront examinées afin de construire un quantificateur de l'\hetero.
+Dans un second temps, nous appliquerons le même traitement aux images produites par la simulation numérique du modèle EDP présenté précédemment. Les histogrammes des images produites numériquement (que l'on appellera aussi par abus de langage \og histogramme numérique \fg) seront présentés et comparés à ceux cliniques. De même, le quantificateur de l'\hetero que l'on aura construit, sera appliqué aux histogrammes numériques et nous pourrons ainsi voir à quel point le modèle EDP est capable de reproduire les aspects homogènes et \heterogenes des tumeurs que l'on considère.
 \section{Construction des histogrammes de niveaux de gris.}
-Dans cette section, il s'agit, à partir d'une image donnée en niveaux de gris et d'un contour donné, de reconstruire l'histogramme des niveaux de gris des pixels présents à l'intérieur du contour. Une telle zone est communément appelée ROI (de l'anglais: Region Of Interest). Dans la suite, pour une image donnée, on notera $p(\vecx)$ la valeur du pixel (comprise entre 0 et 255) situé en position $\vecx$. Ainsi les données de l'histogramme sont représenté par la liste (ensemble avec valeur multiples autorisées)~:
+Dans cette section, il s'agit, à partir d'une image donnée en niveaux de gris et d'un contour donné, de reconstruire l'histogramme des niveaux de gris des pixels présents à l'intérieur du contour. Une telle zone est communément appelée ROI (de l'anglais: Region Of Interest). Dans la suite, pour une image donnée, on ~:era~$p(\vecx)$ la valeur du pixel (comprise entre 0 et 255) situé en position~$\vecx$. Ainsi les données de l'histogramme sont représentées par la liste (ensemble avec valeur multiples autorisées)~:
 \begin{equation}
 \label{eq:def_data_histo}
 X:=\{ \ p(\vecx) \  | \  \vecx \in \textrm{\small ROI} \ \},
@@ -25,16 +26,16 @@ et l'histogramme lui-même, que l'on normalise, est donné par la fonction~:
 \label{eq:def_histo}
 H(x) = \dfrac{ \# X_x  }{ \# X }, \qquad \forall x \in \{ 0,1,2,\ldots,255 \}
 \end{equation}
-où $x$ désigne un niveau de gris et $X_x$ désigne la partition de la liste $X$ qui ne contient que les éléments $x$.
+où~$x$ désigne un niveau de gris et~$X_x$ désigne la partition de la liste~$X$ qui ne contient que les éléments~$x$ (le symbole~$\#$ désignant le cardinal).
 
 \subsection{Histogrammes cliniques}
 \todo[noline]{Description du processus médical pour les scanners: ajout ici ?}
-Les données dont nous disposons sont celles produites par le scanner. Beaucoup plus riche qu'une image, ces données au format DICOM, nécéssitent l'utilisation d'un outil adapté pour les visualiser. OsiriX est ainsi utilisé pour:
+Les données dont nous disposons sont celles produites par le scanner (\cf Chapitre~\ref{sec:fct_scan} pour la procédure d'acquisition d'images médicales). Beaucoup plus riche qu'un agglomérat de pixels, ces données (méta-images) au format DICOM, nécessitent l'utilisation d'un outil adapté pour les visualiser. OsiriX est ainsi utilisé pour:
 \begin{myitemize}
 \item Choisir une coupe pertinente sur chaque scanner et l'exporter (également au format DICOM) de sorte à avoir ensuite des données 2D à traiter.
 \item Contourer manuellement la métastase. OsiriX dispose d'un outil crayon adapté à ce type de contourage. Ce contourage définit une ROI, que l'on peut également exporter (au format .xml)
 \end{myitemize}
-A partir de ces 2 fichiers, un code C++, s'appuyant sur la librairie ITK qui traite entre autre le format DICOM, permet de :
+A partir de ces 2 fichiers, un code C++, s'appuyant sur la librairie ITK qui traite entre autre le format DICOM, permet de~:
 \begin{myitemize}
 \item Construire l'histogramme des niveaux de gris en parcourant  l'ensemble des pixels du scanner contenus uniquement dans la ROI. 
 A titre indicatif, l'ensemble des histogrammes cliniques de \Nber et de \Chen sont présentés Figure~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen}. Nous les commenterons plus tard.
@@ -48,7 +49,7 @@ Remarquons que, comme montré sur la figure~\ref{fig:contourage_sain}, le logici
 
 
 \subsection{Histogrammes numériques}
-Pour les histogrammes numériques, seule une image est reconstruite par la simulation. Le contour quant à lui va être définit à partir des fichiers de sorties des simulations qui stockent la densité des différentes populations en chaque maille de notre modèle EDP. En utilisant la reconstruction en niveau de gris détaillée au chapitre précédent, on peut fournir une image en niveaux de gris à partir de ces valeurs. En ce qui concerne le contour, il sera définit par seuillage sur le tissu sain~: si la proportion de tissu sain est inférieur à un pourcentage donné, alors on considèrera que l'on est à l'intérieur de la tumeur, sinon on est à l'extérieure. Nous avons donc également dans cas, une image en niveaux de gris et une ROI. Le code C++ pour la partie clinique peut être réutilisé et produira ainsi les histogrammes numériques.
+Pour les histogrammes numériques, seule une image est reconstruite par la simulation. Le contour quant à lui va être définit à partir des fichiers de sorties des simulations qui stockent la densité des différentes populations donnée par notre modèle EDP, en chacune des mailles du quadrillage.  En utilisant la reconstruction d'images scanners détaillée au chapitre précédent, on peut fournir une image en niveaux de gris à partir de ces valeurs. En ce qui concerne le contour, il sera définit par seuillage sur le tissu sain~: si la proportion de tissu sain est inférieur à un pourcentage donné, alors on considèrera que l'on est à l'intérieur de la tumeur, sinon on est à l'extérieure. Nous avons donc également dans cas, une image en niveaux de gris et une ROI. Le code C++ pour la partie clinique peut être réutilisé et produira ainsi les histogrammes numériques.
 
 \subsection{Traitements appliqués aux histogrammes~: fit par un mélange bi-gaussien}
 
@@ -265,108 +266,149 @@ où~:
 \label{eq:hauteur_gaussienne}
 h_i := \dfrac{w_i}{\sigma_i \sqrt{2\pi}} \qquad i=1;2,
 \end{equation}
-où $w_i$ est le poids associées à chacune des composantes. Notez que les poids sont choisis de telle sorte que :
+où~$w_i$ est le poids associées à chacune des composantes. Notez que les poids sont choisis de telle sorte que~:
 \begin{equation}
 w_1+w_2=1.
 \end{equation}
+\end{myitemize}
 Ainsi, selon les besoins de l'écriture et pour mettre en évidence dans certains cas le nombre de paramètres, on pourra alléger les notations de la manière suivante~:
 \begin{equation}
 \label{eq:renomage_w}
 w_1 := w \quad \textrm{et} \quad w_2 = 1 - w.
 \end{equation}
-De même, lorsqu'on aura besoin d'écrire $g$ en fonction de ces paramètres, on écrira $g(x,\theta)$ avec $\theta =( c_1,c_2,\sigma_1,\sigma_2,w  )$.
-\end{myitemize}
-L'optimisation des 5 paramètres $c_1,c_2,\sigma_1,\sigma_2$ et $w$ est réalisée grâce à une librairie Python nommée Scikit-learn, qui contient un module dédié aux mélanges gaussiens. Ce module procède d'abord à une clusterisation des données par la méthodes des K-moyennes afin d'estimer les centres des composantes. Le jeu de paramètres résultant est ensuite donné comme point de départ à une méthode de descente aléatoire qui cherche à maximiser la logvraissemblance. Par algorithme de descente aléatoire, on entends~:
+De même, lorsqu'on aura besoin d'écrire~$g$ en fonction de ces paramètres sans besoin de distinction sur la nature de ceux-ci, on écrira~$g(x,\theta)$ avec~$\theta =( c_1,c_2,\sigma_1,\sigma_2,w  )$.
+
+
+L'optimisation des 5 paramètres~$c_1,c_2,\sigma_1,\sigma_2$ et~$w$ est réalisée grâce à une librairie Python nommée Scikit-learn, qui contient un module dédié aux mélanges gaussiens. Ce module procède d'abord à une clusterisation des données par la méthodes des K-moyennes afin d'estimer les centres des composantes. Le jeu de paramètres résultant est ensuite donné comme point de départ à une méthode de descente aléatoire qui cherche à maximiser la logvraisemblance. Par algorithme de descente aléatoire, on entends qu'étant donné un jeu de paramètres courants, on réalise les étapes suivantes~:
 \begin{myitemize}
-\item[1)] Un nouveau jeu de paramètres est choisi dans un certain périmètre (plus ou moins grand) autour du jeu de paramètres courrant.
-\item[2)] La logvraissemblance de ce nouvel ensemble de paramètres est calculée. Si elle est meilleure que celle du jeu de paramètres courrant, alors ce nouveau jeu de paramètres devient le jeu courrant. Sinon le jeu de paramètres courrants reste celui qu'il était.
-\item[3)] On recommence à 1).
+\item[1)] Un nouveau jeu de paramètres est choisi dans un certain périmètre (plus ou moins grand) autour du jeu de paramètres courants.
+\item[2)] La logvraisemblance de ce nouvel ensemble de paramètres est calculée. Si elle est meilleure que celle du jeu de paramètres courants, alors ce nouveau jeu de paramètres devient le jeu courant. Sinon le jeu de paramètres courants reste celui qu'il était.
+\item[3)] On recommence à 1). On boucle ainsi jusqu'à ce qu'une précision voulue soit atteinte ou que nous ayons atteint le nombre maximum d'itérations que l'on souhaite faire à l'algorithme.
 \end{myitemize}
-La vraissemblance, dont on maximise le logarithme selon $\theta$, est quant à elle donnée par~:
+La vraisemblance, dont on maximise le logarithme selon~$\theta$, est quant à elle donnée par~:
 \begin{equation}
 \mathcal{L}(X,\theta) = \prod_{x \in X} g(x,\theta).
 \end{equation}
-Quelquesoit $\theta$, l'intégrale de $g$ vaut 1 (\cf REFF).
-\todo[noline]{demo ou ref : integ gaussienne = 1}
-Ainsi la vraissemblance est le produit des probabilités que chacun des éléments de $X$ appartiennent à la distribution définit par le paramètre $\theta$.
+Quelquesoit~$\theta$, l'intégrale de~$g$ vaut~1 (\cf Propriété~\ref{prop:integ1}, page~\pageref{prop:integ1} dans l'annexe~\ref{chap:anx_gmm}). 
+Ainsi la vraisemblance est le produit des probabilités que chacun des éléments de~$X$ appartiennent à la distribution de paramètre~$\theta$.
+
+
+Cet algorithme de mélanges de gaussiennes nous fournit alors la meilleure  (au sens de la logvraisemblance) combinaison de gaussiennes qui permet de décrire l'histogramme des niveaux de gris. Ainsi, à chaque image correspond un mélange bi-gaussien totalement identifié. L'ensemble des fits 
+bi-gaussien, pour les images cliniques et numériques, sont présentés suer les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} pour les histogrammes cliniques et sur les figures????\todo{Fig fit histo num, on commente les histos ? les fits ?} pour les histogrammes cliniques. Voyons à présent, comment pouvons-nous exploité ceci pour quantifier une hétérogénéité.
+
 
 \todo[noline]{Img + histo numérique ?}
 
 \section{Définition d'une fonction objectif à reproduire}
-On considère désormais l'approximation en un mélange de deux gaussiennes les histogrammes de niveau gris provenant de nos images. 
-Notons $\Delta$ l'opérateur de différence défini par :
-\begin{equation}
-\label{eq:operateur_delta_gaussienne}
-\Delta :  u \longmapsto \Delta u := u_2 - u_1.
-\end{equation}
-Ainsi les quantités suivantes pourraient s'avérées intéressantes à étudier : $\Delta c$, $\Delta \sigma$,  $\Delta \sigma^2$, $\Delta h$, $\Delta w$ représentant respectivement l'écart entre les centres, la différence d'écart-type, la différence des variances, la différence des hauteurs et la diffirences des poids. On pourra aussi regarder le ratio des quantités :
-\begin{equation}
-\label{eq:operateur_quotient_gaussienne}
-Q :  u \longmapsto Qu := \dfrac{ \min( u_2 , u_1) }{ \max( u_2 , u_1)  }.
-\end{equation}
-
-
-Afin de correctement traduire l'\hetero, il est nécessaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero $\mathscr{H}$ :
+Afin de correctement traduire l'\hetero, il est nécessaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero~$\mathscr{H}$~:
 \begin{myitemize}
-\item $\mathscr{H}=0.9$ : très \heterogene
-\item $\mathscr{H}=0.7$ : plutôt \heterogene
-\item $\mathscr{H}=0.5$ : cas intermédiaire ou difficile à caractériser
-\item $\mathscr{H}=0.3$ : plutôt homogène
-\item  $\mathscr{H}=0.1$ : très homogène
+\item $\mathscr{H}=0.9$~: très \heterogene
+\item $\mathscr{H}=0.7$~: plutôt \heterogene
+\item $\mathscr{H}=0.5$~: cas intermédiaire ou difficile à caractériser
+\item $\mathscr{H}=0.3$~: plutôt homogène
+\item $\mathscr{H}=0.1$~: très homogène
 \end{myitemize}
-Après appréciation visuelle \footnote{\samepage Cette appréciation visuelle reste ma perception personnelle même si je me suis efforcer de rester le plus objectif possible. Mettre à contribution les membres de l'équipe de recherche par exemple, pour leur demander une catégorisation aurait pu permettre de confronter l'évolution de l'\hetero au cours du temps que je perçois à celle que perçoivent les autres. La fonction objectif finale pourrait ainsi être la moyenne de celles que chacun obtient. On aurait donc un peu plus de nuances : des valeurs intermédiaires aux 5 paliers notamment ainsi que des barres d'erreur pour chaque valeur}
-%(la fonction objectif sera appelée \hetero visuelle)
-, voici ce que donne les fonctions objectifs pour $\mathscr{H}$ (\cf  Figure~\ref{fig:hetero_visuelle} ).
 
+\paragraph{Comment visuellement bien apprécier l'\hetero ?}
+Pour correctement classifier les images dans les 5 catégories que nous venons de dresser, il est nécessaire de savoir précisément ce que l'on entend~: à quoi correspond une \hetero de 0\,\% ? de 100\,\% ? Une \hetero nulle (\ie homogénéité parfaite) correspond à un aplat d'une seule et unique couleur. A l'opposé, étant données 2 couleurs bien distinctes, on dira que l'\hetero est maximale, si  ces 2 couleurs occupent chacune la moitié de la zone considérée. Une \hetero intermédiaire pourra être un cas où~:
+\begin{myitemize}
+\item soit les 2 couleurs sont relativement proche,
+\item soit l'une des deux couleurs occupe un faible espace comparé à celui occupé par l'autre couleur, 
+\item soit aussi un mélange des deux raisons précédentes.
+\end{myitemize}~
 \begin{figure}
-\subfloat[\label{fig:hetero_objectif_Nber}\Nber]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/00-note_hetero.png}}
-\subfloat[\label{fig:hetero_objectif_Chen}\Chen]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Chen/00-note_hetero.png}}
+\subfloat[\label{fig:hetero_objectif_Nber}\Nber]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/00-note_hetero}}
+\subfloat[\label{fig:hetero_objectif_Chen}\Chen]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Chen/00-note_hetero}}
 \caption{\label{fig:hetero_visuelle}Fonction objectif de l'\hetero}
 \end{figure}
 
-Notons que \Nber est encore ici un cas très représentatif de ce que l'on cherche à étudier \ie corrélation entre \hetero et rechute imminente. En effet, ici l'\hetero croit avant même que le volume tumorale ne réaugmente, signe de la reprise d'activité cellulaire sur le pourtour de la métastase. Le coeur reste nécrosé et donc l'\hetero est accrue. Lorsque le volume tumorale fini par augmenter, le tissu proliférant à, en grande partie (si le centre de la tumeur est suffisament vascularisé), recoloniser la zone nécrosée. La croissance de la métastase est alors synonyme d'homogénéisation, puisque l'ensemble de la surface tumorale tend à être proliférante. Une homogénéisation a également lieu lorsque le traitement est efficace. Dans ce cas-ci, l'ensemble de la tumeur tend à être nécrosée.
+
+En se conformant à ces règles, l'appréciation visuelle\footnote{\samepage Cette appréciation visuelle reste ma perception personnelle même si je me suis efforcer de rester le plus objectif possible. Mettre à contribution les membres de l'équipe de recherche par exemple, pour leur demander une catégorisation aurait pu permettre de confronter l'évolution de l'\hetero au cours du temps que je perçois à celle que perçoivent les autres. La fonction objectif finale pourrait ainsi être la moyenne de celles que chacun obtient. On aurait donc un peu plus de nuances~: des valeurs intermédiaires aux 5 paliers notamment ainsi que des barres d'erreurs pour chaque valeur.}
+%(la fonction objectif sera appelée \hetero visuelle)
+ des images cliniques nous donne les fonctions objectifs~$\mathscr{H}_{obj}$ (\cf Figure~\ref{fig:hetero_visuelle}) que notre quantificateur de l'\hetero se devra de reproduire. 
+Notons que \Nber est encore ici un cas très représentatif de ce que l'on cherche à étudier \ie qui montre bien la corrélation entre \hetero et rechute imminente. En effet, ici l'\hetero croît avant même que le volume tumorale ne réaugmente, signe de la reprise d'activité cellulaire sur le pourtour de la métastase. Le c\oe{}ur reste nécrosé et donc l'\hetero est accrue. Lorsque le volume tumorale fini par augmenter, le tissu proliférant a, en grande partie (si le centre de la tumeur est suffisamment vascularisé), recolonisé la zone nécrosée. La croissance de la métastase est alors synonyme d'homogénéisation, puisque l'ensemble de la surface tumorale tend à être proliférante. Une homogénéisation a également lieu lorsque le traitement est efficace. Dans ce cas-ci, l'ensemble de la tumeur tend à être nécrosée.
 
 
-Bien que nous ayons 2 patients à notre disposition, je m'efforcerais de construire un critère qui reproduira convenablement la fonction objectif pour \Nber uniquement. Le second patient, \Chen, sera gardé pour valider le ou les critère(s) retenu(s) et non pour le ou les construire. L'idéal serait bien sûr d'avoir à notre disposition une plus large cohorte de patient...
+Bien que nous ayons 2 patients à notre disposition, je m'efforcerais de construire un critère qui reproduira convenablement la fonction objectif pour \Nber uniquement. Le second patient, \Chen, sera gardé pour valider le ou les critère(s) retenu(s) et non pour le ou les construire. L'idéal serait bien sûr d'avoir à notre disposition une plus large cohorte de patient.
 
 \section{Premiers essais de critères\label{sec:premier_essai_critere}}
-Examinons à présent, les informations que fournissent les quantités suivantes (qui pourraient être des quantificateurs de l'\hetero):
+%$$\mathcal{ACHLS}$$ 
+%$$\mathscr{ACHLS}$$
+%$$\matheus{ACHLS}$$
+On considère désormais l'approximation en un mélange de deux gaussiennes des histogrammes de niveaux de gris provenant de nos images. La définition faite de l'\hetero dans la section précédente, nous invite à prendre en compte non pas les positions des gaussiennes, mais plutôt leur écarts. Plus les gaussiennes sont similaires, et plus on tends vers un cas homogène. 
+Notons~$\Delta$ l'opérateur de différence défini par~:
+\begin{equation}
+\label{eq:operateur_delta_gaussienne}
+\Delta :  u \longmapsto \Delta u := u_2 - u_1,
+\end{equation}
+et
+\begin{equation}
+\label{eq:operateur_quotient_gaussienne}
+Q : u \longmapsto Qu := \dfrac{ \min( u_2 , u_1) }{ \max( u_2 , u_1)  }.
+\end{equation}
+l'opérateur de ratio. 
+Ainsi les quantités suivantes pourraient s'avérer intéressantes à étudier~:~$\Delta c$, $\Delta \sigma$,  $\Delta \sigma^2$, $\Delta h$, $\Delta w$ représentant respectivement l'écart entre les centres, la différence d'écart-type, la différence des variances, la différence des hauteurs et la différences des poids. On pourra aussi regarder leur ratio~:~$Qc, Qw$ et~$Qh$ notamment. Naïvement, on pourrait penser que ces quantités pourrait être des indicateurs directs de l'\hetero. 
+Examinons donc, les informations que fournissent les quantités suivantes~: %(qui pourraient être des quantificateurs de l'\hetero):
+\begin{multicols}{2}[\setlength{\columnseprule}{0.4pt}]%
+\vspace*{-15mm} %%% sans l'etoile l'espace est rejeté en debut de page
+\leqnomode
 \begin{align}
-\mathcal{H}_1 =& \frac{|\Delta c |}{256}, \\
-\mathcal{H}'_1 =& 1-Qc, \\ %%1-\frac{ \min(c_1,c_2) }{\max(c_1,c_2)}, \\
-\mathcal{H}'_2 =& \left| \frac{\Delta c / 256 }{\Delta h}\right|, \\
+\quad &&\mathcal{H}_1 =& \frac{|\Delta c |}{256}, \label{eq:H1}\\
+&&\mathcal{H}'_1 =& 1-Qc, \\ %%1-\frac{ \min(c_1,c_2) }{\max(c_1,c_2)}, \\
+&&\mathcal{H}'_2 =& \left| \frac{\Delta c / 256 }{\Delta h}\right|,
 %% \mathsrc{A} & %%% on ne peut pas utiliser mathsrc ici ...
-\mathcal{H}_3 =& Qw, \\ %%\frac{ \min (w_1,w_2) }{ \max (w_1,w_2) },  \\
+\end{align}
+\reqnomode
+\begin{align}
+\mathcal{H}_3 =& Qw, \\ %%\frac{ \min (w_1,w_2) }{ \max (w_1,w_2) },  
 \mathcal{H}'_3 =& |\Delta w|, \\
 \mathcal{H}_8 =& |\Delta h|, \\
-\mathcal{H}'_8 =& Qh. %%\frac{ \min (h_1,h_2) }{ \max (h_1,h_2) },
-\end{align}
+\mathcal{H}'_8 =& Qh.  \label{eq:H8bis}  
+%%\frac{ \min (h_1,h_2) }{ \max (h_1,h_2) }, 
+\end{align}%%\todo{Equilibrage colonne}
+\end{multicols}
 
 \begin{figure}[htpb]
-\subfloat[\label{fig:critere_dc}Critères basés sur $\Delta c$]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/01-dc.png}}
-\subfloat[\label{fig:critere_dh}Critères basés sur $\Delta h$]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/02-dh.png}}
-\\
 \centering
-\subfloat[\label{fig:critere_dw}Critères basés sur $\Delta w$]{\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/02_2-dw.png}}
+\subfloat[\label{fig:critere_dc}Critères basés sur $\Delta c$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/01-dc}}\ 
+\subfloat[\label{fig:critere_dh}Critères basés sur $\Delta h$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/02-dh}}\\
+\subfloat[\label{fig:critere_dw}Critères basés sur $\Delta w$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/02_2-dw}}
 \caption{\label{fig:premiers_criteres}Premiers critères}
 \end{figure}
+
 \begin{figure}[htpb]
 \centering
 %\subfloat[\label{fig:critere_dc_sur_dh}Critères basés sur la pente $\dfrac{\Delta c}{\Delta h}$]{
-\includegraphics[width=0.70\textwidth]{graph_hetero/dcm_Nber/03-atan(dc_sur_dh).png}
+\includegraphics[width=0.70\textwidth]{graph_hetero/dcm_Nber/03-atan(dc_sur_dh)}
 %}
 \caption{\label{fig:critere_dc_sur_dh}Critères basés sur la pente $\Delta c / \Delta h$}
 \end{figure}
 
-La Figure~\ref{fig:premiers_criteres} montre l'évolution de ces différentes quantités (ou de quantités qui en découle) au cours du temps. 
-Les ratios $Qc, Qh$ et $Qw$ sont par définition entre 0 et 1. 
-Notez que $\Delta h$ et $\Delta w$ sont nécessairement compris entre 0 et 1, puisqu'ils sont la différence de 2 élements compris entre ces même bornes. En ce qui concerne $\Delta c$ on le divisera par 256, pour également le ramener dans cet intervalle. Pour garantir l'appartenance à l'intervalle $[0,1]$, on pourra également saturer les quantités :
+
+Notons que les ratios~$Qc, Qh$ et~$Qw$ sont par définition entre~0 et~1. 
+Pour les quantités~$\Delta h$ et~$\Delta w$ la propriété suivante nous permet aussi d'assurer la même condition.
+
+\begin{prop}
+\label{prop:bornitude_difference}
+Soit l'intervalle $I=]0,a[$ avec $a>0$. Alors~:
+\begin{equation}
+\forall (x,y)\in I^2, |x-y| < a - \min(x,y).
+\end{equation}
+En particulier, on a : $\forall (x,y)\in I^2, |x-y| < a$.
+\end{prop}
+La démonstration de cette propriété est quasiment immédiate par disjonction des cas $x=y$, $x<y$ et $x>y$.  
+
+Ainsi, par cette propriété, comme les poids~$w_i$ sont compris entre~0 et~1, alors~$\Delta w$ l'est aussi. 
+De même, comme $\sigma_i\geq 1$ alors, $h_i<1/\sqrt{2\pi}$ et donc $\Delta h<1/\sqrt{2\pi}$. 
+En ce qui concerne~$\Delta c$, rien n'assure qu'il soit dans l'intervalle~$[0;1]$. On le divisera par~256, pour également l'y ramener. De manière plus générale, pour garantir l'appartenance d'une quantité positive  à l'intervalle~$[0,1]$, on pourra lui appliquer la fonction de saturation~:
 \begin{equation}
 \label{eq:saturation_critere}
-\mathscr{S}: x \longmapsto \dfrac{x}{1+x}.
+\matheus{S}: x \longmapsto \dfrac{x}{1+x}.
 \end{equation}
 
-On remarque qu'aucune de ces quantités n'est pertinente pour décrire l'\hetero. Outre cela, on peut également remarquer les équivalences suivantes :
+
+La Figure~\ref{fig:premiers_criteres} montre l'évolution des quantités~\eqref{eq:H1}-\eqref{eq:H8bis} au cours du temps, avec application d'une saturation pour certaines. 
+On remarque qu'aucune de ces quantités n'est pertinente pour décrire l'\hetero. Outre cela, on peut également remarquer les équivalences suivantes~:
 %\begin{equation}
 %\label{eq:equiv_diff_rapport}
 %\dfrac{\Delta c}{256} \simeq 1 - \dfrac{\min(c_1,c_2)}{\max(c_1,c_2)} \quad {\rm et } \quad \Delta w \simeq 1 - \dfrac{\min(w_1,w_2)}{\max(w_1,w_2)}.
@@ -375,29 +417,29 @@ On remarque qu'aucune de ces quantités n'est pertinente pour décrire l'\hetero
 \label{eq:equiv_diff_rapport}
 \dfrac{\Delta c}{256} \simeq 1 - Qc \quad {\rm et } \quad \Delta w \simeq 1 - Qw.
 \end{equation}
-Pour $\Delta h$ et $1-Qh$, on a visiblement pas d'équivalence stricte mais les variations du ratio semble être une dilatation de celles de la différence.
-On peut noter également que $Qh$ et $Qw$ sont très similaire et reproduisent assez bien la partie sur laquelle le patient est sous antiangiogénique. De plus, bien que $| \Delta c | / 256$ soit relativement bas, ses variations, si elles étaient dilatées,  pourrait s'approcher d'une description grossière de l'\hetero sur la partie avec imatinib.
+Pour~$\Delta h$ et~$1-Qh$, on a visiblement pas d'équivalence stricte mais les variations du ratio semble être une dilatation de celles de la différence.
+On peut noter également que~$Qh$ et~$Qw$ sont très similaire et reproduisent assez bien la partie sur laquelle le patient est sous antiangiogénique. De plus, bien que~$| \Delta c | / 256$ soit relativement bas, ses variations, si elles étaient dilatées,  pourrait s'approcher d'une description grossière de l'\hetero sur la partie avec imatinib.
 
 Les prochains critères que nous allons étudier sont basés sur l'angle de la pente 
 \todo[noline]{Il s'agit de l'inverse de la pente}
-décrite entre le sommet des deux gaussiennes :
+décrite entre le sommet des deux gaussiennes~:
 \begin{equation}
 \label{eq:critere_pente}
-\mathcal{H}_4 = \dfrac{1}{\pi} \left| \atan \left( \dfrac{ \Delta c }{ \Delta h }  \right) \right| + \dfrac{1}{2}
+\mathcal{H}_4 = \dfrac{1}{\pi} \atan \left( \dfrac{ \Delta c / 256 }{ \Delta h }  \right) + \dfrac{1}{2}
 \quad {\rm et } \quad
-\mathcal{H}_{10} = \dfrac{2}{\pi} \atan \left( \left| \dfrac{ \Delta c }{ \Delta h } \right| \right).
+\mathcal{H}_{10} = \dfrac{2}{\pi} \atan \left( \left| \dfrac{ \Delta c / 256 }{ \Delta h } \right| \right).
 \end{equation}
 \todo[noline]{l'arctangente ?}
-Notons que l'arctangente, n'est ni plus ni moins qu'une autre manière de saturer une quantité. En effet, comme le montre la Figure~\ref{fig:comp_saturation}, l'arctangente est proche de la saturation $\mathscr{S}$ définie par \eqref{eq:saturation_critere}. Ce graph montre d'ailleurs également que d'autre saturation sont également possibles et équivalentes à celles utilisées.
+Notons que l'arctangente, n'est ni plus ni moins qu'une autre manière de saturer une quantité. En effet, comme le montre la Figure~\ref{fig:comp_saturation}, l'arctangente est proche de la saturation~$\matheus{S}$ définie par \eqref{eq:saturation_critere}. Ce graph montre d'ailleurs également que d'autre saturation sont également possibles et équivalentes à celles utilisées.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{comparaison_saturation.png}
-\vspace{-5mm}
-\caption{\label{fig:comp_saturation}Comparaison de différentes saturations}
+\vspace{-3mm}
+\caption{\label{fig:comp_saturation}Equivalence des différentes saturations}
 \end{figure}
 
-Que la pente soit négative ou positive, à priori si les 2 composantes sont semblables, alors l'\hetero est la même. Sur la Figure~\ref{fig:critere_dc_sur_dh} est également tracé le critère qui dépend du signe de la pente, pour voir si ce signe pourrait apporter de l'information supplémentaire. Chose que nous pouvons espérer car :
+Que la pente soit négative ou positive, à priori si les 2 composantes sont semblables, alors l'\hetero est la même. Sur la Figure~\ref{fig:critere_dc_sur_dh} est également tracé le critère qui dépend du signe de la pente, pour voir si ce signe pourrait apporter de l'information supplémentaire. Chose que nous pouvons espérer car~:
 \begin{myitemize}
 \item une pente positive va traduire qu'on a une majorité de proliférantes,
 \item une pente négative va traduire qu'on a une majorité de tissu nécrosé.
@@ -410,30 +452,30 @@ Avant de proposer diverses critères, étudions de manière plus précise, la fa
 %Avant de regarder quel critère qu'il soit, étudions l'ensemble des configurations possibles entre 2 gaussiennes.
 
 \subsection{Ensemble des configurations d'un mélange bi-gaussien. \label{sec:config_gmm}}
-\begin{figure}
+\begin{figure}[ht]
+\centering
 \subfloat[Cas avec 2 intersections, l'une se situant entre les centres des gaussiennes.]{
 \vspace{-3mm}
-\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_config1.png}}\qquad
-\subfloat[Cas où les 2 intersections, toutes les deux en dehors de l'intervalle défini par le centre des gaussiennes.]{
+\includegraphics[width=.45\textwidth]{dessin_gauss/gmm_config1.png}}\qquad
+\subfloat[Cas avec 2 intersections, toutes les deux en dehors de l'intervalle défini par le centre des gaussiennes.]{
 \vspace{-3mm}
-\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_config2.png}}\\
-\subfloat[Cas avec un seul et unique point d'intersection (ici $\sigma_1 = \sigma_2$).]{
+\includegraphics[width=.45\textwidth]{dessin_gauss/gmm_config2.png}}\\
+\subfloat[Cas avec un seul et unique point d'intersection (ici~$\sigma_1 = \sigma_2$).]{
 \vspace{-3mm}
-\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_config3.png}}\qquad
+\includegraphics[width=.45\textwidth]{dessin_gauss/gmm_config3.png}}\qquad
 \subfloat[Cas sans aucun point d'intersection.]{
 \vspace{-3mm}
-\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_config4.png}}
+\includegraphics[width=.45\textwidth]{dessin_gauss/gmm_config4.png}}
 \caption{\label{fig:config_intersection_gaussienne}Ensemble des configurations avec 2 gaussiennes.}
 \end{figure}
-
-Comme le montre la Figure~\ref{fig:config_intersection_gaussienne}, deux gaussiennes ne s'intersectent pas nécessairement. De plus, il n'est pas obligatoire d'avoir un point d'intersection dont l'abscisse est situé entre $c_1$ et $c_2$. Pour cela, résolvons l'équation suivante :
+Comme le montre la Figure~\ref{fig:config_intersection_gaussienne}, deux gaussiennes ne s'intersectent pas nécessairement. De plus, il n'est pas obligatoire d'avoir un point d'intersection dont l'abscisse est située entre~$c_1$ et~$c_2$. Pour cela, résolvons l'équation suivante~:
 \begin{align*}
 g_1(x)=g_2(x) 
 & \Leftrightarrow h_1\exp \left(\frac{-1}{2} \left( \dfrac{x-c_1}{\sigma_1}\right)^2  \right) = h_2\exp \left(\frac{-1}{2} \left( \dfrac{x-c_2}{\sigma_2}\right)^2  \right), \\
 & \Leftrightarrow \ln h_1 - \dfrac{1}{2}\left( \dfrac{x-c_1}{\sigma_1} \right)^2 = \ln h_2 - \dfrac{1}{2}\left( \dfrac{x-c_2}{\sigma_2} \right)^2, \\
 & \overset{\sigma_i \neq 0}{\Leftrightarrow} 0 = \sigma_2^2 (x-c_1)^2 - \sigma_1^2 (x-c_2)^2 + 2\sigma_1^2\sigma_2^2 \ln( h_2 / h_1 ),
 \end{align*}
-qui amène à la résolution d'un polynome du second degré en $x$:
+qui amène à la résolution d'un polynôme du second degré en~$x$:
 \begin{equation}
 \begin{aligned}
 \label{eq:g1=g2}
@@ -444,15 +486,15 @@ g_1(x)=g_2(x) \quad \Longleftrightarrow & \quad  Ax^2 + 2B'x + C =0 \\
 \end{aligned}
 \end{equation}
 \paragraph{Cas particulier. \label{para:cas_partic_polynome}}
-Ecartons tout de suite le cas particulier $\sigma_1=\sigma_2$. %, que l'on notera génériquement $\sigma$. 
-Dans ce cas, l'équation~\eqref{eq:g1=g2} se réécrit :
+Ecartons tout de suite le cas particulier~$\sigma_1=\sigma_2$. %, que l'on notera génériquement $\sigma$. 
+Dans ce cas, l'équation~\eqref{eq:g1=g2} se réécrit~:
 \begin{equation}
 \label{eq:g1=g2_cas_part}
 2\Delta c \; x + c_1^2-c_2^2 +  2 \sigma^2 \ln \big( (1-w) / w \big) = 0
 \end{equation}
 \begin{myitemize}
-\item Si de plus $\Delta c=0$, alors \eqref{eq:g1=g2_cas_part} implique que $h_1=h_2$, et donc les deux gaussiennes sont absolument identiques et superposées.
-\item Si $\Delta c\neq0$, alors on a un seul et unique point de croisement, dont l'abscisse est :
+\item Si de plus~$\Delta c=0$, alors \eqref{eq:g1=g2_cas_part} implique que~$h_1=h_2$, et donc les deux gaussiennes sont absolument identiques et superposées.
+\item Si~$\Delta c\neq0$, alors on a un seul et unique point de croisement, dont l'abscisse est~:
 \begin{equation}
 \label{eq:pt_croisement_unique}
 x=\dfrac{c_1+c_2}{2}-\dfrac{\sigma^2}{\Delta c}\ln \left( \dfrac{1-w}{w} \right).
@@ -475,51 +517,52 @@ Différents critères seront étudiés dans cette section. Ils sont basés sur
 
 \subsubsection{Critères basés sur la valeur d'angles particuliers.}
 \begin{figure}
+\centering
 \subfloat[{Cas où l'une des intersections se situe entre les centres des gaussiennes ($R_x \in [c_1;c_2] $).
 }]{\vspace{-3mm}
-\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss.png}}\qquad
+\includegraphics[width=.47\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss.png}}\quad
 \subfloat[{Cas où les deux points d'intersections sont à l'extérieure ($R_x \notin [c_1;c_2] $).
 }]{\vspace{-3mm}
-\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss_v2.png}}
+\includegraphics[width=.47\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss_v2.png}}
 \caption{\label{fig:pts_carac_intersection_gaussienne}Points caractéristiques d'un mélange de deux gaussiennes.}
 \end{figure}
 
-Plutôt que de considérer seulement 2 points (le sommet de chaque gaussienne), élargissons notre évantail de points caractéristiques. La Figure~\ref{fig:pts_carac_intersection_gaussienne} présente l'ensemble des points utilisés dans les critères d'évaluation de l'\hetero de cette section. Cet ensemble de points n'existe que dans le cas où les gaussiennes possèdent 2 points d'intersections. Comme montrer dans l'annexe~\ref{chap:anx_gmm}, les cas avec aucun ou un seul point d'intersection sont relativement marginaux (plus ou moins selon la valeur de $\Delta c$ notamment). En plus des points $I$ et $J$ représentant le sommet de chaque composante ($I$ représentera toujours le sommet de la plus haute composante), on se servira de $A$ et $B$ qui représentent les valeurs du mélange gaussien en les centres des composantes : $c_1$ et $c_2$ ($A$ ayant même abscisse que $I$, et $B$ même abscisses que $J$). On notera également $R$ et $S$ les points d'intersections des composantes, $R$ étant le point le plus haut. Enfin, on considère $H$ la valeur du mélange gaussien à l'abscisse de $R$ et $M$ milieu de $[AB]$. 
+Plutôt que de considérer seulement 2 points (le sommet de chaque gaussienne), élargissons notre éventail de points caractéristiques. La Figure~\ref{fig:pts_carac_intersection_gaussienne} présente l'ensemble des points utilisés dans les critères d'évaluation de l'\hetero de cette section. Cet ensemble de points n'existe que dans le cas où les gaussiennes possèdent 2 points d'intersections. Comme montrer dans l'annexe~\ref{chap:anx_gmm}, les cas avec aucun ou un seul point d'intersection sont relativement marginaux (plus ou moins selon la valeur de~$\Delta c$ notamment). En plus des points~$I$ et~$J$ représentant le sommet de chaque composante ($I$ représentera toujours le sommet de la plus haute composante), on se servira de~$A$ et~$B$ qui représentent les valeurs du mélange gaussien en les centres des composantes~:~$c_1$ et~$c_2$ ($A$ ayant même abscisse que~$I$, et~$B$ même abscisses que~$J$). On notera également~$R$ et~$S$ les points d'intersections des composantes, $R$ étant le point le plus haut. Enfin, on considère~$H$ la valeur du mélange gaussien à l'abscisse de~$R$ et~$M$ milieu de~$[AB]$. 
 
 
-On regardera ici les informations que peuvent fournir l'étude des angles. Un large spectre d'angle sera examiné : $\widehat{ARB}$, $\widehat{MRB}$, $\widehat{MRA}$,  $\widehat{HRB}$, $\widehat{HRA}$, $\widehat{IRJ}$, $\widehat{MRJ}$, $\widehat{MRI}$, $\widehat{HRJ}$, $\widehat{HRI}$, $\widehat{IRB}$ et $\widehat{ARJ}$. 
-On s'attend cependant à ce que certain d'entre eux soit équivalents, notamment ceux qui font intervenir des points sur la même verticale comme $\widehat{HRA}$ et $\widehat{HRI}$ par exemple avec à prioiri une variation un peu plus importante du critère d'\hetero qui sera basé sur $\widehat{HRA}$ que celui basé sur $\widehat{HRI}$.
+On regardera ici les informations que peuvent fournir l'étude des angles. Un large spectre d'angle sera examiné~: $\widehat{ARB}$, $\widehat{MRB}$, $\widehat{MRA}$,  $\widehat{HRB}$, $\widehat{HRA}$, $\widehat{IRJ}$, $\widehat{MRJ}$, $\widehat{MRI}$, $\widehat{HRJ}$, $\widehat{HRI}$, $\widehat{IRB}$ et~$\widehat{ARJ}$. 
+On s'attend cependant à ce que certain d'entre eux soit équivalents, notamment ceux qui font intervenir des points sur la même verticale comme~$\widehat{HRA}$ et~$\widehat{HRI}$ par exemple avec à prioiri une variation un peu plus importante du critère d'\hetero qui sera basé sur~$\widehat{HRA}$ que celui basé sur~$\widehat{HRI}$.
 
-Tous ces angles ne seront pas calculés. On ne s'intéressera uniquement à leur cosinus qui se calcule aisément de la manière suivante avec le produit scalaire :
+Tous ces angles ne seront pas calculés. On ne s'intéressera uniquement à leur cosinus qui se calcule aisément de la manière suivante avec le produit scalaire~:
 \begin{equation}
 \label{eq:cos_prod_scal}
 \cos(\widehat{BAC}) = \dfrac{ \overrightarrow{AB}.\overrightarrow{AC} }{ \| \overrightarrow{AB} \| \| \overrightarrow{AC} \|}.
 \end{equation}
-Notons que :
+Notons que~:
 \begin{myitemize}
 \item Plus les angles définit ci-dessus sont petits, plus on s'attend à une tumeur homogène. Le critère d'\hetero doit donc avoir des variations inversées par rapport à celle du cosinus.
 \item Le critère doit être indépendant du signe de l'angle orienté. Tout critère basé sur le cosinus de l'angle respectera ceci, puisque le cosinus est une fonction paire.
 \item Le cosinus est à valeur dans [-1;1]. Le critère doit quant à lui être entre 0 et 1. Il faut donc adapter. Mais attention à la manière d'adapter. L'idée triviale de la valeur absolue ou du  carré ne peut pas être appliqué ici. En effet, le signe de l'angle est sans importance mais le signe de son cosinus l'est ! Si l'angle est obtu (donc grand, ce qui traduirait une \hetero) le cosinus de l'angle est négatif et donc il ne faut surtout pas le ramené à son équivalent aigu ! De même on ne veut qu'un angle droit traduise un cas limite ($\mathcal{H} = 0$ ou 1). L'angle droit doit être le cas de transition entre l'angle obtu et l'angle aigu.
 \end{myitemize}
-On souhaite construire ici un critère qui varie de manière monotone en fonction de l'angle. Nous examinerons deux types d'adptation d'échelle :
+On souhaite construire ici un critère qui varie de manière monotone en fonction de l'angle. Nous examinerons deux types d'adptation d'échelle~:
 \begin{align}
 \mathcal{H}_5 (\theta) = &\dfrac{1-\cos \theta}{2} \\
 \mathcal{H}_6 (\theta) = &\sqrt{1-\left(  \dfrac{1+\cos \theta}{2}\right)^2}
 \end{align}
 \begin{figure}
-\subfloat[Avec adaptation $\mathcal{H}_5$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/04-angle_complet_rescaleL1.png}}\ 
-\subfloat[Avec adaptation $\mathcal{H}_6$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/04-angle_complet_rescaleL2.png}}
+\subfloat[Avec adaptation~$\mathcal{H}_5$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/04-angle_complet_rescaleL1}}\ 
+\subfloat[Avec adaptation~$\mathcal{H}_6$]{\includegraphics[width=0.49\textwidth]{graph_hetero/dcm_Nber/04-angle_complet_rescaleL2}}
 \caption{\label{fig:crit_hetero_angle}Critères basés sur des angles entre points particuliers de l'histogramme des niveaux de gris.}
 \end{figure}
-Pour beaucoup d'angles les résultats fournis sont insatisfaisant : certains sont quasiment constant ($\mathcal{H}_{5,6}(\widehat{HRJ})$ par exemple), d'autres sont très chaotique (comme $\mathcal{H}_{5,6}(\widehat{ARB}$). Sur la Figure~\ref{fig:crit_hetero_angle} est présenté les critères d'\hetero restants (\ie non écarté pour les raisons précédentes). 
-Les critères basés sur l'angle $\widehat{MRI}$ ou sur l'angle $\widehat{MRA}$ semblent ne pas bien capturés le premier pic d'\hetero même si le second pic est capté ainsi que la remontée finale. Les critères basés sur l'angle $\widehat{HRB}$ semblent eux bien capté les moments hétérogènes. Les pics d'\hetero sont cependant %assez faible et parfois 
+Pour beaucoup d'angles les résultats fournis sont insatisfaisant~: certains sont quasiment constant ($\mathcal{H}_{5,6}(\widehat{HRJ})$ par exemple), d'autres sont très chaotique (comme~$\mathcal{H}_{5,6}(\widehat{ARB}$). Sur la Figure~\ref{fig:crit_hetero_angle} est présenté les critères d'\hetero restants (\ie non écarté pour les raisons précédentes). 
+Les critères basés sur l'angle~$\widehat{MRI}$ ou sur l'angle~$\widehat{MRA}$ semblent ne pas bien capturés le premier pic d'\hetero même si le second pic est capté ainsi que la remontée finale. Les critères basés sur l'angle~$\widehat{HRB}$ semblent eux bien capté les moments hétérogènes. Les pics d'\hetero sont cependant %assez faible et parfois 
 assez peu différents de certains passages homogènes... 
 %Les critères basés sur l'angle $\widehat{MRA}$ quant à eux, capturent très bien les deux premiers pics d'\hetero. Les passages homogènes sont également bien traduit (plateau lors du premier traitement, et pic descendant lors du second traitement). La recroissance finale de l'\hetero semble un peu plus laborieuse à capturer dans le cas du critère $\mathcal{H}_5$.
 Explorons à présent d'autres critères encore.
 
 \subsubsection{Critères basés sur des intégrales.}
-Dans cette section, on va s'intéresser à construire des critères basés sur des comparaisons  d'aires. Dans la section~\ref{sec:premier_essai_critere}, on a déjà examiner un critère qui compare l'aire des composantes entre elles. Il s'agit du critère $Qw$, l'aire (l'intégrale) de la i-ème composante valant $w_i$. 
-Ici, en observant les gaussiennes produite pour \Nber de plus près, on pourrait penser que l'aire commune aux deux gaussiennes (\cf schéma représentatif Figure~\ref{fig:gmm_aire_commune}) pourrait être un indicateur. Plus l'aire commune aux deux gaussiennes est élevée, et plus la tumeur semble homogène.  On s'intéresse ainsi aux critères suivants :
+Dans cette section, on va s'intéresser à construire des critères basés sur des comparaisons  d'aires. Dans la section~\ref{sec:premier_essai_critere}, on a déjà examiner un critère qui compare l'aire des composantes entre elles. Il s'agit du critère~$Qw$, l'aire (l'intégrale) de la i-ème composante valant~$w_i$. 
+Ici, en observant les gaussiennes produite pour \Nber de plus près, on pourrait penser que l'aire commune aux deux gaussiennes (\cf schéma représentatif Figure~\ref{fig:gmm_aire_commune}) pourrait être un indicateur. Plus l'aire commune aux deux gaussiennes est élevée, et plus la tumeur semble homogène.  On s'intéresse ainsi aux critères suivants~:
 \begin{align}
 \mathcal{H}_9 =& 1 - \dfrac{ 1 }{\min(w_1,w_2)}\int \min(g_1(x),g_2(x)) \dx, \\
 \mathcal{H}'_9 =& 1-\int \min(g_1(x),g_2(x)) \dx.
@@ -527,12 +570,12 @@ Ici, en observant les gaussiennes produite pour \Nber de plus près, on pourrait
 \begin{figure}
 \subfloat[\label{fig:gmm_aire_commune}Schéma représentatif de l'aire commune à deux gaussiennes.]{
 \includegraphics[width=.35\textwidth]{dessin_gauss/gmm_aire_commune.png}}
-\subfloat[\label{fig:crit_aire_commune}\Hetero fournit avec les critères $\mathcal{H}_9$ et $\mathcal{H}'_9$.]{
-\includegraphics[width=.65\textwidth]{graph_hetero/dcm_Nber/05-integ_commune.png}}
-\caption{Critères basés sur l'aire commune aux deux gaussiennes $\big($ donnée par : $\int_0^{255} \min \big(g_1(x),g_2(x) \big) \dx \big)$.}
+\subfloat[\label{fig:crit_aire_commune}\Hetero fournit avec les critères~$\mathcal{H}_9$ et~$\mathcal{H}'_9$.]{
+\includegraphics[width=.64\textwidth]{graph_hetero/dcm_Nber/05-integ_commune}}
+\caption{Critères basés sur l'aire commune aux deux gaussiennes~$\big($donnée par~: $\int_0^{255} \min \big(g_1(x),g_2(x) \big) \dx \big)$.}
 \end{figure}
 Les résultats pour ces deux critères sont présentés  Figure~\ref{fig:crit_aire_commune}. 
-Considérer l'aire commune relativement à l'aire de la plus petite des gaussiennes ($\mathcal{H}_9$) semble plus pertinent que de considérer l'aire commune seulement ($\mathcal{H}'_9$). Ce critère n'est pas des plus mauvais : l'ensemble des moments hétérogènes est capturé (premier pic avant traitement jour~119, second et troisième pics avant les rechutes (jour~776 et~1116). Cependant les homogénéisations ne sont pas très bien capturées : il y a notamment le plateau lors du premier traitement et le pic descendant lors du second traitement.
+Considérer l'aire commune relativement à l'aire de la plus petite des gaussiennes ($\mathcal{H}_9$) semble plus pertinent que de considérer l'aire commune seulement ($\mathcal{H}'_9$). Ce critère n'est pas des plus mauvais~: l'ensemble des moments hétérogènes est capturé (premier pic avant traitement jour~119, second et troisième pics avant les rechutes (jour~776 et~1116). Cependant les homogénéisations ne sont pas très bien capturées~: il y a notamment le plateau lors du premier traitement et le pic descendant lors du second traitement.
 
 \section{Critère retenu}
 \begin{figure}
@@ -550,7 +593,7 @@ Considérer l'aire commune relativement à l'aire de la plus petite des gaussien
 %\subfloat[\label{fig:critere_dc2_sur_dh} Critères basés sur $(\Delta c)^2 / \Delta h$ ]{
 %\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh.png}
 %}
-%\subfloat[\label{fig:critere_dc2_sur_dh} Critères basés sur $(\Delta c)^2 / \Delta w$ ]{
+%\subfloat[\label{fig:critere_dc2_sur_dw} Critères basés sur $(\Delta c)^2 / \Delta w$ ]{
 %\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/07-dc2_sur_dw.png}
 %}
 %\caption{\label{fig:critere_avec_dc2}Critères dans lesquels $\Delta c$ joue un rôle prépondérant.}
@@ -561,40 +604,41 @@ Considérer l'aire commune relativement à l'aire de la plus petite des gaussien
 %\includegraphics[width=0.75\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh.png}
 %\caption{\label{fig:critere_dc2_sur_dh_Chen} Critères basés sur $(\Delta c)^2 / \Delta h$ sur \Chen }
 %\end{figure}
+
 \begin{figure}
 \centering
 \subfloat[\label{fig:critere_dc2_sur_dh_nber} \Nber ]{
-\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh.png}
+\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh}
 }
 \subfloat[\label{fig:critere_dc2_sur_dh_chen} \Chen ]{
-\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh.png}
+\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh}
 }
-\caption{\label{fig:critere_dc2_sur_dh}\Hetero clinique fournit par le critère $\mathcal{H}_{12}$ dans lequel $\Delta c$ joue un rôle prépondérant.}
+\caption{\label{fig:critere_dc2_sur_dh}\Hetero clinique fournit par le critère~$\mathcal{H}_{12}$ dans lequel~$\Delta c$ joue un rôle prépondérant.}
 \end{figure}
 L'idée de ce dernier critère m'est venu de la constation suivante en repartant du critère basé sur la pente décrite entre le sommet des gaussiennes. Sur la Figure~\ref{fig:pente_gaussienne_identique} est présenté deux configurations très différentes, mais présentant la même pente. Pourtant la Figure~\ref{fig:pente_gaussienne_identique_a} est très clairement représentative d'une image \heterogene alors que la Figure~\ref{fig:pente_gaussienne_identique_a} serait plutôt représentative de qqch d'homogène puisque l'approximation par une seule et unique gaussienne ne serait pas des plus mauvaise. 
-Comment différencier ces deux cas ? Cet exemple mis en exergue nous invite à dire que $\Delta c$ doit avoir plus de poids que $\Delta h$ dans le calcul du critère de l'\hetero. Ainsi, j'ai décidé de regarder le critère suivant :
+Comment différencier ces deux cas ? Cet exemple mis en exergue nous invite à dire que~$\Delta c$ doit avoir plus de poids que~$\Delta h$ dans le calcul du critère de l'\hetero. Ainsi, j'ai décidé de regarder le critère suivant~:
 \begin{equation}
 \label{eq:criteres_finaux}
-\mathcal{H}_{11} = \mathscr{S}\left( \left| \dfrac{(\Delta c /256)^2}{\Delta w} \right| \right)
+\mathcal{H}_{11} =  \left| \dfrac{(\Delta c /256)^2}{\Delta w} \right| 
 \quad {\rm et } \quad
-\mathcal{H}_{2} = \mathscr{S} \left( \left| \dfrac{(\Delta c /256)^2}{\Delta h} \right| \right)
+\mathcal{H}_{2} =  \left| \dfrac{(\Delta c /256)^2}{\Delta h} \right|
 \end{equation}
 
 
-L'\hetero clinique, pour \Nber, fournit par le critère~$\mathcal{H}_{11}$ est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_nber}. Ici, le critère reproduit bien les pics d'\heteros (jour~119 et jour~776). La regain d'\hetero final, qui démarre avant la rechute au second traitement, et qui se poursuit pendant la rechute, est également bien capturé. Les phases homogènes sont également relativement bien reproduit. L'évaluation visuelle qui amenait à considérer l'\hetero constante du jour~209 au jour~688 est ainsi précisée par le critère. Manifestement le jour~331 est donc légèrement plus \hetero. Notons que bien écartés, plusieurs autre critères (notament $\mathcal{H}???$ ) 
+L'\hetero clinique, pour \Nber, fournit par le critère~$\mathcal{H}_{11}$ est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_nber}. Ici, le critère reproduit bien les pics d'\heteros (jour~119 et jour~776). La regain d'\hetero final, qui démarre avant la rechute au second traitement, et qui se poursuit pendant la rechute, est également bien capturé. Les phases homogènes sont également relativement bien reproduit. L'évaluation visuelle qui amenait à considérer l'\hetero constante du jour~209 au jour~688 est ainsi précisée par le critère. Manifestement le jour~331 est donc légèrement plus \hetero. Notons que bien écartés, plusieurs autre critères (notamment~$\mathcal{H}???$ ) 
 \todo[noline]{critere avec pic sur plateau}
-avaient aussi capté cette subtilité. Enfin la forte homogénéistion causée par le second traitement est également bien traduite.
+avaient aussi capté cette subtilité. Enfin la forte homogénéisation causée par le second traitement est également bien traduite.
 Nous avons donc trouvé un critère qui semble quantifier de manière acceptable l'\hetero clinique de \Nber. Cela dit ce critère a été construit pour! Pour le valider regardons ce qu'il en est sur notre second patient~: \Chen.
 
 
-L'\hetero clinique, pour \Chen, fournit par le critère~$\mathcal{H}_{11}$ est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_chen}. Ici aussi, la retranscription est aussi tout a fait acceptable. Les phases où il y a regain d'\hetero sont toutes correctement bien décrites. Au tout début (jusqu'au jour~279) la métastase est très petite. Il est donc difficile d'apprécier visuellement l'\hetero. De plus, le quantificateur sera aussi plus sensible aux erreurs dues au contourage. La tendance réelle à une baisse de l'\hetero est tout à fait plausible. D'autant plus que c'est le comportement attendu lorsqu'on traite de manière efficace : l'ensemble de la métastase tends à se nécroser, et donc l'ensemble s'homogénéise.
+L'\hetero clinique, pour \Chen, fournit par le critère~$\mathcal{H}_{11}$ est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_chen}. Ici aussi, la retranscription est aussi tout a fait acceptable. Les phases où il y a regain d'\hetero sont toutes correctement bien décrites. Au tout début (jusqu'au jour~279) la métastase est très petite. Il est donc difficile d'apprécier visuellement l'\hetero. De plus, le quantificateur sera aussi plus sensible aux erreurs dues au contourage. La tendance réelle à une baisse de l'\hetero est tout à fait plausible. D'autant plus que c'est le comportement attendu lorsqu'on traite de manière efficace~: l'ensemble de la métastase tends à se nécroser, et donc l'ensemble s'homogénéise.
 L'homogénéisation lors du second traitement est également très bien capturée.
 \todo[inline]{commentaire de figure a terminer}
 \section{L'\hetero sur les simulations numériques}
 \todo[noline]{Nouveau chapitre ?}
 \todo[noline]{Titre sous-section ?}
 \subsection{Présentation}
-Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), faisons parler ce critère sur nos simulations numériques. En ce qui concerne cet aspect, les images  résultantes (gouvernées par EQREF \todo[noline]{eqref} ) des simulations numériques dépendent de 3 paramètres : $\tau_N, \tau_P$ et $\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveau de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit : $\tau_N=38, \tau_P=166$ et $\tau_S=204$.
+Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), faisons parler ce critère sur nos simulations numériques. En ce qui concerne cet aspect, les images  résultantes (gouvernées par EQREF \todo[noline]{eqref} ) des simulations numériques dépendent de 3 paramètres~: $\tau_N, \tau_P$ et~$\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveau de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit~: $\tau_N=38, \tau_P=166$ et~$\tau_S=204$.
 \todo[noline]{Et l'optim du niveau de gris faite entre temps ?}
 Dans un second temps, on pourra faire varier ces paramètres pour examiner l'influence de ceux-ci sur l'\hetero numérique.
 On ne montrera ici que l'\hetero numérique de \Nber. Celle de \Chen n'a absolument aucune chance d'être correctement reproduite pour la simple et bonne raison que le premier scan est très \heterogene, alors que notre condition initial dans le modèle numérique est complètement homogène. Il faudrait prendre une condition initiale plus en relation avec l'image médicale, à minima une condition initiale qui présenterait le même niveaux d'\hetero pour pouvoir poursuivre l'étude avec ce patient.
@@ -603,17 +647,17 @@ On ne montrera ici que l'\hetero numérique de \Nber. Celle de \Chen n'a absolum
 \centering
 \includegraphics[width=0.75\textwidth]
 {graph_hetero/simu_Nber_N38_P166_S204/06-dc2_sur_dh.png}
-\caption{\label{fig:hetero_nber_simu}\Hetero numérique pour \Nber\ -- $\tau_N=33, \tau_P=166$ et $\tau_S=215$. L'\hetero clinique est rappelée, à titre de comparaison, ici en rouge.}
+\caption{\label{fig:hetero_nber_simu}\Hetero numérique pour \Nber\ -- $\tau_N=38, \tau_P=166$ et~$\tau_S=215$. L'\hetero clinique est rappelée, à titre de comparaison, ici en rouge.}
 \end{figure}
 
 Sur la Figure~\ref{fig:hetero_nber_simu} est présenté l'\hetero numérique de \Nber.
-La fonction objectif pour l'\hetero clinique ainsi que l'évolution de l'aire tumorale sont ici rappelées sur ce graphique à titre comparatif. La phase avec imatinib est  correctement décrite :
+La fonction objectif pour l'\hetero clinique ainsi que l'évolution de l'aire tumorale sont ici rappelées sur ce graphique à titre comparatif. La phase avec imatinib est  correctement décrite~:
 \begin{myitemize}
 \item Présence d'un pic d'\hetero jour~119.
 \item Décroissance de l'\hetero lorsque l'imatinib agit de manière efficace.
 \item Saut important de l'\hetero qui grandit juste avant la recroissance de l'aire tumorale.
 \end{myitemize}
-En ce qui concerne la partie avec sunitinib, au début de l'administration du traitement l'\hetero décroit. Cependant :
+En ce qui concerne la partie avec sunitinib, au début de l'administration du traitement l'\hetero décroit. Cependant~:
 \begin{myitemize}
 \item La recroissance de l'\hetero numérique a lieu un peu tôt par rapport à celle constatée cliniquement.
 \item Sur la partie finale (lors de la rechute au sunitinib, après le jour~1116), l'\hetero numérique décroit alors que celle clinique continue d'augmenter. 
@@ -651,8 +695,8 @@ Tout ceci renforce donc l'idée que l'image du jour~1120 est plus \hetero que ce
 
 
 \subsection{Influence des niveaux de gris sur l'\hetero numérique}
-La principale conséquence du changement des niveaux de gris $\tau_N$, $\tau_P$ et $\tau_S$ est la dilatation de l'histogramme des niveaux de gris. Les variations de l'\hetero ne sont donc que peu dépendante de ces paramètres, comme le montre 
-la Figure~\ref{fig:impact_grey_lvl_on_hetero}, sur laquelle toute les courbes sont comparables. Comme différence, on pourra relever tout de même que plus $\tau_N$ est écarté de $\tau_P$, plus les variations de l'\hetero numérique sont importantes. Ceci est notamment visible lors de la rechute à l'imatinib, entre les jour~776 et 888 où le pic descendant de l'\hetero numérique est plus prononcé si $\tau_P-\tau_N$ est grand. Ceci est conforme à ce que l'on pouvait attendre, puisque cette différence va impacter directement la position des gaussiennes sur l'histogramme, position relative en grande partie donnée par $\Delta c$ qui intervient dans le calcul de notre critère de l'\hetero numérique.
+La principale conséquence du changement des niveaux de gris~$\tau_N$, $\tau_P$ et~$\tau_S$ est la dilatation de l'histogramme des niveaux de gris. Les variations de l'\hetero ne sont donc que peu dépendante de ces paramètres, comme le montre 
+la Figure~\ref{fig:impact_grey_lvl_on_hetero}, sur laquelle toute les courbes sont comparables. Comme différence, on pourra relever tout de même que plus~$\tau_N$ est écarté de~$\tau_P$, plus les variations de l'\hetero numérique sont importantes. Ceci est notamment visible lors de la rechute à l'imatinib, entre les jour~776 et~888 où le pic descendant de l'\hetero numérique est plus prononcé si~$\tau_P-\tau_N$ est grand. Ceci est conforme à ce que l'on pouvait attendre, puisque cette différence va impacter directement la position des gaussiennes sur l'histogramme, position relative en grande partie donnée par~$\Delta c$ qui intervient dans le calcul de notre critère de l'\hetero numérique.
 
 \begin{figure}
 \centering

@@ -12,9 +12,13 @@
 
 \usepackage{lmodern} %% latin modern font
 %\usepackage{fcursive}
-%\usepackage[mathscr]{euscript}
+%%\usepackage[mathscr]{euscript}
+\usepackage{euscript}
 \usepackage{dsfont}
 \usepackage{mathrsfs} %% fournit \mathsrc (majuscules rondes)
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\DeclareMathAlphabet{\matheus}{U}{eus}{m}{n}
+
 %\usepackage{scrextend} %%% http://tex.stackexchange.com/questions/5339/how-to-specify-font-size-less-than-10pt-or-more-than-12pt
 %\changefontsizes[20pt]{16pt}
 \usepackage[fontsize=13pt]{scrextend}
@@ -62,6 +66,7 @@
 \usepackage{subfig}%% \subfloat
 \usepackage{wrapfig}%% \begin{wrapfigure}
 %%\usepackage{stackengine}
+\usepackage{vwcol} 
 \usepackage{placeins} %%% Fournit \FloatBarrier
 \usepackage{xspace}
 \usepackage{lipsum}
@@ -272,6 +277,10 @@
 \renewcommand\chaptername{#1}%
 }
 
+\makeatletter
+\newcommand{\leqnomode}{\tagsleft@true}
+\newcommand{\reqnomode}{\tagsleft@false}
+\makeatother
 
 \input{mes_macros.tex}
 

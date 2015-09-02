@@ -18,5 +18,5 @@ $\nuS$ & Taux d'inhibition de \mbox{l'angiogenèse} par le \mbox{traitement}~$\T
 $\muS$ & Taux de mortalité des cellules proliférantes dû au \mbox{traitement}~$\TS$ & $d^{-1}$ & 4.27e-3 & 3.0e-4 \\
 $\epsilon_{th}$ & Proportion minimale de cellules cancéreuses pouvant être \mbox{détectée} sur les scanners -- Seuil minimal pour la \mbox{localisation} \mbox{numérique} de la tumeur & - & 1.0e-2 & 0.1 \\
 $\Sigma_{ini}$ & Proportion de cellules résistantes à \mbox{l'imatinib} à~$t=0$ -- \mbox{Equivalent} à $(P_2+P_3)_{t=0}$ & - & 3e-06 & 0.10 \\
-$q_{ini}$ & Proportion des cellules résistantes à \mbox{l'imatinib} qui sont aussi résistante au sunitinib à~$t=0$ -- \mbox{Equivalent} à $(P_3/P_2)_{t=0}$ & - & 7.5e-3 & 0.41 \\
-$\xi_{ini}$ & Signal de facteur de croissance angiogénique à~$t=0$ & $cm.d^{-1}$ & 3.33e-3 & 0 \\
+$q_{ini}$ & Proportion des cellules résistantes à \mbox{l'imatinib} qui sont aussi résistantes au sunitinib à~$t=0$ -- \mbox{Equivalent} à $(P_3/P_2)_{t=0}$ & - & 7.5e-3 & 0.41 \\
+$\xi_{ini}$ & Signal de facteurs de croissance angiogénique à~$t=0$ & $cm.d^{-1}$ & 3.33e-3 & 0 \\
