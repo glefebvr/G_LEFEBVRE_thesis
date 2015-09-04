@@ -29,11 +29,30 @@ Sans plus tardez, présentons le problème en image. Sur la Figure~\ref{fig:tref
 \begin{figure}
 \centering
 HEP FIGURE
-\caption{\label{fig:trefle} Simulations numériques réalisées avec un WENO5 pour le transport et un Laplacien classique à 5 points pour la diffusion. Numerical simulations with the standard WENO5 stencil for the
-specific set of parameters. Partant d'une donnée initiale circulaire, 
+\caption{\label{fig:trefle} Simulations numériques réalisées avec un WENO5 pour le transport et un Laplacien classique à 5 points pour la diffusion. Partant d'une donnée initiale circulaire, 
 une structure en forme de trèfle apparaît.}
 \end{figure}
-La forme en forme de trèfle apparaît ici clairement. 
+
+Partant d'une donnée initiale irrotationelle, on constate que la simulation numérique peut générer une structure en forme de trèfle, comme présenté sur la Figure~\ref{fig:simu_clover}, alors que la forme circulaire devrait être préservée. 
+\begin{figure}[h!]
+  \centering
+  \subfloat[Jour 0]{\label{fig_chen_simu_spatial_1}
+\includegraphics[width=0.3\textwidth]
+{track_10x10_7/vue_S/1.png}}
+\subfloat[Jour 543]{\label{fig_chen_simu_spatial_2}
+\includegraphics[width=0.3\textwidth]
+{track_10x10_7/vue_S/34.png}}
+\subfloat[Jour 1053]{\label{fig_chen_simu_spatial_4}
+\includegraphics[width=0.3\textwidth]
+{track_10x10_7/vue_S/65.png}}
+\\
+\subfloat[Profil de~$\vit_x$ le long de~$\ex$ au Jour 905]{\label{fig_vx_profile}\includegraphics[width=.4\textwidth]
+{track_10x10_7/coupe_vitesse_v2_56.png}}
+\caption{Simulation numérique avec le stencil standard du WENO5 pour un jeu de paramètres spécifique. Partant d'une donnée initiale circulaire, une structure en forme de trèfle apparaît.} \label{fig:simu_clover}
+\end{figure}
+
+Notez que ce type d'erreur sur la forme conduit à une erreur sur l'évolution de l'aire de la lésion. En effet la forme de trèfle augmente la surface de contact ce qui modifie l'interaction entre la vascularisation et la tumeur. Ce type d'instabilités doit être fixé.
+
 
 \section{Le schéma de diffusion}
 \subsection{Influence de la condition limite}
@@ -127,13 +146,90 @@ Le profil de ces 2 vitesses est présenté à titre indicatif sur la Figure~\ref
 \end{figure}\todo[noline]{graphique \ref{fig:vitesse+et-imposees} a refaire}
 Avec ce modèle extrêmement minimaliste, le trèfle à 4 feuilles apparaît une fois de plus, comme on peut le constater sur la Figure~\ref{fig:evo_test_transp}.
 \begin{figure}
-FIGURE
 \caption{Evolution de la densité $P$, solution numérique du modèle réduit~\eqref{eq:mod_reduit_test_transp}.\label{fig:evo_test_transp}}
 \end{figure}
 
-\subsection{Méthode pour améliorer la préservation de l'invariance par rotation~: le \twinweno}
-De la même manière que nous avons procédé pour l'équation de Poisson, proposons un schéma dont le stencil n'est pas uniquement réparti selon 2 directions. Le nouveau schéma, baptisé \twinweno consiste à combiner le WENO5 standard avec un autre WENO5 basé sur les directions diagonales. Ainsi l'ordre de convergence du WENO5 est préservé.\todo{ref biblio pour WENO5}
+\subsection{Méthode pour améliorer la préservation de l'invariance par rotation~: le \twinweno  \label{sec:twinweno}}
+De la même manière que nous avons procédé pour l'équation de Poisson, proposons un schéma pour le transport dont le stencil n'est pas uniquement réparti selon 2 directions. Le nouveau schéma, baptisé \twinweno consiste à combiner le WENO5 standard avec un autre WENO5 basé sur les directions diagonales. Ainsi l'ordre de convergence du WENO5 est préservé.\todo{ref biblio pour WENO5}
 
 Détaillons un peu plus la manière dont se présente ce schéma. Son stencil est présenté sur la Figure ...
+
+\begin{center}
+===== COPIE ARTICLE =====
+\end{center}
+
+%\subsection{Le \twinweno~: un schéma WENO5 modifié \label{sec:twinweno}}
+
+Le schéma WENO5 standard comme donné par~\cite{Liu1994} est précis dans la plupart des cas, cependant certains ensembles de paramètres\footnote{L'ensemble de paramètre a été trouvé par incident en  fitant l'aire tumorale de \Chen, \cf Section~\ref{section chen}.} produisent des instabilités numériques (de telles instabilités ont aussi été constatées avec un schéma classique upwind). 
+
+
+Le problème est dû au stencil du WENO5 qui tend à favoriser les directions du maillage lors de changement de direction de la vitesse.
+Comme on peut le voir sur la Figure~\ref{fig_vx_profile}, 
+au centre de la tumeur (autour de~$x=5\;cm$ sur la  Figure~\ref{fig_vx_profile}), il y a un point de compression~: 
+la vitesse est centripète puisque~$v_x$ est positif à droite et négatif à gauche. 
+De plus, aux alentours de~$1.5\;cm$ du centre de la tumeur, il y a une couronne de cellules proliférantes qui induit un mouvement d'étalement~: la vitesse est centripète près du centre mais centrifuge plus loin. 
+
+
+Plus précisément, pour le schéma classique WENO5, en tout point 
+~$\vecx_{ij}$ de la grille, l'approximation numérique 
+$\W^{n+1}_{ij}$ de l'équation~\eqref{eq_transp_weno} au temps 
+$t^{n+1}$ est donnée par
+\begin{equation}\label{eq:WENO5}
+\begin{aligned}
+\W^{n+1}_{i,j}=\W^n_{i,j} + \Delta t & \Bigl(v_{i,j}^{x,n}
+\mathcal{F}\left(\Delta x,(\W^n_{i+k,j})_{k=-3,\cdots, 3}\right) \\
+&\quad +v_{i,j}^{y,n} \mathcal{F}\left(\Delta y,(\W^n_{i,j+k})_{k=-3,\cdots, 3}\right)\Bigr),
+\end{aligned}
+\end{equation}
+où~$v_{i,j}^{x,n} $ et~$v_{i,j}^{y,n}$ sont définis par~\eqref{eq_vit_discr} et où~$\mathcal{F}$ est le fonction de flux WENO5 donnée par~\cite{Liu1994}. 
+Pour éviter ces instabilités numériques, nous introduisons le schéma \twinweno, qui est la combinaison d'un WENO5 avec son stencil standard avec un autre WENO5 dont le stencil est une rotation d'angle~$\ang$ du premier (\cf Figure~\ref{fig:stencil_weno5_twin}), où~$\ang$ est défini en fonction des pas d'espaces de la grille, $\Delta x$ et~$\Delta y$, par 
+ $$\ang=\arctan (\Delta y/\Delta x)\in (0,\pi/2). $$
+\begin{figure}[h]
+  \centering
+\subfloat[Grille uniforme~$\thickmuskip=1mu  \Delta x=\Delta y$]{\input{tex_pictures/weno5_twin_stencil.tex}}
+\subfloat[Grille non-uniforme]{\input{tex_pictures/weno5_twin_stencil-NonU.tex}}
+\caption{Stencil du schéma \twinweno\ pour une grille uniforme (à gauche)
+  et une grille non-uniforme (à droite).} \label{fig:stencil_weno5_twin}
+\end{figure} 
+Nous introduisons les coefficients~$(v^{r,n}_{i,j},
+v^{\theta,n}_{i,j})$ et~$\Delta r$ définis par\footnote{Les coefficients~$v^{r,n}_{i,j}$
+  et~$v^{\theta,n}_{i,j}$ sont définis de sorte que 
+$$\vit^n_{i,j}=v^{x,n}_{i,j}\ex+v^{y,n}_{i,j}\ey=v^{r,n}_{i,j}\er+v^{\theta,n}_{i,j}\et,\quad\text{avec}\quad 
+\er=\cos\ang\,\ex+\sin\ang\,\ey,\quad \et=-\sin\ang\,\ex+\cos\ang\, \ey.$$}
+\begin{equation}
+\begin{pmatrix}
+v^{r,n}_{i,j} \\ v^{\theta,n}_{i,j}
+\end{pmatrix} = \begin{pmatrix}
+\cos \ang & \sin \ang \\ -\sin \ang & \cos \ang
+\end{pmatrix} \begin{pmatrix}
+v^{x,n}_{i,j} \\ v^{y,n}_{i,j}
+\end{pmatrix}, \qquad  \Delta r=\sqrt{\Delta x^2+\Delta y^2},
+\end{equation}
+et nous discrétisons l'équation~\eqref{eq_transp_weno} grâce à notre schéma \twinweno\ : 
+\begin{equation}\label{eq:twin-WENO5}
+  \begin{split}
+\W^{n+1}_{i,j} =\W^n_{i,j} &+ (1-\beta)\Delta t \Bigl(v_{i,j}^{x,n}
+\mathcal{F}\left(\Delta x,(\W^n_{i+k,j})_{k=-3,\cdots, 3}\right) \\
+&\hspace{25mm} + v_{i,j}^{y,n} \mathcal{F}\left(\Delta y,(\W^n_{i,j+k})_{k=-3,\cdots,3}\right)\Bigr)\\
+&+\beta\Delta t \Bigl(v_{i,j}^{r,n}
+\mathcal{F}\left(\Delta r,(\W^n_{i+k,j+k})_{k=-3,\cdots, 3}\right) \\
+& \hspace{25mm} + v_{i,j}^{\theta,n} \mathcal{F}\left(\Delta r,(\W^n_{i-k,j+k})_{k=-3,\cdots, 3}\right)\Bigr),
+  \end{split}
+\end{equation}
+où~$\beta\in(0,1)$ est un paramètre numérique que nous devons choisir. 
+En particulier pour~$\beta=0$, on retrouve le WENO5 standard. 
+Comme nous pouvons le voir sur la Figure~\ref{fig:compWENO5}, notre nouveau schéma préserve beaucoup mieux la propriété d'invariance par rotation dans les cas où le WENO5 ne la préserve pas.
+
+\begin{figure}[!htb]
+\subfloat[Jour 0]{\label{fig:correction_cross_spatial_1}
+\includegraphics[width=0.33\textwidth]{track_14x14_cross/vue_S/1.png}}
+\subfloat[Jour 543]{\label{fig:correction_cross_spatial_2}
+\includegraphics[width=0.33\textwidth]{track_14x14_cross/vue_S/34.png}}
+\subfloat[Jour 1053]{\label{fig:correction_cross_spatial_3}
+\includegraphics[width=0.33\textwidth]{track_14x14_cross/vue_S/65.png}}
+\caption{Simulation numérique avec le schéma \twinweno\  ($\beta=0.26$).  
+Comparé à la Figure~\ref{fig:simu_clover}, la conservation de l'invariance par rotation est très clairement améliorée. 
+}\label{fig:compWENO5}
+\end{figure}
 
 \end{document}

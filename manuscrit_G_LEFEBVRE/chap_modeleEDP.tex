@@ -4,13 +4,80 @@
 \begin{document}
 \chapter{Un modèle mathématique qui reproduit la croissance tumorale}
 
-\mylettrine{N}{ous} allons ici présenter le cheminement qui, depuis les mécanismes biologiques et cliniques, a conduit à un modèle mathématique. 
+%\mylettrine{N}{ous} allons ici présenter le cheminement qui, depuis les mécanismes biologiques et cliniques, a conduit à un modèle mathématique. 
 
-\begin{center}
------ Copie article ----
-\end{center}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mylettrine{C}{e} chapitre, ainsi qu'une partie du chapitre suivant (la partie sur le \twinweno), ont  fait l'objet d'une publication (actuellement en review). Nous allons ici en garder la structure, en commençant par présenter les principaux résultats. La construction du modèle sera ensuite détaillée. Nous discuterons enfin sur les résultats numériques apportés par notre modèle, et les diverses informations que l'ont peut en tirer.
 
+\section{Principaux résultats}
+Sur la partie gauche de la Figure~\ref{fig_nber} est présenté une séquence de scanners, et sur la partie droite nous donnons l'évolution de l'aire tumorale d'une métastase hépatique de GIST d'un patient spécifique, appelé \Nber. Sur chaque scanner de \Nber, nous avons contouré la région la plus sombre, qui correspond principalement à la zone nécrosée.  
+Pendant l'évolution tumorale, on peut voir que l'hétérogénéité tumorale change (par exemple sur la Figure~\ref{fig_hen_spatial_2} la tumeur est homogène tandis que sur la Figure~\ref{fig_hen_spatial_6}, elle est hétérogène). Nous distinguons, dans l'évolution de l'aire tumorale,  les points correspondant à une tumeur homogène (cercles pleins) des points correspondants à une tumeur hétérogène.
+
+\begin{figure}[h]
+\captionsetup[subfigure]{margin={7pt,7pt}}
+\begin{tabular}{@{\hspace{-1mm}}ccc}
+\subfloat[16 sept. 2008 -- Jour 119]{\label{fig_hen_spatial_1}
+\includegraphics[width=0.2\textwidth]{scan_henbert/2008_09_16(2).jpg}
+}
+&
+\subfloat[30 juin 2009 -- Jour 406]{\label{fig_hen_spatial_2}
+\includegraphics[width=0.2\textwidth]{scan_henbert/2009_06_30(2).jpg}
+}&
+\\
+\subfloat[5 juill. 2010  -- Jour 776]{\label{fig_hen_spatial_3}
+\includegraphics[width=0.2\textwidth]{scan_henbert/2010_07_05(3).jpg}
+}&
+\subfloat[25 oct. 2010 -- Jour 888]{\label{fig_hen_spatial_4}
+\includegraphics[width=0.2\textwidth]{scan_henbert/2010_10_25.jpg}
+}&\\
+\subfloat[7 janv 2011 -- Jour 962]{\label{fig_hen_spatial_5}
+\includegraphics[width=0.2\textwidth]{scan_henbert/2011_01_07(2).jpg}
+}&
+\subfloat[10 juin 2011 -- Jour 1116]{\label{fig_hen_spatial_6}
+\includegraphics[width=0.2\textwidth]{scan_henbert/2011_06_10.jpg}
+}&
+\multirow{-3}{*}[107mm]{
+ \subfloat[Aire tumorale. Chaque point représente l'aire de la tumeur mesurée sur les scanners et la ligne représente notre résultat numérique. \newline
+Les lettres font référence aux scanners montrés sur la gauche. Les symboles 
+ $\oplus$ représentent les tumeurs hétérogènes, {\large$\bullet$} les tumeurs plutôt homogènes et {\large$\circ$} les tumeurs pour lesquelles il est difficile de détecter sur le scanner un aspect hétérogène ou homogène dominant.  
+Les valeurs des paramètres utilisés dans la simulation numérique sont données dans la  Table~\ref{table_param}.]{\label{fig:fit_area_henbert}
+ \includegraphics[width=0.5\textwidth]{fit_henbert_form3/henbert_area.png}
+ }}
+\end{tabular}
+\caption{\label{fig_nber} Evolution spatiale de la métastase hépatique de \Nber sur une série de scanners.}
+\end{figure}
+
+
+
+Curieusement, juste avant les recroissances tumorales au Jour~776 (Figure~\ref{fig_hen_spatial_3})
+et au Jour~1116 (Figure~\ref{fig_hen_spatial_6}), une couronne plus claire que le c\oe{}ur sombre apparaît, alors que la réponse au traitement se traduit par un assombrissement de la tumeur (\cf Figure~\ref{fig_hen_spatial_2} et~\ref{fig_hen_spatial_5}). 
+De telles étapes successives de tumeurs homogènes/hétérogènes sont particulièrement prononcées dans les métastases hépatiques de GIST et notre but est de fournir une explication à ce type de comportement.
+
+
+Le premier résultat de cet article est qu'il est possible de décrire l'évolution tumorale en terme d'aire tumorale comparable aux mesures réalisées sur les scanners, comme présenté sur la  Figure~\ref{fig:fit_area_henbert}; la ligne continue représentant notre résultat numérique. Il est important de noter que nous ne fournissons pas un modèle 1D qui décrit le volume tumoral. Nous traitons un modèle complexe d'EDPs non linéaires, qui est phénoménologique et qui décrit le comportement des cellules cancéreuses en fonction du temps et de l'espace. Par conséquent, le premier fit de l'aire tumorale n'est pas un résultat trivial.
+
+
+Le second résultat est que notre modèle apporte de nouvelles informations sur la structure de la tumeur, ce qui semble corroborer par les scanners. En effet, comme présenté dans la suite, nous relions l'hétérogénéité tumorale à une augmentation de l'activité cellulaire signifiant qu'un phénotype résistant émerge dans la région plus claire. Selon notre modèle, de tels comportements peuvent être constatés avant la rechute effective, alors que le critère RECIST n'a pas changé. Par exemple, sur la Figure~\ref{fig:compare_spatial_nber}, 
+nous comparons la structure de la tumeur à deux temps différents: l'hétérogénéité de la tumeur semble bien capturée par les simulations numériques. Ainsi, notre article peut être vu comme un premier pas dans le développement de nouveaux outils pour évaluer la réponse des tumeurs aux traitements  basés sur des inhibiteurs de tyrosine kinase.
+
+\begin{figure}[htpb]
+\vspace{-1cm}
+\subfloat[Jour 406]{
+\resizebox{.5\textwidth}{!}{
+\raisebox{0.045\textwidth}{
+\includegraphics[width=0.19\textwidth]{scan_henbert/2009_06_30(2).jpg}}
+\includegraphics[width=0.3\textwidth]{fit_henbert_form3/vue_scan/vue_scan32.png}
+}}
+\subfloat[Jour 776]{
+\resizebox{.5\textwidth}{!}{
+\raisebox{0.045\textwidth}{
+\includegraphics[width=0.19\textwidth]{scan_henbert/2010_07_05(3).jpg}}
+\includegraphics[width=0.3\textwidth]{fit_henbert_form3/vue_scan/vue_scan60.png}
+}}
+\caption{\label{fig:compare_spatial_nber}
+Comparaison entre les scanners du \Nber et les simulations numériques.
+}
+\end{figure}
+%\vspace{-3cm}
 \section{Description du modèle}
 
 Notre modèle est un système d'EDPs similaire au modèle de 
@@ -37,9 +104,10 @@ Par conséquent, selon les observations cliniques, il semble pertinent de consid
  \begin{table}[h]
  \centering
  \rowcolors{2}{white}{gray!40}
- {\small
+ {\footnotesize%%\smaller[0.5]
+ %%\small
  %%\scriptsize 
- \begin{tabular}{|l|l|l|}
+ \begin{tabularx}{\textwidth}{|l|X|l|}
  \hline
  \rowcolor[gray]{0.7} 
  Nom & Signification  & Unité \\
@@ -64,16 +132,19 @@ Par conséquent, selon les observations cliniques, il semble pertinent de consid
  \hline
  $\vit(t,\vecx)$ &Vitesse du mouvement passif de la tumeur sous l'effet de la pression& $cm.d^{-1}$ \\
  \hline
- $\Pi(t,\vecx)$ & Pression du milieu\tablefootnote{
-L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
-Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse.}
+ $\Pi(t,\vecx)$ & Pression du milieu\protect\footnotemark
+ %\tablefootnote{
+%L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
+%Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse.}
  & $kg.cm^{-1}.d^{-2}$\\
  \hline
- \end{tabular}
+ \end{tabularx}
  }
  \caption{\label{table_variable}Liste des quantités calculées par le modèle
  -- $d=\textrm{jour (day)}$ }
  \end{table}
+ \footnotetext{L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
+Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse.}
 
 \subsection{Le modèle mathématique}
 
@@ -82,15 +153,16 @@ Soit~$\Omega$ le domaine d'intérêt, où la tumeur croît, et soit~$\partial\Om
 \subsubsection{EDPs sur les cellules proliférantes, nécrosées et saines}
 
 La densité de cellules proliférantes est gouvernée par l'équation de transport suivante~:
-%{\scriptsize
+%%{%%\scriptsize
 \begin{align}
 %\medmuskip=1mu
 %\thinmuskip=0mu
 %\thickmuskip=0mu
-\partial_t P_1 + \dive(\vit P_1) & =  \big(\gammapp(M)- \gammapd(M)\big)P_1 - \big(\muI \chiI (t)+\muS \chiS(t) \big)(1+M)P_1 & \ \textrm{ dans } \Omega, \label{eq_P1}\\
-\partial_t P_2 + \dive(\vit P_2) & = \big(\gammapp(M)- \gammapd(M)\big)P_2 - \muS \chiS(t) (1+M)P_2 & \ \textrm{ dans }  \Omega, \label{eq_P2}\\
-\partial_t P_3 + \dive(\vit P_3) & = (\gammapp(M) - \gammapd(M))P_3 & \ \textrm{ dans }  \Omega, \label{eq_P3}
-\end{align}%}
+\mkern-8mu \partial_t P_1 & + \dive(\vit P_1) = \big(\gammapp(M)- \gammapd(M)\big)P_1 \nonumber \\
+ & \hspace{4cm}  - \big(\muI \chiI (t)+\muS \chiS(t) \big)(1+M)P_1 & \textrm{ dans } \Omega, \label{eq_P1}\\
+\mkern-8mu \partial_t P_2 &+ \dive(\vit P_2) = \big(\gammapp(M)- \gammapd(M)\big)P_2 - \muS \chiS(t) (1+M)P_2 & \textrm{ dans }  \Omega, \label{eq_P2}\\
+\mkern-8mu \partial_t P_3 &+ \dive(\vit P_3) = (\gammapp(M) - \gammapd(M))P_3 & \textrm{ dans }  \Omega, \label{eq_P3}
+\end{align}%%}
 où~$\chii(t)=\mathds{1}_{[\Tini{i},\rm \Tend{i}[}(t)$ est la fonction temps caractéristique du 
 traitement~$\treat_{\rm i}$ et~$\mu_{\rm i}$ représente le taux de mortalité\footnote{Le taux de mortalité dû au traitement est clairement lié à la dose de médicament délivrée au patient, mais pas seulement. Par exemple la sensibilité du patient et la dose parvenant vraiment à la tumeur sont aussi impliquées.} causé par~$\treat_{\rm i}$ sur les cellules proliférantes, pour~$\rm i\in\{1,2\}$. 
 Le terme~$\vit (t,\vecx)$ désigne la vitesse impliquée dans les changements d'aire de la tumeur et~$M(t,\vecx)$ représente la vascularisation et l'apport en nutriments. 
@@ -114,8 +186,9 @@ où~$\gammasd$ est le taux de mortalité des cellules saines dû à l'hypoxie~:
 \end{equation}
 Notez que~$\gammasd$  s'annule exactement si~$M\geq\Ms$ dans le but d'assurer que~$S=1$ sur le bord extérieur en tout temps. Finalement, la densité de cellules nécrosées satisfait la relation 
 \begin{equation}\label{eq_N}
-\partial_t N + \dive(\vit N) =  \gammapd(M) P +\gammasd(M) S  + \big(\muI \chiI(t)P_1 + \muS\chiS(t)(P_1+P_2)\big)(1+M) - \muN(1+M)N,
-\end{equation}
+\begin{aligned}
+\partial_t N + \dive(\vit N) & =  \gammapd(M) P +\gammasd(M) S  + \\ & \big(\muI \chiI(t)P_1 + \muS\chiS(t)(P_1+P_2)\big)(1+M) - \muN(1+M)N,
+\end{aligned}\end{equation}
 où
 \begin{equation}
 P = P_1+P_2+P_3,
@@ -152,7 +225,7 @@ La loi de Darcy assure la solvabilité du système, de manière similaire à~\ci
 où~$\Pi$ est la pression (ou le potentiel) du milieu et~$k$ sa perméabilité. La condition de Dirichlet homogène, dans~\eqref{eq_darcy}, impose qu'en dehors de~$\Omega$, la pression du tissu sain n'est pas modifiée par la pression générée par la croissance tumorale. Cette hypothèse est valide pour de petites métastases n'impactant pas la forme du foie. En d'autres termes, la tumeur n'est pas mécaniquement contrainte par la région extratumorale. 
 
 
-Observez qu'une condition de flux nul impliquerait nécessairement que~$\int_{\Omega} \gammapp P - \delta (1+M)N \textrm{\;d}\vecx $ s'annule en tout temps, ce qui n'est pas satisfait à~$t=0$.
+Observez qu'une condition de flux nul impliquerait nécessairement que l'intégrale~$\int_{\Omega} \gammapp P - \delta (1+M)N \textrm{\;d}\vecx$ s'annule en tout temps, ce qui n'est pas satisfait à~$t=0$.
 
 
 Nous soulignons que notre article traite de métastases hépatiques de GIST et non de tumeurs primaires du foie. Par conséquent, les cellules métastatiques ne grandissent pas dans leur milieu d'origine~: elles ne peuvent pas infiltrer le foie mais leur prolifération induit une pression qui pousse les cellules saines vers l'extérieur. Pour ces raisons, nous choisissons une loi de Darcy pour décrire la croissance de la métastase. 
@@ -205,15 +278,26 @@ alors pour tout temps~$t$, $0\leq M(t) \leq 2\Ms$. Ceci traduit le fait que le t
 \subsection{Formulation vectorielle des équations sur les cellules cancéreuses}
 
 Pour simplifier les notations, considérons le vecteur des populations de cellules~$\W=\trans{(P_1, P_2, P_3, N)}$. On définit la fonction vectorielle 
-$$
-\medmuskip=1mu
-\GG(M,\W) = \begin{pmatrix}
-\Big(\gammapp(M)- \gammapd(M) - \big(\muI \chiI (t)+\muS \chiS(t) \big)(1+M)\Big) P_1 \\
-\Big(\gammapp(M)- \gammapd(M) - \muS \chiS(t) (1+M)\Big)P_2 \\
-\big(\gammapp(M) - \gammapd(M) \big)P_3 \\
-\gammapd(M) P +\gammasd(M) (1-P-N)  + \big( \muI \chiI P_1 + \muS\chiS (P_1+P_2) \big) (1+M) - \muN(1+M)N
-\end{pmatrix}.
-$$
+%$$
+%\medmuskip=1mu
+%\GG(M,\W) = \begin{pmatrix}
+%\Big(\gammapp(M)- \gammapd(M) - \big(\muI \chiI (t)+\muS \chiS(t) \big)(1+M)\Big) P_1 \\
+%\Big(\gammapp(M)- \gammapd(M) - \muS \chiS(t) (1+M)\Big)P_2 \\
+%\big(\gammapp(M) - \gammapd(M) \big)P_3 \\
+%\gammapd(M) P +\gammasd(M) (1-P-N)  + \big( \muI \chiI P_1 + \muS\chiS (P_1+P_2) \big) (1+M) - \muN(1+M)N
+%\end{pmatrix}.
+%$$
+\begin{equation}
+\GG(M,\W) = \trans{\big(\GG_1(M,\W), \GG_2(M,\W), \GG_3(M,\W), \GG_4(M,\W) \big)},
+\end{equation}
+dont les composantes sont données par~:
+\begin{align}
+\GG_1(M,\W) &= \Big(\gammapp(M)- \gammapd(M) - \big(\muI \chiI (t)+\muS \chiS(t) \big)(1+M)\Big) P_1, \\
+\GG_2(M,\W) &= \big(\gammapp(M)- \gammapd(M) - \muS \chiS(t) (1+M)\big)P_2, \\
+\GG_3(M,\W) &= \big(\gammapp(M) - \gammapd(M) \big)P_3, \\
+\GG_4(M,\W) &= \gammapd(M) P +\gammasd(M) (1-P-N)  \nonumber \\
+&\qquad +\big( \muI \chiI P_1 + \muS\chiS (P_1+P_2) \big) (1+M) - \muN(1+M)N.
+\end{align}
 Il est également utile de définir~$\Frm(M,\W)$ comme
 \begin{align}
   \label{eq_F}
@@ -313,7 +397,7 @@ résolue grâce au spliting en temps suivant~:
 Cette forme non conservative est choisie dans le but de réutiliser les informations que nous possédons déjà sur la divergence de la vitesse, grâce à la relation~\eqref{eq_divv}.
 
 
-Une méthode de type WENO5 comme donnée par~\cite{Liu1994} est utilisée pour approximer le gradient~$\nabla \W$ impliqué  dans~\eqref{eq_transp_weno}.
+Une méthode de type WENO5 comme donnée par~\cite{Liu1994} est utilisée pour approximer le gradient~$\nabla \W$ impliqué  dans~\eqref{eq_transp_weno}. Cette variante du WENO5, appelée \twinweno, est présentée dans le chapitre suivant, section~\ref{sec:twinweno}. 
 D'autres schémas d'ordre moins élevé ont aussi été essayés. Cependant la diffusion numérique de ces schémas est trop importante. Ceci conduit à une diffusion artificielle des nutriments dans la tumeur. La croissance tumorale est alors complètement modifiée par cet artefact. La résolution précise du transport est par conséquent un point important. De plus,  utiliser un schéma d'ordre élevé réduit, par le gain de convergence, les problèmes usuels liés à la résolution du problème non conservatif.
 
 \subsection{Calcul des quantités~$\xi$ et~$M$}
@@ -333,99 +417,10 @@ satisfaite par~$M$, le spliting en temps suivant est réalisé~:
 \label{eq_transp_diff_M}\\
 \dfrac{M^{n+1}-M^\#}{\Delta t/2} &= C_0 S^n \left( 1-\dfrac{M^n}{2\Ms}\right) - \eta P^nM^n. \label{eq_snd_membre_M}
 \end{align}
-L'équation~\eqref{eq_transp_diff_M} est calculée comme une équation de la chaleur avec un schéma standard à 5 points de grille. Le membre de droite est approximé par un schéma de type WENO5.
+L'équation~\eqref{eq_transp_diff_M} est calculée comme une équation de la chaleur avec un schéma standard à 5 points de grille. Le membre de droite est approximé par un schéma  \twinweno également.
 
 
-\subsection{Le \twinweno~: un schéma WENO5 modifié}
-
-Le schéma WENO5 standard comme donné par~\cite{Liu1994} est précis dans la plupart des cas, cependant certains ensembles de paramètres\footnote{L'ensemble de paramètre a été trouvé par incident en  fitant l'aire tumorale de \Chen, \cf Section~\ref{section chen}.} produisent des instabilités numériques (de telles instabilités ont aussi été constatées avec un schéma classique upwind). 
-Plus précisément, partant d'une donnée initiale irrotationelle, la simulation numérique peut générer une structure en forme de trèfle, comme présenté sur la Figure~\ref{fig:simu_clover}, alors que la forme circulaire devrait être préservée. 
-\begin{figure}[h!]
-  \centering
-  \subfloat[Jour 0]{\label{fig_chen_simu_spatial_1}
-\includegraphics[width=0.3\textwidth]
-{track_10x10_7/vue_S/1.png}}
-\subfloat[Jour 543]{\label{fig_chen_simu_spatial_2}
-\includegraphics[width=0.3\textwidth]
-{track_10x10_7/vue_S/34.png}}
-\subfloat[Jour 1053]{\label{fig_chen_simu_spatial_4}
-\includegraphics[width=0.3\textwidth]
-{track_10x10_7/vue_S/65.png}}
-\\
-\subfloat[Profil de~$\vit_x$ le long de~$\ex$ au Jour 905]{\label{fig_vx_profile}\includegraphics[width=.4\textwidth]
-{track_10x10_7/coupe_vitesse_v2_56.png}}
-\caption{Simulation numérique avec le stencil standard du WENO5 pour un jeu de paramètres spécifique. Partant d'une donnée initiale circulaire, une structure en forme de trèfle apparaît.} \label{fig:simu_clover}
-\end{figure}
-
-Notez que ce type d'erreur sur la forme conduit à une erreur sur l'évolution de l'aire de la lésion. En effet la forme de trèfle augmente la surface de contact ce qui modifie l'interaction entre la vascularisation et la tumeur. Ce type d'instabilités doit être fixé.
-Le problème est dû au stencil du WENO5 qui tend à favoriser les directions du maillage lors de changement de direction de la vitesse.
-Comme on peut le voir sur la Figure~\ref{fig_vx_profile}, 
-au centre de la tumeur (autour de~$x=5\;cm$ sur la  Figure~\ref{fig_vx_profile}), il y a un point de compression~: 
-la vitesse est centripète puisque~$v_x$ est positif à droite et négatif à gauche. 
-De plus, aux alentours de~$1.5\;cm$ du centre de la tumeur, il y a une couronne de cellules proliférantes qui induit un mouvement d'étalement~: la vitesse est centripète près du centre mais centrifuge plus loin. 
-
-
-Plus précisément, pour le schéma classique WENO5, en tout point 
-~$\vecx_{ij}$ de la grille, l'approximation numérique 
-$\W^{n+1}_{ij}$ de l'équation~\eqref{eq_transp_weno} au temps 
-$t^{n+1}$ est donnée par
-\begin{equation}\label{eq:WENO5}
-\W^{n+1}_{i,j}=\W^n_{i,j} + \Delta t \Bigl(v_{i,j}^{x,n}
-\mathcal{F}\left(\Delta x,(\W^n_{i+k,j})_{k=-3,\cdots, 3}\right) +
-v_{i,j}^{y,n} \mathcal{F}\left(\Delta y,(\W^n_{i,j+k})_{k=-3,\cdots, 3}\right)\Bigr),
-\end{equation}
-où~$v_{i,j}^{x,n} $ et~$v_{i,j}^{y,n}$ sont définis par~\eqref{eq_vit_discr} et où~$\mathcal{F}$ est le fonction de flux WENO5 donnée par~\cite{Liu1994}. 
-Pour éviter ces instabilités numériques, nous introduisons le schéma \twinweno, qui est la combinaison d'un WENO5 avec son stencil standard avec un autre WENO5 dont le stencil est une rotation d'angle~$\ang$ du premier (\cf Figure~\ref{fig:stencil_weno5_twin}), où~$\ang$ est défini en fonction des pas d'espaces de la grille, $\Delta x$ et~$\Delta y$, par 
- $$\ang=\arctan (\Delta y/\Delta x)\in (0,\pi/2). $$
-\begin{figure}[h]
-  \centering
-\subfloat[Grille uniforme~$\thickmuskip=1mu  \Delta x=\Delta y$]{\input{tex_pictures/weno5_twin_stencil.tex}}
-\subfloat[Grille non-uniforme]{\input{tex_pictures/weno5_twin_stencil-NonU.tex}}
-\caption{Stencil du schéma \twinweno\ pour une grille uniforme (à gauche)
-  et une grille non-uniforme (à droite).} \label{fig:stencil_weno5_twin}
-\end{figure} 
-Nous introduisons les coefficients~$(v^{r,n}_{i,j},
-v^{\theta,n}_{i,j})$ et~$\Delta r$ définis par\footnote{Les coefficients~$v^{r,n}_{i,j}$
-  et~$v^{\theta,n}_{i,j}$ sont définis de sorte que 
-$$\vit^n_{i,j}=v^{x,n}_{i,j}\ex+v^{y,n}_{i,j}\ey=v^{r,n}_{i,j}\er+v^{\theta,n}_{i,j}\et,\quad\text{avec}\quad 
-\er=\cos\ang\,\ex+\sin\ang\,\ey,\quad \et=-\sin\ang\,\ex+\cos\ang\, \ey.$$}
-\begin{equation}
-\begin{pmatrix}
-v^{r,n}_{i,j} \\ v^{\theta,n}_{i,j}
-\end{pmatrix} = \begin{pmatrix}
-\cos \ang & \sin \ang \\ -\sin \ang & \cos \ang
-\end{pmatrix} \begin{pmatrix}
-v^{x,n}_{i,j} \\ v^{y,n}_{i,j}
-\end{pmatrix}, \qquad  \Delta r=\sqrt{\Delta x^2+\Delta y^2},
-\end{equation}
-et nous discrétisons l'équation~\eqref{eq_transp_weno} grâce à notre schéma \twinweno\ : 
-\begin{equation}\label{eq:twin-WENO5}
-  \begin{split}
-\W^{n+1}_{i,j} =\W^n_{i,j} &+ (1-\beta)\Delta t \Bigl(v_{i,j}^{x,n}
-\mathcal{F}\left(\Delta x,(\W^n_{i+k,j})_{k=-3,\cdots, 3}\right) +
-v_{i,j}^{y,n} \mathcal{F}\left(\Delta y,(\W^n_{i,j+k})_{k=-3,\cdots,
-    3}\right)\Bigr)\\
-&+\beta\Delta t \Bigl(v_{i,j}^{r,n}
-\mathcal{F}\left(\Delta r,(\W^n_{i+k,j+k})_{k=-3,\cdots, 3}\right) +
-v_{i,j}^{\theta,n} \mathcal{F}\left(\Delta r,(\W^n_{i-k,j+k})_{k=-3,\cdots, 3}\right)\Bigr),
-  \end{split}
-\end{equation}
-où~$\beta\in(0,1)$ est un paramètre numérique que nous devons choisir. 
-En particulier pour~$\beta=0$, on retrouve le WENO5 standard. 
-Comme nous pouvons le voir sur la Figure~\ref{fig:compWENO5}, notre nouveau schéma préserve beaucoup mieux la propriété d'invariance par rotation dans les cas où le WENO5 ne la préserve pas.
-
-\begin{figure}[!htb]
-\subfloat[Jour 0]{\label{fig:correction_cross_spatial_1}
-\includegraphics[width=0.33\textwidth]{track_14x14_cross/vue_S/1.png}}
-\subfloat[Jour 543]{\label{fig:correction_cross_spatial_2}
-\includegraphics[width=0.33\textwidth]{track_14x14_cross/vue_S/34.png}}
-\subfloat[Jour 1053]{\label{fig:correction_cross_spatial_3}
-\includegraphics[width=0.33\textwidth]{track_14x14_cross/vue_S/65.png}}
-\caption{Simulation numérique avec le schéma \twinweno\  ($\beta=0.26$).  
-Comparé à la Figure~\ref{fig:simu_clover}, la conservation de l'invariance par rotation est très clairement améliorée. 
-}\label{fig:compWENO5}
-\end{figure}
-
+%%%%%%%%%\subsection{Le \twinweno~: un schéma WENO5 modifié}
 \subsection{Condition CFL}
 
 En outre, une restriction de type CFL est requise pour assurer la stabilité numérique. Tout d'abord, le schéma de type WENO5 conduit à une condition CFL qui s'écrit~:
@@ -536,11 +531,13 @@ L'aire tumorale numérique est ensuite comparée aux aires mesurées sur la Figu
 figure, l'évolution de l'aire tumorale est bien reproduite. 
 \begin{table}
 \rowcolors{4}{white}{gray!40}
-{\small
-\begin{tabularx}{\textwidth}{|l|X|l|p{17mm}|p{17mm}|}
+{\footnotesize\smaller[0.5]
+\begin{tabularx}{\textwidth}{|l|X|l|p{18mm}|p{18mm}|}
 \hline
-\rowcolor[gray]{0.7}  & & &  Valeur pour & Valeur pour \\
-\rowcolor[gray]{0.7}  & & & le fit de  & le fit de \\
+%\rowcolor[gray]{0.7}  & & &  Valeur pour & Valeur pour \\
+%\rowcolor[gray]{0.7}  & & & le fit de  & le fit de \\
+\rowcolor[gray]{0.7} &&& \multicolumn{2}{|c|}{\cellcolor[gray]{0.7} Valeur pour le fit de} \\
+\cline{4-5}
 \rowcolor[gray]{0.7}  Nom & Signification & Unité & \Nber & \Chen \\
 \rowcolor[gray]{0.7}  &   &  & (Figure~\ref{fig:fit_area_henbert}) & (Figure~\ref{fig:fit_area_chen})\\
 \hline
@@ -578,12 +575,15 @@ La fonction~$Y$ definie par\footnote{Notez que si~$e=0$, alors~$Y$ est  invarian
 \end{array}\right.
 \end{equation}
 est ensuite utilisée afin d'imposer la condition initiale~:
-\begin{align}
+\begin{equation}
+\label{eq:CI}
+\begin{aligned}
 P_1|_{t=0}&=(1-\Sigma_{ini})Y, \quad
 P_2|_{t=0}=\dfrac{\Sigma_{ini}}{1+q_{ini}}Y, \quad
 P_3|_{t=0}=q_{ini}P_2(t=0), \quad N|_{t=0}=0, \\
-M|_{t=0}&=2\Ms,\label{eq:CI}
-\end{align}
+M|_{t=0}&=2\Ms,
+\end{aligned}
+\end{equation}
 où~$\Sigma_{ini}$ représente la proportion de cellules résistantes au traitement~$\TI$ et~$q_{ini}$ est la proportion de cellules~$P_2$
 qui sont aussi résistantes au traitement~$\TS$. Pour \Nber, nous avons choisi~$e=0.35$ et~$r_1=0.47$; $r_2=0.36$.
 
@@ -715,9 +715,8 @@ Dans cette section, on s'intéresse à \Chen, dont l'évolution tumorale est ass
 Malheureusement, comme illustré par la Figure~\ref{fig:fit_area_chen}, l'évolution tumorale est très rapide entre le scanner du jour~429 et celui de jour~845 sur lequel la métastase a atteint le bord du foie, et ainsi, avec notre modèle nous n'avons pas espoir de fournir une croissance tumorale numérique qui soit spatialement en accord avec les scanners car les effets de bord de l'organe devraient être pris en compte. Par conséquent, nous nous intéresserons à la l'aire tumorale comme donnée par les cliniciens, le principal enjeu ici étant de capter une croissance aussi rapide. 
 
 \begin{figure}[h]
-\captionsetup[subfigure]
-{margin={10pt,10pt}}
-\begin{tabular}{@{\hspace{-7mm}}ccc}
+\captionsetup[subfigure]{margin={7pt,7pt}}
+\begin{tabular}{@{\hspace{-1mm}}ccc}
 \setlength{\unitlength}{0.01\textwidth}
 \subfloat[23 mai 2007 -- Jour 0]{\label{fig_chen_spatial_1}
 \begin{picture}(20,20)
@@ -751,7 +750,7 @@ Malheureusement, comme illustré par la Figure~\ref{fig:fit_area_chen}, l'évolu
 Les lettres font référence aux scanners montrés sur la gauche. Les symboles 
  $\oplus$ représentent les tumeurs hétérogènes, {\large$\bullet$} les tumeurs plutôt homogènes et {\large$\circ$} les tumeurs pour lesquelles il est difficile de détecter sur le scanner un aspect hétérogène ou homogène dominant.  
 Les valeurs des paramètres utilisés dans la simulation numérique sont données dans la Table~\ref{table_param}.]{\label{fig:fit_area_chen} 
- \includegraphics[width=0.59\textwidth]{chen_area.png}
+ \includegraphics[width=0.5\textwidth]{chen_area.png}
  }}
 \end{tabular}
 \caption{\label{fig_chen_spatial} Evolution spatiale de la métastase hépatique de \Chen sur une série de scanners. Nous examinons l'évolution de la lésion\protect\footnotemark~située au départ en haut à gauche de la Figure~\ref{fig_chen_spatial_1}.}
@@ -763,8 +762,8 @@ Comme le sunitinib est totalement inefficace dans ce cas, nous considérons que 
 traitement~$\TI$ est administré du jour~0 au jour~845, tandis que le 
 traitement~$\TS$, basé sur le sorafinib, est administré du jour~1049 au jour~1600. 
 Nous avons trouvé des paramètres qui rendent possible la comparaison qualitative entre l'aire tumorale mesurée par les cliniciens et notre aire tumorale numérique. Ces paramètres sont donnés dans la  Table~\ref{table_param}. 
-La donnée initiale a été choisie invariante par rotation, en accord avec les données de la 
-Figure~\ref{fig_chen_spatial_1}.
+La donnée initiale a été choisie invariante par rotation, puisque nous ne pouvons pas %en accord avec les données de la Figure~\ref{fig_chen_spatial_1}.
+ici de reproduire la forme de la métastase qui atteint rapidement le bord du foie.
 Comme on peut le voir, l'évolution tumorale est très raide~: entre le  jour~416 et le jour~614 l'aire de la tumeur a été multipliée par plus de 9, et une fois que le sorafenib est administré, l'aire décroît de~4\;500\;$mm^2$ à~2\;850\;$mm^2$. Nous parvenons malgré tout à obtenir, au moins qualitativement, un tel comportement avec notre modèle, même si le fit n'est pas parfait. 
 
 
@@ -833,21 +832,6 @@ Il est important de noter que notre modèle fite bien les données, cependant il
 
 En conclusion, nous avons fourni un modèle qui fite avec les scanners cliniques que nous avons. De futurs travaux consisteront à ajouter plus d'informations biologiques que nous ne pouvons pas obtenir depuis les scanners, afin d'obtenir un modèle prédictif. L'imagerie fonctionnelle (TEP-scan ou IRM) ou des biopsies pourraient enrichir le présent modèle.
 
-
-\section*{Remerciements}
-
-Les données médicales utilisées dans cet article ont été fournies aux auteurs  par l'Institut Bergoni\'e, F-33000, Bordeaux, France. Nous remercions l'Institut Bergoni\'e pour sa collaboration et particulièrement l'oncologue MD Binh Bui.
-
-
-Cette étude a été soutenue dans le cadre du LABEX TRAIL, ANR-10-LABX-0057 avec le soutien financier de l'Etat Francais, géré par l'Agence Nationale de Recherche (ANR) de France dans le cadre des "Investissements d'avenir" du Programme IdEx  (ANR-10-IDEX-03-02).
-
-Les expérimentations présentées dans cet article ont été réalisées en utilisant la plateforme expérimentale PlaFRIM, développée par l'action de développement  Inria DIHPES avec le support du LABRI et de l'IMB et d'autres entités~: Conseil R\'egional d'Aquitaine, FeDER, Universit\'e de Bordeaux et CNRS (\textit{cf.} https://plafrim.bordeaux.inria.fr/)
-
-
-Le Travail de Patricio Cumsille (PC) a été partiellement soutenu par le Programme de Recherche Associative (PIA) du Conicyt avec le financement numéro FB0001. Le travail de PC a aussi été partiellement soutenu par l'Université de B\'{\i}o-B\'{\i}o avec les financements DIUBB 121909 GI/C et DIUBB 122109 GI/EF.
-
-
-Les auteurs remercient très chaleureusement Dr H. Fathallah-Shaykh pour ses discussions et ses conseils qui ont significativement contribués à l'amélioration de la qualité de cet article. 
 
 %%-----------------------------
 %%       bibliography

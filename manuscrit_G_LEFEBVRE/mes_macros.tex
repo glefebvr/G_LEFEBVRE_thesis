@@ -107,3 +107,84 @@
 \newcommand{\squaremesh}[3]{
 	\mesh{#1}{#2}{#3}{#1}{#2}{#3}
 }
+
+\newlength{\dimx}
+\setlength{\dimx}{888px}
+\newlength{\dimy}
+\setlength{\dimy}{888px} %%% faire \the\dimy dans le corps du doc pour afficher
+\newlength{\zoneh}
+\setlength{\zoneh}{90px}
+\newlength{\zoneb}
+\setlength{\zoneb}{90px}
+\newlength{\zoneg}
+\setlength{\zoneg}{0px}
+\newlength{\zoned}
+\setlength{\zoned}{416px}
+\newlength{\margh}
+\newlength{\margb}
+\newlength{\margg}
+\newlength{\margd}
+\newlength{\dimxn}
+\newlength{\dimyn}
+
+
+\newcommand{\evalNewDim}{%
+	\setlength{\dimxn}{\dimx-\margg-\margd}%
+	\setlength{\dimyn}{\dimy-\margh-\margb}%
+}
+
+\newcommand{\RAZmargin}{%
+	\setlength{\margh}{0px}%
+	\setlength{\margb}{0px}%
+	\setlength{\margg}{0px}%
+	\setlength{\margd}{0px}%
+	\evalNewDim%
+}
+
+\newcommand{\setzone}{%
+	\addtolength{\margh}{\zoneh}%
+	\addtolength{\margb}{\zoneb}%
+	\addtolength{\margg}{\zoneg}%
+	\addtolength{\margd}{\zoned}%
+	\evalNewDim%
+}
+
+\newcommand{\zoomeur}[1]{%
+	\evalNewDim%
+	\FPeval{\ccc}{0.5*(#1-1.0)/#1}%%% #1 est un facteur d'agrandissement
+	\addtolength{\margh}{\ccc\dimyn}%
+	\addtolength{\margb}{\ccc\dimyn}%
+	\addtolength{\margg}{\ccc\dimxn}%
+	\addtolength{\margd}{\ccc\dimxn}%
+	\evalNewDim%
+}
+
+\newcommand{\decale}[2]{%
+	%% #1 > 0 ==> decalage vers la droite
+	%% #2 >0 ==> decalage vers le haut
+	\addtolength{\margg}{#1}%
+	\addtolength{\margd}{-#1}%
+	\addtolength{\margh}{#2}%
+	\addtolength{\margb}{-#2}%
+}
+
+\newcommand{\reshapeimg}[3]{%%% on a pas la mm hauteur si on zoom
+	\RAZmargin\setzone\decale{#2}{#3}\zoomeur{#1}%
+}
+
+\newcommand{\tikzzoom}[4]{%
+  \begin{tikzpicture}[%
+  spy using outlines={%
+  %%height = .5cm, 
+  %%%width = .5cm,
+  %%circle,
+  magnification=#2,%%% taille de ce que l'on veut zoomer
+  size=30mm,%%% taille de la fenetre qui donne affiche le zoom
+  connect spies,%
+  white}]%
+ \node[inner sep=1pt] {%
+ \includegraphics[trim = {\margg} {\margb} {\margd} {\margh}, clip, width=0.32\textwidth]{#1}};%
+  \spy on (#3,#4) in node at (-0.7,-2.0);%
+  %% \spy on (coord de la zone a zoomer) in node at (coord de la vue zoomé )
+\end{tikzpicture}%
+}
