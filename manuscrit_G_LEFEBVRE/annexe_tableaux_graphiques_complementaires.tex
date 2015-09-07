@@ -40,9 +40,6 @@ L'ensemble des données utilisées pour réaliser ces travaux sont présentées 
 \caption{\label{fig:nber_complete_scan}Evolution spatiale de la métastase hépatique de \Nber sur une série de scanners.}
 \end{figure}
 
-
-
-
 \newpage
 %%\section{Ensemble des données}
 \subsection{Scanners de \Nber}
@@ -257,7 +254,97 @@ Ci-dessous est présenté l'ensemble des histogrammes numérique de \Nber, corre
 \caption{\label{fig:histo_dcm_Chen} Histogramme clinique de la tumeur de \Chen. }
 \end{figure}
 
+\clearpage
+\section{Simulations numériques}
+\subsection{\Nber}
 
+\setlength{\largeurfignber}{.195\textwidth}
+\vspace{-18mm}
+\begin{figure}[h!]
+%\hspace{5pt}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
+\setlength{\tabcolsep}{1mm} %%% padding horizontal
+\begin{tabular}{*{5}{@{\hspace{-5pt}}c}}
+\subfloat[Jour 0]{\includeminisimunber{1}}&
+\subfloat[Jour 119]{\includeminisimunber{10}}&
+\subfloat[Jour 209]{\includeminisimunber{17}}
+&\multicolumn{2}{c}{%
+\multirow{2}{*}[25mm]{
+\hspace{1mm}
+\captionsetup[subfigure]{labelformat=empty}
+\subfloat[Fit de l'aire tumorale -- Les cercles représentent les données, la ligne, ce que fournit notre modèle.]{\includegraphics[width=1.9\largeurfignber]{fit_henbert_form3/henbert_fit_simple.png}}
+\captionsetup[subfigure]{labelformat=parens}
+\addtocounter{subfigure}{-1}
+}}\\
+\subfloat[Jour 275]{\includeminisimunber{22}}&
+\subfloat[Jour 331]{\includeminisimunber{26}}&
+\subfloat[Jour 406]{\includeminisimunber{32}}&
+\multicolumn{2}{c}{}\\
+\subfloat[Jour 493]{\includeminisimunber{38}}&
+\subfloat[Jour 535]{\includeminisimunber{42}}&
+\subfloat[Jour 611]{\includeminisimunber{47}}&
+\subfloat[Jour 688]{\includeminisimunber{53}}&
+\subfloat[Jour 776]{\includeminisimunber{60}}\\
+\subfloat[Jour 867]{\includeminisimunber{67}}&
+\subfloat[Jour 888]{\includeminisimunber{68}}&
+\subfloat[Jour 927]{\includeminisimunber{71}}&
+\subfloat[Jour 962]{\includeminisimunber{74}}&
+\subfloat[Jour 990]{\includeminisimunber{76}}\\
+& \subfloat[Jour 1053]{\includeminisimunber{81}}& 
+\subfloat[Jour 1116]{\includeminisimunber{86}}&
+\subfloat[Jour 1179]{\includeminisimunber{91}}
+\end{tabular}
+\caption{\label{fig:simu_complete_nber} Simulation numérique pour \Nber  -- Graduations en~$cm$ -- L'échelle des niveaux de gris est donnée par la  Figure~\ref{fig:schema_correspondance_gris} -- Les valeurs des paramètres pour réaliser cette simulations numériques sont présentées dans la Table~\ref{table_param}. }
+\end{figure}
+\FloatBarrier
+\clearpage
+
+\subsection{\Chen}
+\begin{figure}[h!]
+\vspace*{-18mm}
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
+\addtocounter{subfigure}{-1} %% Commence a 0
+\setlength{\tabcolsep}{1mm} %%% padding horizontal
+%\begin{tabular}{|c|c|c|c|c}
+\begin{tabular}{*{5}{@{\hspace{-5pt}}c}}
+%%% \renewcommand{\arraystretch}{3} %%%% padding vertical (ne semble pas fonctionner
+\subfloat[Jour 0]{\includeminisimuchen{1}}&
+\subfloat[Jour 93]{\includeminisimuchen{7}}&
+\subfloat[Jour 182]{\includeminisimuchen{12}}
+&\multicolumn{2}{c}{%
+\multirow{2}{*}[25mm]{
+\hspace{1mm}
+\captionsetup[subfigure]{labelformat=empty}
+\subfloat[Fit de l'aire tumorale -- Les cercles représentent les données, la ligne, ce que fournit notre modèle.]{\includegraphics[width=1.95\largeurfignber]{fit_chen7_L12_cross0.3/chen_fit_simple.png}}
+\captionsetup[subfigure]{labelformat=parens}
+\addtocounter{subfigure}{-1}
+}}\\
+\subfloat[Jour 279]{\includeminisimuchen{17}}&
+\subfloat[Jour 331]{\includeminisimuchen{21}}&
+\subfloat[Jour 429]{\includeminisimuchen{26}}&
+\multicolumn{2}{c}{}\\
+\subfloat[Jour 614]{\includeminisimuchen{37}}&
+\subfloat[Jour 715]{\includeminisimuchen{43}}&
+\subfloat[Jour 845]{\includeminisimuchen{51}}&
+\subfloat[Jour 936]{\includeminisimuchen{56}}&
+\subfloat[Jour 1009]{\includeminisimuchen{60}}\\
+\subfloat[Jour 1049]{\includeminisimuchen{62}}&
+\subfloat[Jour 1093]{\includeminisimuchen{65}}&
+\subfloat[Jour 1161]{\includeminisimuchen{69}}&
+\subfloat[Jour 1224]{\includeminisimuchen{73}}&
+\subfloat[Jour 1296]{\includeminisimuchen{77}}
+\end{tabular}\\
+\begin{tabular}{p{.5\largeurfignber}*{4}{@{\hspace{-5pt}}c}}
+& \subfloat[Jour 1377]{\includeminisimuchen{82}}& 
+\subfloat[Jour 1415]{\includeminisimuchen{84}}&
+\subfloat[Jour 1458]{\includeminisimuchen{87}}& 
+\subfloat[Jour 1510]{\includeminisimuchen{90}}
+\end{tabular}
+\caption{\label{fig:simu_complete_chen} Simulation numérique pour \Chen  -- Graduations en~$cm$ -- L'échelle des niveaux de gris est donnée par la  Figure~\ref{fig:schema_correspondance_gris} -- Les valeurs des paramètres pour réaliser cette simulations numériques sont présentées dans la Table~\ref{table_param}. -- Pour ce patient, pas d'intention de reproduire la forme de la tumeur. }
+\end{figure}
 
 %\mylettrine{D}{ans} tout ce chapitre 
 %\newpage
@@ -316,6 +403,9 @@ Ci-dessous est présenté l'ensemble des histogrammes numérique de \Nber, corre
 %\DTLcleardb{optim2_0leg}
 %\DTLcleardb{optim2_0stat}
 %\DTLcleardb{optim2_0stat}
+
+
+
 
 \FloatBarrier
 \section{Valeur des paramètres pour les simulations numériques de la Figure~\ref{fig:possibilites}~:}

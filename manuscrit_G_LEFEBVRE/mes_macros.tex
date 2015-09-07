@@ -84,8 +84,10 @@
 
 \newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
 
+%%%%%% ===================================================
+%%%%%%          ***  Commande de dessins   ***
+%%%%%% ===================================================
 
-%%%%%% Commande de dessins
 \newcommand{\rect}[4]{
 	%% #1 et #2 --> coordonnee du coin en bas a gauche
 	%% #3 et #4 --> largeur et hauteur
@@ -187,4 +189,26 @@
   \spy on (#3,#4) in node at (-0.7,-2.0);%
   %% \spy on (coord de la zone a zoomer) in node at (coord de la vue zoomé )
 \end{tikzpicture}%
+}
+
+\newcommand{\includeminisimunber}[1]{
+\includegraphics[ trim = 51px 20mm 43mm 8mm ,clip, 
+width=\largeurfignber]{fit_henbert_form3/vue_scan/vue_scan#1.png}
+}
+
+\newcommand{\includeminisimuchen}[1]{
+%\resizebox{\largeurfignber}{!}{
+%%% trim --- > coupe à gauche, en bas, à droite et en haut
+%\setlength{\unitlength}{1mm}
+%\begin{picture}(24,24)
+%\rect{0}{0}{26}{26}
+%\put(0,0){
+\includegraphics[ trim = 51px 20mm 43mm 8mm ,clip,
+ width=\largeurfignber]{fit_chen7_L12_cross0.3/vue_scan/vue_scan#1.png}
+%}
+%{\color{white}
+%\multiput(30,3)(0,.5){45}{\circle*{1}}
+%}
+%\end{picture}
+%}
 }
