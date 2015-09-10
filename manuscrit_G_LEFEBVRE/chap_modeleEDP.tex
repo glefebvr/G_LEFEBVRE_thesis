@@ -248,7 +248,7 @@ Nous décrivons ainsi l'évolution de~$\xi$ par
 \begin{equation}\label{eq_xi}
 \partial_t \xi = \alpha \int_\Omega \big(1+\epsilon_{\xi} - \gammapp(M) / \gamma_0 \big)\Big(\big(1-\nuS\chiS(t)\big)(P_1+P_2)+P_3\Big) \textrm{\;d}\vecx - \lambda \xi.
 \end{equation}
-Le paramètre adimensionné~$\nuS\in(0,1)$ représente l'effet antiangiogénique de~$\TS$, qui est supposé identique pour~$P_1$ et~$P_2$, et le paramètre~$\epsilon_{\xi}$ traduit la production minimale de facteurs de croissance par les cellules cancéreuses.
+Le paramètre adimensionné~$\nuS\in(0,1)$ représente l'effet antiangiogénique de~$\TS$, qui est supposé identique pour~$P_1$ et~$P_2$, et le paramètre~$\epsilon_{\xi}$ traduit la production minimale de facteurs de croissance par les cellules cancéreuses. 
 
 
 La quantité~$M$ décrit à la fois la vascularisation et la concentration de nutriments. Nous utilisons une équation de transport-réaction-diffusion pour décrire cette quantité~:
@@ -275,6 +275,9 @@ Notez que si initialement
 \end{align}
 alors pour tout temps~$t$, $0\leq M(t) \leq 2\Ms$. Ceci traduit le fait que le tissu sain environnant est bien vascularisé et est fourni de suffisamment de nutriments.
 
+
+Des essais ont été réalisés en considérant~$\xi$ dépendant également de l'espace. L'équation régissant~$\xi$ était alors la même que l'équation~\eqref{eq_xi} mais sans l'intégrale. Cet essai a soulevé beaucoup de problème. Le principal, étant que~$\xi$, qui est produit par les cellules proliférantes, est concentré dans la tumeur, alors que la vascularisation~$M$ est concentrée à l'extérieur. Les variables~$\xi$ et~$M$ ont donc des supports quasi disjoint, ce qui pose donc problème pour le transport de~$M$. Appliquer un transport et/ou une diffusion sur~$\xi$ aurait pu résoudre ce problème mais aurait complexifier le modèle qui compte déjà beaucoup de paramètres.
+
 \subsection{Formulation vectorielle des équations sur les cellules cancéreuses}
 
 Pour simplifier les notations, considérons le vecteur des populations de cellules~$\W=\trans{(P_1, P_2, P_3, N)}$. On définit la fonction vectorielle 
@@ -298,6 +301,15 @@ dont les composantes sont données par~:
 \GG_4(M,\W) &= \gammapd(M) P +\gammasd(M) (1-P-N)  \nonumber \\
 &\qquad +\big( \muI \chiI P_1 + \muS\chiS (P_1+P_2) \big) (1+M) - \muN(1+M)N.
 \end{align}
+On notera aussi~$\bar{\GG}$ la partie diagonale de l'opérateur~$\GG$~:
+\begin{equation}\label{eq:GG_bar}
+\bar{\GG} = \begin{pmatrix}
+\gammapp(M)- \gammapd(M) - (\muI \chiI +\muS \chiS )(1+M) \\
+\gammapp(M)- \gammapd(M) - \muS \chiS (1+M) \\
+\gammapp(M) - \gammapd(M) \\
+- \muN(1+M)
+\end{pmatrix}.
+\end{equation}
 Il est également utile de définir~$\Frm(M,\W)$ comme
 \begin{align}
   \label{eq_F}
@@ -321,6 +333,177 @@ et
 \end{aligned}
 \right. \end{equation}
 Notez que la densité de cellules saines~$S$ est donnée par~\eqref{eq_saturation}.
+
+
+%%%%%% Rajout par rapport à l'article
+\subsection{Propriétés mathématiques du modèle}
+\subsubsection{Positivité}
+\begin{prop}\label{prop:positivite_modele}
+Dans le modèle~\eqref{eq_transport_pop}, si
+ $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ appartiennent à~$L^\infty, \ \forall t \geq 0$, 
+alors $ \forall t\geq 0, \ P_i \geq 0, N \geq 0$ et $S\geq 0.$
+\end{prop}
+Pour démontrer cette positivité, nous allons montrer que les parties négatives de ces quantités sont toutes nulles. Les parties négatives sont définies comme suit~:
+\begin{dfn}[Partie positive et négative]~
+\begin{itemize}
+\item On appelle la \emph{partie positive} de~$f$, la quantité~$f^+=\max(0,f)$.
+\item On appelle la \emph{partie négative} de~$f$, la quantité~$f^-=-\min(0,f)$.
+\end{itemize}
+\end{dfn}
+On notera les propriétés intéressantes de ces quantités~:
+\begin{prop}\label{prop:partie_neg_et_pos}
+Quelle que soit la fonction~$f$, on a~:
+\begin{itemize}
+\item $f^+ \geq 0$ et $f^- \geq 0$
+\item  $f'f^+=(f^+)'f^+$  et $f'f^-=-(f^-)'f^-$ 
+\end{itemize} 
+\end{prop}
+La première partie de cette propriété découle directement de la définition, la seconde se démontre de manière immédiate par disjonction des cas~$f\geq0$ et~$f<0$. Ayant définit ces parties négatives et positives, nous pouvons maintenant démontrer la positivité de notre modèle.
+
+\begin{proof}[Démonstration de la Propriété~\ref{prop:positivite_modele}]
+On suppose que $P_i,N$ et $S$ sont bornées. Commençons par démontré la positivité de~$P_i$. On a~:
+$$\partial_t P_i + \dive (\vit P_i) = \bar{\GG_i}P_i $$
+En multipliant par la partie négative~$P_i^-$ puis en intégrant, on obtient~:
+$$
+\begin{aligned}
+&\qquad \intx (\partial_t P_i) P_i^- + \intx \dive (\vit P_i) P_i^- = \intx \bar{\GG_i} P_i P_i^- \\
+&\overset{IPP\footnote{IPP~: Intégration Par Parties.}}{\Longleftrightarrow} \intx (\partial_t P_i) P_i^- + \intbord \vit . \nn P_i P_i^- - \intx (\vit P_i).\nabla (P_i^-)  = \intx \bar{\GG_i} P_i P_i^-  \\
+&\overset{\textrm{Prop. \ref{prop:partie_neg_et_pos}}}{\Longleftrightarrow}  - \intx (\partial_t P_i^-) P_i^- - \intbord \vit . \nn (P_i^-)^2 + \intx P_i^- \vit.\nabla (P_i^-)  = - \intx \bar{\GG_i} (P_i^-)^2  \\
+&\Longleftrightarrow  \frac{-1}{2} \intx \partial_t \big( (P_i^-)^2 \big) - \intbord \vit . \nn (P_i^-)^2 + \frac{1}{2} \intx \vit.\nabla \big( (P_i^-)^2\big)   = - \intx \bar{\GG_i} (P_i^-)^2  \\
+&\overset{IPP}{\Longleftrightarrow}  \frac{-1}{2} \intx \partial_t \big( (P_i^-)^2 \big) -\frac{1}{2} \intbord \vit . \nn (P_i^-)^2 + \frac{1}{2} \intx (\dive \vit)  (P_i^-)^2  = - \intx \bar{\GG_i} (P_i^-)^2  \\
+\end{aligned}$$
+Ainsi
+\begin{equation}
+\partial_t \intx (P_i^-)^2  = - \intx (\dive \vit + 2\bar{\GG_i})  (P_i^-)^2 - \intbord \vit . \nn (P_i^-)^2.
+\end{equation}
+Or $$\intbord \vit . \nn (P_i^-)^2 \geq 0. $$
+Si~$\vit.\nn\geq0$, ceci est immédiat, sinon la condition limite impose~$S=1$ et donc~$S^-=0$. 
+Les quantités~$P_i$ , $N$ et~$M$ étant bornées, alors~$\dive \vit$ et~$\bar{\GG}_i$ sont bornés. Ceci nous conduit à la majoration suivante~:
+\begin{equation}
+\partial_t \intx (P_i^-)^2 \leq \| \dive \vit + 2\bar{\GG_i} \|_{\infty} \intx (P_i^-)^2.
+\end{equation}
+En posant $y(t):=\intx (P_i^-(t))^2$, le lemme de Gronwall nous conduit à
+\begin{equation}
+y(t) \leq y(t=0) \exp ( \| \dive \vit + 2\bar{\GG_i} \|_{\infty} t  ).
+\end{equation}
+Or~$P_i\geq 0$ au temps initial, donc~$y(t=0)=0$. Il en découle que~$y(t)\leq0, \forall t\geq0$. Mais par définition, $y$ est nécessairement positif. Ainsi~$y$ est identiquement nulle. Ceci conduit à~$P_i^-(t)\equiv0, \forall t\geq0$, et donc $P_i(t)\geq0, \forall t\geq0$. \\
+Le même type de raisonnement permet de montrer la positivité de~$S$ (il suffit de remplacer~$P_i$ par~$S$ et~$\bar{\GG}_i$ par~$-\gammasd$ qui est borné. Pour la positivité de~$N$, sachant que~$P$ et~$S$ le sont alors on a
+$$ \partial_t N + \dive (\vit N) \geq \bar{\GG}_4 N.$$
+En procédant de la même manière également, et en remplaçant les égalités par la majoration ci-dessus, on obtient également la positivité de~$N$ en tout temps positif. Ceci clôt la démonstration.
+\end{proof}
+
+
+\subsubsection{Préservation de la densité totale}
+Dans ce paragraphe, on considère~$\W=\trans{(P_1, P_2, P_3, N, S)}$ dans sa forme pleine \ie avec~$S$. On pose~:
+\begin{equation}\label{eq:G5}
+\GG_5(M,\W) = -\gammasd(M) S,
+\end{equation}
+pour compléter la formulation~\eqref{eq_transport_pop}.
+\begin{prop}
+Le vecteur~$\W=\trans{(P_1, P_2, P_3, N, S)}$ vérifie une condition de saturation \ssi la somme d'un transport conservatif sur chacune de ses composantes est égale à la divergence de la vitesse régissant ce transport.
+\begin{equation}
+\sum_i \W_i = 1 \quad \Leftrightarrow \quad \sum_i  [ \partial_t \W_i + \dive(\vit\W_i) ] = \dive \vit
+\end{equation}
+\end{prop}
+
+\begin{proof}
+Pour réaliser cette preuve, notons $\sigma := \sum_i \W_i$ \\
+$\Rightarrow$) Quasiment immédiat.
+\begin{align*}
+\sum_i  [ \partial_t \W_i + \dive(\vit\W_i) ] & = \sum_i  [ \partial_t \W_i + \dive(\vit) \W_i + \vit . \nabla \W_i ] \\
+& = \partial_t \sigma + (\dive\vit) \sigma + \vit . \nabla \sigma = \dive \vit,
+\end{align*}
+puisque les dérivées de $\sigma$  sont nulles car ici il est constant. \\
+$\Leftarrow$) On suppose ici que $\partial_t \sigma + \dive (\vit \sigma ) = \dive \vit$ ou autrement écrit que $$ \partial_t \sigma + \vit . \nabla \sigma  = (1-\sigma) \dive \vit.$$ Montrons que ceci implique que~$\sigma\equiv1$. Remarquons que $\sigma\equiv1$ est solution de l'équation ci-dessus. Il ne reste donc plus qu'à montrer son unicité pour conclure. Considérons~$\sigma_1$ et~$\sigma_2$, 2 solutions de cette équation. Soit $d:=\sigma_2-\sigma_1$. On a alors~:
+$$ \partial_t d + \dive (\vit d) = 0 \textrm{~~avec~~} d(t=0,\vecx)\equiv0. $$
+Par le même procédé qu'utilisé précédemment (estimation d'énergie pour démontrer la positivité de la solution), on a~:
+\begin{equation}
+\partial_t \intx d^2 + \intx d^2 \dive \vit = - \intbord (\vit . \nn) d^2 \leq 0.
+\end{equation}
+Ainsi par le lemme de Gronwall, appliqué à la fonction~$\left(\intx d^2 \right)(t)$, on a~:
+\begin{equation}
+\left(\intx d^2 \right)(t) \leq \left(\intx d^2 \right)(t=0) \exp ( \| \dive \vit \|_{\infty} t ) = 0
+\end{equation}
+Donc~$d(t,\vecx)^2\equiv0, \forall t$, donc $d$ est identiquement nulle. Ceci conduit donc à~$\sigma_1=\sigma_2$, d'où l'unicité de la solution. 
+\end{proof}
+
+\subsubsection{Comportement asymptotique lorsque le taux d'élimination de la nécrose tend vers l'infini ($\delta \to +\infty$)}
+Nous allons montrer ici que notre modèle tend, lorsque le taux d'élimination devient grand, vers un modèle sans nécrose. Nous allons procédé sur un modèle un peu plus simple. Les 3 populations $P_1,P_2$ et~$P_3$ vérifiant des équations similaires, on se restreindra à une seule population de cellules proliférantes. Le raisonnement étant analogue en considérant l'effet cytotoxique des  traitements ou non, on ne considèrera pas cette aspect pour simplifier les calculs. D'autre part, nous allons ici considérer la vascularisation~$M$ constante (dans l'espace et le temps). Posons 
+\begin{equation}
+\epsilon:= \frac{1}{\muN(1+M)},
+\end{equation}
+et montrons que lorsque~$\epsilon \to 0$, le modèle~A avec nécrose 
+\begin{subequations}\label{eq:modele_simplifie1}
+\begin{empheq}[left={(\rm A)\quad}\empheqlbrace]{align} %%%% grace au package empheq
+\partial_t P + \nabla.(vP)& = ( \gammapp - \gammapd  ) P, \label{modele1-eq1}\\
+\partial_t N + \nabla.(vN)& =\gammapd P- N/\epsilon, \label{modele1-eq2} \\
+\nabla.v & = \gammapp P- N/\epsilon,
+\end{empheq}
+\end{subequations}
+converge vers le modèle~B sans nécrose
+\begin{subequations}\label{eq:modele_sans_necrose}
+\begin{empheq}[left={(\rm B)\quad}\empheqlbrace]{align} %%%% grace au package empheq
+\partial_t P + \nabla.(vP) & = ( \gammapp - \gammapd  ) P, \\
+\nabla.v & = ( \gammapp - \gammapd  ) P.
+\end{empheq}
+\end{subequations}
+Pour montrer cela, on considère une nouvelle variable~$Z$ définie comme suit 
+\begin{equation}
+ Z=\gammapd P- N/\epsilon.
+\end{equation}
+La combinaison~$\gammapd $ \eqref{modele1-eq1}-\eqref{modele1-eq2}$/\epsilon$ nous donne que le modèle~A est équivalent à~:
+\hspace*{-35mm}\begin{subequations}\label{eq:modele_simplifie1}
+\begin{empheq}[left={(\rm A) \Leftrightarrow \ }\empheqlbrace]{align} %%%% grace au package empheq
+\partial_t P + \nabla.(vP) & = ( \gammapp - \gammapd  ) P \label{modele1equiv-eq1}\\
+\partial_t Z + \nabla.(vZ) & = -Z/\epsilon + r P  & \textrm{avec} \quad r=\gammapd ( \gammapp - \gammapd  ) \label{modele1equiv-eq2} \\
+\nabla.v & =  Z
+\end{empheq}
+\end{subequations}
+En multipliant \eqref{modele1equiv-eq2} par $Z$, puis en intégrant en espace, on obtient :
+\begin{equation}
+\intx Z \partial_t Z + \intx Z \nabla.(vZ) = - \frac{1}{\epsilon} \intx Z^2 + \intx rPZ
+\end{equation}
+Or une série de deux intégration par parties (IPP) nous fourni l'égalité suivante~:
+\begin{align*}
+\intx Z \partial_t Z + \intx Z \nabla.(vZ) & \overset{IPP}{=} \intx Z \partial_t Z - \intx v Z \nabla Z + \intbord (v.\vec{n}) Z^2 \\
+&= \frac{1}{2} \partial_t \intx Z^2 - \frac{1}{2} \intx v \nabla (Z^2) + \intbord (v.\vec{n}) Z^2 \\
+& \overset{IPP}{=} \frac{1}{2} \partial_t \intx Z^2 + \frac{1}{2} \intx Z^2 \nabla.v + \frac{1}{2} \intbord (v.\vec{n}) Z^2 \\
+\end{align*}
+D'où :
+\begin{equation}
+\partial_t \intx Z^2 + \intx Z^2 \nabla.v = - \frac{2}{\epsilon} \intx Z^2 + 2 \intx rPZ - \intbord (v.\vec{n}) Z^2
+\end{equation}
+Or
+\begin{equation}
+\intbord (v.\vec{n}) Z^2 \geq 0.
+\end{equation}
+En effet si $v.\vec{n} \geq 0$ c'est trivial, sinon les C.L ($P=N=0$ sur $\partial \Omega$) implique que $Z=0$ sur $\partial \Omega$. Dans ce dernier cas, le terme est donc nul. Ainsi :
+\begin{equation}
+ \partial_t \intx Z^2 \leq - \frac{2}{\epsilon} \intx Z^2 + 2 \intx rPZ - \intx Z^2 \nabla.v
+\end{equation}
+On considère une solution suffisamment régulière de notre problème de telle sorte que $\nabla.v \in L^\infty$, $P \in L^2, N \in L^2$ et par conséquent $Z \in L^2$. De plus, $r$ est constant (\ie ne dépend ni de l'espace ni du temps) puisque nous avons considérer~$M$ constant ici. Par l'inégalité triangulaire et l'inégalité de Young\footnote{L'inégalité de Young affirme que pour tout couple de réel $(a,b)$ positif et pour tout couple de réels $(p,q)$ positif et conjugué alors on a~: $ab \leq \frac{a^p}{p} + \frac{b^q}{q}$. L'inégalité est utilisée ici avec $p=q=2$. }, 
+on obtient alors~:
+\begin{align*}
+\partial_t \| Z \|^2_2 & \leq -\frac{2}{\epsilon} \intx Z^2 + 2 \intx  |r| \dfrac{\sqrt{\epsilon}}{\sqrt{\epsilon}} P|Z| + \intx Z^2 | \nabla.v | \\
+& \leq -\frac{2}{\epsilon} \intx Z^2 + \intx \epsilon r^2 P^2 + \intx \dfrac{Z^2}{\epsilon}  + \intx Z^2 | \nabla.v | \\
+& \leq \intx \epsilon r^2 P^2 - \dfrac{1}{\epsilon} \intx Z^2  + \intx Z^2 | \nabla.v | 
+\end{align*}
+Ainsi :
+\begin{equation}
+\partial_t \|Z\|_2^2 \leq \epsilon r^2 \|P\|_2^2 + \left( \|\nabla.v\|_\infty - \frac{1}{\epsilon} \right) \| Z \|^2_2
+\end{equation}
+Par le lemme de Gronwall, on a $\forall t\in [0,T]$ :
+\begin{equation}
+\begin{array}{l}
+\displaystyle \|Z(t)\|^2_2 \leq \|Z(t=0)\|_2^2 \exp \left(  \left(  |\nabla.v\|_\infty - \frac{1}{\epsilon} \right) t\right) \\
+\displaystyle \quad + \epsilon r^2 \max_{t\in[0,T]} \| P(t) \|^2_2 \int_0^t \exp \left(  \left(  |\nabla.v\|_\infty - \frac{1}{\epsilon} \right) (t-s) \right) \textrm{d}s
+\end{array}
+\end{equation}
+
+Lorsque $\epsilon \to 0$, on obtient que $Z \to 0$. Ainsi, par définition de~$Z$, $N$ tend vers 0 à la même vitesse que~$\epsilon$. Ceci montre que le modèle A avec nécrose converge vers le modèle sans nécrose lorsque $\epsilon \to 0$. 
+Pour ce qui est du modèle complet, des simulations numériques ont été réalisées avec de grande valeur de~$\muN$. On constate bien une convergence vers~$N\equiv0$.
+
+
 \section{Méthodes numériques}\label{sec:NumMet}
 
 Nous utilisons une méthode de volumes finis sur grille uniforme 2D. Pour la simulation numérique, le domaine~$\Omega$ est le 
@@ -433,15 +616,7 @@ $$
 \W^{*}=\W^n+\frac{\Delta t}{2} (\GG^n -\Frm^n\W^n) \geq 
 \left( \mathbf{1}+\frac{\Delta t}{2} (\bar{\GG}^n - \Frm^n\mathbf{1} )\right) \circ \W^n,
 $$
-où~$\mathbf{1}=\trans{(1,1,1,1)}$, le symbole~$\circ$ représente le produit d'Hadamard (multiplication terme à terme) et où~$\bar{\GG}^n$ vaut~:
-$$
-\bar{\GG}^n = \begin{pmatrix}
-\gammapp(M^n)- \gammapd(M^n) - (\muI \chiI^n +\muS \chiS^n )(1+M^n) \\
-\gammapp(M^n)- \gammapd(M^n) - \muS \chiS^n (1+M^n) \\
-\gammapp(M^n) - \gammapd(M^n) \\
-- \muN(1+M^n)
-\end{pmatrix}.
-$$
+où~$\mathbf{1}=\trans{(1,1,1,1)}$, le symbole~$\circ$ représente le produit d'Hadamard (multiplication terme à terme) et où~$\bar{\GG}$ est défini par~\eqref{eq:GG_bar}. 
 Une relation similaire entre~$\W^\#$ et~$\W^{n+1}$ 
 peut être écrite depuis l'équation~\eqref{eq_snd_membre2}. 
 Ainsi, en supposant que~$\W^n\geq 0$ et~$S^n=1-\Sigma_i W^n_i\geq 0$ 
@@ -602,7 +777,7 @@ L'aspect spatial des simulations numériques présentées dans la Figure~\ref{fi
 Curieusement, les résultats numériques spatiaux sont en accord avec les données, au moins jusqu'au début de la dernière rechute autour du jour~1000. En fait, les cinq étapes que nous observons numériquement sont également constatées sur les scanners (\cf Figure~\ref{fig_hen_spatial_1}-\ref{fig_hen_spatial_6}).
 
 
-Après le jour~1116, notre modèle n'est probablement plus valide car la structure de la tumeur numérique est très différente de celles des scanners. Peut-être que d'autres phénomènes qui ne sont pas pris en compte par notre modèle se produisent, comme les changements microenvironementaux ou d'autres mutations cellulaires. Des interactions dans la~$3^\textrm{ème}$ direction (non prise en compte ici) peuvent aussi être impliquées.
+Après le jour~1116, notre modèle n'est probablement plus valide car la structure de la tumeur numérique est très différente de celles des scanners. Peut-être que d'autres phénomènes qui ne sont pas pris en compte par notre modèle se produisent, comme les changements microenvironementaux ou d'autres mutations cellulaires. Des interactions dans la~$3^\textrm{ième}$ direction (non prise en compte ici) peuvent aussi être impliquées.
 
 %%%%%%%%%%% Simu scan NBER
 \begin{figure}[h]
