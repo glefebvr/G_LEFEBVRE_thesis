@@ -136,6 +136,11 @@
 %\dottedcontents{section}[6.5em]{}{2em}{.5pc}
 %\dottedcontents{chapter}[4em]{\vspace{7mm}}{2em}{.5pc}
 
+%\usepackage{titletoc}
+%\titlecontents{chapter}[7pc]{\bf\addvspace{1pc}\filright}%
+%{\contentslabel[\color{black}{Chapitre \thecontentslabel.~}]{7pc}}%
+%{\hspace{-6pc}}{\hfill\contentspage}[\addvspace{2pt}] 
+
 
 %%%%% fncychap predefini
 %\usepackage[Glenn]{fncychap}
@@ -175,7 +180,8 @@
   \lhead[\leftmark]{}
   \rhead[]{\rightmark}
   \fancyfoot[LE,RO]{{\normalsize \thepage}}%
-  \fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  %%\fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  \fancyfoot[LO,RE]{{\fontfamily{pzc}\selectfont\small Guillaume Lefebvre}}%
   \renewcommand{\headrulewidth}{0.4pt}%
 }
 
@@ -184,7 +190,8 @@
 %  \lhead[\leftmark]{}
 %  \rhead[]{\rightmark}
   \fancyfoot[LE,RO]{{\normalsize \thepage}}%
-  \fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  %%\fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  \fancyfoot[LO,RE]{{\fontfamily{pzc}\selectfont\small Guillaume Lefebvre}}%
   %%\addtolength{\footskip}{7mm}%
   \renewcommand{\headrulewidth}{0pt}%
 }
@@ -195,7 +202,8 @@
 %  \rhead[]{\rightmark}
   \fancyhead[LE,RO]{~\chaptername~}
   \fancyfoot[LE,RO]{{\normalsize \thepage}}%
-  \fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  %%\fancyfoot[LO,RE]{{\footnotesize Guillaume Lefebvre}}%
+  \fancyfoot[LO,RE]{{\fontfamily{pzc}\selectfont\small Guillaume Lefebvre}}%
   %%\addtolength{\footskip}{7mm}%
   \renewcommand{\headrulewidth}{0.4pt}%
 }
@@ -291,10 +299,14 @@
 
 \newcommand{\specialchap}[1]{%
 %%%% Chapitre sans sections
-\chapter{#1}%
+\chapter*{#1}%
 \pagestyle{prefacestyle}%
 \renewcommand\chaptername{#1}%
+%%\markboth{#1}{#1}
+\addcontentsline{toc}{chapter}{#1}%
+%\addcontentsline{toc}{chapter}{\protect\numberline{}#1}
 }
+
 
 \makeatletter
 \newcommand{\leqnomode}{\tagsleft@true}
@@ -316,6 +328,31 @@
 %%\maketitle
 
 \frontmatter % Le prologue du livre
+
+
+\specialchap{Remerciements} %%% defauts si mis dans un autre fichier avec subfile
+%\chapter{Remerciements}
+%\renewcommand\chaptername{Remerciements}
+\input{remerciements.tex}
+
+%\section*{Remerciements}
+%
+%Les données médicales utilisées dans cet article ont été fournies aux auteurs  par l'Institut Bergoni\'e, F-33000, Bordeaux, France. Nous remercions l'Institut Bergoni\'e pour sa collaboration et particulièrement l'oncologue MD Binh Bui.
+%
+%
+%Cette étude a été soutenue dans le cadre du LABEX TRAIL, ANR-10-LABX-0057 avec le soutien financier de l'Etat Francais, géré par l'Agence Nationale de Recherche (ANR) de France dans le cadre des "Investissements d'avenir" du Programme IdEx  (ANR-10-IDEX-03-02).
+%
+%Les expérimentations présentées dans cet article ont été réalisées en utilisant la plateforme expérimentale PlaFRIM, développée par l'action de développement  Inria DIHPES avec le support du LABRI et de l'IMB et d'autres entités~: Conseil R\'egional d'Aquitaine, FeDER, Universit\'e de Bordeaux et CNRS (\textit{cf.} https://plafrim.bordeaux.inria.fr/)
+%
+%
+%Le Travail de Patricio Cumsille (PC) a été partiellement soutenu par le Programme de Recherche Associative (PIA) du Conicyt avec le financement numéro FB0001. Le travail de PC a aussi été partiellement soutenu par l'Université de B\'{\i}o-B\'{\i}o avec les financements DIUBB 121909 GI/C et DIUBB 122109 GI/EF.
+%
+%
+%Les auteurs remercient très chaleureusement Dr H. Fathallah-Shaykh pour ses discussions et ses conseils qui ont significativement contribués à l'amélioration de la qualité de cet article. 
+
+
+
+
 %%\updatechaptername
 %%\renewcommand\chaptername{Sommaire}
 \pagestyle{plain}
@@ -329,12 +366,13 @@
 %%\renewcommand\chaptername{Avant-Propos}
 %\lipsum[1-11]
 
-\specialchap{Introduction}
-%\chapter{Introduction}
-
 \mainmatter % Corps du livre
+
+\subfile{intro}
+
 \renewcommand\chaptername{Chapitre}
 \updatechaptername
+\pagestyle{main}
 
 %%%\newcommand{\mainfile}{} % we use the existence of this command to see if we're compiling the whole thesis or just a chapter
 
@@ -375,6 +413,8 @@
 \end{appendices}
 
 \backmatter  %%%% l'épilogue du document
+\pagestyle{prefacestyle}
+
 %\specialchap{Test}
 %%\updatechaptername
 %%\renewcommand\chaptername{Test}
@@ -394,26 +434,6 @@
 %\subsubsection{test13}\paragraph{hep}
 %\subsubsection{test14}\paragraph{hep}
 
-\specialchap{Remerciements} %%% defauts si mis dans un autre fichier avec subfile
-%\chapter{Remerciements}
-%\renewcommand\chaptername{Remerciements}
-\input{remerciements.tex}
-
-%\section*{Remerciements}
-%
-%Les données médicales utilisées dans cet article ont été fournies aux auteurs  par l'Institut Bergoni\'e, F-33000, Bordeaux, France. Nous remercions l'Institut Bergoni\'e pour sa collaboration et particulièrement l'oncologue MD Binh Bui.
-%
-%
-%Cette étude a été soutenue dans le cadre du LABEX TRAIL, ANR-10-LABX-0057 avec le soutien financier de l'Etat Francais, géré par l'Agence Nationale de Recherche (ANR) de France dans le cadre des "Investissements d'avenir" du Programme IdEx  (ANR-10-IDEX-03-02).
-%
-%Les expérimentations présentées dans cet article ont été réalisées en utilisant la plateforme expérimentale PlaFRIM, développée par l'action de développement  Inria DIHPES avec le support du LABRI et de l'IMB et d'autres entités~: Conseil R\'egional d'Aquitaine, FeDER, Universit\'e de Bordeaux et CNRS (\textit{cf.} https://plafrim.bordeaux.inria.fr/)
-%
-%
-%Le Travail de Patricio Cumsille (PC) a été partiellement soutenu par le Programme de Recherche Associative (PIA) du Conicyt avec le financement numéro FB0001. Le travail de PC a aussi été partiellement soutenu par l'Université de B\'{\i}o-B\'{\i}o avec les financements DIUBB 121909 GI/C et DIUBB 122109 GI/EF.
-%
-%
-%Les auteurs remercient très chaleureusement Dr H. Fathallah-Shaykh pour ses discussions et ses conseils qui ont significativement contribués à l'amélioration de la qualité de cet article. 
-
 
 %%\chapter{Conclusion et discussion}
 
@@ -429,6 +449,9 @@
 
 %%%% Bibliographie
 %\nocite{*}
-%\bibliographystyle{plain}
-%\bibliography{biblio}
+%%\renewcommand\bibname{\rm Bibliographie}
+\renewcommand\chaptername{Bibliographie}
+\addcontentsline{toc}{chapter}{Bibliographie}
+\bibliographystyle{plain}
+\bibliography{biblio}
 \end{document}
