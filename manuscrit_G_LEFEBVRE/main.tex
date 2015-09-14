@@ -72,8 +72,18 @@
 %\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{0.5em}
 
 
-\usepackage{float}% Fournit l'option H pour les figures
+%%%\usepackage{datatime} %%% Gestion des dates + \currenttime (obsolete)
+%%\usepackage{datatime2} %%% Gestion des dates + \DTMcurrenttime
+\usepackage{calc}
+\usepackage{numprint}
+\newcounter{hours}\newcounter{minutes}
+\newcommand{\printtime}{%
+  \setcounter{hours}{\time/60}%
+  \setcounter{minutes}{\time-\value{hours}*60}%
+  \thehours h\,\nplpadding{2}\numprint{\theminutes}\npnolpadding}
 
+  
+\usepackage{float}% Fournit l'option H pour les figures
 \usepackage{mathabx} %% Pour avoir proprement le grand symbole \sqrt notamment
 \usepackage{mathtools}
 %%\usepackage{mathstyle} %%% Produit une erreur ...
@@ -85,6 +95,7 @@
 %%\usepackage{stackengine}
 \usepackage{vwcol} 
 \usepackage{placeins} %%% Fournit \FloatBarrier
+
 \usepackage{xspace}
 \usepackage{lipsum}
 \usepackage{booktabs} %% midrule
@@ -327,8 +338,18 @@
 %%\thispagestyle{empty}
 %%\maketitle
 
-\frontmatter % Le prologue du livre
 
+\begin{titlepage}
+\centering \Large
+\vspace*{5cm}
+Thèse de \\
+~\\
+{\LARGE Guillaume LEFEBVRE}\\
+\vspace{4cm}
+Version du \today, \printtime
+\end{titlepage}
+
+\frontmatter % Le prologue du livre
 
 \specialchap{Remerciements} %%% defauts si mis dans un autre fichier avec subfile
 %\chapter{Remerciements}
