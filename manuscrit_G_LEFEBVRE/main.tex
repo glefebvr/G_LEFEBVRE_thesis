@@ -205,6 +205,7 @@
   \fancyfoot[LO,RE]{{\fontfamily{pzc}\selectfont\small Guillaume Lefebvre}}%
   %%\addtolength{\footskip}{7mm}%
   \renewcommand{\headrulewidth}{0pt}%
+  \fancyhead[CO]{(Version du \today, \printtime)} %%%% A retirer pour la version definitive
 }
 
 \fancypagestyle{prefacestyle}{%
@@ -388,9 +389,13 @@ Version du \today, \printtime
 %\lipsum[1-11]
 
 \mainmatter % Corps du livre
-
+\renewcommand\chaptername{Introduction}
+%%\markboth{Introduction}
+\pagestyle{prefacestyle}
 \subfile{intro}
 
+
+\cleardoublepage %%% Pour que les commandes ci-dessous prennent bien effet sur la page du nouveau chapitre et non sur la dernière page du chapitre precedent
 \renewcommand\chaptername{Chapitre}
 \updatechaptername
 \pagestyle{main}
@@ -419,6 +424,7 @@ Version du \today, \printtime
 \subfile{chap_optim_grey}
 \subfile{chap_analyse_heterogeneite}
 
+\cleardoublepage
 \appendix %%%% Les annexes
 \addappheadtotoc %%% Pour la page debutant les annexes apparaisse dans la toc
 \updatechaptername

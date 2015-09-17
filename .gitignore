@@ -19,6 +19,7 @@
 ### Ignorer tous les fichier (ou dossier) commencant par :
 essai_*
 consignes*
+relectures*
 ### à l'exception de foo.html qui est maintenu à la main
 # !foo.html
 ### Ignorer les objets et les archives

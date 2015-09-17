@@ -2,7 +2,7 @@
 \pagestyle{main}%%%
 \begin{document}
 
-\chapter{Préservation de l'invariance par rotation sur maillage cartésien}
+\chapter{Préservation de l'invariance par rotation sur maillage cartésien \label{chap:trefle}}
 \vspace{-13mm}
 \begin{flushright}
 { \Large\sf ou Vous avez dit trèfle à 4 feuilles ?\ }
@@ -11,7 +11,7 @@
 %
 %\mylettrine{T}{ransporter} (ou diffuser) une quantité invariante par rotation n'est pas chose facile. Pour illustrer cela, nous allons montrer dans un premier temps les résultats obtenus, lorsqu'on discrétise le modèle présenté au chapitre précédent avec des schémas classiques.  Nous examinerons ensuite les diverses sources causant
 
-\mylettrine{C}{onsidérons} le modèle que nous avons construit au chapitre précédent avec pour donnée initiale des densités invariantes par rotation. Le champ de vitesse (dont la divergence est  donnée par ces mêmes densités, \cf Eq.~EQREF) est donc invariant par rotation. Ainsi pour tout temps nos densités devraient être invariante par rotation. Sauf que sur maillage cartésien, avec les schémas numériques classiques, cette propriété n'est pas du tout conservée au fil du temps... Comme nous allons le présenter au début de ce chapitre, les lignes de niveaux, au départ circulaires, vont peu à peu se déformer devenant progressivement carrées puis prenant plus tard la forme d'un trèfle à 4 feuilles !... Deux pistes seront alors étudiées~:
+\mylettrine{C}{onsidérons} le modèle que nous avons construit au chapitre précédent avec pour donnée initiale des densités invariantes par rotation. Le champ de vitesses (dont la divergence est  donnée par ces mêmes densités, \cf Eq.~EQREF) est donc invariant par rotation. Ainsi pour tout temps nos densités devraient être invariantes par rotation. Sauf que sur maillage cartésien, avec les schémas numériques classiques, cette propriété n'est pas du tout conservée au fil du temps... Comme nous allons le présenter au début de ce chapitre, les lignes de niveaux, au départ circulaires, vont peu à peu se déformer devenant progressivement carrées puis prenant plus tard la forme d'un trèfle à 4 feuilles !... Deux pistes seront alors étudiées~:
 \begin{myitemize}
 \item défaut du schéma de diffusion
 \item défaut du schéma de transport
@@ -21,7 +21,7 @@
 \noindent Une fois le défaut identifié, un correctif sera finalement proposé. 
 
 \section{Présentation du problème}
-Sans plus tardez, présentons le problème en image. Sur la Figure~\ref{fig:trefle}, est présenté une simulation numérique du modèle EDP construit au chapitre précédent avec~:
+Sans plus tarder, présentons le problème en image. Sur la Figure~\ref{fig:trefle}, est présenté une simulation numérique du modèle EDP construit au chapitre précédent avec~:
 \begin{myitemize}
 \item un schéma à 5 points classique pour la diffusion,
 \item un WENO5 (avec splitting directionnel) pour le transport.
@@ -51,7 +51,7 @@ Notez que ce type d'erreur sur la forme conduit à une erreur sur l'évolution d
 
 \section{Le schéma de diffusion}
 \subsection{Influence de la condition limite}
-Le schéma associé à la diffusion a été le premier à être incriminé. En effet dans l'équation~REFF ??\todo{eqref}, la condition limite (CL) est imposée au bord du domaine de calcul $\Omega$, domaine qui est carré. La CL ne vérifie donc pas, dès le départ, l'invariance par rotation. Ceci est illustré sur la Figure~\ref{fig:ligne_nvx_laplace_carre} qui présente la solution de l'équation
+Le schéma associé à la diffusion a été le premier à être incriminé. En effet dans l'équation~\eqref{eq_pression_disc} sur la pression~$\Pi$, la condition limite (CL) est imposée au bord du domaine de calcul~$\Omega$, domaine qui est carré. La CL ne vérifie donc pas, dès le départ, l'invariance par rotation. Ceci est illustré sur la Figure~\ref{fig:ligne_nvx_laplace_carre} qui présente la solution de l'équation
 \begin{equation}\label{eq:pression_iter1}
 \left\{
 \begin{aligned}
@@ -60,7 +60,7 @@ Le schéma associé à la diffusion a été le premier à être incriminé. En e
 \end{aligned}
 \right.
 \end{equation}
-qui n'est autre que l'équation résolue lors de la première itération de l'algorithme sur le modèle complet ($M$ étant initialisé au dessus du seuil d'hypoxie, on a alors au départ $\gammapp=1$ dans l'équation REF. De plus, comme $N=0$ au départ, on obtient alors $\dive \vit = P$, car $k\equiv1$). Dans les itérations suivantes certes le second membres de l'équation va varier, mais cela ne va pas changer le fait que la forme du bord impacte sur les lignes de niveaux.
+qui n'est autre que l'équation résolue lors de la première itération de l'algorithme sur le modèle complet ($M$ étant initialisé au dessus du seuil d'hypoxie, on a alors au départ $\gammapp=1$ dans l'équation REF. De plus, comme $N=0$ au départ, on obtient alors $\dive \vit = P$, car $k\equiv1$). Dans les itérations suivantes certes le second membre de l'équation va varier, mais cela ne va pas changer le fait que la forme du bord impacte sur les lignes de niveaux.
 \begin{figure}
 \centering
 \subfloat[Sans masque\label{fig:ligne_nvx_laplace_carre} ]{
@@ -75,7 +75,7 @@ qui n'est autre que l'équation résolue lors de la première itération de l'al
 \caption{\label{fig:ligne_nvx_laplace} Résolution de la pression donnée par un laplacien. La forme du domaine de calcul carré impacte sur le résultat.}
 \end{figure}
 
-L'effet carré sur les lignes de niveaux de la pression, apparait surtout près du bord du domaine de calcul. Ainsi, pour tenter de palier à ce défaut, la première idée fut de considérer un domaine plus grand, laissant une sorte de couche limite pour absorber les déformations. Des simulations numériques de notre modèle ont été réalisées en doublant la longueur dans chaque direction (la taille d'une maille restant inchangée, on double aussi le nombre de maille). Malheureusement, une forme de trèfle est toujours visible. On a même du mal à distinguer visuellement si il y a eu une amélioration. Visiblement cette couche limite ne suffit pas. La seconde idée, fut donc d'imposer la CL sur un cercle, de sorte à ce que celle-ci soit invariante par rotation. Considérons alors un disque~$\mathcal{D}$ (un masque) inclus dans notre domaine de calcul initial~$\Omega$ et imposons la CL de Dirichlet sur son bord. L'équation~REFF\todo{eqref} devient alors~: 
+L'effet carré sur les lignes de niveaux de la pression, apparaît surtout près du bord du domaine de calcul. Ainsi, pour tenter de palier à ce défaut, la première idée fut de considérer un domaine plus grand, laissant une sorte de couche limite pour absorber les déformations. Des simulations numériques de notre modèle ont été réalisées en doublant la longueur dans chaque direction (la taille d'une maille restant inchangée, on double aussi le nombre de mailles). Malheureusement, une forme de trèfle est toujours visible. On a même du mal à distinguer visuellement s'il y a eu une amélioration. Visiblement cette couche limite ne suffit pas. La seconde idée, fut donc d'imposer la CL sur un cercle, de sorte à ce que celle-ci soit invariante par rotation. Considérons alors un disque~$\mathcal{D}$ (un masque) inclus dans notre domaine de calcul initial~$\Omega$ et imposons la CL de Dirichlet sur son bord. L'équation~\eqref{eq_pression_disc} sur la pression devient alors~: 
 \begin{equation}\label{eq:pression_iter1_mask}
 \left\{
 \begin{aligned}
@@ -89,7 +89,7 @@ Pour résoudre cela on procède par pénalisation de tout ce qui est à l'extér
 - \Delta \Pi(t,\vecx) = F(t,\vecx) + \frac{1}{\epsilon} \Pi \mathds{1}_{\mathcal{D}^c}(\vecx),
 \end{equation}
 où $\mathcal{D}^c$ désigne le complémentaire de $\mathcal{D}$. Ainsi, le domaine de calcul reste~$\Omega$ entier, mais en dehors de~$\mathcal{D}$, la pénalisation impose~$\Pi=0$. Cette technique nous garantit ainsi l'invariance par rotation de~$\Pi$ si le terme source~$F$ l'est. 
-Comme on peut le voir sur la Figure~\ref{fig:ligne_nvx_laplace_mask}, l'utilisation d'un masque permet bien d'assurer la préservation de l'invariance par rotation sur la pression. Malheureusement, les simulations numériques réalisées avec ce masque circulaire ne montre qu'une très légère amélioration \todo{Montrer graphique?} de la forme~: le trèfle persiste. 
+Comme on peut le voir sur la Figure~\ref{fig:ligne_nvx_laplace_mask}, l'utilisation d'un masque permet bien d'assurer la préservation de l'invariance par rotation sur la pression. Malheureusement, les simulations numériques réalisées avec ce masque circulaire ne montrent qu'une très légère amélioration \todo{Montrer graphique?} de la forme~: le trèfle persiste. 
 Explorons alors une autre piste. 
 
 \subsection{Schéma à 9 points}
@@ -101,10 +101,10 @@ La forme du trèfle fait très clairement apparaître les directions du maillage
 \resizebox{.49\textwidth}{!}{\input{tex_pictures/stencil_9pts_custom.tex}}}
 \caption{\label{fig:schema_laplacien}Poids associés à chacun des points du stencil à 9 points de schémas discrétisant le laplacien ($h$ étant le pas d'espace, égal dans chaque direction).}
 \end{figure}
-Le premier schéma à 9 points essayer est le schéma classique, présenté notamment ???\todo{bib ref}, ayant des poids comme indiqué sur la Figure~\ref{fig:schema_laplace_9pts_classique}. Aucune amélioration n'a malheureusement été constatée ... Un second schéma à 9 points a été imaginé à partir d'une méthode mixte éléments finis/volumes finis. Le principe est le suivant.  
+Le premier schéma à 9 points essayé est le schéma classique, présenté notamment ???\todo{bib ref}, ayant des poids comme indiqué sur la Figure~\ref{fig:schema_laplace_9pts_classique}. Aucune amélioration n'a malheureusement été constatée ... Un second schéma à 9 points a été imaginé à partir d'une méthode mixte éléments finis/volumes finis. Le principe est le suivant.  
 %%%% Figure basculées en annexe
-Sur chaque maille~$\mathcal{M}$, une approximation par un polynôme~$\mathbb{Q}1$ est réalisée à partir des valeurs aux quatre coins de la maille. Le flux au travers du volume de contrôle est alors calculé comme l'intégrale sur le bord de ce volume, de la dérivée du polynôme. Les détails concernant cette méthode sont présenté en  annexe~\ref{chap:anx_methode_mixte_VFEF}. Il y est notamment montré que ce schéma mixte se ramène en réalité à un schéma à 9 points avec des poids un peu différents, comme présenté dans la Figure~\ref{fig:schema_laplace_9pts_custom}. 
-Ici encore le trèfle persiste. Explorons alors une autre piste.
+Sur chaque maille~$\mathcal{M}$, une approximation par un polynôme~$\mathbb{Q}1$ est réalisée à partir des valeurs aux quatre coins de la maille. Le flux au travers du volume de contrôle est alors calculé comme l'intégrale sur le bord de ce volume, de la dérivée du polynôme. Les détails concernant cette méthode sont présentés en  annexe~\ref{chap:anx_methode_mixte_VFEF}. Il y est notamment montré que ce schéma mixte se ramène en réalité à un schéma à 9 points avec des poids un peu différents, comme présenté dans la Figure~\ref{fig:schema_laplace_9pts_custom}. 
+Ici encore le trèfle persiste. Tout ceci nous amène à penser que le schéma de diffusion n'est pas le responsable de cette instabilité numérique qui génère le trèfle. Regardons maintenant de plus près le schéma de transport. 
 
 \section{Le schéma de transport}
 \subsection{Reproduction du problème sur un modèle (très) réduit}
@@ -112,8 +112,8 @@ Afin de démontrer que le responsable du trèfle est le schéma de transport, tr
 Ce nouveau modèle est construit à partir du modèle complet présenté au chapitre précédent, en faisant les simplifications suivantes~:
 \begin{myitemize}
 \item On enlève les parties modélisant les traitements cliniques. On peut donc ainsi considérer une seule et unique population proliférante.
-\item On supprime la partie vascularisation. Les taux de croissance $\gammapp$ et $\gammapd$ sont alors considéré constant, égaux à~1.
-\item On supprime le compartiment nécrosé, quitte à considérer que celle-ci est instantanément éliminée.
+\item On supprime la partie vascularisation. Les taux de croissance $\gammapp$ et $\gammapd$ sont alors considérés constants, égaux à~1.
+\item On supprime le compartiment nécrosé, quitte à considérer que la nécrose  est instantanément éliminée.
 \end{myitemize}
 Le modèle complet en est alors réduit à~:
 \begin{equation}
@@ -142,7 +142,7 @@ De plus, aux alentours de~$1.5\;cm$ du centre de la tumeur, il y a une couronne 
 \includegraphics[width=.49\textwidth]{vitesse_imposee.png}
 \caption{Composantes de la vitesse imposée dans l'équation de transport~\eqref{eq:mod_reduit_test_transp} -- Ici $L=9$ donc le rayon~$r$ varie entre~$0$ et~$4,5$\label{fig:vitesse+et-imposees} }
 \end{multicols}
-\end{figure}\todo[noline]{graphique \ref{fig:vitesse+et-imposees} a refaire}
+\end{figure}
 
 La vitesse, que l'on impose dans~\eqref{eq:mod_reduit_test_transp}, est alors choisie comme suit en fonction du rayon~$r(\vecx)=\| \vecx - \vecx_c \|$ uniquement ($\vecx_c$ étant le centre du domaine de calcul de taille $L\times L$)~:
 \begin{equation}\label{eq:vit_imposee}
@@ -155,7 +155,7 @@ v_+(r)&=\exp\left( \frac{-1}{10} \left(\frac{r-L/4}{L/16} \right)^2 \right., \la
 \end{align}
 Le profil de ces 2 vitesses est présenté à titre indicatif sur la Figure~\ref{fig:vitesse+et-imposees}. 
 
-La vitesse imposée est donc, par construction, complètement dilatante au départ et tends vers un comportement totalement contractant en temps long. La transition s'opère avec un mélange des 2 comportements~:
+La vitesse imposée est donc, par construction, complètement dilatante au départ et tend vers un comportement totalement contractant en temps long. La transition s'opère avec un mélange des 2 comportements~:
 \begin{myitemize}
 \item dilatant en périphérie, autour d'un rayon~$L/4=2.25$,
 \item contractant à l'intérieur, autour d'un rayon~$L/8=1.125$.
@@ -203,7 +203,7 @@ Nous avons ainsi mis en évidence la responsabilité du schéma de transport dan
 Le schéma WENO5 standard comme donné par~\cite{Liu1994} est précis dans la plupart des cas, cependant, comme nous venons de le voir, certains ensembles de paramètres%\footnote{L'ensemble de paramètre a été trouvé par incident en  fitant l'aire tumorale de \Chen, \cf Section~\ref{section chen}.}
  produisent des instabilités numériques. De telles instabilités ont aussi été constatées avec un schéma classique upwind. 
 
-Le problème est dû au stencil du WENO5 qui tend à favoriser les directions du maillage lors de changement de direction de la vitesse. 
+Le problème est dû au stencil du WENO5 qui tend à favoriser les directions du maillage lors de changements de direction de la vitesse. 
 Plus précisément, pour le schéma classique WENO5, en tout point 
 ~$\vecx_{ij}$ de la grille, l'approximation numérique 
 $\W^{n+1}_{ij}$ de l'équation~\eqref{eq_transp_weno} au temps 
@@ -259,7 +259,7 @@ où~$\beta\in[0,1]$ est un paramètre numérique que nous devons choisir.
 En particulier pour~$\beta=0$, on retrouve le WENO5 standard. 
 
 
-Sur la Figure~\ref{fig:evo_test_transp_twinweno}, on peut visualiser le bénéfice apporté par le \twinweno sur le modèle réduit. Ici bien que le résultat final ne soit pas parfaitement circulaire (de l'ordre de quelques pourcents d'erreurs), on peut voir que la conservation de l'invariance par rotation est très améliorée. Cette amélioration est également rendue sur le modèle complet comme nous pouvons le voir sur la Figure~\ref{fig:compWENO5}, comparée à la même simulation présentée~Figure~\ref{fig:trefle}, réalisée avec un WENO5 standard.
+Sur la Figure~\ref{fig:evo_test_transp_twinweno}, on peut visualiser le bénéfice apporté par le \twinweno sur le modèle réduit. Ici bien que le résultat final ne soit pas parfaitement circulaire (de l'ordre de quelques pourcents d'erreur), on peut voir que la conservation de l'invariance par rotation est très améliorée. Cette amélioration est également rendue sur le modèle complet comme nous pouvons le voir sur la Figure~\ref{fig:compWENO5}, comparée à la même simulation présentée~Figure~\ref{fig:trefle}, réalisée avec un WENO5 standard.
 
 \begin{figure}[!htb]
 \centering
@@ -279,7 +279,7 @@ Comparé à la Figure~\ref{fig:trefle}, la conservation de l'invariance par rota
 Quelle est la valeur optimale pour le paramètre~$\beta$ ?} 
 Avec~$\beta=1$, on obtient un trèfle orienté dans les directions diagonales. 
 Avec~$\beta=0.5$ aussi ! Le fait que~$\Delta r$ soit supérieur à~$\Delta x$ favorise certainement la direction diagonale au détriment des autres. 
-Pour l'équation~\eqref{eq:mod_reduit_test_transp} muni de la vitesse~\eqref{eq:vit_imposee}, la valeur optimale de~$\beta$ est de~$0,26$ (résultat fourni par une méthode de descente sur le paramètre~$\beta$, précis à la seconde décimale). 
-Cependant cette valeur du paramètre~$\beta$, bien que faisant nettement moins apparaitre le trèfle, ne semble pas être optimale pour le problème complet. Pour le jeu de paramètre de la simulation présentée sur la Figure~\ref{fig:trefle}, la valeur $\beta=0,27$ est meilleure que~$0,26$. D'autres jeux de paramètres encore ont produit un optimal de~$\beta$ de~$0.3$. 
-La valeur optimale du paramètre~$\beta$ n'est donc pas transcendante~: elle ne dépends pas uniquement du schéma utilisé et des caractéristiques du maillage, mais aussi de la vitesse. L'étude du choix de ce paramètre en fonction de la vitesse n'a pas été réalisée ici. Nos simulations permettent d'en donner un encadrement~: entre~$0.2$ et~$0.4$. Ici, nous nous limiterons à~$\beta$ constant en temps, ce choix améliorant déjà de manière très satisfaisante la conservation de l'irrotationnalité.
+Pour l'équation~\eqref{eq:mod_reduit_test_transp} muni de la vitesse~\eqref{eq:vit_imposee}, la valeur optimale de~$\beta$ est de~$0.26$ (résultat fourni par une méthode de descente sur le paramètre~$\beta$, précis à la seconde décimale). 
+Cependant cette valeur du paramètre~$\beta$, bien que faisant nettement moins apparaître le trèfle, ne semble pas être optimale pour le problème complet. Pour le jeu de paramètres de la simulation présentée sur la Figure~\ref{fig:trefle}, la valeur $\beta=0.27$ est meilleure que~$0.26$. D'autres jeux de paramètres encore ont produit un optimal de~$\beta$ de~$0.3$. 
+La valeur optimale du paramètre~$\beta$ n'est donc pas transcendante~: elle ne dépend pas uniquement du schéma utilisé et des caractéristiques du maillage, mais aussi de la vitesse. L'étude du choix de ce paramètre en fonction de la vitesse n'a pas été réalisée ici. Nos simulations permettent d'en donner un encadrement~: entre~$0.2$ et~$0.4$. Ici, nous nous limiterons à~$\beta$ constant en temps, ce choix améliorant déjà de manière très satisfaisante la conservation de l'irrotationnalité.
 \end{document}

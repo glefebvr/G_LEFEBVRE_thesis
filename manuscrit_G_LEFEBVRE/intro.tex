@@ -5,9 +5,26 @@
 \specialchap{Introduction}
 %\chapter{Introduction}
 
-===== ICI INTRO =====
-%\lipsum
-%\lipsum
+Le but de ce travail est de fournir un modèle spatial de tumeur du stroma\footnote{tissu de soutien, non impliqué dans la fonction première de l'organe.} gastroinstestinal (GIST) traité cliniquement de manière standard afin de comparer le modèle avec les images, et éventuellement de souligner des particularités dans la croissance tumorale ou dans les rechutes. Ce travail est un premier pas dans la modélisation de résistance aux traitements, basée sur des images cliniques.
+
+
+Dans un premier temps, nous fournissons ici un modèle, qui consiste en un système d'équations aux dérivées partielles (EDPs) non linéaires afin de prendre en compte les aspects spatiaux de la croissance tumorale. Actuellement, 
+les modèles basés sur des équations différentielles ordinaires (EDOs), comme les modèles de Mendelsohn, de Gompertz ou de 
+Bertalanffy, permettent de suivre la croissance de l'aire tumorale mais ils ne considèrent aucun aspect spatial de cette croissance. Nous en référons à l'analyse de Benzekry {\it et al.} pour plus de détails sur de tels modèles 1D~\cite{benzekry2014}. 
+Notre modèle est dans le même esprit que celui de Ribba~{\it et
+  al.}~\cite{Ribba2006532} -- nous vous renvoyons également à~\cite{Iollo2012,gallinato2014} -- pour  décrire l'évolution de la maladie. La principale nouveauté du modèle réside en la description des traitements. Deux traitements sont considérés~: le premier traitement a un effet cytotoxique alors que le second à un effet à la fois cytotoxique et antiangiogénique. Trois populations de cellules proliférantes sont utilisées pour décrire la résistance aux traitements~: une population de cellules sensibles aux deux traitements, un autre sensible uniquement au second traitement et une dernière résistante aux deux traitements.  
+Nous incorporons également un modèle simple d'angiogenèse puisqu'elle joue un rôle crucial dans la croissance métastatique.
+
+
+Une fois le modèle construit, nous présentons les schémas numériques utilisés pour résoudre les EDPs. 
+En particulier, nous présentons dans la 
+Section~\ref{sec:NumMet} un nouveau type de schéma WENO5 qui stabilise le calcul numérique en utilisant une combinaison du stencil classique du WENO5 avec un autre stencil tourné par rapport au premier. Ensuite, dans la Section~\ref{sec:NumRes}, nous comparons dans le détail notre modèle aux données cliniques pour un patient donné, pour lequel nous disposons de l'ensemble du protocole clinique. 
+Mentionnons qu'il a été nécessaire d'introduire une reconstitution numérique de scanner depuis les résultats numériques afin de comparer les niveaux de gris des scanners avec nos simulations. 
+Une fois le fit obtenu, nous examinons numériquement l'effet de la dose de traitement sur la progression de la croissance tumorale. Un résultat contre-intuitif est ainsi obtenu~: avec les paramètres utilisés pour le fit des données, une augmentation de la dose du premier traitement n'améliore pas le temps de survie sans aggravation. Ce résultat est expliqué dans la Section~\ref{subsec:NumEff}. 
+Enfin, nous concluons sur la consistance de notre modèle en présentant les différents comportements d'évolution tumorale que l'on peut obtenir. 
+Nous fitons également l'aire tumorale d'un autre patient dont la tumeur est proche du bord du foie. 
+Notez que pour un tel patient, la forme de la tumeur ne pourra pas être retrouvée. Notre modèle ne prend pas en compte les contraintes mécaniques correspondantes. Cependant, l'aire tumorale semble bien reproduite par nos simulations. 
+Les résultats de cet article sont un premier pas vers la compréhension des résistances des métastases hépatiques de GIST aux médicaments. Cependant, comme mentionné dans la conclusion, les scanners ne fournissent pas suffisamment d'informations pour permettre à notre modèle d'être prédictif~: évaluer les paramètres sur les scanners réalisés durant la croissance avant traitement et durant la première ligne de traitement ne suffit pas pour prédire la réponse à la seconde ligne de traitement. Ceci est dû au fait qu'en se basant sur les scanners, il est impossible d'évaluer la quantité de cellules insensibles au second traitement. Nous sommes convaincus que des données sur la structure de la tumeur, comme des biopsies ou des images fonctionnelles, devraient aider à améliorer la prédictivité du modèle.
 
 
 \end{document}
