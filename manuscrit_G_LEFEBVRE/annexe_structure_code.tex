@@ -1,0 +1,72 @@
+\documentclass[main.tex]{subfiles}
+\pagestyle{main}
+
+\begin{document}
+\chapter{Structuration du code de calcul. \label{chap:structure_code} }
+\mylettrine{D}{e} nombreux codes de calculs ont été développés durant la thèse. Outre le début de la thèse qui s'est déroulé sous Scilab dans le but de maquetter rapidement le code résolvants les différents modèles EDP, plusieurs codes ont été développées dans différents langages. 
+Sans tomber dans la présentation détaillée de l'ensemble des codes développés pendant ma thèse, faisons en un tour d'horizon. Ma thèse étant divisée en deux grandes parties, deux codes ont été développé. Le premier pour résoudre le modèle EDP, et fournir des simulations numériques reproduisant des croissances tumorales et des résistances aux traitements. Le second, pour calculer un critère d'\hetero à partir d'une image, que ce soit une image provenant directement de l'appareil d'imagerie médicale ou une image provenant de la simulation numérique.  
+
+\section{Code de calcul pour la simulation numérique du modèle EDP}
+Le code permettant la simulation numérique via le modèle EDP a été développé en C++, avec la librairie eLYSe. Cette librairie, développée par Olivier Saut, est une interface qui fournit un certain nombre de solveurs pour les problèmes classiques (transport et diffusion). Elle s'appuie sur la librairie d'algèbre linéaire PETSC, bien qu'aucune connaissance de PETSC ne soit nécessaire pour utiliser eLYSe. 
+
+Après avoir appris le C++, j'ai pu prendre en main cet outil. Divers modules ont pu être construit~:
+\begin{myitemize}
+\item Un module pour les schémas à stencil croisé (de type \twinweno)
+\item Une classe Modele qui est à même de calculer, en fonction de paramètres (ceux fournis dans le chapitre~\ref{chap:modele_EDP}, dans la Table~\ref{table_variable} de la  page~\pageref{table_variable}) l'évolution spatio-temporelle des différentes quantités du modèle EDP (notamment les diverses populations de cellules). 
+\item Une classe de méta-modèle, permettant d'explorer, de différentes manières, l'espace des paramètres lié à un modèle. Cette classe m'a notamment servie pour réaliser le fit des données cliniques par le modèle EDP. Plusieurs méthodes d'exploration ont été abordées : Monte-Carlo, méthode de sensitivité ou de descente, algorithmes génétiques... Le modèle EDP ayant beaucoup de paramètre et admettant beaucoup de minima locaux, il n'a pas été facile d'obtenir un fit acceptable. 
+\end{myitemize}
+
+\bigskip
+Le code de calcul est séquentiel. La partie recherche d'optimum dans l'espace des paramètres a elle été (pseudo-)parallélisée. A un jeu de paramètres donné, il y a un modèle qui est calculé sur un unique processeur. Les méthodes d'exploration de l'espace des paramètres nécessitant donc l'évaluation de plusieurs modèles, on partage l'ensemble des évaluations à réaliser entre les différents processeurs. Par exemple, sur une méthode de gradient, à chaque pas de l'algorithme, une approximation du gradient (dérivée du modèle par rapport à ses $n$ paramètres ici) est requise. Ainsi pour chaque paramètre, une évaluation est nécessaire. Chaque évaluation est réalisée sur une seul et unique processeur, mais on partage les $n$ évaluations requises sur le nombre de processeurs disponibles.
+
+
+Pour donner un ordre d'idée du code manipulé, présentons le en quelques chiffres. Ce code est subdivisé en une dizaine de modules conduisant à un total d'environ \numprint{10000} lignes. Il est exécuté sur la plateforme de calcul INRIA, nommée PlaFRIM, sans laquelle de nombreuses simulation numériques n'auraient pas pu être réalisées. Le temps moyen d'exécution d'une simulation est d'environ~1h30. 
+
+
+\section{Code de calcul aboutissant à la quantification de l'\hetero}
+Le code de calcul générant le pourcentage d'\hetero aussi bien clinique que numérique est très hétéroclite. Il y a plusieurs raisons à cela :
+\begin{myitemize}
+\item On veut pouvoir manipuler des données de natures différentes. On souhaite générer les histogrammes des niveaux de gris depuis des sources diverses :
+\begin{myitemize}[label=$-$]
+\item Les données cliniques sont dans un format particulier~: le format DICOM. C'est un format de méta-image, qui nécessite l'utilisation d'un logiciel (ou d'une librairie) spécifique pour être visualisé et traité. 
+\item La simulation numérique fournit les différentes populations~$P,N$ et~$S$. A partir de cela  de niveaux de gris associés~$\tau_P, \tau_N$ et~$\tau_S$, une image scanner est synthétisée.
+\end{myitemize}
+\item Le code s'appuie sur des langages différents :
+\begin{myitemize}[label=$-$]
+\item C++, avec la librairie ITK. Passage quasiment obligatoire (il y a très peu d'alternative) pour pouvoir traiter des données au format DICOM.
+\item Python, avec la librairie Scikit-learn, qui contient un module dédié au mélange gaussien.
+\end{myitemize}
+\end{myitemize}
+
+Noter qu'au niveau des données, il n'y a pas que la nature des images qui diffèrent~: le moyen d'acquérir le contour diffère également. 
+Pour les données cliniques, grâce au logiciel OsiriX, nous pouvons contourer manuellement les tumeurs, et en exporter le contour au format xml. Pour l'aspect images provenant de la simulation numérique, il n'y a pas de contour défini. Le choix (assez naturel) a été fait de le définir en prenant un seuil sur la population saine. Moyennant un parseur xml, on peut donc se ramener à un contour semblable dans les deux cas.
+
+
+Le code s'articule donc en plusieurs briques. Outre un parseur xml écrit en Objective-C, deux briques principales se distinguent. 
+
+
+Une première brique a été développée en C++ avec la librairie ITK. 
+Elle a pour but, à partir à partir d'une image quelconque 
+%(dicom ou sortie image fournie par le code précédent)
+ et d'un contour, d'extraire les valeurs des niveaux de gris des pixels présents à l'intérieur du contour. On obtient ainsi l'histogramme des niveaux de gris. 
+La librairie ITK a l'avantage de traiter des images aux formats standards (.jpg, .png, etc) mais aussi et surtout le format DICOM, qui est le format des images médicales que nous possédons. 
+Puisque ce code manipule différents format d'images, j'en ai profité pour qu'il soit capable d'exporter, depuis les données DICOM, des images dans des formats standards sur lesquelles sont mis en évidence les différents contours. 
+Ce code a notamment permis de générer les images présentées dans les Figures~\ref{fig:nber_complete_scan} et~\ref{fig:chen_complete_scan} de l'annexe~\ref{chap:anx_img_complement} (pages~\pageref{fig:nber_complete_scan} et~\pageref{fig:chen_complete_scan}).
+
+
+La seconde brique est chargée de trouver les paramètres de deux gaussiennes dont la somme décrit au mieux un histogramme donné. 
+Cette brique est basée sur la librairie Python Scikit-learn, qui contient un module dédié au mélange gaussien. Une fois les paramètres du mélange bi-gaussien identifiés, on peut aisément construire et examiner les critères quantifiant l'\hetero.
+
+\begin{figure}
+TODO : METTRE FIGURE
+\caption{\label{fig:schema_struct_code}Schéma du code de calcul permettant la quantification de l'\hetero. Le code est très hétéroclite et fait intervenir plusieurs langages de programmation}
+\end{figure}
+
+L'ensemble de l'articulation entre les différents modules est présenté sur la Figure~\ref{fig:schema_struct_code}.
+Afin d'automatiser l'ensemble de la chaîne, un script Bash a été développé.
+
+
+Terminons en donnant brièvement quelques statistiques. Ce deuxième code fait environ \numprint{5000} lignes. Le temps d'éxécution est de quelques secondes.
+ 
+
+\end{document}
