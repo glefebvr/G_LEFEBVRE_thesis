@@ -1,0 +1,67 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{lmodern}
+\usepackage{xspace}
+
+
+\newcommand{\hetero}{hétérogénéité\xspace}
+\newcommand{\Hetero}{Hétérogénéité\xspace}
+\newcommand{\heteros}{hétérogénéité\xspace}
+\newcommand{\Heteros}{Hétérogénéité\xspace}
+\newcommand{\heterogene}{hétérogène\xspace}
+\newcommand{\heterogenes}{hétérogènes\xspace}
+\newcommand{\Nber}{Patient~A\xspace}
+\newcommand{\Chen}{Patient~B\xspace}
+\newcommand{\ie}{{\it i.e.}\xspace}
+\newcommand{\cf}{{\it cf.}\xspace}
+\newcommand{\etal}{{\it et al.}\xspace}
+
+\newcommand{\twinweno}{twin-WENO5\xspace}
+\newcommand{\Twinweno}{Twin-WENO5\xspace}
+
+\setlength{\parskip}{1em}
+
+
+\begin{document}
+
+\begin{center}
+\large
+Thèse de Guillaume LEFEBVRE \\
+\Large
+%Modélisation spatiale de résistances aux traitements cancéreux à partir de l'imagerie médicale et analyse de l'\hetero tumorale : cas des métastases hépatiques de GIST. 
+Résistances aux traitements cancéreux : modélisation et analyse de l'\hetero tumorale dans le cas de métastases hépatiques de GIST. 
+\end{center}
+
+\section*{Résumé}
+Les tumeurs du stroma gastroinstestinal (GISTs) touchent de 9 à 14 cas par million d'individu par an. Dans 25\% des cas ce type de cancer migre au foie. Ce type de cancer avancé est réputé pour être résistant à la plupart des chimiothérapies conventionnelles. Des thérapies ciblées sont alors utilisées. La ligne de conduite est la suivante. Le patient est mis sous imatinib, molécule cytotoxique (inhibiteur de tyrosine kinase). Dans 85\% des cas, le traitement contrôle la (ou les) lésion(s) métastatique(s) pendant 20 à 24 mois avant que le patient ne rechute. Une fois la rechute avérée, les médecins changent de traitement et administrent du sunitinib. Cette seconde molécule est un inhibiteur multi-récepteurs (de tyrosine kinase également) et a des effets cytotoxiques et antiangiogénique. 
+
+
+Comme le pronostic et la sensibilité aux thérapies ciblées dépend de chaque patient, notre but a été, dans une première partie de la thèse, de développer un modèle mathématique basé sur les images cliniques, qui soit dépendant de chaque patient. 
+Basé sur des EDPs, notre modèle est capable de décrire l'évolution spatiale de la croissance d'une métastase. Afin de prendre en compte les deux types de traitement cités ci-dessus, l'approche découle d'un couplage entre un modèle de croissance tumorale, et un modèle d'angiogenèse. Pour l'aspect croissance tumorale, la métastase est décrite comme un flux de densité cellulaire : son évolution est régit par des équations d'advection non homogène. Les effets liés aux traitements (contrôle et rechute) sont pris en compte par la subdivision de la population tumorale en plusieurs sous-population : une population nécrosée et trois populations de cellules proliférantes (qui n'ont pas les même sensibilités face aux différents traitements). Notre modèle fournit ainsi la variation de ces différentes densités au cours du temps. Notre modèle est comparé aux données de deux patients : le premier est très représentatif du type de comportement que l'on cherche à reproduire et le second plus particulier, présente de plus forte variation de l'aire tumorale et une métastase sur le bord du foie (ce que notre modèle ne prend pas en compte). Le second patient servira donc surtout de validation. Pour ces deux patients, bien que le modèle ne puisse prédire l'évolution de l'aire tumorale, celle-ci est correctement reproduite par la simulation numérique, de manière qualitative mais aussi quantitative.
+
+
+
+Outre l'aspect modélisation sur du long terme (avec succession de deux traitements aux modes d'actions différents), la principale nouveauté de ce type d'approche réside dans l'aspect spatial. Actuellement, pour quantifier l'efficacité d'un traitement, les médecins utilise le critère RECIST, qui consiste à ne retenir des scanners que le diamètre de la métastase. Plusieurs études ont déjà démontrées les limitations de ce critère sur ce type de cancer. En accord avec ceci, notre modèle spatial permet de souligner l'importance d'un autre aspect~: l'\hetero tumorale. Notamment le modèle illustre bien la corrélation entre \hetero et rechute imminente.
+
+
+
+Notons que notre modélisation nous a confrontée aux limitations des schémas classiques de transport sur maillage cartésien. Partant d'une donnée invariante par rotation, nous avons observé une altération de la forme circulaire au cours du temps conduisant à des géométrie aberrante (du rond on passe a un carré, puis à un trèfle à 4 feuilles !). Ce type d'instabilité a été corrigé par un nouveau schéma de transport, baptisé \twinweno, présenté dans le manuscrit.
+
+
+Une étape supplémentaire a ensuite été franchie dans la présentation des résultats de simulations numériques. De manière à se rapprocher au plus près d'une image médicale,  une reconstruction d'image scanner de synthèse a été développée. Il a fallut associer à chaque population cellulaires un niveau de gris. Cette association n'a pas été des plus simples. Sur un scanner le niveau de gris est lié à l'absorption des tissus exposés aux rayons X. Notre simulation fournit quant à elle, des densités de populations. N'ayant aucun moyen de déterminer la répartition des populations de cellules à partir des scanners, et encore moins d'isoler le niveau de gris qui serait associé à chacune d'entre elles, une optimisation a été réalisée sur les paramètres de cette synthèse d'images. Le gain apporté par cette étape est non négligeable puisqu'elle permet à un médecin de regarder nos simulations numériques comme s'il regardait un scanner. 
+
+
+Bien que non actuellement prise en compte dans l'évaluation clinique de l'efficacité d'un traitement, différente phase homogène/\heterogene sont visibles sur les scanners et notre modèle les reproduit au moins pour le premier patient. Mais à quel point ? La deuxième partie de la thèse a été consacrée à l'établissement d'un critère permettant de quantifier l'\hetero, aussi bien sur les images cliniques, que sur les images de synthèses produites par la simulation numérique. Après avoir identifié la tumeur sur les images, l'histogramme des niveaux de gris est étudié et décrit à l'aide de deux gaussiennes. Le critère, basé sur une évaluation de la proximité de ces deux composantes, va ainsi traduire le caractère \heterogene de la métastase. La robustesse du critère est également discutée, avant de comparée l'\hetero clinique à celle fournit par la simulation numérique. 
+
+
+Finalement, ce quantificateur de l'\hetero met en avant les limitations du modèle EDP dont la sensibilité de paramètres non mesurables cliniquement (ou n'étant pas en notre possession) semble importante. Une étude du problème inverse serait à mener pour approfondir cela. Des données IRM notamment pourraient venir palier au manque d'information sur la vascularisation, bien qu'il résiderait quelques indéterminées. D'autre pistes sont encore à explorer comme l'ajout de paramètres statistiques en faisant du machine learning sur une plus large cohorte de patient par exemple. On pourrait également imaginé un autre modèle EDPs, dans lequel l'\hetero serait une variable à part  entière, et pourrait donc ainsi gouverner les rechutes. 
+
+
+\end{document}
