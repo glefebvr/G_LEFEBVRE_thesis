@@ -28,6 +28,9 @@
 \usepackage{relsize}
 \usepackage{lettrine}
 
+% ajoute (entre autre) la bibliographie dans la table des matieres 
+\usepackage[nottoc]{tocbibind}
+
 \usepackage[titles]{tocloft}
 \setlength{\cftchapnumwidth}{0pt}
 \setlength{\cftbeforechapskip}{\baselineskip}
@@ -120,6 +123,7 @@
 
 \usepackage{tabularx}
 \usepackage{tablefootnote}
+\usepackage{threeparttable} %% tableau avec titre + footnote attachés
 %%\usepackage{xcolor} (repetition)
 %%\usepackage{showkeys} %%% Pour faire afficher les label utilisés
 %%%%%\usepackage[plain]{fancyref}
@@ -161,6 +165,8 @@
 %\usepackage{fncychap}
 %%\usepackage{fancyhdr} %%%% incompatible avec la class memoir
 \usepackage{fancyhdr}
+
+\usepackage[bottom]{footmisc} %%% force les footnotes sur la meme page que le footnotemark
 
 %%%%%% Parametrage des entetes et pied de page %%%%%%%%
 \pagestyle{fancy}
@@ -230,6 +236,10 @@
 
 %%%%%%% Variables d'environnement
 \graphicspath{{../img/}{../img_publi_GIST/}{../img/simu/}} %%
+
+\interfootnotelinepenalty=10000  %%% Empeche latex de couper des footnotes sur deux pages
+
+%%\setlength{\parskip}{1em} %%% espace entre les paragraphes
 
 
 \setlength\doublerulesep{2mm} %% hauteur entre 2 \hline successifs
@@ -314,7 +324,7 @@
 \chapter*{#1}%
 \pagestyle{prefacestyle}%
 \renewcommand\chaptername{#1}%
-%%\markboth{#1}{#1}
+\markboth{#1}{#1}
 \addcontentsline{toc}{chapter}{#1}%
 %\addcontentsline{toc}{chapter}{\protect\numberline{}#1}
 }
@@ -423,6 +433,7 @@ Version du \today, \printtime
 \subfile{chap_trefle}
 \subfile{chap_optim_grey}
 \subfile{chap_analyse_heterogeneite}
+\subfile{conclusion}
 
 \cleardoublepage
 \appendix %%%% Les annexes
@@ -479,7 +490,7 @@ Version du \today, \printtime
 %\nocite{*}
 %%\renewcommand\bibname{\rm Bibliographie}
 \renewcommand\chaptername{Bibliographie}
-\addcontentsline{toc}{chapter}{Bibliographie}
+%%%\addcontentsline{toc}{chapter}{Bibliographie}
 \bibliographystyle{plain}
 \bibliography{biblio}
 \end{document}

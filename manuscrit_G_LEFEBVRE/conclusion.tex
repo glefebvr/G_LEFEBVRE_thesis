@@ -1,0 +1,45 @@
+\documentclass[main.tex]{subfiles}
+%\pagestyle{main}
+
+\begin{document}
+\specialchap{Conclusion}
+
+
+\lettrine{D}{ans} ce manuscrit nous avons fourni un modèle basé sur des EDPs propre à chaque patient. Il décrit le comportement global de métastases hépatiques de GISTs durant les différentes étapes de son évolution. Nous avons présenté les méthodes numériques utilisées pour résoudre le système d'EDPs et nous avons introduit un nouveau type de schéma WENO5, appelé \twinweno, pour faire face à une instabilité numérique. Notons que cette instabilité a été mise en évidence sur des cas de simulations particuliers auquel nous sommes confronté~: une modélisation de croissance tumorale sur du long terme avec deux types de traitements différents induisant de forts rétrécissement de l'aire tumorale. 
+
+
+\paragraph{}
+Le modèle a été numériquement comparé avec les observations cliniques concernant~\Nber, qui a été traité successivement à l'imatinib puis au sunitinib.
+Comme présenté sur la 
+Figure~\ref{fig:fit_area_henbert}, notre modèle fournit des résultats qui sont qualitativement en accord avec les données cliniques. En particulier, notre modèle est capable de décrire non seulement l'évolution de la taille de la lésion, mais aussi sa structure, comme l'illustrent les Figures~\ref{fig_nber} et~\ref{fig:compare_spatial_nber}. 
+Il est intéressant de noter que nos simulations numériques font apparaître une couronne de cellules proliférantes sur le pourtour de la tumeur juste avant la rechute. Ceci semble corroboré dans les scanners par l'augmentation de l'hétérogénéité tumorale, au sens des niveaux de gris, avant la rechute. Plus la métastase est hétérogène, plus la rechute est imminente. Ce résultat souligne le fait que le critère RECIST n'est pas suffisant pour évaluer l'efficacité d'un traitement.
+
+\paragraph{}
+Nous avons également toucher du doigt avec notre modèle, le fait qu'il existe une dose minimale de traitement pour qu'il y ait un effet. A l'inverse, trop traiter, n'améliore pas la survie globale du patient (survie sans aggravation) comme le montre la Figure~\ref{fig:eff_glivec_nber}. Notre modèle conforte donc l'hypothèse qu'il existe une dose optimale de traitement. Cependant il ne peut pas être utilisé pour déterminer cet optimum car il n'est pas prédictif. En effet, comme expliqué par la Figure~\ref{fig:possibilites2}, on peut voir que des comportements très différents à long terme peuvent être obtenus avec le même comportement durant les 400 premiers jours (on peut trouver différents jeux de paramètres qui donnent le même comportement initial). Il n'est pas possible de déterminer par exemple la quantité de cellules résistantes à un instant donné à partir de l'imagerie. De même pour la densité du système vasculaire environnant. Ceci signifie que des données plus précises, comme de l'imagerie fonctionnelle (TEP-scan ou IRM), ou encore éventuellement des biopsies, devront être nécessaires pour une meilleure analyse de la structure interne de la métastase. Ce nouveau type de données pourraient ainsi enrichir le présent modèle.
+
+
+\paragraph{}
+%Afin de visualiser les résultats numériques de manière similaires aux données, une reconstruction d'image scanner de synthèse est adoptée. La paramétrisation de cette reconstruction a été optimisée bien que plusieurs cas de figures mal conditionnés ont été exhibés. 
+Une étape supplémentaire a ensuite été franchie dans la présentation des résultats de simulations numériques. 
+Afin de les visualiser de manière similaire aux données, une reconstruction d'image scanner de synthèse est adoptée. Bien qu'elle se résume à une interpolation, sa paramétrisation ne fut pas sans problème.  Plusieurs cas de figures mal conditionnés ont été exhibés. Une fois ces cas identifiés et écartés, les paramètres de la 
+synthèse d'image scanner ont finalement été optimisés et ont permis la génération d'images en niveaux de gris à partir des résultats de la simulation numérique.
+
+
+\paragraph{}
+Un critère quantifiant l'\hetero a été construit. Robuste, il permet d'attribuer un pourcentage d'\hetero a une image quelconque, qu'elle soit médicale ou qu'elle provienne  de la simulation numérique. Il permet ainsi de quantifier ce qui restait jusqu'alors à l'appréciation personnelle de celui qui regarde les images. Pour \Nber, ce critère met en avant la proximité de l'évolution de l'\hetero clinique avec celle constatée sur les simulations numériques. Cependant, pour \Chen, ce quantificateur de l'\hetero démontre les limites du modèle EDP : l'\hetero n'est ici pas bien décrite. La sensibilité du modèle vis à vis de la condition initiale semble donc importante. Le fait que celle-ci soit choisie  homogène, alors que la donnée ne l'est pas biaise donc l'ensemble de la simulation numérique. Pour palier à cela, il faudrait alors être capable de créer des conditions initiales qui soient cliniquement consistantes et en accord avec l'imagerie. Et le problème est bien là... Admettons que l'on considère une condition initiale avec de la nécrose à un endroit donné. Il se pose d'abord le problème de savoir quelle quantité en mettre puisque celle-ci n'est pas déterminable à partir des scanners. Ensuite une telle configuration  signifie que l'endroit nécrosé en question n'est pas suffisamment vascularisé. On ne peut donc pas considérer une vascularisation initiale constante dans ce cas. 
+
+
+\paragraph{}
+Les perspectives sont donc multiples. 
+Pour construire la condition initiale de manière cohérente, deux pistes sont à explorer. La première consiste à récupérer de données d'imagerie fonctionnelle (IRM ou TEP-scan), ce qui permettrait d'avoir de l'information sur la vascularisation. La seconde piste est d'étudier le modèle adjoint, pour mieux cerner l'impact du choix de la condition initiale et en améliorer la construction.  
+Notons que cette étude pourrait également corriger le caractère non prédictif du modèle. 
+
+Dans le cas de figure où l'on aurait des données sur une large cohorte de patients, des paramètres statistiques pourraient venir enrichir le présent modèle par le biais notamment de machine learning.
+
+Enfin, un nouveau modèle dans lequel l'\hetero serait une variable à part entière pourrait également être construit et pourrait éventuellement permettre de réduire le nombre d'inconnues sur lesquelles nous n'avons pas de données.
+
+\paragraph{}
+La modélisation de résistance aux traitements anticancéreux est une nécessité. Les travaux présentés ici constituent un premier pas non négligeable en ce sens. 
+De tels travaux doivent être poursuivis de sorte à ce que la modélisation mathématique apporte à terme un gain clinique, que ce soit par le biais d'aide au diagnostic grâce à de nouveaux critères ou par le biais d'outils de pronostics ou par d'autre biais encore.
+
+\end{document}

@@ -102,6 +102,7 @@ Il est bien connu que les médicaments cytotoxiques n'ont pas un impact similair
 Il est important de noter que notre but n'est pas de décrire l'évolution de la tumeur depuis le tout début du GIST, mais de nous focaliser sur l'évolution des métastases situées dans le foie. 
 Par conséquent, selon les observations cliniques, il semble pertinent de considérer que trois sous-populations sont présentes lorsqu'une métastase est détectée.
  \begin{table}[h]
+ %\begin{threeparttable}[b]
  \centering
  \rowcolors{2}{white}{gray!40}
  {\footnotesize%%\smaller[0.5]
@@ -133,17 +134,25 @@ Par conséquent, selon les observations cliniques, il semble pertinent de consid
  $\vit(t,\vecx)$ &Vitesse du mouvement passif de la tumeur sous l'effet de la pression& $cm.d^{-1}$ \\
  \hline
  $\Pi(t,\vecx)$ & Pression du milieu\protect\footnotemark
- %\tablefootnote{
-%L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
-%Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse.}
+% \tnote{1}
+%% \tablefootnote{
+%%L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
+%%Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse.}
  & $kg.cm^{-1}.d^{-2}$\\
  \hline
  \end{tabularx}
  }
  \caption{\label{table_variable}Liste des quantités calculées par le modèle
- -- $d=\textrm{jour (day)}$ }
+ -- $d=\textrm{jour (day)}$ } 
+%%\begin{flushleft}  \rule{5cm}{1pt}  \end{flushleft}
+%\footnoterule 
+% \begin{tablenotes}
+%\item [1] L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
+%Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse
+%\end{tablenotes}
+% \end{threeparttable}
  \end{table}
- \footnotetext{L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
+\footnotetext{L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
 Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse.}
 
 \subsection{Le modèle mathématique}
@@ -166,6 +175,7 @@ La densité de cellules proliférantes est gouvernée par l'équation de transpo
 où~$\chii(t)=\mathds{1}_{[\Tini{i},\rm \Tend{i}[}(t)$ est la fonction temps caractéristique du 
 traitement~$\treat_{\rm i}$ et~$\mu_{\rm i}$ représente le taux de mortalité\footnote{Le taux de mortalité dû au traitement est clairement lié à la dose de médicament délivrée au patient, mais pas seulement. Par exemple la sensibilité du patient et la dose parvenant vraiment à la tumeur sont aussi impliquées.} causé par~$\treat_{\rm i}$ sur les cellules proliférantes, pour~$\rm i\in\{1,2\}$. 
 Le terme~$\vit (t,\vecx)$ désigne la vitesse impliquée dans les changements d'aire de la tumeur et~$M(t,\vecx)$ représente la vascularisation et l'apport en nutriments. 
+Le terme $1+M$ traduit le fait que les traitements arrivent principalement par le réseau sanguin. 
 Le taux de prolifération (resp. de mortalité) des cellules proliférantes, noté~$\gammapp$ (resp.~$\gammapd$), dépend de~$M$ comme suit~:
 \begin{align}
 \gammapp(M) &=\gamma_0 \frac{1+\tanh\big(R(M-\Ms)\big)}{2}, \label{eq_gammapp}\\
@@ -193,7 +203,9 @@ où
 \begin{equation}
 P = P_1+P_2+P_3,
 \end{equation}
-et où~$\muN$ est un paramètre qui contrôle le taux d'élimination de la nécrose par le système immunitaire.
+et où~$\muN$ est un paramètre qui contrôle le taux d'élimination de la nécrose par le système immunitaire. Le terme $1+M$ traduit le fait que plus le milieu est vascularisé, plus l'élimination de la nécrose est rapide. 
+Notez que biologiquement il ne serait pas aberrant de considérer que cette élimination pourrait dépendre également de la pression $\Pi$ du milieu (que l'on décrit un peu plus loin). Ce type de considération conduit cependant à un modèle mathématiquement mal posé. 
+
 
 La condition suivante de Dirichlet est utilisée sur le bord si la vitesse est entrante~:
 \begin{equation}\label{eq_CL_pop}
@@ -991,12 +1003,14 @@ Ce type de profil est représentatif des patients avec une mutation génétique 
 \FloatBarrier
 \section{Conclusion}
 
-Dans cet article, nous avons fourni un modèle dépendant de chaque patient, basé sur des EDPs, qui décrit le comportement global de métastases hépatiques de GISTs durant les différentes étapes. Nous avons présenté les méthodes numériques utilisées pour résoudre le système d'EDPs et nous avons introduit un nouveau type de schéma WENO5, appelé \twinweno. 
-Ensuite, le modèle a été numériquement comparé avec les observations cliniques concernant \Nber, qui a été traité successivement à l'imatinib puis au sunitinib.
+Nous avons fourni ici un modèle dépendant de chaque patient, basé sur des EDPs, qui décrit le comportement global de métastases hépatiques de GISTs durant les différentes étapes. 
+
+
+Le modèle a été numériquement comparé avec les observations cliniques concernant \Nber, qui a été traité successivement à l'imatinib puis au sunitinib.
 Comme présenté sur la 
 Figure~\ref{fig:fit_area_henbert}, notre modèle fournit des résultats qui sont qualitativement en accord avec les données cliniques. En particulier, notre modèle est capable de décrire non seulement l'évolution de la taille de la lésion, mais aussi sa structure, comme l'illustrent les Figures~\ref{fig_nber} et~\ref{fig:compare_spatial_nber}.
 
-Il est intéressant de noter que nos simulations numériques font apparaître une couronne de cellules proliférantes sur le pourtour de la tumeur juste avant la rechute. Ceci semble corroboré dans les scanners par l'augmentation de l'hétérogénéité tumorale, au sens des niveaux de gris, avant la rechute. Plus la métastase est hétérogène, plus la rechute est imminente. Ce résultat souligne le fait que le critère RECIST n'est pas suffisant pour évaluer l'efficacité d'un traitement.
+Il est intéressant de noter que nos simulations numériques font apparaître une couronne de cellules proliférantes sur le pourtour de la tumeur juste avant la rechute. Ceci semble corroboré dans les scanners par l'augmentation de l'\hetero tumorale, au sens des niveaux de gris, avant la rechute. Plus la métastase est hétérogène, plus la rechute est imminente. Ce résultat souligne le fait que le critère RECIST n'est pas suffisant pour évaluer l'efficacité d'un traitement.
 
 
 Nous avons également étudié numériquement l'effet du paramètre~$\muI$, lié à l'efficacité du traitement~$\TI$. Nous avons montré que, selon notre modèle, augmenter la valeur de~$\muI$, ce qui peut être vu comme une augmentation de la dose administrée, ne fournit pas de meilleurs résultats en terme de survie sans aggravation comme le montre la Figure~\ref{fig:eff_glivec_nber}.
@@ -1005,15 +1019,10 @@ Nous avons également étudié numériquement l'effet du paramètre~$\muI$, lié
 Il est important de noter que notre modèle fite bien les données, cependant il n'est pas prédictif. En effet, comme expliqué par la Figure~\ref{fig:possibilites2}, on peut voir que les 3 comportements typiques~$\rm{b,c,d}$ peuvent être obtenus avec le même comportement durant les 400 premiers jours. Ceci est dû au fait que sur les images médicales, il est compliqué de dire {\it à priori}, ce qu'il va se passer avant d'utiliser le second traitement, entre une tumeur principalement composée de la population~$P_2$ (comme pour le cas~${\rm b}$) de la Figure~\ref{fig:possibilites2}) ou une tumeur avec une population~$P_3$ (comme donné par la courbe~${\rm d}$) de la  Figure~\ref{fig:possibilites2}). En d'autre termes, on peut trouver différents jeux de paramètres qui donnent le même comportement initial. Ceci signifie que des données plus précises, comme de l'imagerie fonctionnelle, devront être nécessaires pour une meilleure analyse de la structure interne de la métastase. 
 
 
-En conclusion, nous avons fourni un modèle qui fite avec les scanners cliniques que nous avons. De futurs travaux consisteront à ajouter plus d'informations biologiques que nous ne pouvons pas obtenir depuis les scanners, afin d'obtenir un modèle prédictif. L'imagerie fonctionnelle (TEP-scan ou IRM) ou des biopsies pourraient enrichir le présent modèle.
+%En conclusion, nous avons fourni un modèle qui fite avec les scanners cliniques que nous avons. De futurs travaux consisteront à ajouter plus d'informations biologiques que nous ne pouvons pas obtenir depuis les scanners, afin d'obtenir un modèle prédictif. L'imagerie fonctionnelle (TEP-scan ou IRM) ou des biopsies pourraient enrichir le présent modèle.
 
 
-%%-----------------------------
-%%       bibliography
-%%-----------------------------
-
-%\bibliographystyle{plain}
-%\bibliography{biblio}
+Dans le chapitre suivant, nous allons présenté un peu plus en détail un nouveau type de schéma WENO5, le \twinweno, utilisé dans nos simulations numériques. Une instabilité se créant avec les schémas classiques, ce schéma la corrigera.
 
 
 \end{document}
