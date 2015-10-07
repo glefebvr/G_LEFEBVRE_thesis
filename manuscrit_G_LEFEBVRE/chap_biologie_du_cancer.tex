@@ -7,28 +7,38 @@
 
 \section{Croissance tumorale}
 %\todo[noline]{La tumeur en grandissant, va pousser vers l'extérieur le réseau sanguin qui l'alimente ! (La tumeur exerçant une pression sur celui-ci) --> valable que pour les méta, tumeur primit = infiltrante}
-Une tumeur est un ensemble de cellules de l'organisme se multipliant de manière dégénérée. Certains scientifiques s'accordent à dire que cela partirait d'une seule cellule (pour l'instant aucune preuve de cela n'a encore été apportée~: le sujet reste ouvert). Chaque cellule fille est alors à son tour dégénérée et se multiplie encore et encore. La tumeur pourrait alors grandir exponentiellement. En réalité, la croissance tumorale est limitée par les besoins de glucose et d'oxygène. En effet, à force de se multiplier les cellules sont en surpopulation. Les nutriments et l'oxygène viennent à manquer : c'est l'\emph{hypoxie}. Les cellules du bord de la tumeur consomment tout et n'en laissent pas assez pour celles situées plus au centre. C'est dans ces cas là que l'on peut voir sur les scanners des tumeurs avec 2 nuances de gris~:
+Une tumeur est un ensemble de cellules de l'organisme se multipliant de manière dégénérée\footnote{Par dégénérée, on entend : autonome, qui agit pour son propre compte.}. Certains scientifiques s'accordent à dire que cela partirait d'une seule cellule (pour l'instant aucune preuve de cela n'a encore été apportée~: le sujet reste ouvert). 
+Chaque cellule fille est alors à son tour dégénérée et se multiplie encore et encore. 
+La tumeur pourrait alors grandir exponentiellement. En réalité, la croissance tumorale est limitée par les besoins de glucose et d'oxygène. En effet, à force de se multiplier les cellules sont en surpopulation. Les nutriments et l'oxygène viennent à manquer : c'est l'\emph{hypoxie}. Les cellules du bord de la tumeur consomment tout et n'en laissent pas assez pour celles situées plus au centre. C'est dans ces cas là que l'on peut voir sur les scanners des tumeurs avec 2 nuances de gris~:
 \begin{myitemize}
 \item un gris foncé au centre, emplacement du tissu en partie nécrosé
 \item un gris plus clair sur le pourtour, lieu de la prolifération
 \end{myitemize}
+Les cellules en hypoxie vont alors entrer dans un état de quiescence et vont sécréter des \emph{facteurs de croissance}, dont le VEGF (Vascular Endothelial Growth Factor). 
+\noindent
+Ces protéïnes commandent la création de nouveaux vaisseaux  
 \begin{wrapfigure}[18]{R}{.5\textwidth}
+%%\vspace{-15mm}
 \includegraphics[width=.5\textwidth]{schema/angiogenese.jpg}
 \caption{\label{fig:schema_angio} Schéma descriptif de l'angiogénèse générant la néovascularisation \cite{webangiogenese}.}
 \end{wrapfigure}
 %\newpage
-Les cellules en hypoxie vont alors entrer dans un état de quiescence et vont sécréter des \emph{facteurs de croissance}, dont le VEGF (Vascular Endothelial Growth Factor). Ces protéïnes commandent la création de nouveaux vaisseaux sanguins, processus appellé \emph{angiogenèse}. 
 
+
+\noindent
+%Ces protéïnes commandent la création de nouveaux vaisseaux 
+sanguins, processus appellé \emph{angiogenèse}. 
 %%%% Il faut fair un paragraphe pour que wrapfigure puisse se fixer là
 %%%% Pour ne pas que ca ait l'apparence d'un paragraphe, on supprime l'indentation
-\noindent Les cellules endothéliales, cellules qui recouvrent la paroi intérieure des vaisseaux sanguins et destinataires de ces facteurs de croissance, vont alors construire des nouveaux vaisseaux sanguins par chimiotactisme c'est à dire que les nouveaux vaisseaux sanguins sont orientés dans le sens où la concentration de facteur de croissance est la plus forte. Ainsi la tumeur se créé son propre réseau sanguin~: la \emph{néovascularisation}. La nourriture et l'oxygène redeviennent de nouveau abondants. 
-Les cellules qui étaient en hypoxie vont alors se remettre à proliférer jusqu'à ce que de nouveau, il y ait surpopulation. Et ainsi de suite, le cycle continue. On peut visualiser ce cycle sur le schéma présenté Figure~\ref{fig:schema_angio}. Notez qu'une cellule saine n'est en général jamais quiescente~: si les conditions extérieures ne sont pas bonnes (surpopulation, manque de nutriments, etc ...), elle va activer son auto-destruction~: c'est l'\emph{apoptose}. A cause de mutation, les cellules cancéreuses sont nettement moins (voire pas) sensibles à ce mécanisme. 
+%%\noindent 
+Les cellules endothéliales, cellules qui recouvrent la paroi intérieure des vaisseaux sanguins et destinataires de ces facteurs de croissance, vont alors construire des nouveaux vaisseaux sanguins par chimiotactisme c'est à dire que les nouveaux vaisseaux sanguins sont orientés dans le sens où la concentration de facteur de croissance est la plus forte. Ainsi la tumeur se créé son propre réseau sanguin~: la \emph{néovascularisation}. La nourriture et l'oxygène redeviennent de nouveau abondants. 
+Les cellules qui étaient en hypoxie vont alors se remettre à proliférer jusqu'à ce que de nouveau, il y ait surpopulation. Et ainsi de suite, le cycle continue. On peut visualiser ce cycle sur le schéma présenté Figure~\ref{fig:schema_angio}. Notez qu'une cellule saine n'est en général jamais quiescente~: si les conditions extérieures ne sont pas bonnes (surpopulation, manque de nutriments, etc), elle va activer son auto-destruction~: c'est l'\emph{apoptose}. A cause de mutation, les cellules cancéreuses sont nettement moins (voire pas) sensibles à ce mécanisme. 
 %\lipsum[1]
 
 \section{Dissémination des métastases}
-\begin{wrapfigure}[16]{l}{.5\textwidth} %%% L : Left flottant / l: left non flottant (pas de pagebreak)
+\begin{wrapfigure}[15]{l}{.5\textwidth} %%% L : Left flottant / l: left non flottant (pas de pagebreak)
 \setlength{\unitlength}{.005\textwidth}
-\vspace{-12mm}
+\vspace{-15mm}
 \begin{picture}(100,93)
 \tiny 
 \put(0,2){\includegraphics[width=.5\textwidth]{schema/cellules_tumorales_circulantes_copyright.jpg}}
@@ -44,15 +54,26 @@ De simple cellules ne pourraient pas nicher dans un autre organe que celui auque
 
 \section{Les traitements}
 A l'heure actuelle aucun traitement ne permet de guérir de manière sûre les cancers, d'autant plus s'ils sont avancés.  Cependant plusieurs techniques existent pour prolonger et/ou améliorer la vie des patients.
-\paragraph{La chirurgie} ne peut-être réalisée que sur des cancers primaires, non métastasés et donc détectés tôt. C'est la première option considérée par le corps médical (bien que la chirurgie elle-même puisse être source de dissémination de métastase, \cf par exemple  \url{http://www.sciencedirect.com/science/article/pii/S0748798305000089}).
+\paragraph{La chirurgie} ne peut-être réalisée que sur des cancers primaires %, non métastasés et donc 
+détectés tôt. C'est la première option considérée par le corps médical (bien que la chirurgie elle-même puisse être source de dissémination de métastase, \cf par exemple  \url{http://www.sciencedirect.com/science/article/pii/S0748798305000089}).
 
-\paragraph{L'ablation par radiofréquence} permet, à l'aide d'une sonde électromagnétique à haute fréquence, de brûler une région définie par le médecin. On peut ainsi réaliser une ablation sans avoir à opérer le patient. Cette technique  
-ne peut cependant être utilisée que pour de petites tumeurs, ne dépassant pas une certaine taille (de l'ordre du centimètre\todo{A verif, ref?}) et n'étant pas à proximité d'organes sensibles. 
+\paragraph{L'ablation par radiofréquence} (ou bien aussi la cryoablation, les micro-ondes et l'électroporation) permet, à l'aide d'une sonde électromagnétique à haute fréquence, de brûler une région définie par le médecin. On peut ainsi réaliser une ablation sans avoir à opérer le patient. Cette technique  
+ne peut cependant être utilisée que pour de petites tumeurs, ne dépassant pas une certaine taille (jusqu'à 6 centimètres maximum,\todo{A verif, ref?}) et n'étant pas à proximité d'organes sensibles. 
 
-\paragraph{La radiothérapie} consiste à irradier une zone de l'organisme par une forte dose de rayons X. Ceci a pour effet de détruire les cellules qui se multiplient  et donc, par voie de conséquence, les cellules cancéreuses. Cette méthode présente les mêmes limitations que la radiofréquence à savoir que son efficacité est limitée à des petites tumeurs. La radiothérapie est souvent utilisée à titre paliatif sur des petites métastases (pulmonaires notamment).
+\paragraph{La radiothérapie} consiste à irradier une zone de l'organisme par une forte dose de rayons X (et rayonnement bêta pour la curiethérapie). 
+%Ceci produit des radicaux libres par radiolyse de l'eau, et donc altération de l'ADN. 
+Ceci engendre une altération de l'ADN et permet de réintroduire de l'apoptose dans le cycle cellulaire. 
+%Ceci a pour effet de détruire les cellules qui se multiplient  et donc, par voie de conséquence, les cellules cancéreuses. 
+%Cette méthode présente les mêmes limitations que la radiofréquence à savoir que son efficacité est limitée à des petites tumeurs. 
+Cette méthode est également utilisée sur de petites (ou moyennes) tumeurs, car sur d'importantes tumeurs, il y a des effets secondaires. 
+La radiothérapie peut être %est souvent 
+utilisée à titre palliatif sur des petites métastases (pulmonaires notamment).
 
-\paragraph{La chimiothérapie} est un médicamment \emph{cytotoxique} (\ie qui détruit les cellules) administré en intraveineuse. 
-Ce type de molécules est suffisament petit pour pénétrer à l'intérieur des cellules. Elle agit sur toutes les cellules en division trop rapide en affectant soit directement la mitose, soit la duplication de l'ADN. Ceci explique ses principaux effets secondaires car elle va impacter aussi sur des cellules saines à division naturellement rapide comme les cellules responsables de la pousse des cheveux, les cellules intestinales (de l'épithélium), les cellules sanguines (à l'origine d'affaiblissement du système immunitaire et d'anémies notamment) ou encore les gamètes.
+\paragraph{La chimiothérapie} est un médicament \emph{cytotoxique} (\ie qui détruit les cellules) administré en intraveineuse. 
+%%Ce type de molécules est suffisamment petit pour pénétrer à l'intérieur des cellules. 
+%% Elle agit 
+Après avoir pénétré à l'intérieur des cellules, ce type de molécules agit 
+sur toutes les cellules en division trop rapide en affectant soit directement la mitose, soit la duplication de l'ADN. Ceci explique ses principaux effets secondaires car elle va impacter aussi sur des cellules saines à division naturellement rapide comme les cellules responsables de la pousse des cheveux, les cellules intestinales (de l'épithélium), les cellules sanguines (à l'origine d'affaiblissement du système immunitaire et d'anémies notamment) ou encore les gamètes.
 
 \paragraph{Les thérapies ciblées} sont des médicaments qui peuvent également être administrés par voies intraveineuses, mais sont de plus en plus prescrit en %métronomique sous forme de cachet à. Des versions
 systémiques 
