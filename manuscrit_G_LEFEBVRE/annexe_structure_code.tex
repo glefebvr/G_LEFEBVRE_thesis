@@ -41,6 +41,15 @@ Le code de calcul générant le pourcentage d'\hetero aussi bien clinique que nu
 Noter qu'au niveau des données, il n'y a pas que la nature des images qui diffèrent~: le moyen d'acquérir le contour diffère également. 
 Pour les données cliniques, grâce au logiciel OsiriX, nous pouvons contourer manuellement les tumeurs, et en exporter le contour au format xml. Pour l'aspect images provenant de la simulation numérique, il n'y a pas de contour défini. Le choix (assez naturel) a été fait de le définir en prenant un seuil sur la population saine. Moyennant un parseur xml, on peut donc se ramener à un contour semblable dans les deux cas.
 
+\begin{sidewaysfigure}
+%%\begin{figure}
+\centering
+\vfill
+\includegraphics[width=.9\textwidth , trim = 0cm 43mm 30mm 0mm, clip=true]{schema/schema_architecture_code.pdf} %%%%  left, bottom, right and top
+\caption{\label{fig:schema_struct_code}Schéma du code de calcul permettant la quantification de l'\hetero. Le code est très hétéroclite et fait intervenir plusieurs langages de programmation}
+%%\end{figure}
+\end{sidewaysfigure}
+
 
 Le code s'articule donc en plusieurs briques. Outre un parseur xml écrit en Objective-C, deux briques principales se distinguent. 
 
@@ -56,11 +65,6 @@ Ce code a notamment permis de générer les images présentées dans les Figures
 
 La seconde brique est chargée de trouver les paramètres de deux gaussiennes dont la somme décrit au mieux un histogramme donné. 
 Cette brique est basée sur la librairie Python Scikit-learn, qui contient un module dédié au mélange gaussien. Une fois les paramètres du mélange bi-gaussien identifiés, on peut aisément construire et examiner les critères quantifiant l'\hetero.
-
-\begin{figure}
-TODO : METTRE FIGURE
-\caption{\label{fig:schema_struct_code}Schéma du code de calcul permettant la quantification de l'\hetero. Le code est très hétéroclite et fait intervenir plusieurs langages de programmation}
-\end{figure}
 
 L'ensemble de l'articulation entre les différents modules est présenté sur la Figure~\ref{fig:schema_struct_code}.
 Afin d'automatiser l'ensemble de la chaîne, un script Bash a été développé.
