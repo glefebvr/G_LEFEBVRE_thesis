@@ -10,8 +10,14 @@
 \section{Ensemble des données}
 L'ensemble des données utilisées pour réaliser ces travaux sont présentées dans cette section. L'ensemble des scanners des 2 patients, \Nber et \Chen, sont présentés ici. On présentera ensuite l'ensemble des histogrammes des niveaux de gris, correspondant à la zone tumorale contourée manuellement sur les scanners.
 
+\newpage
+%%\section{Ensemble des données}
+\subsection{Scanners de \Nber}
+\Nber est traité avec de l'imatinib du jour 119 au jour 867, jour où la rechute est constatée. Le sunitinib est ensuite administré, et là aussi le traitement est efficace avant une rechute débutant au jour~1116. Sur la figure ci-dessous, on peut visualiser l'ensemble des scanners réalisés sur ce patient.
+
 %%%%%% scan NBER
-\begin{figure}
+\begin{figure}[h!]
+\centering\hfill
 \subfloat[16 sept. 2008 -- Jour 119]{\label{fig:hen_full_spatial_1}
 \reshapeimg{1.0}{0px}{0px}%
 \tikzzoom{full_scan/scan_henbert/2008_09_16(2).jpg}{3}{1.5}{1.2}%
@@ -29,7 +35,7 @@ L'ensemble des données utilisées pour réaliser ces travaux sont présentées 
 \reshapeimg{1.28}{45px}{50px}%
 \includegraphics[trim = {\margg} {\margb} {\margd} {\margh}, clip, width=0.32\textwidth]{full_scan/scan_henbert/2010_10_25.jpg}%
 }
-\subfloat[7 jan. 2011 -- Jour 962]{\label{fig:hen_full_spatial_5}
+\subfloat[7 janv. 2011 -- Jour 962]{\label{fig:hen_full_spatial_5}
 \reshapeimg{1.11}{20px}{-66px}%
 \includegraphics[trim = {\margg} {\margb} {\margd} {\margh}, clip, width=0.32\textwidth]{full_scan/scan_henbert/2011_01_07(2).jpg}%
 }
@@ -38,12 +44,9 @@ L'ensemble des données utilisées pour réaliser ces travaux sont présentées 
 \includegraphics[trim = {\margg} {\margb} {\margd} {\margh}, clip, width=0.32\textwidth]{full_scan/scan_henbert/2011_06_10.jpg}%
 }
 \caption{\label{fig:nber_complete_scan}Evolution spatiale de la métastase hépatique de \Nber sur une série de scanners.}
+\vspace{-5mm}
 \end{figure}
 
-\newpage
-%%\section{Ensemble des données}
-\subsection{Scanners de \Nber}
-\Nber est traité avec de l'imatinib du jour 119 au jour 867, jour où la rechute est constatée. Le sunitinib est ensuite administré, et là aussi le traitement est efficace avant une rechute débutant au jour~1116. Sur la figure ci-dessous, on peut visualiser l'ensemble des scanners réalisés sur ce patient. \vspace{-1cm}
 
 \newlength{\largeurfignber}
 \setlength{\largeurfignber}{0.19\textwidth}
@@ -71,7 +74,8 @@ L'ensemble des données utilisées pour réaliser ces travaux sont présentées 
 %\caption{\label{fig:contourageNber} Contourage manuel de la tumeur de \Nber. }
 %\end{figure}
 
-\begin{figure}[h!]
+%\begin{figure}[h!]
+\begin{figure}[p]
 \captionsetup[subfigure]{labelformat=simple, labelsep=colon}
 \renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
 \addtocounter{subfigure}{-1} %% Commence a 0
@@ -110,6 +114,7 @@ L'ensemble des données utilisées pour réaliser ces travaux sont présentées 
 \end{figure}
 
 \FloatBarrier
+\newpage
 \subsection{Scanners de \Chen}
 %\begin{figure}
 %\renewcommand{\thesubfigure}{\arabic{subfigure}} %% Met des label en numeros (au lieu des lettres)
@@ -433,7 +438,7 @@ $\beta$ & 0 &0&0&0&0&0&0\\
 \hline
 \end{tabular}
 }
-\caption{\label{table_param_possibilites}Valeur des paramètres pour les courbes présentées Figure~\ref{fig:possibilites}.}
+\caption{\label{table_param_possibilites}Valeur des paramètres pour les courbes présentées Figure~\ref{fig:possibilites}, page~\pageref{fig:possibilites}.}
 \end{table}
 
 \newpage

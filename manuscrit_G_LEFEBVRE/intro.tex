@@ -24,18 +24,19 @@ De nombreuses études fondamentales, pré-cliniques ou cliniques ont déjà ét�
 Les travaux présentés ici s'inscrivent pleinement dans cette démarche. Ils constituent un premier pas dans la modélisation de résistance aux traitements, basée sur des images cliniques. 
 Plus particulièrement, il s'agit là de proposer un modèle mathématique décrivant la croissance de métastases 
 %(tumeurs filles) 
-(localisations secondaires disséminées à partir d’une lésion primitive)
+(localisations secondaires disséminées à partir d'une lésion primitive)
 hépatiques en provenance d'une  
 tumeur stromale\footnote{Le stroma est un tissu de soutien, non impliqué dans la fonction première de l'organe.} de l'intestin grêle
 %cancer du stroma\footnote{Tissu de soutien, non impliqué dans la fonction première de l'organe.} gastroinstestinal  
 (GIST).
-Ce type de cancer touche de 9 à 14 cas par million de personnes par an~\cite{Nilsson2005}. Dans 25\% des cas, ce cancer migre vers le foie~\cite{Nilsson2005}. 
+Ce type de cancer touche de 9 à 14 cas par million de personnes par an~\cite{Nilsson2005}. Dans 25\% des cas, ce cancer migre vers le foie~\cite{dematteo2000}. 
 %%Ces métastases sont connues pour être relativement résistantes aux traitements anti-cancéreux, ce qui donne un intérêt certain à la modélisation de leurs comportements. 
 %Ces métastases peuvent être résistantes aux traitements conventionnels comme la chimiothérapie ou la radiothérapie. Ainsi d'autres thérapeutiques ont été proposées comme les inhibiteurs de la tyrosine kinase ou les traitements anti-angiogéniques.  Malheureusement, en fonction des mutations rencontrées ou acquises, des résistances à ces traitements peuvent également être rencontrées sur ce type de métastases, ce qui donne un intérêt certain à la modélisation de leurs comportements. 
 En fonction des mutations rencontrées ou acquises, ces métastases peuvent être résistantes aussi bien aux traitements conventionnels (comme la chimiothérapie ou la radiothérapie) qu'aux nouvelles thérapies ciblées (comme les inhibiteurs de la tyrosine kinase ou les traitements anti-angiogéniques), ce qui donne un intérêt certain à la modélisation de leurs comportements. 
+Notre but ici, est de construire un modèle qui reproduise qualitativement et quantitativement la croissance d'une tumeur, et ce à partir de l'imagerie médicale.
 
 \paragraph{}
-Le suivi clinique des patients sous traitement est assuré par des scanners réguliers, réalisés généralement tous les deux mois.  
+Le suivi clinique des patients sous traitement est assuré par des scanners réguliers, réalisés généralement tous les deux mois. Ceux-ce constituent la seule et unique source d'informations cliniques dont nous disposons ici.  
 A l'heure actuelle, pour mesurer l'efficacité d'un traitement, le corps médical utilise le critère RECIST, qui consiste à ne retenir des images médicales que le diamètre de la plus large lésion. L'information retenue semble donc très faible au regard de toutes celles contenues dans les scanners. Plusieurs études ont déjà montrées ses limitations, en particulier lors de traitements anti-angiogénique REFFF. L'imagerie fait apparaître bien d'autres particularités, notamment l'\hetero tumorale à laquelle nous nous intéresserons tout au long de ce manuscrit. L'\hetero peut-elle être liée à l'émergence de populations cellulaires résistantes ? Peut-on reproduire ce caractère par la modélisation ? Comment la quantifier ?
 %La principale particularité à laquelle nous nous intéresserons sera l'\hetero tumorale. Quelles sont les informations sur le comportement de la tumeur que l'ont peut extraire de l'imagerie médicale ? Les critères actuels de lecture de l'imagerie médicale sont-ils suffisant ? L'\hetero peut-elle apportée une information supplémentaire ? 
 
@@ -46,7 +47,7 @@ A l'heure actuelle, pour mesurer l'efficacité d'un traitement, le corps médica
 Les interrogations précédemment posées seront abordées dans ce manuscrit au travers de ses différents chapitres. 
 
 \paragraph{}
-Le premier chapitre est dédié à la présentation des aspects biologiques et cliniques du cancer.  Il présente non pas de manière exhaustive tous les mécanismes du cancer, mais ceux nécessaire à la compréhension des choix réalisés dans la modélisation. La croissance d'une tumeur sera d'abord présentée. Puis sera abordé, la manière dont les métastases se disséminent. Les différents types de traitements seront ensuite présentés. La seule et unique source d'informations cliniques que nous ayant étant des images scanners, nous nous devons de comprendre comment ce type d'image est acquises. Nous discuterons ensuite du critère RECIST et de ses limitations avant de terminer par les spécificités des métastases hépatiques de GISTs.
+Le premier chapitre est dédié à la présentation des aspects biologiques et cliniques du cancer.  Il présente non pas de manière exhaustive tous les mécanismes du cancer, mais ceux nécessaires à la compréhension des choix réalisés dans la modélisation. La croissance d'une tumeur sera d'abord présentée. Puis, la manière dont les métastases se disséminent sera abordée. Les différents types de traitements seront ensuite présentés. La seule et unique source d'informations cliniques que nous ayons étant des images scanners, nous nous devons de comprendre comment ce type d'image est acquis. Nous discuterons ensuite du critère RECIST et de ses limitations avant de terminer par les spécificités des métastases hépatiques de GISTs.
 
 
 \paragraph{}
@@ -68,24 +69,40 @@ Une fois le fit obtenu, nous examinons numériquement l'effet de la dose de trai
 Enfin, nous discuterons sur la consistance de notre modèle en présentant les différents comportements d'évolution tumorale que l'on peut obtenir. 
 Nous fitons également l'aire tumorale d'un autre patient dont la tumeur est proche du bord du foie. 
 Pour un tel patient, la forme de la tumeur ne pourra pas être retrouvée. Notre modèle ne prend pas en compte les contraintes mécaniques correspondantes. Cependant, l'aire tumorale semble bien reproduite par nos simulations. 
-Les résultats du premier chapitre sont un premier pas vers la compréhension des résistances des métastases hépatiques de GIST aux médicaments. Cependant, comme mentionné dans la conclusion, les scanners ne fournissent pas suffisamment d'informations pour permettre à notre modèle d'être prédictif~: évaluer les paramètres sur les scanners réalisés durant la croissance avant traitement et durant la première ligne de traitement ne suffit pas pour prédire la réponse à la seconde ligne de traitement. Ceci est dû au fait qu'en se basant sur les scanners, il est impossible d'évaluer la quantité de cellules insensibles au second traitement. Nous sommes convaincus que des données sur la structure de la tumeur, comme des biopsies ou des images fonctionnelles, devraient aider à améliorer la prédictivité du modèle.
+Les résultats de ce second chapitre sont un premier pas vers la compréhension des résistances des métastases hépatiques de GIST aux médicaments. Cependant, comme mentionné dans la conclusion, les scanners ne fournissent pas suffisamment d'informations pour permettre à notre modèle d'être prédictif~: évaluer les paramètres sur les scanners réalisés durant la croissance avant traitement et durant la première ligne de traitement ne suffit pas pour prédire la réponse à la seconde ligne de traitement. Ceci est dû au fait qu'en se basant sur les scanners, il est impossible d'évaluer la quantité de cellules insensibles au second traitement. Nous sommes convaincus que des données sur la structure de la tumeur, comme des biopsies ou des images fonctionnelles, devraient aider à améliorer la prédictivité du modèle.
 
 
 \paragraph{}
-Dans un troisième chapitre, les aspects numériques seront abordés. En particulier, il a fallut faire face à une instabilité numérique que l'on présentera et à laquelle l'équipe n'a jamais été confrontée avec les schémas classiques qu'elle utilisait. Nous étudions ici des croissances de tumeurs avec traitement, sur du long terme et avec de fort rétrécissement de la taille induit par les traitements. Ce sont là autant de raisons qui présentent l'originalité du problème. Nous montrerons que les champs de vitesses non communs obtenus lors de la simulation numérique  sont à l'origine des instabilités numériques. Enfin un nouveau schéma de transport sera proposé, le \twinweno, pour palier à cette instabilité.
+Dans un troisième chapitre, les aspects numériques seront abordés. En particulier, il a fallu faire face à une instabilité numérique que l'on présentera et à laquelle l'équipe n'a jamais été confrontée avec les schémas classiques qu'elle utilisait. Nous étudions ici des croissances de tumeurs avec traitement, sur du long terme et avec de fort rétrécissement de la taille induit par les traitements. Ce sont là autant de raisons qui présentent l'originalité du problème. Nous montrerons que les champs de vitesses non communs obtenus lors de la simulation numérique  sont à l'origine des instabilités numériques. Enfin un nouveau schéma de transport sera proposé, le \twinweno, pour palier à cette instabilité.
 
 
 \paragraph{}
 Dans le chapitre 4, nous détaillerons comment construit-on des images scanners de synthèse à partir des résultats numériques. La simulation numérique fournit la répartition spatio-temporelle de différentes populations cellulaires. En aucun cas cela fournit les niveaux d'absorption des tissus au rayons X, comme mesurés par les scanners. Il nous faut donc un moyen de reconstituer des images scanners de synthèse à partir de ces densités de populations, dans le but de rapprocher au plus près (une optimisation a été faite) le format des résultats numériques à celui des données cliniques.
-Cette construction d'images scanners de synthèse permettra une meilleure comparaison des résultats obtenus avec les données cliniques. Elle est également d'un intérêt non négligeable pour le clinicien, qui peut ainsi regarder nos résultats numériques comme s'il s'agissait de scanners réels. 
+Cette construction d'images scanners de synthèse permettra une meilleure comparaison des résultats obtenus avec les données cliniques. 
+%Elle est également d'un intérêt non négligeable pour le clinicien, qui peut ainsi regarder nos résultats numériques comme s'il s'agissait de scanners réels. 
 
 
 \paragraph{}
-Dans le cinquième et dernier chapitre, nous chercherons un critère permettant de quantifier l'\hetero. \todo[noline]{Etat de l'art sur la construction de quantificateur de l'\hetero} Ce critère devra être applicable aussi bien aux données cliniques qu'au résultats fournis par la simulation numériques. Et c'est ce qui fait ici l'originalité de la construction d'un tel critère. La méthode proposée ici est basée sur l'analyse des niveaux de gris qui constituent les images (cliniques et numériques). A partir de l'histogramme des niveaux de gris, deux dominantes sont identifiées sous forme gaussienne pour chacune des images. 
-A partir de ces deux composantes, un quantificateur de l'\hetero sera construit. L'idée repose sur le fait que plus les composantes sont éloignées, plus elles traduisent une \hetero. 
-Le critère sera construit en se basant sur les scanners de \Nber uniquement. Le second patient, \Chen, sera gardé à titre de vérification, pour valider le critère. Une fois le critère construit, il sera appliqué également aux images produites par la simulation numérique. La robustesse du critère vis à vis de la paramétrisation choisie pour la synthèse des images  numériques sera présentée. Ce critère montrera notamment les limites du modèle EDP en terme de reproduction de l'\hetero tumorale.
+Dans le cinquième et dernier chapitre, nous chercherons un critère permettant de quantifier l'\hetero. \todo[noline]{Etat de l'art sur la construction de quantificateur de l'\hetero} Ce critère devra être applicable aussi bien aux données cliniques qu'aux résultats fournis par la simulation numérique. Et c'est ce qui fait ici l'originalité de la construction d'un tel critère. 
+La méthode proposée dans ce manuscrit est basée sur l'analyse %des niveaux de gris 
+de l'intensité des pixels 
+qui constituent les images (cliniques et numériques). 
+%A partir de l'histogramme des niveaux de gris, deux dominantes sont identifiées sous forme gaussienne pour chacune des images. 
+%A partir de ces deux composantes, un quantificateur de l'\hetero sera construit. 
+Après avoir identifié la tumeur sur les images, l'histogramme des niveaux de gris est étudié et décrit à l'aide 
+%%de deux gaussiennes. 
+d'un modèle de mélange de gaussiennes. 
+Le critère, basé sur une évaluation de la proximité des %deux 
+composantes gaussiennes, va ainsi traduire le caractère \heterogene de la métastase. 
+%%L'idée repose sur le fait que plus les composantes sont éloignées, plus elles traduisent une \hetero. 
+%Le critère
+Il sera construit en se basant sur les scanners du premier patient (\Nber) uniquement. 
+Le second patient (\Chen) sera gardé à titre de vérification, pour valider le critère. 
+Une fois le critère construit, il sera appliqué également aux images produites par la simulation numérique. 
+La robustesse du critère vis à vis de la paramétrisation choisie pour la synthèse des images  numériques sera présentée. 
+Ce critère montrera notamment les limites du modèle EDP en terme de reproduction de l'\hetero tumorale.
 
 \paragraph{}
-Enfin diverses annexes viendront compléter les discussions menées au cours de ce manuscrit. En particulier j'attire l'attention sur l'annexe~\ref{chap:anx_img_complement} qui présente notamment l'ensemble des données cliniques dont nous disposons pour les deux patients, données qui ont toutes été acquises sur la même machine. 
+Enfin diverses annexes viendront compléter les discussions menées au cours de ce manuscrit. En particulier j'attire l'attention sur l'annexe~\ref{chap:anx_img_complement} qui présente notamment, en images, l'ensemble des données cliniques dont nous disposons pour les deux patients, données qui ont toutes été acquises sur la même machine. 
 
 \end{document}

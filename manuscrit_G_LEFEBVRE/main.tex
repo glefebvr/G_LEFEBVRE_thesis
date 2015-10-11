@@ -93,11 +93,14 @@
 %%\usepackage[overload]{empheq} %%% Etend les environnement align avec des arguments optionnels que l'on peut donner entre crochets.
 \usepackage{empheq}
 \usepackage{caption} %% Permet d'utiliser \captionof sans etre dans un environnement figure
+%%%%%\usepackage{subcaption} %% http://tex.stackexchange.com/questions/175450/subfigure-captions-appear-too-close-together
 \usepackage{subfig}%% \subfloat
 \usepackage{wrapfig}%% \begin{wrapfigure}
 %%\usepackage{stackengine}
 \usepackage{vwcol} 
 \usepackage{placeins} %%% Fournit \FloatBarrier
+\usepackage{varwidth}
+
 
 \usepackage{xspace}
 \usepackage{lipsum}
@@ -176,6 +179,16 @@
 \renewcommand{\chaptermark}[1]{\markboth{{\sc \chaptername } \thechapter.\ #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
 \addtolength{\footskip}{7mm}%
+
+\DeclareCaptionFormat{mycaptionformat}{%
+  % #1: label (e.g. "Table 1")
+  % #2: separator (e.g. ": ")
+  % #3: caption text
+  \begin{varwidth}{\linewidth}%
+    \centering
+    #1#2#3%
+  \end{varwidth}%
+}
  
 %\lhead[]{\leftmark}
 %\rhead[\rightmark]{}
@@ -287,8 +300,11 @@
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
 %%%%%%% Personnalisation des legendes
+%%% cf. http://www.peteryu.ca/tutorials/publishing/latex_captions
 %\captionsetup[figure]{labelfont=it,textfont={bf,it}}
 %\captionsetup[subfigure]{labelfont=bf,textfont=normalfont,justification=raggedright}
+%\captionsetup[subfigure]{margin=15pt}
+
 
 \newcommand{\mylettrine}[2]{\lettrine[lines=2, lhang=0.33, loversize=0.25]{#1}{#2}} 
 %\newcommand{\mylettrine}[2]{\lettrine[lines=2, lhang=0.33, loversize=0.25]{$\mathscr{#1}$}{#2}} 
@@ -352,11 +368,13 @@
 
 \begin{titlepage}
 \centering \Large
-\vspace*{5cm}
+\vspace*{4cm}
 Thèse de \\
 ~\\
 {\LARGE Guillaume LEFEBVRE}\\
-\vspace{4cm}
+\vspace{5cm}
+Résistances aux traitements : modélisation et analyse de l'\hetero tumorale dans le cas de métastases hépatiques de GIST. \\
+\vspace{5cm}
 Version du \today, \printtime
 \end{titlepage}
 
@@ -491,6 +509,7 @@ Version du \today, \printtime
 %%\renewcommand\bibname{\rm Bibliographie}
 \renewcommand\chaptername{Bibliographie}
 %%%\addcontentsline{toc}{chapter}{Bibliographie}
+\small
 \bibliographystyle{plain}
 \bibliography{biblio}
 \end{document}
