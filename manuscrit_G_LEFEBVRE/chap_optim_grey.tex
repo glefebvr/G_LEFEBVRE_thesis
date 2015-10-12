@@ -7,7 +7,7 @@
 \chapter{Synthèse d'images scanners à partir de résultats de simulations numériques \label{chap:optim_grey}}
 \todo[noline]{Entame à réécrire}
 
-\mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons nous sur la manière de reconstruire une image en niveaux de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités~$N(t,x)$, $P(t,x)$ et~$S(t,x)$ (toutes comprises entre 0 et 1). Rappelons que le niveau de gris d'un scanner traduit l'absorption des tissus aux rayons X. D'un point de vue biologique,  on ne peut pas relier à une population un niveau de gris car les populations ne sont pas isolées, et aucun moyen (mise à part la biopsie peut-être) ne permet d'en déceler leur proportions dans chaque voxel du scanner. 
+\mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons-nous sur la manière de reconstruire une image en niveaux de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités~$N(t,x)$, $P(t,x)$ et~$S(t,x)$ (toutes comprises entre 0 et 1). Rappelons que le niveau de gris d'un scanner traduit l'absorption des tissus aux rayons X. D'un point de vue biologique,  on ne peut pas relier à une population un niveau de gris car les populations ne sont pas isolées, et aucun moyen (mise à part la biopsie peut-être) ne permet d'en déceler leur proportions dans chaque voxel du scanner. 
 Dans ce chapitre, on tentera d'optimiser les niveaux de gris~$\tau_N, \tau_P$ et~$\tau_S$ de l'interpolation 
 \begin{equation}\label{eq:nvx_gris}
 \tau_N N + \tau_P P + \tau_S S,
@@ -262,12 +262,12 @@ On peut de plus remarquer que selon les images et les algorithmes choisis les r�
 \caption{\label{fig:schema_correspondance_gris} Correspondance entre l'échelle de Hounsfield (tomodensimétrie en HU) et les niveaux de gris -- Les bornes sont ici fixées à -135\,HU et 215\,HU.}
 \end{figure}
 
-L'algorithme Neldear-Mead semble le moins bon algorithme, au vu notamment des résultats fournis pour les combinaisons~[1,9,11], [2,3,4,5] et~[3,5,7] qui font apparaître une valeur de $\tau_N$ de~255, ce qui correspond à du blanc ! Non seulement elle est grande, mais en plus elle atteint le bord autorisé. Notez que si l'on retire ces 3 valeurs de la moyenne présentée sur la dernière ligne du tableau, alors celle-ci s'approche des moyennes des algorithmes GC et BFGS. 
+L'algorithme Neldear-Mead semble le moins bon algorithme, au vu notamment des résultats fournis pour les combinaisons~[1,9,11], [2,3,4,5] et~[3,5,7] qui font apparaître une valeur de $\tau_N$ de~255, ce qui correspond à du blanc ! Non seulement cette valeur est grande, mais en plus elle atteint le bord autorisé. Notez que si l'on retire ces 3 valeurs de la moyenne présentée sur la dernière ligne du tableau, alors celle-ci s'approche des moyennes des algorithmes GC et BFGS. 
 
 Bien que paraissant le meilleur algorithme, l'optimisation réalisée par la méthode SLSQP sur 3 paramètres n'est pas acceptable. Elle présente les mêmes défauts~: le niveau de gris moyen du tissu proliférant est trop proche encore de celui du tissu sain et l'intensité de gris~$\tau_S$  du tissu sain semble sous-estimée.
 
 
-Pour expliquer l'erreur commise sur~$\tau_S$, on pourrait penser à une large variabilité permise sur ce paramètre due à la présence très minoritaire de tissu sain dans la tumeur. Ainsi~$\tau_S$ serait très peu influent dans le calcul de l'erreur~\eqref{eq:min_optim_grey}. Cependant après avoir examiné de plus près les valeurs des intégrales de l'équation~\eqref{eq:optim_grey_integ_aire} (\ie les coefficients de la matrice~$A$), il y a toujours au moins 10\% de cellules saines. La plupart du temps, elles sont réparties sur le pourtour de la tumeur, dans la zone de transition sur laquelle il y a un mélange de tissu sain et de tissu tumoral. Ceci écarte donc l'hypothèse avancée. On pourrait alors avancer des variations dans les données (bruit dans les images, erreur sur le contourage, variation du temps d'acquisition du scanner qui impacte les niveaux de gris, ... ) pour justifier cela, mais les impacts sont difficiles à mesurer. 
+Pour expliquer l'erreur commise sur~$\tau_S$, on pourrait penser à une large variabilité permise sur ce paramètre due à la présence très minoritaire de tissu  sain dans la tumeur. Ainsi~$\tau_S$ serait très peu influent dans le calcul de l'erreur~\eqref{eq:min_optim_grey}. Cependant après avoir examiné de plus près les valeurs des intégrales de l'équation~\eqref{eq:optim_grey_integ_aire} (\ie les coefficients de la matrice~$A$), il y a toujours au moins 10\% de cellules saines. La plupart du temps, elles sont réparties sur le pourtour de la tumeur, dans la zone de transition sur laquelle il y a un mélange de tissu sain et de tissu tumoral. Ceci écarte donc l'hypothèse avancée. On pourrait alors avancer des variations dans les données (bruit dans les images, erreur sur le contourage, variation du temps d'acquisition du scanner qui impacte les niveaux de gris, ... ) pour justifier cela, mais les impacts sont difficiles à mesurer. 
 Il n'en reste pas moins que le niveau de gris~$\tau_S$ est mal estimé, et ce quel que soit l'algorithme d'optimisation utilisé. 
 Pour palier à cela, nous allons le fixer dans la section suivante.
 
@@ -519,7 +519,7 @@ L'ensemble des résultats d'optimisation de~$\tau_N$ et de~$\tau_P$ avec~$\tau_S
 est fourni dans les Tables~\ref{tab:optim2gris} et~\ref{tab:optim2gris_bad}. 
 
 
-La table~\ref{tab:optim2gris} présente les cas correctement convergés. Ici les niveaux de gris moyens fournis sont conformes aux attentes dans le sens où l'on a~$\tau_N{<}\tau_P{<}\tau_S$.  Une nouvelle fois, l'algorithme basé sur la méthode des moindres carrés se démarque des 3 autres qui fournissent des optima très similaires. 
+La Table~\ref{tab:optim2gris} présente les cas correctement convergés. Ici les niveaux de gris moyens fournis sont conformes aux attentes dans le sens où l'on a~$\tau_N{<}\tau_P{<}\tau_S$.  Une nouvelle fois, l'algorithme basé sur la méthode des moindres carrés se démarque des 3 autres qui fournissent des optima très similaires. 
 Contrairement aux résultats fournis par l'optimisation sur 3 paramètres, les variations sur les optima sont beaucoup moins importantes en fonction des images choisies.
 
 
@@ -542,7 +542,7 @@ Maintenant, si on examine les cas ayant mal convergé, on constate des condition
 Pour les configurations contenant l'image n°11, on peut aussi avancer que le modèle EDP n'est pas proche de la réalité en terme de volume tumoral (\cf Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert}). Bien qu'ici les niveaux de gris soit moyennés, il y a certainement des erreurs qui se reportent sur nos systèmes.
 
 \section{Conclusion}
-L'algorithme basé sur la méthode des moindres carrés semble plus robuste que les autres méthodes examinées. Malgré tout, il peut également fournir des résultats biaisés dans le cas de système mal conditionnés. Il est donc important d'examiner le conditionnement -- ou du moins le conditionnement des sous-systèmes carrés -- pour donner de la crédibilité (ou non) aux optima fournis.
+L'algorithme basé sur la méthode des moindres carrés semble plus robuste que les autres méthodes examinées. Malgré tout, il peut également fournir des résultats biaisés dans le cas de systèmes mal conditionnés. Il est donc important d'examiner le conditionnement -- ou du moins le conditionnement des sous-systèmes carrés -- pour donner de la crédibilité (ou non) aux optima fournis.
 
 Dans les cas bien conditionnés,  les optima fournis sont relativement proches les uns des autres même en faisant varier la méthode d'optimisation ou bien les images considérées comme en atteste la Table~\ref{tab:optim2gris}. Dans la suite de ce manuscrit, on fixera alors les niveaux de gris~$\tau_N=25$, $\tau_P=143$ et~$\tau_S=197$.
 

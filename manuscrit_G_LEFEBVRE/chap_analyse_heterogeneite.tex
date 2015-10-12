@@ -55,10 +55,11 @@ Remarquons que, comme montré sur la figure~\ref{fig:contourage_sain}, le logici
 \subsection{Histogrammes numériques}
 Les fichiers de sorties de nos simulations numériques stockent la densité de chaque population de notre modèle EDP, en chacune des mailles du quadrillage que nous avons choisi. 
 A partir de ceux-ci, en utilisant la reconstruction d'images scanners détaillée au chapitre précédent, on peut fournir une image de synthèse en niveaux de gris. 
-Il reste donc à définir un contour, pour pouvoir en obtenir les histogrammes numériques en appliquent le même processus que sur les images cliniques. 
+Il reste donc à définir un contour, pour pouvoir en obtenir les histogrammes numériques en appliquant le même processus que sur les images cliniques. 
 On définit le contour par seuillage sur le tissu sain~: 
 %Pour les histogrammes numériques, seule une image est reconstruite par la simulation. Il nous faut donc définir un contour pour pouvoir poursuivre. On le défini à partir des fichiers de sorties des simulations qui stockent la densité des différentes populations donnée par notre modèle EDP, en chacune des mailles du quadrillage.  En utilisant la reconstruction d'images scanners détaillée au chapitre précédent, on peut fournir une image en niveaux de gris à partir de ces valeurs. En ce qui concerne le contour, il sera définit par seuillage sur le tissu sain~: 
-si la proportion de tissu sain est inférieure à un pourcentage donné, alors on considérera que l'on est à l'intérieur de la tumeur, sinon on est à l'extérieure. Nous avons donc également dans cas, une image en niveaux de gris et une ROI. Le code C++ pour la partie clinique peut être réutilisé et produira ainsi les histogrammes numériques.
+si la proportion de tissu sain est inférieure à un pourcentage donné, alors on considérera que l'on est à l'intérieur de la tumeur, sinon on est à l'extérieur. 
+Nous avons donc également dans ce cas, une image en niveaux de gris et une ROI. Le code C++ pour la partie clinique peut être réutilisé et produira ainsi les histogrammes numériques.
 
 \subsection{Traitements appliqués aux histogrammes~: description par un modèle de mélange  gaussien}
 
@@ -94,10 +95,11 @@ Pour alléger les notations, lorsqu'on aura besoin d'écrire~$g$ en fonction de 
 
 
 L'optimisation des 5 paramètres est réalisée grâce à une librairie Python nommée Scikit-learn, qui contient un module dédié aux modèles mélanges gaussiens. Ce module procède d'abord à un partitionnement %une clusterisation 
-des données par la méthodes des K-moyennes afin d'estimer les centres des composantes. Le jeu de paramètres résultant est ensuite donné comme point de départ à une méthode de descente aléatoire qui cherche à maximiser la logvraisemblance. Par algorithme de descente aléatoire, on entends qu'étant donné un jeu de paramètres courants, on réalise les étapes suivantes~:
+des données par la méthode des K-moyennes afin d'estimer les centres des composantes. 
+Le jeu de paramètres résultant est ensuite donné comme point de départ à une méthode de descente aléatoire qui cherche à maximiser la log-vraisemblance. Par algorithme de descente aléatoire, on entend qu'étant donné un jeu de paramètres courants, on réalise les étapes suivantes~:
 \begin{myitemize}
 \item[1)] Un nouveau jeu de paramètres est choisi dans un certain périmètre (plus ou moins grand) autour du jeu de paramètres courants.
-\item[2)] La logvraisemblance de ce nouvel ensemble de paramètres est calculée. Si elle est meilleure que celle du jeu de paramètres courants, alors ce nouveau jeu de paramètres devient le jeu courant. Sinon le jeu de paramètres courants reste celui qu'il était.
+\item[2)] La log-vraisemblance de ce nouvel ensemble de paramètres est calculée. Si elle est meilleure que celle du jeu de paramètres courants, alors ce nouveau jeu de paramètres devient le jeu courant. Sinon le jeu de paramètres courants reste celui qu'il était.
 \item[3)] On recommence à 1). On boucle ainsi jusqu'à ce qu'une précision donnée soit atteinte ou que nous ayons atteint le nombre maximum d'itérations voulues.
 \end{myitemize}
 La vraisemblance, dont on maximise le logarithme selon~$\theta$, est quant à elle donnée par~:
@@ -106,12 +108,12 @@ La vraisemblance, dont on maximise le logarithme selon~$\theta$, est quant à el
 \end{equation}
 Notez que quel que soit~$\theta$, l'intégrale de~$g$ vaut~1 (puisque l'intégrale de $g_i$ vaut $w_i$\todo{REF}). 
 %(\cf Propriété~\ref{prop:integ1}, page~\pageref{prop:integ1} dans l'annexe~\ref{chap:anx_gmm}). 
-Ainsi la vraisemblance est le produit des probabilités que chacun des éléments de~$X$ appartiennent à la distribution de paramètre~$\theta$.
+Ainsi la vraisemblance est le produit des probabilités que chacun des éléments de~$X$ appartienne à la distribution de paramètre~$\theta$.
 
 
-Cet algorithme de mélanges de gaussiennes nous fournit alors la meilleure  (au sens de la logvraisemblance) combinaison de gaussiennes qui permet de décrire l'histogramme des niveaux de gris. Ainsi, à chaque image correspond un mélange bi-gaussien totalement identifié. 
+Cet algorithme de mélanges de gaussiennes nous fournit alors la meilleure  (au sens de la log-vraisemblance) combinaison de gaussiennes qui permet de décrire l'histogramme des niveaux de gris. Ainsi, à chaque image correspond un mélange bi-gaussien totalement identifié. 
 %L'ensemble des fits bi-gaussien, pour les images cliniques et numériques, sont présentés sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} pour les histogrammes cliniques et sur les figures REF FIG\todo{Fig fit histo num, on commente les histos ? les fits ?} pour les histogrammes numériques. Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
-L'ensemble des fits bi-gaussien, pour les images cliniques, est présenté sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} de l'Annexe~\ref{chap:anx_img_complement}. La Figure~\ref{fig:baisse_hetero_fin_simu} donn quant à elle un aperçu des histogrammes numériques. Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
+L'ensemble des fits bi-gaussiens, pour les images cliniques, est présenté sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} de l'Annexe~\ref{chap:anx_img_complement}. La Figure~\ref{fig:baisse_hetero_fin_simu} donne quant à elle un aperçu des histogrammes numériques. Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
 \todo[noline]{Presentation de l'ensemble des histo numérique en annexe?}
 
 \section{Définition d'une fonction objectif à reproduire}
@@ -127,7 +129,7 @@ Afin de correctement traduire l'\hetero, il est nécessaire de fournir une fonct
 \paragraph{Comment visuellement bien apprécier l'\hetero ?}
 Pour correctement classifier les images dans les 5 catégories que nous venons de dresser, il est nécessaire de savoir précisément ce que l'on entend~: à quoi correspond une \hetero de 0\,\% ? de 100\,\% ? Une \hetero nulle (\ie homogénéité parfaite) correspond à un aplat d'une seule et unique couleur. A l'opposé, étant données 2 couleurs bien distinctes, on dira que l'\hetero est maximale, si  ces 2 couleurs occupent chacune la moitié de la zone considérée. Une \hetero intermédiaire pourra être un cas où~:
 \begin{myitemize}
-\item soit les 2 couleurs sont relativement proche,
+\item soit les 2 couleurs sont relativement proches,
 \item soit l'une des deux couleurs occupe un faible espace comparé à celui occupé par l'autre couleur, 
 \item soit un mélange des deux raisons précédentes.
 \end{myitemize}~
@@ -143,11 +145,12 @@ En se conformant à ces règles, l'appréciation visuelle\footnote{\samepage Cet
  des images cliniques nous donne les fonctions objectifs\HHobj (\cf Figure~\ref{fig:hetero_visuelle}) pour chacun des patients que notre quantificateur de l'\hetero se devra de reproduire. 
  
  
-Notons que \Nber est encore ici un cas très représentatif de ce que l'on cherche à étudier \ie qui montre bien la corrélation entre \hetero et rechute imminente. En effet, ici l'\hetero croît avant même que le volume tumoral ne réaugmente, signe de la reprise d'activité cellulaire sur le pourtour de la métastase. Le c\oe{}ur reste nécrosé et donc l'\hetero est accrue. Lorsque le volume tumoral  finit par augmenter, le tissu proliférant a, en grande partie (si le centre de la tumeur est suffisamment vascularisé), recolonisé la zone nécrosée. La croissance de la métastase est alors synonyme d'homogénéisation, puisque l'ensemble de la surface tumorale tend à être proliférante. Une homogénéisation a également lieu lorsque le traitement est efficace. Dans ce cas-ci, l'ensemble de la tumeur tend à être nécrosée. 
+Notons que \Nber est encore ici un cas très représentatif de ce que l'on cherche à étudier \ie qui montre bien la corrélation entre \hetero et rechute imminente. En effet, ici l'\hetero croît avant même que le volume tumoral ne réaugmente, signe de la reprise d'activité cellulaire sur le pourtour de la métastase. Le c\oe{}ur reste nécrosé et donc l'\hetero est accrue. Lorsque le volume tumoral  finit par augmenter, le tissu proliférant a, en grande partie (si le centre de la tumeur est suffisamment vascularisé), recolonisé la zone nécrosée. La croissance de la métastase est alors synonyme d'homogénéisation, puisque l'ensemble de la surface tumorale tend à être proliférante. Une homogénéisation a également lieu lorsque le traitement est efficace. Dans ce cas-ci, l'ensemble de la tumeur tend à être nécrosé. 
 
 
-Les courbes de \Chen soulignent également cette corrélation entre \hetero et rechute mais de manière un peu plus subtile. Au jour 400 (\cf Figure~\ref{fig:hetero_objectif_Chen}), un gain d'\hetero est constaté. La recroissance de l'aire tumorale arrive peu après. Ensuite, entre le jour 400 et 900, bien que la tumeur croît de manière quasi constante, l'\hetero varie. On distingue une première phase (entre jour 400 et 700) durant laquelle l'\hetero diminue fortement~: ceci traduit la recolinasation du centre nécrosé par le pourtour proliférant. Dans la seconde phase (entre le jour 700 et 900), l'\hetero réaugmente~: la tumeur a atteint une certaine taille limite, taille au delà de laquelle la vascularisation ne peut plus plus irrigué le c\oe{}ur de la tumeur. Ainsi de la nécrose réapparaît au centre, ce qui engendre un accroissement de l'\hetero. 
-En ce qui concerne la rechute au traitement multi-cibles (administré à partir du jour 1049 et ayant des effets cytotoxique et antiangiogénique), au jour 1300, médicalement la variation de volume par rapport au scanner précédent est beaucoup trop faible pour considérer ceci comme une rechute. L'\hetero a, quant à elle, déjà réaugmenté et traduit ici encore la rechute qui s'avère avoir déjà commencée.  
+Les courbes de \Chen soulignent également cette corrélation entre \hetero et rechute mais de manière un peu plus subtile. Au jour 400 (\cf Figure~\ref{fig:hetero_objectif_Chen}), un gain d'\hetero est constaté. La recroissance de l'aire tumorale arrive peu après. Ensuite, entre le jour 400 et 900, bien que la tumeur croît de manière quasi constante, l'\hetero varie. On distingue une première phase (entre jour 400 et 700) durant laquelle l'\hetero diminue fortement~: ceci traduit la recolonisation du centre nécrosé par le pourtour proliférant. Dans la seconde phase (entre le jour 700 et 900), l'\hetero réaugmente~: la tumeur a atteint une certaine taille limite, taille au-delà de laquelle la vascularisation ne peut plus irriguer le c\oe{}ur de la tumeur. 
+Ainsi de la nécrose réapparaît au centre, ce qui engendre un accroissement de l'\hetero. 
+En ce qui concerne la rechute au traitement multi-cibles (administré à partir du jour 1049 et ayant des effets cytotoxique et antiangiogénique), au jour 1300, médicalement la variation de volume par rapport au scanner précédent est beaucoup trop faible pour considérer ceci comme une rechute. L'\hetero a, quant à elle, déjà réaugmenté et traduit ici encore la rechute qui s'avère avoir déjà commencé.  
 
 
 Cette analyse motive donc encore un peu plus le besoin d'établir un critère capable de quantifier l'\hetero. Bien que nous ayons 2 patients à notre disposition, je m'efforcerai de construire un critère qui reproduira convenablement la fonction objectif pour \Nber uniquement. Le second patient, \Chen, sera gardé pour valider le ou les critère(s) retenu(s) et non pour le ou les construire. L'idéal serait bien sûr d'avoir à notre disposition une plus large cohorte de patients.
@@ -417,8 +420,8 @@ Cette analyse motive donc encore un peu plus le besoin d'établir un critère ca
 
 \section{Construction et analyse de critères divers}
 On considère désormais l'approximation en un mélange de deux gaussiennes des histogrammes de niveaux de gris provenant de nos images. Dans cette section, on notera\HH le critère d'\hetero que l'on recherche. 
-La définition faite de l'\hetero dans la section précédente, nous invite à prendre en compte non pas les positions des gaussiennes, mais plutôt leur écarts. Plus les gaussiennes sont similaires, et plus on tend vers un cas homogène. Partant de cette observation, 
-des premiers critères naïfs ont été testé. Ces critères étaient basés sur des quantités simples~:  l'écart entre les centres des deux composantes ($\Delta c$) notamment et/ou l'écart de leur poids  ($\Delta w$) et/ou encore l'écart de leur hauteur ($\Delta h$). Bien que ces quantités ne se soient pas révélées être de bonnes traductrices de l'\hetero, elles m'ont permises d'aborder les questions suivantes~:
+La définition faite de l'\hetero dans la section précédente, nous invite à prendre en compte non pas les positions des gaussiennes, mais plutôt leur écart. Plus les gaussiennes sont similaires, et plus on tend vers un cas homogène. Partant de cette observation, 
+des premiers critères naïfs ont été testés. Ces critères étaient basés sur des quantités simples~:  l'écart entre les centres des deux composantes ($\Delta c$) notamment et/ou l'écart de leur poids  ($\Delta w$) et/ou encore l'écart de leur hauteur ($\Delta h$). Bien que ces quantités ne se soient pas révélées être de bonnes traductrices de l'\hetero, elles m'ont permises d'aborder les questions suivantes~:
 Comment parvenir à un critère\HH allant de 0 à 1 ? Comment bien normaliser les quantités intervenant dans le calcul de\HH ? Dans les cas où la normalisation des paramètres ne suffit pas à garantir l'appartenance de\HH à l'intervalle $[0;1]$, quelle saturation employer ? 
 
 \begin{figure}
@@ -486,8 +489,9 @@ Dans les cas où les variations sont acceptables (ni trop faibles, ni chaotiques
 }
 \caption{\label{fig:critere_dc2_sur_dh}\Hetero clinique fournie par le critère~$\mathcal{H}_{2}$ dans lequel~$\Delta c$ joue un rôle prépondérant.}
 \end{figure}
-L'idée de ce dernier critère m'est venue de la constatation suivante, en repartant du critère  %$\mathscr{H}_{10}$ 
-basé sur la pente décrite entre le sommet des gaussiennes. Sur la Figure~\ref{fig:pente_gaussienne_identique} sont présentées deux configurations très différentes, mais présentant la même pente. Pourtant la Figure~\ref{fig:pente_gaussienne_identique_a} est très clairement représentative d'une image \heterogene alors que la Figure~\ref{fig:pente_gaussienne_identique_a} serait plutôt représentative de quelque chose  d'homogène puisque l'approximation par une seule et unique gaussienne ne serait pas des plus mauvaise. 
+L'idée de ce dernier critère m'est venue %de la constatation suivante, 
+en repartant du critère  %$\mathscr{H}_{10}$ 
+basé sur la pente décrite entre le sommet des gaussiennes. Sur la Figure~\ref{fig:pente_gaussienne_identique} sont présentées deux configurations très différentes, mais fournissant la même pente. Pourtant la Figure~\ref{fig:pente_gaussienne_identique_a} est très clairement représentative d'une image \heterogene alors que la Figure~\ref{fig:pente_gaussienne_identique_b} serait plutôt représentative de quelque chose d'homogène puisque l'approximation par une seule et unique gaussienne ne serait pas des plus mauvaises. 
 Comment différencier ces deux cas ? Cet exemple mis en exergue nous invite à dire que~$\Delta c$ doit avoir plus de poids que~$\Delta h$ dans le calcul du critère\HH. %l'\hetero. 
 %Ainsi, j'ai décidé de regarder le critère suivant~:
 %\begin{equation}
@@ -507,7 +511,7 @@ et où $\mathscr{S}$ est une fonction de saturation définie par~:
 
 %%===
 %Le seul bémol réside dans le fait que ce critère semble avoir des difficultés à monter vers les grandes \hetero. Multiplier ce critère par 3 semble corriger le problème. Mais pourquoi 3? 
-Le facteur 3 dans la saturation a été considéré car sans, le critère avait des difficultés à s'approcher de 1. Ce facteur n'a pas été choisi au hasard. %de la manière suivante. 
+Le facteur 3 dans la saturation a été considéré car sans celui-ci, le critère avait des difficultés à s'approcher de la valeur 1. Ce facteur n'a pas été choisi au hasard. %de la manière suivante. 
 Si l'on regarde de plus près les histogrammes cliniques de \Nber, on peut remarquer qu'ils sont grossièrement tous compris dans l'intervalle~$[75;220]$. La longueur de cet intervalle est de 145, et non 256. Ainsi au lieu de diviser $\Delta c$ par 256, on peut le normaliser en le divisant par 145. On remarque alors~:
 \begin{equation}
 \left(\frac{\Delta c}{145}\right)^2 \approx \left(\frac{\Delta c}{256/\sqrt{3}}\right)^2 =  3 \left(\frac{\Delta c}{256}\right)^2.
@@ -532,7 +536,7 @@ Bien qu'étant plus larges, les histogrammes cliniques de \Chen n'occupent pas l
 
 \section{L'\hetero sur les simulations numériques}
 
-Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), faisons parler ce critère sur nos simulations numériques. En ce qui concerne cet aspect, les images de synthèse (dont le procédé est détaillé dans le Chapitre~\ref{chap:optim_grey}) résultants des simulations numériques dépendent de 3 paramètres~: $\tau_N, \tau_P$ et~$\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveau de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit~: $\tau_N=38, \tau_P=166$ et~$\tau_S=204$. 
+Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), faisons parler ce critère sur nos simulations numériques. En ce qui concerne cet aspect, les images de synthèse (dont le procédé est détaillé dans le Chapitre~\ref{chap:optim_grey}) résultants des simulations numériques dépendent de 3 paramètres~: $\tau_N, \tau_P$ et~$\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveaux de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit~: $\tau_N=38, \tau_P=166$ et~$\tau_S=204$. 
 Dans un second temps, on pourra faire varier ces paramètres pour examiner l'influence de ceux-ci sur l'\hetero numérique. On examinera notamment ce qui est produit avec les niveaux de gris optimaux du chapitre précédent. 
 
 %On ne montrera ici que l'\hetero numérique de \Nber. Celle de \Chen n'a absolument aucune chance d'être correctement reproduite pour la simple et bonne raison que le premier scan est très \heterogene, alors que notre condition initial dans le modèle numérique est complètement homogène. Il faudrait prendre une condition initiale plus en relation avec l'image médicale, à minima une condition initiale qui présenterait le même niveaux d'\hetero pour pouvoir poursuivre l'étude avec ce patient.
@@ -607,8 +611,9 @@ De plus les images numériques sont dépendantes du choix des niveaux de gris~$\
 Examinons ici l'influence du choix de la paramétrisation de la reconstruction d'images scanners sur la quantification de l'\hetero. 
 Cette paramétrisation consiste à choisir les trois niveaux de gris~$\tau_N$, $\tau_P$ et~$\tau_S$.  
 La principale conséquence d'un changement de ces niveaux de gris est la dilatation de l'histogramme numérique résultant.  
-Les variations de l'\hetero ne sont donc que peu dépendantes de ces paramètres. L'amplitude des variations pourra éventuellement être impactée mais le sens (et c'est cela qui nous intéresse) lui ne sera pas changé. Ceci est corroborer par les tests numériques, dont les résultats sont présentés sur  
-la Figure~\ref{fig:impact_grey_lvl_on_hetero}. En effet, on remarque ici que toutes les courbes sont comparables. Comme différence, on pourra relever tout de même que plus~$\tau_N$ est écarté de~$\tau_P$, plus les variations de l'\hetero numérique sont importantes. Ceci est notamment visible lors de la rechute à l'imatinib, entre les jour~776 et~888 où le pic descendant de l'\hetero numérique est plus prononcé si~$\tau_P-\tau_N$ est grand. Ceci est conforme à ce que l'on pouvait attendre, puisque cette différence va impacter directement la position des gaussiennes sur l'histogramme, position relative en grande partie donnée par~$\Delta c$ qui intervient dans le calcul de notre critère de l'\hetero numérique. 
+Les variations de l'\hetero ne sont donc que peu dépendantes de ces paramètres. L'amplitude des variations pourra éventuellement être impactée mais le sens (et c'est cela qui nous intéresse) lui ne sera pas changé. 
+Ceci est corroboré par les tests numériques, dont les résultats sont présentés sur la Figure~\ref{fig:impact_grey_lvl_on_hetero}. 
+En effet, on remarque ici que toutes les courbes sont comparables. Comme différence, on pourra relever tout de même que plus~$\tau_N$ est écarté de~$\tau_P$, plus les variations de l'\hetero numérique sont importantes. Ceci est notamment visible lors de la rechute à l'imatinib, entre les jour~776 et~888 où le pic descendant de l'\hetero numérique est plus prononcé si~$\tau_P-\tau_N$ est grand. Ceci est conforme à ce que l'on pouvait attendre, puisque cette différence va impacter directement la position des gaussiennes sur l'histogramme, position relative en grande partie donnée par~$\Delta c$ qui intervient dans le calcul de notre critère de l'\hetero numérique. 
 
 %\begin{figure}[h]
 %\centering
@@ -645,7 +650,7 @@ la Figure~\ref{fig:impact_grey_lvl_on_hetero}. En effet, on remarque ici que tou
 \caption{\label{fig:hetero_chen_simu}\Hetero numérique pour \Chen\ -- $\tau_N=25, \tau_P=143$ et~$\tau_S=197$. La fonction objectif\HHobj de l'\hetero clinique est rappelée ici à titre de comparaison. La simulation numérique ne reproduit ici pas du tout l'\hetero clinique.}
 \end{figure}
 
-L'\hetero numérique de \Chen est présentée sur la Figure~\ref{fig:hetero_chen_simu}. Comme on peut le voir sur ce cas, l'\hetero  numérique n'est pas comparable à l'\hetero clinique. Il y a en fait assez peu de chance pour qu'il y ait recollement de ces deux courbes. En effet, le premier scanner de \Chen est très \heterogene, alors que notre condition initiale dans le modèle numérique est complètement homogène. Il faudrait prendre une condition initiale plus en relation avec l'image médicale, à minima une condition initiale qui présenterait le même niveau d'\hetero pour pouvoir poursuivre l'étude avec ce patient. 
+L'\hetero numérique de \Chen est présentée sur la Figure~\ref{fig:hetero_chen_simu}. Comme on peut le voir sur ce cas, l'\hetero  numérique n'est pas comparable à l'\hetero clinique. Il y a en fait assez peu de chance pour qu'il y ait recollement de ces deux courbes. En effet, le premier scanner de \Chen est très \heterogene, alors que notre condition initiale dans le modèle numérique est complètement homogène. Il faudrait prendre une condition initiale plus en relation avec l'image médicale, {\it a minima} une condition initiale qui présenterait le même niveau d'\hetero pour pouvoir poursuivre l'étude avec ce patient. 
 
 Malgré cela, on notera que le critère semble tout de même bien décrire l'\hetero numérique. 
 % puisque

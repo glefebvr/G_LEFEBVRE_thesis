@@ -41,7 +41,12 @@ et donc $u_0$ minimise $J$.
 \end{myitemize}
 \end{proof}
 Ainsi minimiser la fonction $J$ est équivalent à minimiser la fonction $J_c$. 
-L'avantage de la fonction $J_c$, c'est qu'elle est construite de sorte à être  différentiable aux abords du point de minimum même si $J$ ne l'est pas ($J$ peut même être discontinue). Le principal désavantage, c'est que le problème $\min_u J_c(u)$ est infiniment plus complexe à résoudre que le problème $\min_u J(u)$ puisque la fonction $J_c$ nécessite le calcul d'un minimum à chaque évaluation. Qu'à cela ne tienne. Dans notre cas, nous connaissons explicitement $J$. La transformée de Moreau-Yosida n'est appliquée que pour gagner en régularité. Ainsi, on peut calculer explicitement $J_c$. Avant de fournir un exemple, remarquons que 
+L'avantage de la fonction $J_c$ est qu'elle est construite de sorte à être  différentiable aux abords du point de minimum même si $J$ ne l'est pas ($J$ peut même être discontinue). 
+Le principal désavantage est que le problème $\min_u J_c(u)$ est infiniment plus complexe à résoudre que le problème $\min_u J(u)$ puisque la fonction $J_c$ nécessite le calcul d'un minimum à chaque évaluation. 
+Qu'à cela ne tienne. 
+Dans notre cas, nous connaissons explicitement $J$. 
+La transformée de Moreau-Yosida n'est appliquée que pour gagner en régularité. Ainsi, on peut calculer explicitement $J_c$. 
+Avant de fournir un exemple, remarquons que 
 \begin{prop}
 Si la fonction $J$ est paire, alors sa régularisée $J_c$ l'est aussi.
 \end{prop}
@@ -80,7 +85,7 @@ Puisque $J$ est paire, nous pouvons limiter l'étude de sa régularisée aux $u$
 \end{tikzpicture}
 \end{center}
 Ici, $u\leq a \Rightarrow \min_v f_u(v) = \min \left(1, \sfrac{(a-u)^2}{2c} \right)  $. Ainsi $J_c$ vaut 1 si $\sfrac{(a-u)^2}{2c} \geq 1$, \ie si $u\leq a+\sqrt{2c}$; si $u>a+\sqrt{2c}$ alors $J_c(u)=\sfrac{(a-u)^2}{2c}$.
-\item Cas 2 : $ a \geq u$. Ici tout les points $u$ tel que $0\leq u \leq a$ minimise $J$. Donc $J_c(u)=J(u)=0$ sur cet intervalle. On peut s'en rassurer avec le tableau de variation suivant~:
+\item Cas 2 : $ a \geq u$. Ici tous les points $u$ tel que $0\leq u \leq a$ minimisent~$J$. Donc $J_c(u)=J(u)=0$ sur cet intervalle. On peut s'en assurer avec le tableau de variation suivant~:
 \begin{center}
 \begin{tikzpicture}
 \tkzTabInit[espcl=2.8]{$v$/.7,$f_u'(v)$/.7,$f_u(v)$/1.7}{$0$, $u$, $a$, $+\infty$}
@@ -101,12 +106,12 @@ J_c(u) = \left\{  \begin{aligned}
 \end{equation*}
 L'allure de la fonction créneau~$J$ et de sa régularisée~$J_c$, sont présentées Figure~\ref{fig:regul_creneau}.
 
-Notons que la fonction n'est régulière qu'aux abords des minimums. La valeur 0 est raccordé de manière dérivable, mais pas de dérivabilité pour le raccord en~$1$.
+Notons que la fonction n'est régulière qu'aux abords des minimums. La valeur 0 est raccordée de manière dérivable, mais pas de dérivabilité pour le raccord en~$1$.
 
 Remarquons également que plus le paramètre $c$ est grand, plus l'intervalle sur lequel agit la régularisation est large.
 
 
-On pourrait aller beaucoup plus loin dans l'étude des propriétés de cette régularisation. De nombreuses publications ont été faite notament dans des cas où l'on ne connait pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
+On pourrait aller beaucoup plus loin dans l'étude des propriétés de cette régularisation. De nombreuses publications ont été faites notamment dans des cas où l'on ne connait pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
 
 %%%%%%%%%%%%%%%%%
 \subsection{Régularisation de Moreau-Yosida appliquée à une parabole tronquée.}
@@ -242,7 +247,9 @@ et son allure est présentée sur la Figure~\ref{fig:regul_para_coupee}.
 \caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique \eqref{eq:penalisation_quad} (\cf Figure~\ref{fig:para_tronquee}), pour les combinaisons défavorables de la Table~\ref{tab:optim2gris_bad}, page~\pageref{tab:optim2gris_bad}.}
 \end{table}
 
-Comme montré dans le chapitre \ref{chap:optim_grey} (\cf notamment Table~\ref{tab:optim2gris} et surtout dans la Table~\ref{tab:optim2gris_bad} ), les algorithmes d'optimisations sur les niveaux de gris tendent, dans certaines configurations,  vers des jeux de paramètres optimaux qui s'approchent du bord~0 ou du bord~255, voire même qui sont négatifs (\ie non convergence de l'algorithme d'optimisation). Ce phénomène pourrait être dû notamment au fait que la pénalisation en créneau \eqref{eq:penalisation_creneau} présente une discontinuité. Les algorithmes de descente notamment fonctionnant sur une approximation du gradient peuvent ainsi être perturbé par cette discontinuité. Examinons ceci de plus près. Essayons une pénalisation continue~: une parabole coupée
+Comme montré dans le Chapitre \ref{chap:optim_grey} (\cf notamment Table~\ref{tab:optim2gris} et surtout dans la Table~\ref{tab:optim2gris_bad} ), les algorithmes d'optimisations sur les niveaux de gris tendent, dans certaines configurations,  vers des jeux de paramètres optimaux qui s'approchent du bord~0 ou du bord~255, voire même qui sont négatifs (\ie non convergence de l'algorithme d'optimisation). Ce phénomène pourrait être dû notamment au fait que la pénalisation en créneau \eqref{eq:penalisation_creneau} présente une discontinuité. 
+Les algorithmes de descente notamment fonctionnant sur une approximation du gradient peuvent ainsi être perturbés par cette discontinuité. 
+Examinons ceci de plus près. Essayons une pénalisation continue~: une parabole coupée
 \begin{equation}
 \label{eq:penalisation_quad}
 \mathcal{P}(\tau) = \Big[ \big(  E(\tau) - 127.5 \big)^2-126^2 \Big]^+,
@@ -324,7 +331,7 @@ Essayons donc une troisième fonction de pénalisation qui soit~$\mathcal{C}^1$.
 
 
 Visiblement rien ne semble y faire : il y a toujours des valeurs de~$\tau_N$ qui s'approchent des bornes autorisées et les cas où l'on considère les images~$[2,5,7]$ et~$[3,7,9]$ par exemple  fournissent des résultats très différents selon les algorithmes d'optimisation utilisés, qui de plus font apparaître~$\tau_N{\gg}\tau_S$ ce qui est aberrant.
-La régularité de la pénalisation ne semblent donc pas en cause ici. Le problème semble donc venir d'ailleurs (\cf fin de la section~\ref{sec:optim_2_param} traitant des problèmes de mauvais  conditionnement de nos systèmes).
+La régularité de la pénalisation ne semble donc pas en cause ici. En effet, le problème vient d'ailleurs (\cf fin de la Section~\ref{sec:optim_2_param} traitant des problèmes de mauvais conditionnement des systèmes considérés).
 
 %En ce qui concerne l'aberration, cela peut venir du fait que les images 5,7 et 9 sont petites, et donc le bruit est très important et l'image numéro 3, de taille moyenne n'arrive pas à rattraper ce bruit. Il faut donc éviter de prendre en compte les images où la tumeur est trop petite, et si l'on en prend il faut que ces images soient minoritaires devant les autres.
 

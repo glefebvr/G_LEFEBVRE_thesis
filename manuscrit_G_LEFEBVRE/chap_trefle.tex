@@ -21,7 +21,7 @@
 \noindent Une fois le défaut identifié, un correctif sera finalement proposé~: le schéma \twinweno. 
 
 \section{Présentation du problème}
-Sans plus tarder, présentons le problème en image. Sur la Figure~\ref{fig:trefle}, est présenté une simulation numérique du modèle EDP construit au chapitre précédent avec~:
+Sans plus tarder, présentons le problème en image. Sur la Figure~\ref{fig:trefle}, est présentée une simulation numérique du modèle EDP construit au chapitre précédent avec~:
 \begin{myitemize}
 \item un schéma classique à 5 points pour la diffusion,
 \item un WENO5 (avec splitting directionnel) pour le transport.
@@ -41,7 +41,7 @@ Sans plus tarder, présentons le problème en image. Sur la Figure~\ref{fig:tref
 une structure en forme de trèfle apparaît.}
 \end{figure}
 
-Partant d'une donnée initiale irrotationelle, on constate que la simulation numérique peut générer une structure en forme de trèfle, comme présenté sur la Figure~\ref{fig:trefle}, alors que la forme circulaire devrait être préservée. 
+Partant d'une donnée initiale irrotationelle, on constate que la simulation numérique peut générer une structure en forme de trèfle, comme présentée  sur la Figure~\ref{fig:trefle}, alors que la forme circulaire devrait être préservée. 
 
 Ce problème n'apparaît pas de manière systématique. L'ensemble des simulations numériques réalisées pour \Nber, ne le faisait pas apparaître. Le problème a été identifié par incident, lorsque nous cherchions à recoller notre modèle aux données de \Chen. 
 
@@ -60,7 +60,7 @@ Le schéma associé à la diffusion a été le premier à être incriminé. En e
 \end{aligned}
 \right.
 \end{equation}
-qui n'est autre que l'équation résolue lors de la première itération de l'algorithme sur le modèle complet ($M$ étant initialisé au dessus du seuil d'hypoxie, on a alors au départ $\gammapp=1$ dans l'équation~\eqref{eq_darcy}. De plus, comme $N=0$ au départ, on obtient alors $\dive \vit = P$, car $k\equiv1$). Dans les itérations suivantes certes le second membre de l'équation va varier, mais cela ne va pas changer le fait que la forme du bord impacte sur les lignes de niveaux.
+qui n'est autre que l'équation résolue lors de la première itération de l'algorithme sur le modèle complet ($M$ étant initialisé au dessus du seuil d'hypoxie, on a alors au départ $\gammapp=1$ dans l'équation~\eqref{eq_darcy}. De plus, comme $N=0$ au départ, on obtient alors $\dive \vit = P$, car $k\equiv1$). Dans les itérations suivantes certes le second membre de l'équation va varier, mais cela ne va pas changer le fait que la forme du bord impacte les lignes de niveaux.
 \begin{figure}
 \centering
 \subfloat[Sans masque\label{fig:ligne_nvx_laplace_carre} ]{
@@ -72,7 +72,7 @@ qui n'est autre que l'équation résolue lors de la première itération de l'al
 %{simu/trefle_track/point3_0/track_10x10_7/pression_2.png}
 {simu/graph_v2.2.d/ref_mask/pression_2.png}}
 %\vspace{-4mm}\\
-\caption{\label{fig:ligne_nvx_laplace} Résolution de la pression donnée par un laplacien. La forme du domaine de calcul carré impacte sur le résultat.}
+\caption{\label{fig:ligne_nvx_laplace} Résolution de la pression donnée par un laplacien. La forme du domaine de calcul carré se répercute sur le résultat.}
 \end{figure}
 
 L'effet carré sur les lignes de niveaux de la pression, apparaît surtout près du bord du domaine de calcul. Ainsi, pour tenter de palier à ce défaut, la première idée fut de considérer un domaine plus grand, laissant une sorte de couche limite pour absorber les déformations. Des simulations numériques de notre modèle ont été réalisées en doublant la longueur dans chaque direction (la taille d'une maille restant inchangée, on double aussi le nombre de mailles). Malheureusement, une forme de trèfle est toujours visible. On a même du mal à distinguer visuellement s'il y a eu une amélioration. 
@@ -106,7 +106,7 @@ La forme du trèfle fait très clairement apparaître les directions du maillage
 \resizebox{.49\textwidth}{!}{\input{tex_pictures/stencil_9pts_custom.tex}}}
 \caption{\label{fig:schema_laplacien}Poids associés à chacun des points du stencil à 9 points de schémas discrétisant le laplacien ($h$ étant le pas d'espace, égal dans chaque direction).}
 \end{figure}
-Le premier schéma à 9 points essayé est le schéma classique, présenté notamment dans~\cite{leveque2007finite}, ayant des poids comme indiqué sur la Figure~\ref{fig:schema_laplace_9pts_classique}. Aucune amélioration n'a malheureusement été constatée... Un second schéma à 9 points a été imaginé à partir d'une méthode mixte éléments finis/volumes finis comme présentée et utilisée dans~\cite{latige2013second}. Le principe est le suivant.  
+Le premier schéma à 9 points essayé est le schéma classique, présenté notamment dans~\cite{leveque2007finite}, ayant des poids comme indiqués sur la Figure~\ref{fig:schema_laplace_9pts_classique}. Aucune amélioration n'a malheureusement été constatée... Un second schéma à 9 points a été imaginé à partir d'une méthode mixte éléments finis/volumes finis comme présentée et utilisée dans~\cite{latige2013second}. Le principe est le suivant.  
 %%%% Figure basculées en annexe
 Sur chaque maille~$\mathcal{M}$, une approximation par un polynôme~$\mathbb{Q}1$ est réalisée à partir des valeurs aux quatre coins de la maille. Le flux au travers du volume de contrôle est alors calculé comme l'intégrale sur le bord de ce volume, de la dérivée du polynôme. Les détails concernant cette méthode sont présentés en  annexe~\ref{chap:anx_methode_mixte_VFEF}. Il y est notamment montré que ce schéma mixte se ramène en réalité à un schéma à 9 points avec des poids un peu différents, comme présenté dans la Figure~\ref{fig:schema_laplace_9pts_custom}. 
 Ici encore le trèfle persiste. Tout ceci nous amène à penser que le schéma de diffusion n'est pas le responsable de cette instabilité numérique qui génère le trèfle. Regardons maintenant de plus près le schéma de transport. 
@@ -192,7 +192,7 @@ Malgré cela, avec ce modèle extrêmement minimaliste, le trèfle à 4 feuilles
 \subfloat[Jour 1179]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0.27_bis/pop-070}}
 \subfloat[Jour 1347]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0.27_bis/pop-080}}
 \subfloat[Jour 1499]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0.27_bis/pop-089}}
-\caption{Evolution de la densité $P$, solution numérique du modèle réduit~\eqref{eq:mod_reduit_test_transp} (vitesse imposée~\eqref{eq:vit_imposee}) avec le schéma \twinweno ($\beta=0.27$). -- Comparé à la Figure~\ref{fig:evo_test_transp}, l'invariance par rotation est ici très nettement améliorée. \label{fig:evo_test_transp_twinweno}}
+\caption{Evolution de la densité $P$, solution numérique du modèle réduit~\eqref{eq:mod_reduit_test_transp} (vitesse imposée~\eqref{eq:vit_imposee}) avec le schéma \twinweno ($\beta=0.27$). -- Comparée à la Figure~\ref{fig:evo_test_transp}, l'invariance par rotation est ici très nettement améliorée. \label{fig:evo_test_transp_twinweno}}
 \end{figure}
 Ici encore, les symptômes sont les mêmes~: on voit d'abord apparaître une altération de la forme circulaire, qui amène à un carré (\cf  Figure~\ref{fig:evo_test_transp4}), ce qui conduit ensuite  progressivement à une forme de trèfle (\cf  Figure~\ref{fig:evo_test_transp5}-\ref{fig:evo_test_transp6}).
 Nous avons ainsi mis en évidence la responsabilité du schéma de transport dans l'apparition de la forme de trèfle non désirée.
@@ -223,7 +223,7 @@ $t^{n+1}$ est donnée par
 &\quad +v_{i,j}^{y,n} \mathcal{F}\left(\Delta y,(\W^n_{i,j+k})_{k=-3,\cdots, 3}\right)\Bigr),
 \end{aligned}
 \end{equation}
-où~$v_{i,j}^{x,n} $ et~$v_{i,j}^{y,n}$ sont définis par~\eqref{eq_vit_discr} et où~$\mathcal{F}$ est le fonction de flux WENO5 donnée par~\cite{Liu1994}. 
+où~$v_{i,j}^{x,n} $ et~$v_{i,j}^{y,n}$ sont définis par~\eqref{eq_vit_discr} et où~$\mathcal{F}$ est la fonction de flux WENO5 donnée par~\cite{Liu1994}. 
 
 
 Pour éviter ces instabilités numériques, proposons un schéma de transport dont le stencil n'est pas uniquement réparti selon 2 directions. 
@@ -278,7 +278,7 @@ Sur la Figure~\ref{fig:evo_test_transp_twinweno}, on peut visualiser le bénéfi
 \subfloat[Jour 1053]{\label{fig:correction_cross_spatial_3}
 \includegraphics[width=0.33\textwidth]{track_14x14_cross/vue_S/65.png}}
 \caption{Simulation numérique avec le schéma \twinweno\  ($\beta=0.26$).  
-Comparé à la Figure~\ref{fig:trefle}, la conservation de l'invariance par rotation est très clairement améliorée. 
+Comparée à la Figure~\ref{fig:trefle}, la conservation de l'invariance par rotation est très clairement améliorée. 
 }\label{fig:compWENO5}
 \end{figure}
 
@@ -287,7 +287,7 @@ Comparé à la Figure~\ref{fig:trefle}, la conservation de l'invariance par rota
 Quelle est la valeur optimale pour le paramètre~$\beta$ ?} 
 Avec~$\beta=1$, on obtient un trèfle orienté dans les directions diagonales. 
 Avec~$\beta=0.5$ aussi ! Le fait que~$\Delta r$ soit supérieur à~$\Delta x$ favorise certainement la direction diagonale au détriment des autres. 
-Pour l'équation~\eqref{eq:mod_reduit_test_transp} muni de la vitesse~\eqref{eq:vit_imposee}, la valeur optimale de~$\beta$ est de~$0.26$ (résultat fourni par une méthode de descente sur le paramètre~$\beta$, précis à la seconde décimale). 
+Pour l'équation~\eqref{eq:mod_reduit_test_transp} munie de la vitesse~\eqref{eq:vit_imposee}, la valeur optimale de~$\beta$ est de~$0.26$ (résultat fourni par une méthode de descente sur le paramètre~$\beta$, précis à la seconde décimale). 
 Cependant cette valeur du paramètre~$\beta$, bien que faisant nettement moins apparaître le trèfle, ne semble pas être optimale pour le problème complet. Pour le jeu de paramètres de la simulation présentée sur la Figure~\ref{fig:trefle}, la valeur $\beta=0.27$ est meilleure que~$0.26$. D'autres jeux de paramètres encore ont produit un optimal de~$\beta$ de~$0.3$. 
 La valeur optimale du paramètre~$\beta$ n'est donc pas transcendante~: elle ne dépend pas uniquement du schéma utilisé et des caractéristiques du maillage, mais aussi de la vitesse. L'étude du choix de ce paramètre en fonction de la vitesse n'a pas été réalisée ici. Nos simulations permettent d'en donner un encadrement~: entre~$0.2$ et~$0.4$. Ici, nous nous limiterons à~$\beta$ constant en temps, ce choix améliorant déjà de manière très satisfaisante la conservation de l'irrotationnalité.
 \end{document}

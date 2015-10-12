@@ -3,8 +3,13 @@
 
 \begin{document}
 \chapter{Structuration des codes de calculs \label{chap:structure_code} }
-\mylettrine{D}{e} nombreux codes de calculs ont été développés durant la thèse. Outre le début de la thèse qui s'est déroulée sous Scilab dans le but de maquetter rapidement le code résolvants les différents modèles EDP, plusieurs codes ont été développées dans différents langages. 
-Sans tomber dans la présentation détaillée de l'ensemble des codes développés pendant ma thèse, faisons en un tour d'horizon. Ma thèse étant divisée en deux grandes parties, deux codes ont été développé. Le premier pour résoudre le modèle EDP, et fournir des simulations numériques reproduisant des croissances tumorales et des résistances aux traitements. Le second, pour calculer un quantificateur de l'\hetero à partir d'une image, que ce soit une image provenant directement de l'appareil d'imagerie médicale ou une image provenant de la simulation numérique.  
+\mylettrine{D}{e} nombreux codes de calculs ont été développés durant la thèse. Outre le début de la thèse qui s'est déroulée sous Scilab dans le but de maquetter rapidement le code résolvant les différents modèles EDP, plusieurs codes ont été développés dans différents langages. 
+Sans tomber dans la présentation détaillée de l'ensemble des codes de calcul,  %développés pendant ma thèse, 
+faisons en un tour d'horizon. Ma thèse étant divisée en deux grandes parties, deux codes ont été développés~:
+\begin{myitemize}
+\item le premier, pour résoudre le modèle EDP et fournir des simulations numériques qui reproduisent des croissances tumorales et des résistances aux traitements,
+\item le second, pour calculer un quantificateur de l'\hetero à partir d'une image, que ce soit une image provenant directement de l'appareil d'imagerie médicale ou une image provenant de la simulation numérique.
+\end{myitemize}  
 
 \section{Code de calcul pour la simulation numérique du modèle EDP}
 Le code permettant la simulation numérique via le modèle EDP a été développé en C++, avec la librairie eLYSe. Cette librairie, commune a toute l'équipe de recherche et développée par Olivier Saut, est une interface qui fournit un certain nombre de solveurs pour les problèmes classiques (transport et diffusion) traités par une méthode de volumes finis sur maillages cartésiens. Elle est multi-plateforme (Linux et MacOS). 
@@ -12,7 +17,7 @@ Elle s'appuie sur la librairie d'algèbre linéaire PETSc, bien qu'aucune connai
 Ceci est principalement du au fait de la présence des structures de types Field (tableaux 2D et 3D) que cette librairie fournit. 
 
 \paragraph{}
-Après avoir appris le C++, j'ai pu prendre en main cet outil. Divers modules ont pu être construit~:
+Après avoir appris le C++, j'ai pu prendre en main cet outil. Divers modules ont pu être construits~:
 \begin{myitemize}
 \item Un module pour les schémas à stencil croisé (de type \twinweno)
 \item Un module fournissant diverses géométries en fonction de paramètres permettant de construire la condition initiale du modèle EDP.
@@ -42,7 +47,7 @@ Le code de calcul générant le pourcentage d'\hetero aussi bien clinique que nu
 \item On veut pouvoir manipuler des données de natures différentes. On souhaite générer les histogrammes des niveaux de gris depuis des sources diverses :
 \begin{myitemize}[label=$-$]
 \item Les données cliniques sont dans un format particulier~: le format DICOM. C'est un format de méta-image, qui nécessite l'utilisation d'un logiciel (ou d'une librairie) spécifique pour être visualisé et traité. 
-\item La simulation numérique fournit les différentes populations~$P,N$ et~$S$. A partir de cela  de niveaux de gris associés~$\tau_P, \tau_N$ et~$\tau_S$, une image scanner est synthétisée.
+\item La simulation numérique fournit les différentes populations~$P,N$ et~$S$. A partir de cela et des niveaux de gris associés~$\tau_P, \tau_N$ et~$\tau_S$, une image scanner est synthétisée.
 \end{myitemize}
 \item Le code s'appuie sur des langages différents :
 \begin{myitemize}[label=$-$]
@@ -51,8 +56,9 @@ Le code de calcul générant le pourcentage d'\hetero aussi bien clinique que nu
 \end{myitemize}
 \end{myitemize}
 
-Noter qu'au niveau des données, il n'y a pas que la nature des images qui diffèrent~: le moyen d'acquérir le contour diffère également. 
-Pour les données cliniques, grâce au logiciel OsiriX, nous pouvons contourer manuellement les tumeurs, et en exporter le contour au format xml. Pour l'aspect images provenant de la simulation numérique, il n'y a pas de contour défini. Le choix (assez naturel) a été fait de le définir en prenant un seuil sur la population saine. Moyennant un parseur xml, on peut donc se ramener à un contour semblable dans les deux cas.
+Notez qu'au niveau des données, il n'y a pas que la nature des images qui diffère~: le moyen d'acquérir le contour diffère également. 
+Pour les données cliniques, grâce au logiciel OsiriX, nous pouvons contourer manuellement les tumeurs, et en exporter le contour au format xml. 
+En ce qui concerne les images provenant de la simulation numérique, il n'y a pas de contour défini. Le choix (assez naturel) a été fait de le définir en prenant un seuil sur la population saine. Moyennant un parseur xml, on peut donc se ramener à un contour semblable dans les deux cas.
 
 \begin{sidewaysfigure}
 %%\begin{figure}
@@ -73,7 +79,7 @@ Elle a pour but, à partir d'une image quelconque
 %(dicom ou sortie image fournie par le code précédent)
  et d'un contour, d'extraire les valeurs des niveaux de gris des pixels présents à l'intérieur du contour. On obtient ainsi l'histogramme des niveaux de gris. 
 La librairie ITK a l'avantage de traiter des images aux formats standards (.jpg, .png, etc) mais aussi et surtout le format DICOM, qui est le format des images médicales que nous possédons. 
-Puisque ce code manipule différents format d'images, j'en ai profité pour qu'il soit capable d'exporter, depuis les données DICOM, des images dans des formats standards sur lesquelles sont mis en évidence les différents contours. 
+Puisque ce code manipule différents formats d'images, j'en ai profité pour qu'il soit capable d'exporter, depuis les données DICOM, des images dans des formats standards sur lesquelles sont mis en évidence les différents contours. 
 Ce code a notamment permis de générer les images présentées dans les Figures~\ref{fig:contourageNber} et~\ref{fig:contourageChen} de l'annexe~\ref{chap:anx_img_complement} (pages~\pageref{fig:contourageNber}  et~\pageref{fig:contourageNber}).
 
 

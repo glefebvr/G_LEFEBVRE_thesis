@@ -30,7 +30,7 @@ Notons $\Gamma=\displaystyle \bigcup_{i=1,2,3,4} \Gamma_i$ le bord du volume de 
 \begin{equation}
 \int_{\Gamma_1}k \partial_y \Pi \dx - \int_{\Gamma_2}k \partial_x \Pi \dy - \int_{\Gamma_3}k \partial_y \Pi \dx + \int_{\Gamma_4}k \partial_x \Pi \dy = \int_{V_c}F \dx \dy.
 \end{equation}
-Le point $(x_i,y_j)$ étant le centre du volume de contrôle, le membre de droite est approximer de la manière suivante~:
+Le point $(x_i,y_j)$ étant le centre du volume de contrôle, le membre de droite est approximé de la manière suivante~:
 \begin{equation}
 \int_{V_c}F \dx \dy = \Delta x \Delta y F_i^j \quad \textrm{dans chaque volume de contrôle~} V_c.
 \end{equation}
@@ -130,7 +130,7 @@ on a ainsi :
 %%%%%%%%%%%%%%%%%%
 \section{Ecriture de la méthode comme un schéma à 9 points.}
 
-Chacune des intégrales de bord du problème variationnel~\ref{eq:anx_form_var_pr_eq_poisson} est approximée avec~:
+Chacune des intégrales de bord du problème variationnel~\eqref{eq:anx_form_var_pr_eq_poisson} est approximée avec~:
 \begin{align*}
 \int \partial_x \tilde{\Pi}_i^j \dy &= \int (2\alpha_i^jy + \gamma_i^j) \dy = [\alpha_i^jy^2 + \gamma_i^j y ] = \alpha_i^j [y^2] + \gamma_i^j [y]. \\
 \int \partial_y \tilde{\Pi}_i^j \dx &= \int (2\alpha_i^jx + \beta_i^j) \dx = [\alpha_i^jx^2 + \beta_i^j x ] = \alpha_i^j [x^2] + \beta_i^j [x ].
@@ -229,7 +229,7 @@ Et de la même manière, on a :
 
 
 
-Dans le cas particulier où $k\equiv1$ et où $\Delta x = \Delta y := h$ alors l'opérateur de discrétisation prend une forme plus simple. La formulation variationnel~\eqref{eq:anx_form_var_pr_eq_poisson} devient alors :
+Dans le cas particulier où $k\equiv1$ et où $\Delta x = \Delta y := h$ alors l'opérateur de discrétisation prend une forme plus simple. La formulation variationnelle~\eqref{eq:anx_form_var_pr_eq_poisson} devient alors :
 \begin{align*}
 \dfrac{1}{8} \Big[ \Big( & -\Pi_{i-1}^{j-1} -6 \Pi_i^{j-1} - \Pi_{i+1}^{j-1} + \Pi_{i-1}^j +6 \Pi_i^j + \Pi_{i+1}^j  \Big) \\
 &-\Big(  -\Pi_i^{j-1} + \Pi_{i+1}^{j-1} -6 \Pi_i^j +6 \Pi_{i+1}^j - \Pi_i^{j+1} + \Pi_{i+1}^{j+1} \Big)  \\
