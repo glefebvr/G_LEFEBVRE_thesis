@@ -2,9 +2,10 @@
 \pagestyle{main}
 
 \begin{document}
-\chapter{Exploration de différentes pénalisations sur la fonction coût utilisée pour optimiser les niveaux de gris \label{chap:anx_penalisation} }
+\chapter{Exploration de différentes pénalisations sur la fonction coût utilisée pour optimiser les niveaux de gris de la synthèse d'images scanners \label{chap:anx_penalisation} }
 \chaptermark{Exploration de différentes pénalisations} %%% Titre court pour l'entete
-%\mylettrine{B}{labla}
+
+\mylettrine{L}{ors} de la synthèse d'images scanners présentée au Chapitre~\ref{chap:optim_grey}, l'optimisation des niveaux de gris n'a pas été sans posée  de problème. Après avoir étudier des optimisations sur 3 niveaux de gris, puis 2, les cas atteignant pathologiquement le bord du domaine autorisé ($[0;255]$) persistaient. Des fonctions de pénalisation plus régulière qu'un simple créneau ont alors été testées à savoir une parabole tronquée ($\mathcal{C}^0$), puis une parabole tronquée régularisée avec le procédé de Moreau-Yosida que l'on présente ici (la régularisée est alors $\mathcal{C}^1$).
 
 \section{Régularisation de Moreau-Yosida}
 \subsection{Présentation de la régularisation et propriétés}
@@ -24,12 +25,12 @@ Soit $a$ le minimum de $J$. Soit $u$ l'un des antécédants de $a$. Alors $u$ mi
 \end{prop}
 \begin{proof}Notons $f_u(v) := J(v) + \frac{1}{2c} \| v-u \|^2$.
 \begin{myitemize}
-\item[$\Rightarrow$)] Soit $u_0$, un point en lequel $J$ atteint son minimum. \\
-On a alors $f_{u_0}(u_0) = J(u_0)\leq J(u) \leq J(u) + \frac{1}{2c} \| u-u_0 \|^2  = f_{u_0}(u), \ \forall u $, \\
-d'où $J_c(u_0) = \min_u f_{u_0}(u) = J(u_0) $. On a donc égalité des fonctions $J$ et $J_c$ en $u_0$. Reste à montrer que $u_0$ est bien un point de minimum pour $J_c$. Comme $u_0$ minimise $J$, on a $J(u_0)\leq J(v), \ \forall v$. \\
-d'où $ J(u_0) + \frac{1}{2c}\|v-u\|^2 \leq J(v) + \frac{1}{2c}\| v-u \|^2, \ \forall u, \forall v$.\\
-Ainsi $ \min_v ( J(u_0) + \frac{1}{2c}\|v-u\|^2 ) \leq \min_v ( J(v) + \frac{1}{2c}\| v-u \|^2)=J_c(u) \ \forall u$. \\
-Or $\min_v ( J(u_0) + \frac{1}{2c}\|v-u\|^2 )=J(u_0)$ et $J(u_0)=J_c(u_0)$\\ donc $J_c(u_0) \leq J(u), \ \forall u $.
+\item[$\Rightarrow$)] Soit $u_0$, un point en lequel $J$ atteint son minimum. On a alors $$f_{u_0}(u_0) = J(u_0)\leq J(u) \leq J(u) + \frac{1}{2c} \| u-u_0 \|^2  = f_{u_0}(u), \ \forall u, $$
+d'où $J_c(u_0) = \min_u f_{u_0}(u) = J(u_0) $. On a donc égalité des fonctions $J$ et $J_c$ en $u_0$. Reste à montrer que $u_0$ est bien un point de minimum pour $J_c$. Comme $u_0$ minimise $J$, on a $$J(u_0)\leq J(v), \ \forall v.$$
+$$\text{d'où} \hspace{4cm} J(u_0) + \frac{1}{2c}\|v-u\|^2 \leq J(v) + \frac{1}{2c}\| v-u \|^2, \ \forall u, \forall v.$$
+$$\text{Ainsi} \quad \min_v \left( J(u_0) + \frac{1}{2c}\|v-u\|^2 \right) \leq \min_v \left( J(v) + \frac{1}{2c}\| v-u \|^2 \right)=J_c(u), \ \forall u.$$
+$$\text{Or} \hspace{3cm} \min_v \left( J(u_0) + \frac{1}{2c}\|v-u\|^2 \right)=J(u_0) \quad \text{et} \quad  J(u_0)=J_c(u_0),$$ 
+donc $J_c(u_0) \leq J(u), \ \forall u $.
 et ainsi $u_0$ minimise $J_c$.
 \item[$\Leftarrow$)] Supposons que $u_0$ minimise $J_c$. On a alors
 \begin{center}
