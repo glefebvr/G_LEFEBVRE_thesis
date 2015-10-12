@@ -235,7 +235,7 @@ et son allure est présentée sur la Figure~\ref{fig:regul_para_coupee}.
 %\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
 %\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
 %Moyenne : & \col & \CG & \NM & \BFGS  }
-%\\ \hline
+\\ \hline
 \end{tabular}
 
 \caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique \eqref{eq:penalisation_quad} (\cf Figure~\ref{fig:para_tronquee}), pour les combinaisons défavorables de la Table~\ref{tab:optim2gris_bad}, page~\pageref{tab:optim2gris_bad}.}
@@ -311,12 +311,10 @@ La pénalisation considérée ici n'est que~$\mathcal{C}^0$ car il y a 2 points 
 %\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
 %\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
 %Moyenne : & \col & \CG & \NM & \BFGS  }
-%\\ \hline
+\\ \hline
 \end{tabular}
 \caption{\label{tab:optim2gris_pen_quad_reg}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pour pénalisation une parabole tronquée régularisée (\cf Figure~\ref{fig:regul_para_coupee}), pour les configurations défavorables de la Table~\ref{tab:optim2gris_bad}, page~\pageref{tab:optim2gris_bad}.}
 \end{table}
-\todo{ref fig}
-
 \DTLcleardb{optim2_leg}
 \DTLcleardb{optim2_stat}
 \DTLcleardb{optim2_grey}
@@ -324,7 +322,7 @@ La pénalisation considérée ici n'est que~$\mathcal{C}^0$ car il y a 2 points 
 Essayons donc une troisième fonction de pénalisation qui soit~$\mathcal{C}^1$. Considérons la régularisation de Moreau-Yosida de la pénalisation précédente. La courbe de la régularisée d'une parabole tronquée est représentée sur la Figure~\ref{fig:regul_para_coupee} (on prend ici $a=126; u=E(\tau)-127.5$). Les niveaux de gris optimaux obtenus avec cette nouvelle pénalisation plus régulière sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
 
 
-Visiblement rien ne semble y faire : il y a toujours des valeurs de~$\tau_N$ qui s'approchent des bornes autorisées et les cas où l'on considère les images~$[2,5,7]$ et~$[3,7,9]$ par exemple  fournissent des résultats très différents selon les algorithmes d'optimisation utilisés, qui de plus font apparaître~$\tau_N$>>$\tau_S$ ce qui est aberrant.
+Visiblement rien ne semble y faire : il y a toujours des valeurs de~$\tau_N$ qui s'approchent des bornes autorisées et les cas où l'on considère les images~$[2,5,7]$ et~$[3,7,9]$ par exemple  fournissent des résultats très différents selon les algorithmes d'optimisation utilisés, qui de plus font apparaître~$\tau_N{\gg}\tau_S$ ce qui est aberrant.
 La régularité de la pénalisation ne semblent donc pas en cause ici. Le problème semble donc venir d'ailleurs (\cf fin de la section~\ref{sec:optim_2_param} traitant des problèmes de mauvais  conditionnement de nos systèmes).
 
 %En ce qui concerne l'aberration, cela peut venir du fait que les images 5,7 et 9 sont petites, et donc le bruit est très important et l'image numéro 3, de taille moyenne n'arrive pas à rattraper ce bruit. Il faut donc éviter de prendre en compte les images où la tumeur est trop petite, et si l'on en prend il faut que ces images soient minoritaires devant les autres.

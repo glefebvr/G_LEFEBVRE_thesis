@@ -38,14 +38,14 @@ où~$x$ désigne un niveau de gris et~$X_x$ désigne la partition de la liste~$X
 Les données dont nous disposons (\cf Annexe~\ref{chap:anx_img_complement}) sont celles produites par le scanner (\cf Section~\ref{sec:fct_scan} pour la description de la procédure d'acquisition d'images médicales). Beaucoup plus riches qu'un agglomérat de pixels, ces données (méta-images) au format DICOM, nécessitent l'utilisation d'un outil adapté pour les visualiser. OsiriX est ainsi utilisé pour:
 \begin{myitemize}
 \item Choisir une coupe pertinente sur chaque scanner et l'exporter (également au format DICOM) de sorte à avoir ensuite des données 2D à traiter.
-\item Contourer manuellement la métastase. OsiriX dispose d'un outil crayon adapté à ce type de manipulation. Le contourage réalisé définit alors une ROI, que l'on peut également exporter (au format .xml)
+\item Contourer manuellement la métastase. OsiriX dispose d'un outil crayon adapté à ce type de manipulation. Le contourage réalisé définit alors une ROI, que l'on peut également exporter (au format .xml).
 \end{myitemize}
 Pour traiter ces 2 fichiers, un code C++ (\cf. Annexe~\ref{chap:structure_code}), s'appuyant sur la librairie ITK qui traite entre autre le format DICOM a été développé. Il permet de~:
 \begin{myitemize}
 \item Construire l'histogramme des niveaux de gris en parcourant  l'ensemble des pixels du scanner contenus uniquement dans la ROI. 
-A titre indicatif, l'ensemble des histogrammes cliniques de \Nber et de \Chen sont présentés en annexe sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen}. Nous les commenterons plus tard.\todo{Commenter les histogrammes}
+A titre indicatif, l'ensemble des histogrammes cliniques de \Nber et de \Chen sont présentés en annexe sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen}. %Nous les commenterons plus tard.\todo{Commenter les histogrammes}
 \item Produire des images sur lesquelles le contour est visible. L'ensemble des contourages effectués pour \Nber et pour \Chen sont présentés respectivement Figure~\ref{fig:contourageNber} et~\ref{fig:contourageChen}.
-\todo[noline]{Commenter les contourages?}
+%%\todo[noline]{Commenter les contourages?}
 \end{myitemize}
 
 
@@ -110,10 +110,9 @@ Ainsi la vraisemblance est le produit des probabilités que chacun des élément
 
 
 Cet algorithme de mélanges de gaussiennes nous fournit alors la meilleure  (au sens de la logvraisemblance) combinaison de gaussiennes qui permet de décrire l'histogramme des niveaux de gris. Ainsi, à chaque image correspond un mélange bi-gaussien totalement identifié. 
-L'ensemble des fits bi-gaussien, pour les images cliniques et numériques, sont présentés sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} pour les histogrammes cliniques et sur les figures REF FIG\todo{Fig fit histo num, on commente les histos ? les fits ?} pour les histogrammes numériques. Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
-
-
-\todo[noline]{Img + histo numérique ?}
+%L'ensemble des fits bi-gaussien, pour les images cliniques et numériques, sont présentés sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} pour les histogrammes cliniques et sur les figures REF FIG\todo{Fig fit histo num, on commente les histos ? les fits ?} pour les histogrammes numériques. Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
+L'ensemble des fits bi-gaussien, pour les images cliniques, est présenté sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} de l'Annexe~\ref{chap:anx_img_complement}. La Figure~\ref{fig:baisse_hetero_fin_simu} donn quant à elle un aperçu des histogrammes numériques. Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
+\todo[noline]{Presentation de l'ensemble des histo numérique en annexe?}
 
 \section{Définition d'une fonction objectif à reproduire}
 Afin de correctement traduire l'\hetero, il est nécessaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero~$\mathscr{H}$~:
