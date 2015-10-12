@@ -471,6 +471,9 @@ Version du \today, \printtime
 
 \backmatter  %%%% l'épilogue du document
 \pagestyle{prefacestyle}
+\subfile{glossaire}
+\updatechaptername
+\renewcommand\chaptername{Glossaire}
 
 %\specialchap{Test}
 %%\updatechaptername
@@ -505,6 +508,7 @@ Version du \today, \printtime
 
 
 %%%% Bibliographie
+\cleardoublepage
 %\nocite{*}
 %%\renewcommand\bibname{\rm Bibliographie}
 \renewcommand\chaptername{Bibliographie}
