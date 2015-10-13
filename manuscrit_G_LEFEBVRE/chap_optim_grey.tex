@@ -259,7 +259,7 @@ On peut de plus remarquer que selon les images et les algorithmes choisis les r�
 \begin{figure}[h]
 \centering
 \input{tex_pictures/tikz_schema_correspondance_gris.tex}
-\caption{\label{fig:schema_correspondance_gris} Correspondance entre l'échelle de Hounsfield (tomodensimétrie en HU) et les niveaux de gris -- Les bornes sont ici fixées à -135\,HU et 215\,HU.}
+\caption{\label{fig:schema_correspondance_gris} Correspondance entre l'échelle de Hounsfield (tomodensitométrie en HU) et les niveaux de gris -- Les bornes sont ici fixées à -135\,HU et 215\,HU.}
 \end{figure}
 
 L'algorithme Neldear-Mead semble le moins bon algorithme, au vu notamment des résultats fournis pour les combinaisons~[1,9,11], [2,3,4,5] et~[3,5,7] qui font apparaître une valeur de $\tau_N$ de~255, ce qui correspond à du blanc ! Non seulement cette valeur est grande, mais en plus elle atteint le bord autorisé. Notez que si l'on retire ces 3 valeurs de la moyenne présentée sur la dernière ligne du tableau, alors celle-ci s'approche des moyennes des algorithmes GC et BFGS. 

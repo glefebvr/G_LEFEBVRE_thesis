@@ -40,7 +40,7 @@ Les données dont nous disposons (\cf Annexe~\ref{chap:anx_img_complement}) sont
 \item Choisir une coupe pertinente sur chaque scanner et l'exporter (également au format DICOM) de sorte à avoir ensuite des données 2D à traiter.
 \item Contourer manuellement la métastase. OsiriX dispose d'un outil crayon adapté à ce type de manipulation. Le contourage réalisé définit alors une ROI, que l'on peut également exporter (au format .xml).
 \end{myitemize}
-Pour traiter ces 2 fichiers, un code C++ (\cf. Annexe~\ref{chap:structure_code}), s'appuyant sur la librairie ITK qui traite entre autre le format DICOM a été développé. Il permet de~:
+Pour traiter ces 2 fichiers, un code C++ (\cf Annexe~\ref{chap:structure_code}), s'appuyant sur la librairie ITK qui traite entre autre le format DICOM a été développé. Il permet de~:
 \begin{myitemize}
 \item Construire l'histogramme des niveaux de gris en parcourant  l'ensemble des pixels du scanner contenus uniquement dans la ROI. 
 A titre indicatif, l'ensemble des histogrammes cliniques de \Nber et de \Chen sont présentés en annexe sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen}. %Nous les commenterons plus tard.\todo{Commenter les histogrammes}

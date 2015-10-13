@@ -27,7 +27,7 @@ Plus particulièrement, il s'agit là de proposer un modèle mathématique décr
 (localisations secondaires disséminées à partir d'une lésion primitive)
 hépatiques en provenance d'une  
 tumeur stromale\footnote{Le stroma est un tissu de soutien, non impliqué dans la fonction première de l'organe.} de l'intestin grêle
-%cancer du stroma\footnote{Tissu de soutien, non impliqué dans la fonction première de l'organe.} gastroinstestinal  
+%cancer du stroma\footnote{Tissu de soutien, non impliqué dans la fonction première de l'organe.} gastro-instestinal  
 (GIST).
 Ce type de cancer touche de 9 à 14 personnes sur un million par an~\cite{Nilsson2005}. Dans 25\% des cas, ce cancer migre vers le foie~\cite{dematteo2000}. 
 %%Ces métastases sont connues pour être relativement résistantes aux traitements anti-cancéreux, ce qui donne un intérêt certain à la modélisation de leurs comportements. 
@@ -36,8 +36,11 @@ En fonction des mutations rencontrées ou acquises, ces métastases peuvent êtr
 Notre but ici, est de construire un modèle qui reproduise qualitativement et quantitativement la croissance d'une tumeur, et ce à partir de l'imagerie médicale.
 
 \paragraph{}
-Le suivi clinique des patients sous traitement est assuré par des scanners réguliers, réalisés généralement tous les deux mois. Ceux-ce constituent la seule et unique source d'informations cliniques dont nous disposons ici.  
-A l'heure actuelle, pour mesurer l'efficacité d'un traitement, le corps médical utilise le critère RECIST, qui consiste à ne retenir des images médicales que le diamètre de la plus large lésion. L'information retenue semble donc très faible au regard de toutes celles contenues dans les scanners. Plusieurs études ont déjà montrées ses limitations, en particulier lors de traitements anti-angiogéniques REFFF. L'imagerie fait apparaître bien d'autres particularités, notamment l'\hetero tumorale à laquelle nous nous intéresserons tout au long de ce manuscrit. L'\hetero peut-elle être liée à l'émergence de populations cellulaires résistantes ? Peut-on reproduire ce caractère par la modélisation ? Comment la quantifier ?
+Le suivi clinique des patients sous traitement est assuré par des scanners réguliers, réalisés généralement tous les deux mois. Ceux-ci constituent la seule et unique source d'informations cliniques dont nous disposons ici.  
+A l'heure actuelle, pour mesurer l'efficacité d'un traitement, le corps médical utilise le critère RECIST\footnote{de l'anglais~: Response Evaluation Criteria In Solid Tumors}, qui consiste à ne retenir, des images médicales, que le diamètre de la plus large lésion. 
+L'information exploitée %retenue 
+semble donc très faible au regard de toutes celles contenues dans les scanners. 
+Plusieurs études ont déjà montrées ses limitations, en particulier lors de traitements anti-angiogéniques REFFF. L'imagerie fait apparaître beaucoup d'autres particularités, notamment l'\hetero tumorale à laquelle nous nous intéresserons tout au long de ce manuscrit. L'\hetero peut-elle être liée à l'émergence de populations cellulaires résistantes ? Peut-on reproduire ce caractère par la modélisation ? Comment la quantifier ?
 %La principale particularité à laquelle nous nous intéresserons sera l'\hetero tumorale. Quelles sont les informations sur le comportement de la tumeur que l'ont peut extraire de l'imagerie médicale ? Les critères actuels de lecture de l'imagerie médicale sont-ils suffisant ? L'\hetero peut-elle apportée une information supplémentaire ? 
 
 
@@ -55,7 +58,7 @@ Dans le second chapitre, nous présentons le modèle, qui consiste en un systèm
 les modèles basés sur des équations différentielles ordinaires (EDOs), comme les modèles de Mendelsohn, de Gompertz ou de 
 Bertalanffy, permettent de suivre la croissance de l'aire tumorale mais ils ne considèrent aucun aspect spatial de cette croissance. Nous en référons à l'analyse de Benzekry {\it et al.} pour plus de détails sur de tels modèles 1D~\cite{benzekry2014}. 
 Notre modèle est dans le même esprit que celui de Ribba~{\it et
-  al.}~\cite{Ribba2006532} -- nous vous renvoyons également à~\cite{Iollo2012,gallinato2014} -- pour décrire l'évolution de la maladie. La principale nouveauté du modèle réside en la description des traitements. Deux traitements sont considérés~: le premier traitement a un effet cytotoxique alors que le second à un effet à la fois cytotoxique et antiangiogénique. Trois populations de cellules proliférantes sont utilisées pour décrire la résistance aux traitements~: une population de cellules sensible aux deux traitements, une autre sensible uniquement au second traitement et une dernière résistante aux deux traitements.  
+  al.}~\cite{Ribba2006532} -- nous vous renvoyons également à~\cite{Iollo2012,gallinato2014} -- pour décrire l'évolution de la maladie. La principale nouveauté du modèle réside en la description des traitements. Deux traitements sont considérés~: le premier traitement a un effet cytotoxique alors que le second a un effet à la fois cytotoxique et antiangiogénique. Trois populations de cellules proliférantes sont utilisées pour décrire la résistance aux traitements~: une population de cellules sensible aux deux traitements, une autre sensible uniquement au second traitement et une dernière résistante aux deux traitements.  
 Nous incorporons également un modèle simple d'angiogenèse puisqu'elle joue un rôle crucial dans la croissance métastatique.
 
 
@@ -68,16 +71,18 @@ Dans la Section~\ref{sec:NumRes}, nous comparons dans le détail les résultats 
 Une fois le fit obtenu, nous examinons numériquement l'effet de la dose de traitement sur la progression de la croissance tumorale. Un résultat contre-intuitif est ainsi obtenu~: avec les paramètres utilisés pour le fit des données, une augmentation de la dose du premier traitement n'améliore pas le temps de survie sans aggravation. Ce résultat est expliqué dans la Section~\ref{subsec:NumEff}. 
 Enfin, nous discuterons sur la consistance de notre modèle en présentant les différents comportements d'évolution tumorale que l'on peut obtenir. 
 Nous fitons également l'aire tumorale d'un autre patient dont la tumeur est proche du bord du foie. 
-Pour un tel patient, la forme de la tumeur ne pourra pas être retrouvée. Notre modèle ne prend pas en compte les contraintes mécaniques correspondantes. Cependant, l'aire tumorale semble bien reproduite par nos simulations. 
+Pour un tel patient, la forme de la tumeur ne pourra pas être retrouvée car notre modèle ne prend pas en compte les contraintes mécaniques correspondantes. Cependant, l'aire tumorale semble bien reproduite par nos simulations. 
 Les résultats de ce second chapitre sont un premier pas vers la compréhension des résistances des métastases hépatiques de GIST aux médicaments. Cependant, comme mentionné dans la conclusion, les scanners ne fournissent pas suffisamment d'informations pour permettre à notre modèle d'être prédictif~: évaluer les paramètres sur les scanners réalisés durant la croissance avant traitement et durant la première ligne de traitement ne suffit pas pour prédire la réponse à la seconde ligne de traitement. Ceci est dû au fait qu'en se basant sur les scanners, il est impossible d'évaluer la quantité de cellules insensibles au second traitement. Nous sommes convaincus que des données sur la structure de la tumeur, comme des biopsies ou des images fonctionnelles, devraient aider à améliorer la prédictivité du modèle.
 
 
 \paragraph{}
-Dans un troisième chapitre, les aspects numériques seront abordés. En particulier, il a fallu faire face à une instabilité numérique que l'on présentera et à laquelle l'équipe n'a jamais été confrontée avec les schémas classiques qu'elle utilisait. Nous étudions ici des croissances de tumeurs avec traitement, sur du long terme et avec de forts rétrécissements de la taille induit par les traitements. Ce sont là autant de raisons qui présentent l'originalité du problème. Nous montrerons que les champs de vitesses non communs obtenus lors de la simulation numérique  sont à l'origine des instabilités numériques. Enfin un nouveau schéma de transport sera proposé, le \twinweno, pour palier à cette instabilité.
+Dans un troisième chapitre, les aspects numériques seront abordés. En particulier, il a fallu faire face à une instabilité numérique que l'on présentera et à laquelle l'équipe n'avait jamais été confrontée avec les schémas classiques utilisés. %qu'elle utilisait. 
+Nous étudions ici des croissances de tumeurs avec traitement, sur du long terme et avec de forts rétrécissements de la taille induit par les traitements. Ce sont là autant de raisons qui présentent l'originalité du problème. Nous montrerons que les champs de vitesses non communs obtenus lors de la simulation numérique  sont à l'origine des instabilités numériques. Enfin un nouveau schéma de transport sera proposé, le \twinweno, pour palier à cette instabilité.
 
 
 \paragraph{}
-Dans le chapitre 4, nous détaillerons comment construit-on des images scanners de synthèse à partir des résultats numériques. La simulation numérique fournit la répartition spatio-temporelle de différentes populations cellulaires. En aucun cas cela fournit les niveaux d'absorption des tissus au rayons X, comme mesurés par les scanners. Il nous faut donc un moyen de reconstituer des images scanners de synthèse à partir de ces densités de populations, dans le but de rapprocher au plus près (une optimisation a été faite) le format des résultats numériques à celui des données cliniques.
+Dans le quatrième chapitre, nous détaillerons la reconstruction %comment construit-on 
+d'images scanners de synthèse à partir des résultats numériques. La simulation numérique fournit la répartition spatio-temporelle de différentes populations cellulaires. En aucun cas cela ne fournit les niveaux d'absorptions des tissus au rayons X, comme mesurés par les scanners. Il nous faut donc un moyen de reconstituer des images scanners de synthèse à partir de ces densités de populations, dans le but de rapprocher au plus près (une optimisation a été faite) le format des résultats numériques à celui des données cliniques.
 Cette construction d'images scanners de synthèse permettra une meilleure comparaison des résultats obtenus avec les données cliniques. 
 %Elle est également d'un intérêt non négligeable pour le clinicien, qui peut ainsi regarder nos résultats numériques comme s'il s'agissait de scanners réels. 
 
