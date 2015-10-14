@@ -354,9 +354,9 @@
 \input{mes_macros.tex}
 
 
-%%%===============================%%%%
-%%%       DEBUT DU DOCUMENT      %%%%
-%%%===============================%%%%
+%%%=====================================================%%%%
+%%%      ***     --- DEBUT DU DOCUMENT ----    ***       %%%%
+%%%=====================================================%%%%
 \begin{document}
 \renewcommand{\contentsname}{Sommaire}
 \renewcommand*{\listtablename}{Liste des tableaux}
@@ -417,6 +417,7 @@ Version du \today, \printtime
 %\lipsum[1-11]
 
 \mainmatter % Corps du livre
+
 \renewcommand\chaptername{Introduction}
 %%\markboth{Introduction}
 \pagestyle{prefacestyle}
@@ -474,6 +475,10 @@ Version du \today, \printtime
 \subfile{glossaire}
 \updatechaptername
 \renewcommand\chaptername{Glossaire}
+
+\subfile{abreviations}
+\updatechaptername
+\renewcommand\chaptername{Liste des abréviations}
 
 %\specialchap{Test}
 %%\updatechaptername
