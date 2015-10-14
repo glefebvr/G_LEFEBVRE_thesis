@@ -5,14 +5,25 @@
 \begin{document}
 %%\chapter{Optimisation de la reconstruction d'images scanners \label{chap:optim_grey}}
 \chapter{Synthèse d'images scanners à partir de résultats de simulations numériques \label{chap:optim_grey}}
-\todo[noline]{Entame à réécrire}
 
-\mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons-nous sur la manière de reconstruire une image en niveaux de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités~$N(t,x)$, $P(t,x)$ et~$S(t,x)$ (toutes comprises entre 0 et 1). Rappelons que le niveau de gris d'un scanner traduit l'absorption des tissus aux rayons X. D'un point de vue biologique,  on ne peut pas relier à une population un niveau de gris car les populations ne sont pas isolées, et aucun moyen (mise à part la biopsie peut-être) ne permet d'en déceler leur proportions dans chaque voxel du scanner. 
-Dans ce chapitre, on tentera d'optimiser les niveaux de gris~$\tau_N, \tau_P$ et~$\tau_S$ de l'interpolation 
+%%\todo[noline]{Entame à réécrire}
+%%\mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons-nous sur la manière de reconstruire une image en niveaux de gris (image scanner) à partir des résultats numériques \ie de l'évolution des densités~$N(t,x)$, $P(t,x)$ et~$S(t,x)$ (toutes comprises entre 0 et 1). Rappelons que le niveau de gris d'un scanner traduit l'absorption des tissus aux rayons X. D'un point de vue biologique,  on ne peut pas relier à une population un niveau de gris car les populations ne sont pas isolées, et aucun moyen (mise à part la biopsie peut-être) ne permet d'en déceler leur proportions dans chaque voxel du scanner. 
+%%Dans ce chapitre, on tentera d'optimiser les niveaux de gris~$\tau_N, \tau_P$ et~$\tau_S$ de l'interpolation 
+%%\begin{equation}\label{eq:nvx_gris}
+%%\tau_N N + \tau_P P + \tau_S S,
+%%\end{equation}
+%% afin de rapprocher au maximum la visualisation des résultats numériques de la visualisation des scanners médicaux.
+
+\mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons-nous sur la manière de présenter ses résultats. La simulation numérique fournit  l'évolution des densités~$N(t,x)$, $P(t,x)$ et~$S(t,x)$ (toutes comprises entre 0 et 1). 
+Les données cliniques quant à elles fournissent des images en niveaux de gris. 
+L'enjeu ici, consiste à traiter les résultats numériques de sorte à produire des images en niveaux de gris comparable à un scanner. 
+Rappelons que le niveau de gris d'un scanner traduit l'absorption des tissus aux rayons X. D'un point de vue biologique, on ne peut pas relier à une population un niveau de gris car les populations ne sont pas isolées, et aucun moyen (mise à part la biopsie peut-être) ne permet d'en déceler leur proportions dans chaque voxel du scanner. La lien entre densité de populations et absorption aux rayons X n'est donc pas connu. Ainsi le choix a été fait de créer une image scanner de synthèse, à partir de l'évolution des populations données par la simulation numérique, en considérant l'interpolation 
 \begin{equation}\label{eq:nvx_gris}
 \tau_N N + \tau_P P + \tau_S S,
 \end{equation}
- afin de rapprocher au maximum la visualisation des résultats numériques de la visualisation des scanners médicaux.
+où les paramètres $\tau_N, \tau_P$ et $\tau_S$ sont les niveaux de gris que l'on associe aux populations $N,P$ et $S$. N'ayant que peut d'indication sur la nature de ces paramètres, nous proposons ici de les optimiser de sorte à ce que les images de synthèse se rapprochent le plus possible des images scanners. 
+
+
 
 \section{Présentation de l'approche}
 Pour un patient donné, on considère~$n$ instants auxquels on possède des images scanners (aux temps~$t_i, i\in \{ 1,...,n \}$, non nécessairement successifs). Sur ces~$n$ images, on propose d'optimiser les coefficients (niveaux de gris) de l'interpolation~$\tau_N N + \tau_P P + \tau_S S$ où~$N, P$ et~$S$ sont les populations définies dans le modèle présenté précédemment. Sur l'ensemble de ces images, on fait correspondre le niveau de gris moyen des images numériques à celui des scanners, ce qui s'écrit~:
