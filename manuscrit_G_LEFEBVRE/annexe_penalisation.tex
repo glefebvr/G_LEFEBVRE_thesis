@@ -54,7 +54,7 @@ Si la fonction $J$ est paire, alors sa régularisée $J_c$ l'est aussi.
 \begin{align*}
 J_c(-u)  & = \min_{v\in \reel} \left( J(v) + \frac{1}{2c} \| v+u \|^2 \right) \\
 & =\min_{s\in \reel} \left( J(-s) + \frac{1}{2c} \| -s+u \|^2 \right) \qquad \textrm{en posant } s=-v \\
-& = \min_{s\in \reel} \left( J(s) + \frac{1}{2c} \|s-u \|^2 \right) = J_c(u) \qquad \textrm{( car $J$ et $\|.\|^2$ sont paires )}.
+& = \min_{s\in \reel} \left( J(s) + \frac{1}{2c} \|s-u \|^2 \right) = J_c(u) \qquad \textrm{(car $J$ et $\|.\|^2$ sont paires)}.
 \end{align*}
 \end{proof}
 
@@ -84,7 +84,7 @@ Puisque $J$ est paire, nous pouvons limiter l'étude de sa régularisée aux $u$
 \tkzTabVar{+/$\sfrac{u^2}{2c}$ , -CD+/$\sfrac{(a-u)^2}{2c}$/$ {\tiny 1+} \sfrac{(a-u)^2}{2c}$,-/$1$, +/$+\infty$ }
 \end{tikzpicture}
 \end{center}
-Ici, $u\leq a \Rightarrow \min_v f_u(v) = \min \left(1, \sfrac{(a-u)^2}{2c} \right)  $. Ainsi $J_c$ vaut 1 si $\sfrac{(a-u)^2}{2c} \geq 1$, \ie si $u\leq a+\sqrt{2c}$; si $u>a+\sqrt{2c}$ alors $J_c(u)=\sfrac{(a-u)^2}{2c}$.
+Ici, $u\leq a \Rightarrow \min_v f_u(v) = \min \left(1, \sfrac{(a-u)^2}{2c} \right)  $. Ainsi $J_c$ vaut 1 si $\sfrac{(a-u)^2}{2c} \geq 1$, \ie si $u\leq a+\sqrt{2c}$; si $u>a+\sqrt{2c}$ alors $J_c(u)=\sfrac{(a-u)^2}{2c}$. \\
 \item Cas 2 : $ a \geq u$. Ici tous les points $u$ tel que $0\leq u \leq a$ minimisent~$J$. Donc $J_c(u)=J(u)=0$ sur cet intervalle. On peut s'en assurer avec le tableau de variation suivant~:
 \begin{center}
 \begin{tikzpicture}
@@ -111,7 +111,7 @@ Notons que la fonction n'est régulière qu'aux abords des minimums. La valeur 0
 Remarquons également que plus le paramètre $c$ est grand, plus l'intervalle sur lequel agit la régularisation est large.
 
 
-On pourrait aller beaucoup plus loin dans l'étude des propriétés de cette régularisation. De nombreuses publications ont été faites notamment dans des cas où l'on ne connait pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
+On pourrait aller beaucoup plus loin dans l'étude des propriétés de cette régularisation. \todo{biblio} De nombreuses publications ont été faites notamment dans des cas où l'on ne connait pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
 
 %%%%%%%%%%%%%%%%%
 \subsection{Régularisation de Moreau-Yosida appliquée à une parabole tronquée.}
@@ -138,7 +138,7 @@ Ainsi
 & v=\frac{u}{2c+1} && \textrm{ si } v>a.
 \end{aligned}  \right.
 \end{equation}
-Les cas suivants sont donc à considérer~(remarquer que comme $c>0$ et $u>0$ on a toujours $\frac{u}{2c+1}<u$):
+Les cas suivants sont donc à considérer~(remarquons que comme $c>0$ et $u>0$ on a toujours $\frac{u}{2c+1}<u$):
 \begin{myitemize}
 \renewcommand{\labelitemi}{\scriptsize$\bullet$} 
 \item Cas 1 : $0 < \frac{u}{2c+1} < u \leq a$\\ % \qquad$ 
@@ -150,25 +150,33 @@ Les cas suivants sont donc à considérer~(remarquer que comme $c>0$ et $u>0$ on
 %%%\tkzTabVal{1}{2}{0.5}{$\frac{u}{2c+1}$}{}
 %\end{tikzpicture}}\\
 %Ici, $\min_v f_u(v) = f(u) = [u^2-a^2]^+ = 0$
-Dans ce cas là $u$ minimise $J$. Donc $J_c(u)=J(u)=0, \ \forall u \leq a$.
+Dans ce cas là $u$ minimise $J$. Donc $J_c(u)=J(u)=0, \ \forall u \leq a$. \\
 
-\item Cas 2 : $0 < \frac{u}{2c+1} < a < u \qquad$ 
+\item Cas 2 : $0 < \frac{u}{2c+1} < a < u \qquad$
+\vspace{-1mm}
+\begin{center}
 \raisebox{-20mm}{
 \begin{tikzpicture}
 \tkzTabInit[espcl=1.3]{$v$/.7,$f_u'(v)$/.7,$f_u(v)$/1}{$0$, $\frac{u}{2c+1}$ ,$a$, $u$, $+\infty$}
 \tkzTabLine{,-,,-,d,+,,+}
 \tkzTabVar{+/ , R/ ,-/,  R/ , +/ }
 %%\tkzTabVal{1}{2}{0.5}{$\frac{u}{2c+1}$}{}
-\end{tikzpicture}}\\
-Ici, $\min_v f_u(v) = f(a) = \frac{1}{2c} \| a-u\|^2, \ \forall u \in ]a,a(2c+1)[.$
-\item Cas 2 : $0 < a < \frac{u}{2c+1} < u \qquad$ 
+\end{tikzpicture}}
+\end{center}
+Ici, $\min_v f_u(v) = f(a) = \frac{1}{2c} \| a-u\|^2, \ \forall u \in ]a,a(2c+1)[.$\\
+
+\item Cas 3 : $0 < a < \frac{u}{2c+1} < u \qquad$ 
+\vspace{-1mm}
+\begin{center}
 \raisebox{-20mm}{
 \begin{tikzpicture}
 \tkzTabInit[espcl=1.3]{$v$/.7,$f_u'(v)$/.7,$f_u(v)$/1}{$0$,$a$ , $\frac{u}{2c+1}$, $u$, $+\infty$}
 \tkzTabLine{,-,d,-,z,+,,+}
 \tkzTabVar{+/ , R/ ,-/,  R/ , +/ }
 %%\tkzTabVal{1}{2}{0.5}{$\frac{u}{2c+1}$}{}
-\end{tikzpicture}}\\
+\end{tikzpicture}}
+\end{center}
+\vspace{-3mm}
 \begin{align*}
 \textrm{Ici}, \min_v f_u(v) &= f\left( \frac{u}{2c+1} \right) = \left[ \left( \frac{u}{2c+1} \right)^2 -a^2 \right]^+ + \frac{1}{2c} \left\| \frac{u}{2c+1}-u \right\|^2 \\
 & = \left( \frac{u}{2c+1} \right)^2 -a^2 + \frac{1}{2c} \left( \frac{-2cu}{2c+1} \right)^2 \\
@@ -202,7 +210,7 @@ et son allure est présentée sur la Figure~\ref{fig:regul_para_coupee}.
 \DTLloaddb{optim2_2stat}{../data/cout_2_bad/optim2_stat.csv}
 \DTLsetheader{optim2_2leg}{Column1}{}
 \DTLsetheader{optim2_2leg}{Column2}{}
-\begin{table}[htbp]
+\begin{table}[!b]
 \footnotesize
 \centering
 \hspace{\retraittableau} %%% Le tableau depasse sur les marges !
@@ -247,7 +255,7 @@ et son allure est présentée sur la Figure~\ref{fig:regul_para_coupee}.
 \caption{\label{tab:optim2gris_pen_quad}Tableau récapitulatif des optimisations réalisées sur 2 niveaux de gris, $\tau_S$ fixé à 197, avec pénalisation quadratique \eqref{eq:penalisation_quad} (\cf Figure~\ref{fig:para_tronquee}), pour les combinaisons défavorables de la Table~\ref{tab:optim2gris_bad}, page~\pageref{tab:optim2gris_bad}.}
 \end{table}
 
-Comme montré dans le Chapitre \ref{chap:optim_grey} (\cf notamment Table~\ref{tab:optim2gris} et surtout dans la Table~\ref{tab:optim2gris_bad} ), les algorithmes d'optimisations sur les niveaux de gris tendent, dans certaines configurations,  vers des jeux de paramètres optimaux qui s'approchent du bord~0 ou du bord~255, voire même qui sont négatifs (\ie non convergence de l'algorithme d'optimisation). Ce phénomène pourrait être dû notamment au fait que la pénalisation en créneau \eqref{eq:penalisation_creneau} présente une discontinuité. 
+Comme montré dans le Chapitre \ref{chap:optim_grey} (\cf notamment Table~\ref{tab:optim2gris} et surtout dans la Table~\ref{tab:optim2gris_bad}), les algorithmes d'optimisations sur les niveaux de gris tendent, dans certaines configurations,  vers des jeux de paramètres optimaux qui s'approchent du bord~0 ou du bord~255, voire même qui sont négatifs (\ie non convergence de l'algorithme d'optimisation). Ce phénomène pourrait être dû notamment au fait que la pénalisation en créneau \eqref{eq:penalisation_creneau} présente une discontinuité. 
 Les algorithmes de descente notamment fonctionnant sur une approximation du gradient peuvent ainsi être perturbés par cette discontinuité. 
 Examinons ceci de plus près. Essayons une pénalisation continue~: une parabole coupée
 \begin{equation}
@@ -269,8 +277,6 @@ Ici la pénalisation intervient sur un intervalle légèrement plus court que~$[
 %\vspace{-3mm}
 %\caption{\label{fig:penal_quad} Pénalisation via une parabole tronquée (\cf Eq.~\eqref{eq:penalisation_quad}). }
 %\end{figure}
-Les résultats des optimisations de niveaux de gris faites avec la pénalisation~\eqref{eq:penalisation_quad} sont présentés dans la Table~\ref{tab:optim2gris_pen_quad}. Ici plus de valeurs négatives, cependant la borne 1.5 est atteinte à plusieurs reprises. De même les résultats entre les algorithmes sont très variables. Ainsi, ici, il est difficile de dire s'il y a eu une amélioration ou non par rapport à la pénalisation en créneau. 
-La pénalisation considérée ici n'est que~$\mathcal{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
 
 
 %%%%%% Cout3
@@ -279,7 +285,7 @@ La pénalisation considérée ici n'est que~$\mathcal{C}^0$ car il y a 2 points 
 \DTLloaddb{optim2_stat}{../data/cout_3_bad/optim2_stat.csv}
 \DTLsetheader{optim2_leg}{Column1}{}
 \DTLsetheader{optim2_leg}{Column2}{}
-\begin{table}[htpb]
+\begin{table}[!htb]
 \footnotesize
 \centering
 %\scriptsize
@@ -326,6 +332,10 @@ La pénalisation considérée ici n'est que~$\mathcal{C}^0$ car il y a 2 points 
 \DTLcleardb{optim2_leg}
 \DTLcleardb{optim2_stat}
 \DTLcleardb{optim2_grey}
+
+Les résultats des optimisations de niveaux de gris faites avec la pénalisation~\eqref{eq:penalisation_quad} sont présentés dans la Table~\ref{tab:optim2gris_pen_quad}. Ici plus de valeurs négatives, cependant la borne 1.5 est atteinte à plusieurs reprises. De même les résultats entre les algorithmes sont très variables. Ainsi, ici, il est difficile de dire s'il y a eu une amélioration ou non par rapport à la pénalisation en créneau. 
+La pénalisation considérée ici n'est que~$\mathcal{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
+
 
 Essayons donc une troisième fonction de pénalisation qui soit~$\mathcal{C}^1$. Considérons la régularisation de Moreau-Yosida de la pénalisation précédente. La courbe de la régularisée d'une parabole tronquée est représentée sur la Figure~\ref{fig:regul_para_coupee} (on prend ici $a=126; u=E(\tau)-127.5$). Les niveaux de gris optimaux obtenus avec cette nouvelle pénalisation plus régulière sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
 
