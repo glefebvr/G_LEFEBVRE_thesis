@@ -102,6 +102,49 @@ Le jeu de paramètres résultant est ensuite donné comme point de départ à un
 \item[2)] La log-vraisemblance de ce nouvel ensemble de paramètres est calculée. Si elle est meilleure que celle du jeu de paramètres courants, alors ce nouveau jeu de paramètres devient le jeu courant. Sinon le jeu de paramètres courants reste celui qu'il était.
 \item[3)] On recommence à 1). On boucle ainsi jusqu'à ce qu'une précision donnée soit atteinte ou que nous ayons atteint le nombre maximum d'itérations voulues.
 \end{myitemize}
+
+\begin{figure}[!b]
+\hspace*{-1mm}
+\subfloat[Jour~119]{
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour010.png}
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day132(10).png}
+}
+\subfloat[Jour~406]{
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour032.png}
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day422(32).png}
+}\\
+\subfloat[Jour~776]{
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour060.png}
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day792(60).png}
+}
+\subfloat[Jour~867]{
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour067.png}
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day883(67).png}
+}\\
+\subfloat[Jour~962]{
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour074.png}
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day974(74).png}
+}
+\subfloat[Jour~1116]{
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour086.png}
+\includegraphics[height=0.12\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1133(86).png}
+}
+\caption{\label{fig:hetero_simu_nber} Histogrammes numériques de \Nber. -- La zone considérée comme tumorale est ici entourée sur les images scanners de synthèse.}
+\end{figure}
+
+
 La vraisemblance, dont on maximise le logarithme selon~$\theta$, est quant à elle donnée par~:
 \begin{equation}
 \mathcal{L}(X,\theta) = \prod_{x \in X} g(x,\theta).
@@ -113,8 +156,11 @@ Ainsi la vraisemblance est le produit des probabilités que chacun des élément
 
 Cet algorithme de mélanges de gaussiennes nous fournit alors la meilleure  (au sens de la log-vraisemblance) combinaison de gaussiennes qui permet de décrire l'histogramme des niveaux de gris. Ainsi, à chaque image correspond un mélange bi-gaussien totalement identifié. 
 %L'ensemble des fits bi-gaussien, pour les images cliniques et numériques, sont présentés sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} pour les histogrammes cliniques et sur les figures REF FIG\todo{Fig fit histo num, on commente les histos ? les fits ?} pour les histogrammes numériques. Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
-L'ensemble des fits bi-gaussiens, pour les images cliniques, est présenté sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} de l'Annexe~\ref{chap:anx_img_complement}. La Figure~\ref{fig:baisse_hetero_fin_simu} donne quant à elle un aperçu des histogrammes numériques. Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
+L'ensemble des fits bi-gaussiens, pour les images cliniques, est présenté sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} de l'Annexe~\ref{chap:anx_img_complement}. La Figure~\ref{fig:hetero_simu_nber} donne quant à elle un aperçu des histogrammes numériques en fonction du contourage identifié par seuillage. 
+%%La principal différence ici avec les histogrammes cliniques, c'est ici que le diagramme 
+Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
 \todo[noline]{Presentation de l'ensemble des histo numérique en annexe?}
+
 
 \section{Définition d'une fonction objectif à reproduire}
 Afin de correctement traduire l'\hetero, il est nécessaire de fournir une fonction objectif que notre critère devra reproduire au mieux. Ainsi, j'ai décidé de catégoriser l'ensemble des scanners de nos patients. Le partage des scanners est ainsi fait en 5 catégories, en associant à chaque catégorie une valeur de l'\hetero~$\mathscr{H}$~:
@@ -600,7 +646,7 @@ En effet, un grand nombre d'itérations est effectué dans le calcul numérique 
 \includegraphics[width=0.31\textwidth]
 {simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1227(94).png}
 \end{tabular}}
-\caption{\label{fig:baisse_hetero_fin_simu} \Hetero numérique de \Nber. }
+\caption{\label{fig:baisse_hetero_fin_simu} Evolution de l'\hetero numérique de \Nber du jour 1120 au jour 1227.}
 \end{figure}
 
 
