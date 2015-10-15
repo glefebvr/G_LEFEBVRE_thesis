@@ -103,46 +103,66 @@ Le jeu de paramètres résultant est ensuite donné comme point de départ à un
 \item[3)] On recommence à 1). On boucle ainsi jusqu'à ce qu'une précision donnée soit atteinte ou que nous ayons atteint le nombre maximum d'itérations voulues.
 \end{myitemize}
 
+\newcommand{\histosimuNber}[1]{
+\includegraphics[height=0.13\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour#1.png}
+\includegraphics[height=0.13\textheight]
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/fit_histo#1.png}
+}
+
 \begin{figure}[!b]
 \hspace*{-1mm}
-\subfloat[Jour~119]{
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour010.png}
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day132(10).png}
-}
-\subfloat[Jour~406]{
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour032.png}
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day422(32).png}
-}\\
-\subfloat[Jour~776]{
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour060.png}
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day792(60).png}
-}
-\subfloat[Jour~867]{
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour067.png}
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day883(67).png}
-}\\
-\subfloat[Jour~962]{
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour074.png}
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day974(74).png}
-}
-\subfloat[Jour~1116]{
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour086.png}
-\includegraphics[height=0.12\textheight]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1133(86).png}
-}
-\caption{\label{fig:hetero_simu_nber} Histogrammes numériques de \Nber. -- La zone considérée comme tumorale est ici entourée sur les images scanners de synthèse.}
+\subfloat[Jour~119]{\histosimuNber{010}}
+\subfloat[Jour~406]{\histosimuNber{032}}\\
+\subfloat[Jour~776]{\histosimuNber{060}}
+\subfloat[Jour~867]{\histosimuNber{067}}\\
+\subfloat[Jour~962]{\histosimuNber{074}}
+\subfloat[Jour~1116]{\histosimuNber{086}}
+\caption{\label{fig:hetero_simu_nber} Histogrammes numériques de \Nber. -- La zone considérée comme tumorale est ici entourée sur les images scanners de synthèse. \\
+\#~: Nombre d'éléments dans l'histogramme; Err.~: erreur $L^2$ entre l'histogramme et le modèle bi-gaussien)}
 \end{figure}
+
+
+%\begin{figure}[!b]
+%\hspace*{-1mm}
+%\subfloat[Jour~119]{
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour010.png}
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day132(10).png}
+%}
+%\subfloat[Jour~406]{
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour032.png}
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day422(32).png}
+%}\\
+%\subfloat[Jour~776]{
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour060.png}
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day792(60).png}
+%}
+%\subfloat[Jour~867]{
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour067.png}
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day883(67).png}
+%}\\
+%\subfloat[Jour~962]{
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour074.png}
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day974(74).png}
+%}
+%\subfloat[Jour~1116]{
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour086.png}
+%\includegraphics[height=0.12\textheight]
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1133(86).png}
+%}
+%\caption{\label{fig:hetero_simu_nber} Histogrammes numériques de \Nber. -- La zone considérée comme tumorale est ici entourée sur les images scanners de synthèse.}
+%\end{figure}
 
 
 La vraisemblance, dont on maximise le logarithme selon~$\theta$, est quant à elle donnée par~:
@@ -475,10 +495,10 @@ Comment parvenir à un critère\HH allant de 0 à 1 ? Comment bien normaliser le
 \subfloat%[Ensemble des points utilisés pour étudier la proximité de deux gaussiennes.  ]
 [\label{fig:pts_carac_intersection_gaussienne}Position relative de points caractéristiques d'un mélange de deux gaussiennes]
 {\vspace{-3mm}
-\includegraphics[width=.4\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss.png}}\qquad
+\includegraphics[width=.49\textwidth]{dessin_gauss/point_caracteristique_intersect_gauss.png}} 
 \subfloat[\label{fig:aire_commune_gaussienne} Aire commune aux deux gaussiennes %~$\big($donnée par~: $\int_0^{255} \min \big(g_1(x),g_2(x) \big) \dx \big)$
 ]{\vspace{-3mm}
-\includegraphics[width=.4\textwidth]{dessin_gauss/gmm_aire_commune.png}}
+\includegraphics[width=.49\textwidth]{dessin_gauss/gmm_aire_commune.png}}
 \caption{Caractérisation de la proximité des deux composantes gaussiennes}
 \end{figure}
 
@@ -498,7 +518,7 @@ Dans les cas où les variations sont acceptables (ni trop faibles, ni chaotiques
 
 
 \section{Critère retenu}
-\begin{figure}[h]
+\begin{figure}
 \centering
 \subfloat[\label{fig:pente_gaussienne_identique_a} Cas clairement \heterogene ]{
 \includegraphics[width=.49\textwidth]{dessin_gauss/gmm_pente1a.png}
@@ -508,33 +528,7 @@ Dans les cas où les variations sont acceptables (ni trop faibles, ni chaotiques
 }
 \caption{\label{fig:pente_gaussienne_identique}Deux configurations très différentes mais fournissant la même pente entre les gaussiennes.}
 \end{figure}
-%\begin{figure}
-%\centering
-%\subfloat[\label{fig:critere_dc2_sur_dh} Critères basés sur $(\Delta c)^2 / \Delta h$ ]{
-%\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh.png}
-%}
-%\subfloat[\label{fig:critere_dc2_sur_dw} Critères basés sur $(\Delta c)^2 / \Delta w$ ]{
-%\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/07-dc2_sur_dw.png}
-%}
-%\caption{\label{fig:critere_avec_dc2}Critères dans lesquels $\Delta c$ joue un rôle prépondérant.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=0.75\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh.png}
-%\caption{\label{fig:critere_dc2_sur_dh_Chen} Critères basés sur $(\Delta c)^2 / \Delta h$ sur \Chen }
-%\end{figure}
 
-\begin{figure}[h]
-\centering
-\subfloat[\label{fig:critere_dc2_sur_dh_nber} \Nber ]{
-\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh}
-}
-\subfloat[\label{fig:critere_dc2_sur_dh_chen} \Chen ]{
-\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh}
-}
-\caption{\label{fig:critere_dc2_sur_dh}\Hetero clinique fournie par le critère~$\mathcal{H}_{2}$ dans lequel~$\Delta c$ joue un rôle prépondérant.}
-\end{figure}
 L'idée de ce dernier critère m'est venue %de la constatation suivante, 
 en repartant du critère  %$\mathscr{H}_{10}$ 
 basé sur la pente décrite entre le sommet des gaussiennes. Sur la Figure~\ref{fig:pente_gaussienne_identique} sont présentées deux configurations très différentes, mais fournissant la même pente. Pourtant la Figure~\ref{fig:pente_gaussienne_identique_a} est très clairement représentative d'une image \heterogene alors que la Figure~\ref{fig:pente_gaussienne_identique_b} serait plutôt représentative de quelque chose d'homogène puisque l'approximation par une seule et unique gaussienne ne serait pas des plus mauvaises. 
@@ -564,6 +558,34 @@ Si l'on regarde de plus près les histogrammes cliniques de \Nber, on peut remar
 \end{equation}
 %%===
 Examinons à présent les résultats fournis par ce critère.
+
+%\begin{figure}
+%\centering
+%\subfloat[\label{fig:critere_dc2_sur_dh} Critères basés sur $(\Delta c)^2 / \Delta h$ ]{
+%\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh.png}
+%}
+%\subfloat[\label{fig:critere_dc2_sur_dw} Critères basés sur $(\Delta c)^2 / \Delta w$ ]{
+%\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/07-dc2_sur_dw.png}
+%}
+%\caption{\label{fig:critere_avec_dc2}Critères dans lesquels $\Delta c$ joue un rôle prépondérant.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.75\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh.png}
+%\caption{\label{fig:critere_dc2_sur_dh_Chen} Critères basés sur $(\Delta c)^2 / \Delta h$ sur \Chen }
+%\end{figure}
+
+\begin{figure}[t]
+\centering
+\subfloat[\label{fig:critere_dc2_sur_dh_nber} \Nber ]{
+\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Nber/06-dc2_sur_dh}
+}
+\subfloat[\label{fig:critere_dc2_sur_dh_chen} \Chen ]{
+\includegraphics[width=0.48\textwidth]{graph_hetero/dcm_Chen/06-dc2_sur_dh}
+}
+\caption{\label{fig:critere_dc2_sur_dh}\Hetero clinique fournie par le critère~$\mathcal{H}_{2}$ dans lequel~$\Delta c$ joue un rôle prépondérant.}
+\end{figure}
 
 
 L'\hetero clinique, pour \Nber, fournie par le critère\HH est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_nber}. Ici, le critère reproduit bien les pics d'\heteros (jour~119 et jour~776). La regain d'\hetero final, qui démarre avant la rechute au second traitement (jour 1100), et qui se poursuit pendant la rechute, est également bien capturé. Les phases homogènes sont également relativement bien reproduites. L'évaluation visuelle qui amenait à considérer l'\hetero constante du jour~209 au jour~688 est ainsi précisée par le critère. Manifestement le jour~331 est donc légèrement plus \heterogene. 
@@ -628,23 +650,29 @@ En effet, un grand nombre d'itérations est effectué dans le calcul numérique 
 \subfloat[Jour~1120]
 {\begin{tabular}{c}
 \includegraphics[width=0.31\textwidth]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor086.png}\\
+%%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor086.png}\\
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour086.png}\\
 \includegraphics[width=0.31\textwidth]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1120(85).png}
+%%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1120(85).png}
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/fit_histo085.png}
 \end{tabular}}
 \subfloat[Jour~1186]
 {\begin{tabular}{c}
 \includegraphics[width=0.31\textwidth]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor091.png}\\
+%%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor091.png}\\
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour090.png}\\
 \includegraphics[width=0.31\textwidth]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1186(90).png}
+%%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1186(90).png}
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/fit_histo090.png}
 \end{tabular}}
 \subfloat[Jour~1227]
 {\begin{tabular}{c}
 \includegraphics[width=0.31\textwidth]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor095.png}\\
+%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/tumor095.png}\\
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/simu_contour095.png}\\
 \includegraphics[width=0.31\textwidth]
-{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1227(94).png}
+%%{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/Nber_day1227(94).png}
+{simu/N38_P166_S204/fit_henbert_form3_seuil0.1/histo/fit_histo094.png}
 \end{tabular}}
 \caption{\label{fig:baisse_hetero_fin_simu} Evolution de l'\hetero numérique de \Nber du jour 1120 au jour 1227.}
 \end{figure}
