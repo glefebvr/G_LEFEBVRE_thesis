@@ -3,10 +3,11 @@
 \begin{document}
 
 \chapter{Préservation de l'invariance par rotation sur maillage cartésien \label{chap:trefle}}
-\vspace{-13mm}
-\begin{flushright}
-{ \Large\sf ou Vous avez dit trèfle à 4 feuilles ?\ }
-\end{flushright}
+%\vspace{-13mm}
+%\begin{flushright}
+%{ \Large\sf ou Vous avez dit trèfle à 4 feuilles ?\ }
+%\end{flushright}
+
 %\mylettrine{C}{e} chapitre aurait pu ce nommer \og Vous avez dit trèfle à 4 feuilles ? \fg{}, car oui en effet, comme nous allons le voir au début de ce chapitre, discrétiser notre modèle avec des schémas standards va produire une 
 %
 %\mylettrine{T}{ransporter} (ou diffuser) une quantité invariante par rotation n'est pas chose facile. Pour illustrer cela, nous allons montrer dans un premier temps les résultats obtenus, lorsqu'on discrétise le modèle présenté au chapitre précédent avec des schémas classiques.  Nous examinerons ensuite les diverses sources causant
@@ -112,28 +113,31 @@ Sur chaque maille~$\mathcal{M}$, une approximation par un polynôme~$\mathbb{Q}1
 Ici encore le trèfle persiste. Tout ceci nous amène à penser que le schéma de diffusion n'est pas le responsable de cette instabilité numérique qui génère le trèfle. Regardons maintenant de plus près le schéma de transport. 
 
 \section{Le schéma de transport}
-\subsection{Reproduction du problème sur un modèle (très) réduit}
-Afin de démontrer que le responsable du trèfle est le schéma de transport, travaillons sur un modèle plus simple, le plus simple possible. Il sera \textit{a priori} incapable de reproduire la biologie que l'on souhaite décrire mais il aura l'avantage de toujours présenter cette forme en trèfle. 
+\subsection{Reproduction du problème sur un modèle réduit}
+Afin de démontrer que le responsable du trèfle est le schéma de transport, travaillons sur un modèle plus simple.%, le plus simple possible. 
+Il sera \textit{a priori} incapable de reproduire la biologie que l'on souhaite décrire mais il aura l'avantage de toujours présenter cette forme en trèfle. 
 Ce nouveau modèle est construit à partir du modèle complet présenté au chapitre précédent, en faisant les simplifications suivantes~:
 \begin{myitemize}
 \item On enlève les parties modélisant les traitements cliniques. On peut donc ainsi considérer une seule et unique population proliférante.
 \item On supprime la partie vascularisation. Les taux de croissance $\gammapp$ et $\gammapd$ sont alors considérés constants, égaux à~1.
 \item On supprime le compartiment nécrosé, quitte à considérer que la nécrose  est instantanément éliminée.
 \end{myitemize}
-Le modèle complet en est alors réduit à~:
-\begin{equation}
-\left\{ \begin{aligned}
-\partial_t P + \dive (\vit P) &= 0 \\
-\dive \vit &= P  \\
-\vit &= -\nabla \Pi
-\end{aligned} \right.
-\end{equation}
-Si maintenant, on se donne un champ de vitesse $\vit$, alors en injectant la seconde égalité dans la première équation, le système se réduit à une seule équation~:
+%Le modèle complet en est alors réduit à~:
+%\begin{equation}
+%\left\{ \begin{aligned}
+%\partial_t P + \dive (\vit P) &= 0 \\
+%\dive \vit &= P  \\
+%\vit &= -\nabla \Pi
+%\end{aligned} \right.
+%\end{equation}
+%Si maintenant, on se donne un champ de vitesse $\vit$, alors en injectant la seconde égalité dans la première équation, le système se réduit à une seule équation~:
+Le modèle réduit obtenu est alors le suivant~:
 \begin{equation}\label{eq:mod_reduit_test_transp}
-\partial_t P + \vit \nabla P = -P^2
+\partial_t P + \vit.\nabla P = -P^2,
 \end{equation}
 %Pour pouvoir incriminer le schéma de transport, réalisons une dernière simplification~: donnons nous une vitesse. Ainsi seule l'équation~\eqref{eq:mod_reduit_test_transp} ci-dessus suffit. 
-La vitesse $\vit$ est choisie de sorte à reproduire au mieux la vitesse du système complet. Le champ est d'abord dilatant (pour reproduire la croissance lors de la rechute au premier traitement) puis contractant (lorsque le second traitement agit). La transition entre les deux comportements est une phase dans laquelle on a un mélange des deux comportements. 
+%%La 
+où la vitesse~$\vit$ est choisie de sorte à reproduire au mieux la vitesse du système complet. Le champ est d'abord dilatant (pour reproduire la croissance lors de la rechute au premier traitement) puis contractant (lorsque le second traitement agit). La transition entre les deux comportements est une phase dans laquelle on a un mélange des deux comportements. 
 La Figure~\ref{fig:vx_profile} présente l'un des profils de vitesse de la simulation numérique qui génère le trèfle, simulation que l'on a présentée sur la Figure~\ref{fig:trefle}. 
 Au centre de la tumeur (autour de~$x=5\;cm$), il y a un point de compression~: 
 la vitesse est centripète puisque~$v_x$ est positif à droite et négatif à gauche. 
@@ -168,7 +172,7 @@ La vitesse imposée est donc, par construction, complètement dilatante au dépa
 \item dilatant en périphérie, autour d'un rayon~$L/4=2.25$,
 \item contractant à l'intérieur, autour d'un rayon~$L/8=1.125$.
 \end{myitemize}
-Notez qu'ici la couronne dilatante ne coïncide pas avec le bord de la tumeur, puisque celle-ci est fixe~:  elle ne suit pas le front tumoral au cours du temps. 
+Notons qu'ici la couronne dilatante ne coïncide pas avec le bord de la tumeur, puisque celle-ci est fixe~:  elle ne suit pas le front tumoral au cours du temps. 
 Malgré cela, avec ce modèle extrêmement minimaliste, le trèfle à 4 feuilles apparaît lors de la simulation numérique, comme on peut le constater sur la Figure~\ref{fig:evo_test_transp}.
 \begin{figure}
 \centering
@@ -180,7 +184,7 @@ Malgré cela, avec ce modèle extrêmement minimaliste, le trèfle à 4 feuilles
 \subfloat[Jour 1179 \label{fig:evo_test_transp4}]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0/pop-070}}
 \subfloat[Jour 1347 \label{fig:evo_test_transp5}]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0/pop-080}}
 \subfloat[Jour 1499 \label{fig:evo_test_transp6}]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0/pop-089}}
-\caption{Evolution de la densité $P$, solution numérique du modèle réduit~\eqref{eq:mod_reduit_test_transp} (vitesse imposée~\eqref{eq:vit_imposee}) avec un WENO5 standard -- La forme en trèfle est également visible sur le modèle réduit.\label{fig:evo_test_transp}}
+\caption{Evolution de la densité $P$, solution numérique du modèle réduit~\eqref{eq:mod_reduit_test_transp} (vitesse donnée par l'équation~\eqref{eq:vit_imposee}) avec un WENO5 standard -- La forme en trèfle est également visible sur le modèle réduit.\label{fig:evo_test_transp}}
 \end{figure}
 \begin{figure}
 \centering
@@ -192,9 +196,9 @@ Malgré cela, avec ce modèle extrêmement minimaliste, le trèfle à 4 feuilles
 \subfloat[Jour 1179]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0.27_bis/pop-070}}
 \subfloat[Jour 1347]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0.27_bis/pop-080}}
 \subfloat[Jour 1499]{\includegraphics[width=.32\textwidth,trim = 0mm 11mm 0mm 10mm, clip]{simu/test_transport/cross0.27_bis/pop-089}}
-\caption{Evolution de la densité $P$, solution numérique du modèle réduit~\eqref{eq:mod_reduit_test_transp} (vitesse imposée~\eqref{eq:vit_imposee}) avec le schéma \twinweno ($\beta=0.27$). -- Comparée à la Figure~\ref{fig:evo_test_transp}, l'invariance par rotation est ici très nettement améliorée. \label{fig:evo_test_transp_twinweno}}
+\caption{Evolution de la densité $P$, solution numérique du modèle réduit~\eqref{eq:mod_reduit_test_transp} (vitesse donnée par l'équation~\eqref{eq:vit_imposee}) avec le schéma \twinweno ($\beta=0.27$). -- Comparée à la Figure~\ref{fig:evo_test_transp}, l'invariance par rotation est ici très nettement améliorée. \label{fig:evo_test_transp_twinweno}}
 \end{figure}
-Ici encore, les symptômes sont les mêmes~: on voit d'abord apparaître une altération de la forme circulaire, qui amène à un carré (\cf  Figure~\ref{fig:evo_test_transp4}), ce qui conduit ensuite  progressivement à une forme de trèfle (\cf  Figure~\ref{fig:evo_test_transp5}-\ref{fig:evo_test_transp6}).
+%Ici encore, les symptômes sont les mêmes~: on voit d'abord apparaître une altération de la forme circulaire, qui amène à un carré (\cf  Figure~\ref{fig:evo_test_transp4}), ce qui conduit ensuite  progressivement à une forme de trèfle (\cf  Figure~\ref{fig:evo_test_transp5}-\ref{fig:evo_test_transp6}).
 Nous avons ainsi mis en évidence la responsabilité du schéma de transport dans l'apparition de la forme de trèfle non désirée.
 
 
@@ -286,8 +290,9 @@ Comparée à la Figure~\ref{fig:trefle}, la conservation de l'invariance par rot
 \subsubsection{
 Quelle est la valeur optimale pour le paramètre~$\beta$ ?} 
 Avec~$\beta=1$, on obtient un trèfle orienté dans les directions diagonales. 
-Avec~$\beta=0.5$ aussi ! Le fait que~$\Delta r$ soit supérieur à~$\Delta x$ favorise certainement la direction diagonale au détriment des autres. 
+Avec~$\beta=0.5$ aussi. Le fait que~$\Delta r$ soit supérieur à~$\Delta x$ favorise certainement la direction diagonale au détriment des autres. 
 Pour l'équation~\eqref{eq:mod_reduit_test_transp} munie de la vitesse~\eqref{eq:vit_imposee}, la valeur optimale de~$\beta$ est de~$0.26$ (résultat fourni par une méthode de descente sur le paramètre~$\beta$, précis à la seconde décimale). 
-Cependant cette valeur du paramètre~$\beta$, bien que faisant nettement moins apparaître le trèfle, ne semble pas être optimale pour le problème complet. Pour le jeu de paramètres de la simulation présentée sur la Figure~\ref{fig:trefle}, la valeur $\beta=0.27$ est meilleure que~$0.26$. D'autres jeux de paramètres encore ont produit un optimal de~$\beta$ de~$0.3$. 
-La valeur optimale du paramètre~$\beta$ n'est donc pas transcendante~: elle ne dépend pas uniquement du schéma utilisé et des caractéristiques du maillage, mais aussi de la vitesse. L'étude du choix de ce paramètre en fonction de la vitesse n'a pas été réalisée ici. Nos simulations permettent d'en donner un encadrement~: entre~$0.2$ et~$0.4$. Ici, nous nous limiterons à~$\beta$ constant en temps, ce choix améliorant déjà de manière très satisfaisante la conservation de l'irrotationnalité.
+Cependant cette valeur du paramètre~$\beta$, bien que faisant nettement moins apparaître le trèfle, ne semble pas être optimale pour le problème complet. 
+%Pour le jeu de paramètres de la simulation présentée sur la Figure~\ref{fig:trefle}, la valeur $\beta=0.27$ est meilleure que~$0.26$. D'autres jeux de paramètres encore ont produit un optimal de~$\beta$ de~$0.3$. 
+%La valeur optimale du paramètre~$\beta$ n'est donc pas transcendante~: elle ne dépend pas uniquement du schéma utilisé et des caractéristiques du maillage, mais aussi de la vitesse. L'étude du choix de ce paramètre en fonction de la vitesse n'a pas été réalisée ici. Nos simulations permettent d'en donner un encadrement~: entre~$0.2$ et~$0.4$. Ici, nous nous limiterons à~$\beta$ constant en temps, ce choix améliorant déjà de manière très satisfaisante la conservation de l'irrotationnalité.
 \end{document}

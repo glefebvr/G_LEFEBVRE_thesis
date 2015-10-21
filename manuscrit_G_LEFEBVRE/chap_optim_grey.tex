@@ -17,7 +17,8 @@
 \mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons-nous sur la manière de présenter ses résultats. La simulation numérique fournit  l'évolution des densités~$N(t,x)$, $P(t,x)$ et~$S(t,x)$ (toutes comprises entre 0 et 1). 
 Les données cliniques quant à elles fournissent des images en niveaux de gris. 
 L'enjeu ici, consiste à traiter les résultats numériques de sorte à produire des images en niveaux de gris comparable à un scanner. 
-Rappelons que le niveau de gris d'un scanner traduit l'absorption des tissus aux rayons X. D'un point de vue biologique, on ne peut pas relier à une population un niveau de gris car les populations ne sont pas isolées, et aucun moyen (mise à part la biopsie peut-être) ne permet d'en déceler leur proportions dans chaque voxel du scanner. La lien entre densité de populations et absorption aux rayons X n'est donc pas connu. Ainsi le choix a été fait de créer une image scanner de synthèse, à partir de l'évolution des populations données par la simulation numérique, en considérant l'interpolation 
+Rappelons que le niveau de gris d'un scanner traduit l'absorption des tissus aux rayons X. D'un point de vue biologique, on ne peut pas relier à une population un niveau de gris car les populations ne sont pas isolées, et aucun moyen %(mise à part la biopsie peut-être) 
+ne permet d'en déceler leur proportions dans chaque voxel du scanner. La lien entre densité de populations et absorption aux rayons X n'est donc pas connu. Ainsi le choix a été fait de créer une image scanner de synthèse, à partir de l'évolution des populations données par la simulation numérique, en considérant l'interpolation 
 \begin{equation}\label{eq:nvx_gris}
 \tau_N N + \tau_P P + \tau_S S,
 \end{equation}
@@ -26,7 +27,8 @@ où les paramètres $\tau_N, \tau_P$ et $\tau_S$ sont les niveaux de gris que l'
 
 
 \section{Présentation de l'approche}
-Pour un patient donné, on considère~$n$ instants auxquels on possède des images scanners (aux temps~$t_i, i\in \{ 1,...,n \}$, non nécessairement successifs). Sur ces~$n$ images, on propose d'optimiser les coefficients (niveaux de gris) de l'interpolation~$\tau_N N + \tau_P P + \tau_S S$ où~$N, P$ et~$S$ sont les populations définies dans le modèle présenté précédemment. Sur l'ensemble de ces images, on fait correspondre le niveau de gris moyen des images numériques à celui des scanners, ce qui s'écrit~:
+Pour un patient donné, on considère~$n$ instants auxquels on possède des images scanners (aux temps~$t_i, i\in \{ 1,...,n \}$).% , non nécessairement successifs). 
+Sur ces~$n$ images, on propose d'optimiser les coefficients (niveaux de gris) de l'interpolation~$\tau_N N + \tau_P P + \tau_S S$ où~$N, P$ et~$S$ sont les populations définies dans le modèle présenté précédemment. Sur l'ensemble de ces images, on fait correspondre le niveau de gris moyen des images numériques à celui des scanners, ce qui s'écrit~:
 \begin{equation}
 \label{eq:optim_grey_integ_aire}
 \begin{aligned}
@@ -37,8 +39,8 @@ Pour un patient donné, on considère~$n$ instants auxquels on possède des imag
 où : \begin{myitemize}
 \item $\aire(Z)$ est l'aire de la zone $Z$.
 \item $Z_1(t_i)$ est la zone correspondant à la tumeur dans les simulations numériques au temps~$t_i$. Elle est définie par un seuillage sur~$S$.
-\todo[noline]{specifier le seuillage ?}
-\item $Z_2(t_i)$ est la zone tumorale sur le scanner réalisé au temps~$t_i$. Cette zone a été définie par contourage manuel à l'aide du logiciel OsiriX (\cf contourage des tumeurs en Annexe~\ref{chap:anx_img_complement} page~\ref{chap:anx_img_complement}).
+%%\todo[noline]{specifier le seuillage ?}
+\item $Z_2(t_i)$ est la zone tumorale sur le scanner réalisé au temps~$t_i$. Cette zone a été définie par contourage manuel à l'aide du logiciel OsiriX (\cf contourage des tumeurs en Annexe~\ref{chap:anx_img_complement} pages~\pageref{fig:contourageNber} et~\pageref{fig:contourageChen}).
 \item $z_0$ est la coupe que l'on choisit d'étudier dans les scanners. Cette coupe est approximativement la même au cours du temps de sorte à suivre l'évolution d'une même section du foie. 
 \item $s(t_i,x,z_0)$ est la valeur du niveau de gris du pixel en position~$x$ sur la coupe~$z_0$ du scanner effectué au temps~$t_i$.
 \end{myitemize}
@@ -65,7 +67,7 @@ où~$\mathcal{P}$ pénalise la fonction coût~$J$ lorsque l'une des composantes 
 Une pénalisation en créneau sera considérée ici
 \begin{equation}
 \label{eq:penalisation_creneau}
-\mathcal{P}(\tau) = 1e7 \times ( \tau \notin  [0;255]^3 ).
+\mathcal{P}(\tau) = 1e7 \times\mathds{1}( \tau \notin  [0;255]^3 ).
 \end{equation}
 %Dans la section d'après, la régularisée de Moreau-Yosida d'une parabole tronquée sera considérée comme pénalisation. Cette méthode de régularisation est décrite dans l'annexe REF page REF \todo[noline]{ref anex + page}. Dans cette annexe également, on examinera l'influence du choix de la fonction de pénalisation sur les optima fournit.
 %permet d'assurer que les optima respectent les bornes~0 à~255 :
@@ -254,7 +256,7 @@ En ce qui concerne les algorithmes d'optimisations utilisés, nous en choisirons
 \item BFGS (Broyden, Fletcher, Goldfarb, and Shanno)~: Méthode quasi newtonnienne basée  également sur une approximation de la dérivée.
 \todo[inline]{Ref : Piocher ref algo : \url{http://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.optimize.minimize.html} }
 \end{myitemize}
-Ces algorithmes seront initialisés avec les paramètres~$\tau_N, \tau_P$ et~$\tau_S$ considérés dans la section~\ref{sec:NumRes} page~\pageref{sec:NumRes}. Lorsqu'ils sont nécessaires, les gradients (voire les hessiennes) sont approximés par les algorithmes eux-mêmes. Outre un vecteur de paramètre initial et la fonction coût à optimiser~\eqref{eq:min_optim_grey}, aucune information supplémentaire n'est fournie à ces différents algorithmes.
+Ces algorithmes seront initialisés avec les paramètres~$\tau_N, \tau_P$ et~$\tau_S$ considérés dans la section~\ref{sec:NumRes} page~\pageref{sec:NumRes}. Lorsqu'ils sont nécessaires, les gradients (voire les hessiennes) sont approchées par les algorithmes eux-mêmes. Outre un vecteur de paramètre initial et la fonction coût à optimiser~\eqref{eq:min_optim_grey}, aucune information supplémentaire n'est fournie à ces différents algorithmes.
 
 
 La Table~\ref{tab:optim3gris} synthétise une partie des résultats d'optimisation obtenus sur les différents tests qui ont été réalisés. 
@@ -263,7 +265,8 @@ On remarque que plus le nombre d'images considérées est grand, plus l'erreur �
 
 On peut de plus remarquer que selon les images et les algorithmes choisis les résultats sont assez variables. Les moyennes des optima trouvés selon l'algorithme sont présentées sur la dernière ligne de la Table~\ref{tab:optim3gris}. Seul l'algorithme SLSQP se démarque des autres qui ont~:
 \begin{myitemize}
-\item une valeur moyenne de~$\tau_P$ supérieure à~$\tau_S$ alors qu'on s'attendrait plutôt à l'inverse...  Des images ont été reconstituées avec des valeurs de~$\tau_S$ aux alentours de 140 et 150 (on pourra consulter la Figure~\ref{fig:schema_correspondance_gris} pour se donner une idée de l'intensité de gris que cela représente). Il apparaît que la couleur du tissu sain n'est pas bonne~: il est beaucoup trop foncé. 
+\item une valeur moyenne de~$\tau_P$ supérieure à~$\tau_S$ alors qu'on s'attendrait plutôt à l'inverse. 
+Des images ont été reconstituées avec des valeurs de~$\tau_S$ aux alentours de 140 et 150 (on pourra consulter la Figure~\ref{fig:schema_correspondance_gris} pour se donner une idée de l'intensité de gris que cela représente). Il apparaît que la couleur du tissu sain n'est pas bonne~: il est beaucoup trop foncé. 
 \item pour environ un tiers des combinaisons, une valeur de~$\tau_P$ proche de celle de~$\tau_S$, ce qui ne facilite pas du tout le contraste du tissu proliférant avec le tissu sain.
 \end{myitemize}
 
@@ -273,14 +276,14 @@ On peut de plus remarquer que selon les images et les algorithmes choisis les r�
 \caption{\label{fig:schema_correspondance_gris} Correspondance entre l'échelle de Hounsfield (tomodensitométrie en HU) et les niveaux de gris -- Les bornes sont ici fixées à -135\,HU et 215\,HU.}
 \end{figure}
 
-L'algorithme Neldear-Mead semble le moins bon algorithme, au vu notamment des résultats fournis pour les combinaisons~[1,9,11], [2,3,4,5] et~[3,5,7] qui font apparaître une valeur de $\tau_N$ de~255, ce qui correspond à du blanc ! Non seulement cette valeur est grande, mais en plus elle atteint le bord autorisé. Notez que si l'on retire ces 3 valeurs de la moyenne présentée sur la dernière ligne du tableau, alors celle-ci s'approche des moyennes des algorithmes GC et BFGS. 
+L'algorithme Neldear-Mead semble le moins bon algorithme, au vu notamment des résultats fournis pour les combinaisons~[1,9,11], [2,3,4,5] et~[3,5,7] qui font apparaître une valeur de $\tau_N$ de~255, ce qui correspond à du blanc. Non seulement cette valeur est grande, mais en plus elle atteint la valeur limite autorisée. Notons que si l'on retire ces 3 valeurs de la moyenne présentée sur la dernière ligne du tableau, alors celle-ci s'approche des moyennes des algorithmes GC et BFGS. 
 
 Bien que paraissant le meilleur algorithme, l'optimisation réalisée par la méthode SLSQP sur 3 paramètres n'est pas acceptable. Elle présente les mêmes défauts~: le niveau de gris moyen du tissu proliférant est trop proche encore de celui du tissu sain et l'intensité de gris~$\tau_S$  du tissu sain semble sous-estimée.
 
 
 Pour expliquer l'erreur commise sur~$\tau_S$, on pourrait penser à une large variabilité permise sur ce paramètre due à la présence très minoritaire de tissu  sain dans la tumeur. Ainsi~$\tau_S$ serait très peu influent dans le calcul de l'erreur~\eqref{eq:min_optim_grey}. Cependant après avoir examiné de plus près les valeurs des intégrales de l'équation~\eqref{eq:optim_grey_integ_aire} (\ie les coefficients de la matrice~$A$), il y a toujours au moins 10\% de cellules saines. La plupart du temps, elles sont réparties sur le pourtour de la tumeur, dans la zone de transition sur laquelle il y a un mélange de tissu sain et de tissu tumoral. Ceci écarte donc l'hypothèse avancée. On pourrait alors avancer des variations dans les données (bruit dans les images, erreur sur le contourage, variation du temps d'acquisition du scanner qui impacte les niveaux de gris, ... ) pour justifier cela, mais les impacts sont difficiles à mesurer. 
 Il n'en reste pas moins que le niveau de gris~$\tau_S$ est mal estimé, et ce quel que soit l'algorithme d'optimisation utilisé. 
-Pour palier à cela, nous allons le fixer dans la section suivante.
+%%Pour palier à cela, nous allons le fixer dans la section suivante.
 
 
 %%%%%  ---- SECTION  OPTIM SUR 2 NVX DE GRIS ----- %%%%%

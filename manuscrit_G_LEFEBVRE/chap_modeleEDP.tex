@@ -6,13 +6,20 @@
 
 %\mylettrine{N}{ous} allons ici présenter le cheminement qui, depuis les mécanismes biologiques et cliniques, a conduit à un modèle mathématique. 
 
-\mylettrine{C}{e} chapitre, ainsi qu'une partie du chapitre suivant (la partie sur le \twinweno), ont  fait l'objet d'une publication (actuellement en review) et d'un poster (présenté en Annexe, dans la Figure~\ref{fig:poster}, page~\pageref{fig:poster}). Nous allons ici garder la structure de l'article, en commençant par présenter les principaux résultats. La construction du modèle sera ensuite détaillée. Nous discuterons enfin sur les résultats numériques apportés par notre modèle, et les diverses informations que l'on peut en tirer.
+\mylettrine{C}{e} chapitre, ainsi qu'une partie du chapitre suivant, %(la partie sur le \twinweno) 
+ont  fait l'objet d'une publication (actuellement en review) et d'un poster (présenté en Annexe, dans la Figure~\ref{fig:poster}, page~\pageref{fig:poster}). %Nous allons ici garder la structure de l'article, en commençant par présenter les principaux résultats. 
+Après avoir présenté la problématique, les principaux résultats obtenus seront décrit.  
+La construction du modèle sera ensuite détaillée. Nous discuterons enfin plus précisément, sur les résultats numériques apportés par notre modèle, et les diverses informations que l'on peut en tirer.
+
+\section{Problématique}
+Le but de ce chapitre est de construire un modèle de croissance tumorale adapté aux métastases hépatiques de GIST et à leurs traitements. Un comportement typique est celui de \Nber dont les données d'imagerie sont présentées en Annexe~\ref{chap:anx_img_complement}, sur les Figures~\ref{fig:nber_complete_scan} et~\ref{fig:contourageNber}. Le schéma typique est le suivant~: à la détection d'une métastase (pour \Nber, à l'examen n°1, jour~119) le patient reçoit de l'imitanib (thérapie ciblée). La réponse est positive~: la tumeur décroît et est contrôlée jusqu'au jour~867 (examen n°11) où l'on constate un échappement au traitement. Celui-ci est alors modifié~: l'imatinib est  remplacé par le sunitinib, thérapie ciblée ayant notamment des effets antiangiogéniques. Ce traitement permet une nouvelle fois le contrôle de la lésion jusqu'à une nouvelle rechute constatée jour~1179 (examen n°11). Ce comportement est typique chez les métastases hépatiques de GIST et c'est celui-ci que nous souhaitons modéliser.
 
 \section{Principaux résultats}
-Sur la partie gauche de la Figure~\ref{fig_nber} est présentée une séquence de scanners, et sur la partie droite nous donnons l'évolution de l'aire tumorale d'une métastase hépatique de GIST d'un patient spécifique, appelé \Nber. Sur chaque scanner de \Nber, nous avons contouré la région la plus sombre, qui correspond principalement à la zone nécrosée.  
+Sur la partie gauche de la Figure~\ref{fig_nber} est présentée une séquence de scanners, et sur la partie droite nous donnons l'évolution de l'aire tumorale d'une métastase hépatique de GIST de \Nber. %d'un patient spécifique, appelé \Nber. 
+Sur chaque scanner de \Nber, nous avons contouré la région la plus sombre, qui correspond principalement à la zone nécrosée.  
 Pendant l'évolution tumorale, on peut voir que l'hétérogénéité tumorale change (par exemple sur la Figure~\ref{fig_hen_spatial_2} la tumeur est homogène tandis que sur la Figure~\ref{fig_hen_spatial_6}, elle est hétérogène). Nous distinguons, dans l'évolution de l'aire tumorale,  les points correspondant à une tumeur homogène (cercles pleins) des points correspondant à une tumeur hétérogène.
 
-\begin{figure}[h]
+\begin{figure}[t]
 \captionsetup[subfigure]{margin={7pt,7pt}}
 \begin{tabular}{@{\hspace{-1mm}}ccc}
 \subfloat[16 sept. 2008 -- Jour 119]{\label{fig_hen_spatial_1}
@@ -48,7 +55,8 @@ Les valeurs des paramètres utilisés dans la simulation numérique sont donnée
 
 
 
-Curieusement, juste avant les recroissances tumorales au Jour~776 (Figure~\ref{fig_hen_spatial_3})
+%Curieusement, juste a
+Avant les recroissances tumorales au Jour~776 (Figure~\ref{fig_hen_spatial_3})
 et au Jour~1116 (Figure~\ref{fig_hen_spatial_6}), une couronne plus claire que le c\oe{}ur sombre apparaît, alors que la réponse au traitement se traduit par un assombrissement de la tumeur (\cf Figure~\ref{fig_hen_spatial_2} et~\ref{fig_hen_spatial_5}). 
 De telles étapes successives de tumeurs homogènes/hétérogènes sont particulièrement prononcées dans les métastases hépatiques de GIST et notre but est de fournir une explication à ce type de comportement.
 
@@ -81,7 +89,9 @@ Comparaison entre les scanners de \Nber et les simulations numériques.
 \section{Description du modèle}
 
 Notre modèle est un système d'EDPs similaire au modèle de 
-Bresch {\it et al.}~\cite{Bresch2010}. Grosso modo, la tumeur est décrite grâce à des densités de cellules proliférantes et une densité de cellules cancéreuses nécrosées notées~$P$ et~$N$ respectivement. 
+Bresch {\it et al.}~\cite{Bresch2010}. 
+%Grosso modo, l
+La tumeur est décrite grâce à des densités de cellules proliférantes et une densité de cellules cancéreuses nécrosées notées~$P$ et~$N$ respectivement. 
 La prolifération cellulaire conduit à une augmentation de l'aire causée par une surpression dont le gradient transporte les cellules saines environnantes~$S$ loin du c\oe{}ur de la tumeur. 
 Les cellules situées au centre de la tumeur se nécrosent à cause du manque d'oxygène, sauf si l'angiogenèse intervient pour leur apporter les provisions nutritives nécessaires.
 L'angiogenèse et l'apport en nutriments sont pris en compte dans notre modèle via une description simpliste similaire à celle de~\cite{Fathallah2013,Billy2009545}: comme la vascularisation gouverne la concentration de nutriments parvenant à la tumeur, nous introduisons une variable~$M$ 
@@ -90,7 +100,8 @@ Nous introduisons également les effets liés aux facteurs de croissance au trav
 
 
 La principale nouveauté réside en la modélisation des traitements. Deux traitements sont considérés (on peut voir dans \cite{lorz2013}, les récents travaux de Lorz~\etal\ pour des modèles plus élaborés sur les résistances aux traitements). 
-Le premier est un inhibiteur de tyrosine kinase, comme l'imatinib, qui a un effet cytotoxique 
+Le premier est un inhibiteur de tyrosine kinase (imatinib), %, comme l'imatinib, 
+qui a un effet cytotoxique 
 sur les cellules proliférantes. Le second est inhibiteur multi-kinases, comme le sunitinib ou le sorafenib, qui a un effet à la fois cytotoxique et antiangiogénique. En d'autres termes, en plus de l'effet cytotoxique, il bloque la production de facteurs de croissance, comme le facteur de croissance vasculaire endothélial (VEGF), et ainsi réduit la quantité de nutriments apportée à la tumeur. 
 Il est bien connu que les médicaments cytotoxiques n'ont pas un impact similaire sur toutes les cellules cancéreuses métastatiques car des phénotypes résistants peuvent apparaître dans la population de cellules proliférantes. De plus les cellules cancéreuses peuvent résister différemment à l'hypoxie. Par conséquent nous découpons, comme dans~\cite{Bresch2009}, la densité~$P$ de cellules proliférantes en 3 sous-populations~$P_1$, $P_2$ et~$P_3$, telles  que~$P=P_1+P_2+P_3$, où
 \begin{myitemize}
@@ -156,7 +167,7 @@ Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse.}
 
 
 Il est important de noter que notre but n'est pas de décrire l'évolution de la tumeur depuis le tout début du GIST, mais de nous focaliser sur l'évolution des métastases situées dans le foie. 
-Par conséquent, selon les observations cliniques, il semble pertinent de considérer que trois sous-populations sont présentes lorsqu'une métastase est détectée.
+Par conséquent, selon les observations cliniques, il semble pertinent de considérer que les trois sous-populations sont déjà présentes lorsqu'une métastase est détectée.
 
 \subsection{Le modèle mathématique}
 
@@ -175,7 +186,7 @@ La densité de cellules proliférantes est gouvernée par l'équation de transpo
 \mkern-8mu \partial_t P_2 &+ \dive(\vit P_2) = \big(\gammapp(M)- \gammapd(M)\big)P_2 - \muS \chiS(t) (1+M)P_2 & \textrm{ dans }  \Omega, \label{eq_P2}\\
 \mkern-8mu \partial_t P_3 &+ \dive(\vit P_3) = (\gammapp(M) - \gammapd(M))P_3 & \textrm{ dans }  \Omega, \label{eq_P3}
 \end{align}%%}
-où~$\chii(t)=\mathds{1}_{[\Tini{i},\rm \Tend{i}[}(t)$ est la fonction temps caractéristique du 
+où~$\chii(t)=\mathds{1}_{[\Tini{i},\rm \Tend{i}[}(t)$ est la fonction temps-caractéristique du 
 traitement~$\treat_{\rm i}$ et~$\mu_{\rm i}$ représente le taux de mortalité\footnote{Le taux de mortalité dû au traitement est clairement lié à la dose de médicament délivrée au patient, mais pas seulement. Par exemple la sensibilité du patient et la dose parvenant vraiment à la tumeur sont aussi impliquées.} causé par~$\treat_{\rm i}$ sur les cellules proliférantes, pour~$\rm i\in\{1,2\}$. 
 Le terme~$\vit (t,\vecx)$ désigne la vitesse impliquée dans les changements d'aire de la tumeur et~$M(t,\vecx)$ représente la vascularisation et l'apport en nutriments. 
 Le terme $1+M$ traduit le fait que les traitements arrivent principalement par le réseau sanguin. 
@@ -184,9 +195,11 @@ Le taux de prolifération (resp. de mortalité) des cellules proliférantes, not
 \gammapp(M) &=\gamma_0 \frac{1+\tanh\big(R(M-\Ms)\big)}{2}, \label{eq_gammapp}\\
 \gammapd(M) &=\gamma_1 \frac{1-\tanh\big(R(M-\Ms)\big)}{2}, \label{eq_gammapd}
 \end{align}
-où~$R$ est un paramètre numérique régularisant\footnote{Notez que les fonctions~$\gammapp$ et~$\gammapd$ sont purement des fonctions de Heaviside régularisées. Pour les simulations numériques, nous fixerons arbitrairement~$R$ à 5.}, $\gamma_0$ et
+où~$R$ est un paramètre numérique régularisant\footnote{Notons que les fonctions~$\gammapp$ et~$\gammapd$ sont des fonctions de Heaviside régularisées. Pour les simulations numériques, nous fixerons arbitrairement~$R$ à 5.}, $\gamma_0$ et
 $\gamma_1$ sont respectivement les paramètres de 
-prolifération/mortalité et~$\Ms$ est le seuil d'hypoxie.
+prolifération/mortalité et~$\Ms$ est le seuil d'hypoxie. 
+Cette forme des coefficients assure que lorsque~$M$ est dessus du seuil d'hypoxie~$\Ms$ alors~$\gammapp$ est supérieur à sa valeur moyenne~$\gamma_0/2$ et~$\gammapd$ est inférieur à sa valeur moyenne~$\gamma_1/2$. De plus, si~$R$ est grand, $\gammapp$ est proche de~$\gamma_0$ et~$\gammapd$ est proche de~0 dès lors que~$M>\Ms$ et de façon symétrique, si~$M<\Ms$ alors~$\gammapp$ est proche de~0  et~$\gammapd$ est proche de~$\gamma1$.
+
 
 
 On suppose que les cellules saines sont uniquement sensibles à l'hypoxie, et qu'elles sont passivement transportées par les changements de l'aire tumorale~:
@@ -197,7 +210,7 @@ où~$\gammasd$ est le taux de mortalité des cellules saines dû à l'hypoxie~:
 \begin{equation}
 \gammasd(M)=C_S \gamma_1  \max\Big(0,-\tanh\big(R(M-\Ms)\big)\Big). \label{eq_gammasd}
 \end{equation}
-Notez que~$\gammasd$  s'annule exactement si~$M\geq\Ms$ dans le but d'assurer que~$S=1$ sur le bord extérieur en tout temps. Finalement, la densité de cellules nécrosées satisfait la relation 
+La fonction~$\gammasd$  s'annule exactement si~$M\geq\Ms$ dans le but d'assurer que~$S=1$ à l'extérieur de la lésion en tout temps. Finalement, la densité de tissus nécrosées satisfait la relation 
 \begin{equation}\label{eq_N}
 \begin{aligned}
 \partial_t N + \dive(\vit N) & =  \gammapd(M) P +\gammasd(M) S  + \\ & \big(\muI \chiI(t)P_1 + \muS\chiS(t)(P_1+P_2)\big)(1+M) - \muN(1+M)N,
@@ -206,8 +219,12 @@ où
 \begin{equation}
 P = P_1+P_2+P_3,
 \end{equation}
-et où~$\muN$ est un paramètre qui contrôle le taux d'élimination de la nécrose par le système immunitaire. Le terme $1+M$ traduit le fait que plus le milieu est vascularisé, plus l'élimination de la nécrose est rapide. 
-Notez que biologiquement il ne serait pas aberrant de considérer que cette élimination pourrait dépendre également de la pression $\Pi$ du milieu (que l'on décrit un peu plus loin). Ce type de considération conduit cependant à un modèle mathématiquement mal posé. 
+et où~$\muN$ est un paramètre qui contrôle le taux d'élimination de la nécrose par le système immunitaire. 
+Le membre de droite de l'équation~\eqref{eq_N} collecte tous les termes de mort cellulaires des équations~\eqref{eq_P1},\eqref{eq_P2},\eqref{eq_P3} et \eqref{eq_S}. 
+Le terme $1+M$ traduit le fait que plus le milieu est vascularisé, plus l'élimination de la nécrose est rapide. 
+%Notez que b
+%Biologiquement il ne serait pas aberrant de considérer que cette élimination pourrait dépendre également de la pression $\Pi$ du milieu (que l'on décrit un peu plus loin). 
+%Ce type de considération conduit cependant à un modèle mathématiquement mal posé. 
 
 
 La condition suivante de Dirichlet est utilisée sur le bord si la vitesse est entrante~:
@@ -237,16 +254,20 @@ La loi de Darcy assure la solvabilité du système, de manière similaire à~\ci
 \end{aligned}
 \right.
 \end{equation}
-où~$\Pi$ est la pression (ou le potentiel) du milieu et~$k$ sa perméabilité. La condition de Dirichlet homogène, dans~\eqref{eq_darcy}, impose qu'en dehors de~$\Omega$, la pression du tissu sain ne soit pas modifiée par la pression générée par la croissance tumorale. Cette hypothèse est valide pour de petites métastases n'impactant pas la forme du foie. En d'autres termes, la tumeur n'est pas mécaniquement contrainte par la région extratumorale. 
+où~$\Pi$ est la pression %(ou le potentiel) du 
+dans le milieu et~$k$ sa perméabilité. 
+La condition de Dirichlet homogène, dans~\eqref{eq_darcy}, impose qu'en dehors de~$\Omega$, la pression du tissu sain ne soit pas modifiée par la pression générée par la croissance tumorale. Cette hypothèse est valide pour de petites métastases n'impactant pas la forme du foie. En d'autres termes, la tumeur n'est pas mécaniquement contrainte par la région extratumorale. 
 
 
-Observez qu'une condition de flux nul impliquerait nécessairement que l'intégrale~$\int_{\Omega} \gammapp P - \delta (1+M)N \textrm{\;d}\vecx$ s'annule en tout temps, ce qui n'est pas satisfait à~$t=0$.
+%Observez qu'une condition de flux nul impliquerait nécessairement que l'intégrale~$\int_{\Omega} \gammapp P - \delta (1+M)N \textrm{\;d}\vecx$ s'annule en tout temps, ce qui n'est pas satisfait à~$t=0$.
 
 
 Nous soulignons que l'on traite ici de métastases hépatiques de GIST et non de tumeurs primaires du foie. Par conséquent, les cellules métastatiques ne grandissent pas dans leur milieu d'origine~: elles ne peuvent pas infiltrer le foie mais leur prolifération induit une pression qui pousse les cellules saines vers l'extérieur. Pour ces raisons, nous choisissons une loi de Darcy pour décrire la croissance de la métastase. 
 
 
-Bien sûr, une loi de Stockes ou n'importe quelle loi viscoélastique pourrait être utilisée, nous en référons à~\cite{Bresch2009}  et~\cite{ambrosi2002,byrne2003} pour plus de détails. De telles lois plus compliquées peuvent fournir une meilleure description du front tumoral. Cependant, notre objectif ici n'est pas de fournir précisément le front tumoral ni la forme de la tumeur mais de reproduire la structure interne de la métastase.
+Bien sûr, une loi de Stokes ou n'importe quelles autre loi plus complexe (loi viscoélastique par exemple) pourrait être utilisée, nous en référons à~\cite{Bresch2009}  et~\cite{ambrosi2002,byrne2003} pour plus de détails. 
+De telles lois plus sophistiquées %compliquées 
+peuvent fournir une meilleure description du front tumoral. Cependant, notre objectif ici n'est pas de fournir précisément le front tumoral ni la forme de la tumeur mais de reproduire la structure interne de la métastase.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -256,7 +277,8 @@ et l'impact du traitement~$\TS$ sur celui-ci. Il est important de noter que la s
 
 Nous introduisons une variable scalaire~$\xi$, qui est associée à la moyenne de facteurs de croissance produits par les cellules cancéreuses. 
 Il a été signalé dans~\cite{Holmes2007} que les cellules hypoxiques augmentent leur production de facteurs de croissance, tandis que les cellules hautement proliférantes n'ont pas besoin d'apports nutritifs supplémentaires. Ainsi, si~$M$ est en dessous du seuil~$\Ms$ alors~$\xi$ doit augmenter. 
-Notez aussi que l'effet antiangiogénique du 
+%Notez aussi que l
+L'effet antiangiogénique du 
 traitement~$\TS$ diminue la production
 de~$\xi$, mais seulement pour les cellules~$P_1$ et~$P_2$ alors que~$P_3$ est la densité de cellules insensibles\footnote{Ceci est dû au fait que plusieurs voies moléculaires permettent d'engendrer la vascularisation. Le VEGF est le facteur de croissance vasculaire le plus commun  et est inhibé par le second traitement~$\TS$. La population $P_3$ émet un autre type de molécule que le VEGF pour se néovasculariser~: elle est donc insensible au traitement~$\TS$.} à~$\TI$ et~$\TS$.
 Nous décrivons ainsi l'évolution de~$\xi$ par
@@ -281,16 +303,23 @@ $\eta$ représente la destruction de la vascularisation par les cellules prolif�
 Le terme de transport~$\xi \frac{\nabla S}{\| \nabla S \|}. \nabla M$ de~\eqref{eq_M} décrit le fait que la vascularisation est apportée à la tumeur depuis le tissu sain qui est supposé bien vascularisé.  
 L'amplitude de la vitesse est égale à~$\xi$, qui représente le total des facteurs de croissance produits par les cellules proliférantes. 
 Le terme de diffusion décrit l'infiltration des vaisseaux sanguins et des nutriments dans la tumeur. D'un point de vue numérique, ce terme a un effet régularisant sur la vascularisation~$M$, et ainsi stabilise le modèle. 
-
-
-Notez que si initialement 
+Le terme~$C_0S(1-\frac{M}{2\Ms})$ a deux rôles~:
+\begin{myitemize}
+\item C'est un terme de saturation pour la vascularisation qui empêche $M$ de croître indéfiniment. 
+%Notez
+Il est clair que si initialement 
 \begin{align}\label{eq:borneM}
 0\leq \|M|_{t=0}\|_{L^\infty}\leq 2\Ms
 \end{align}
-alors pour tout temps~$t$, $0\leq M(t) \leq 2\Ms$. Ceci traduit le fait que le tissu sain environnant est bien vascularisé et est fourni de suffisamment de nutriments.
+alors pour tout temps~$t$, $0\leq M(t) \leq 2\Ms$. 
+\item Il permet d'imposer $M=2\Ms$ dans le tissu sain ($P=0$ et $S=1$) qui est bien vascularisé et est fourni de suffisamment de nutriments.
+%Ceci traduit le fait que le tissu sain environnant est bien vascularisé et est fourni de suffisamment de nutriments.. 
+\end{myitemize}
 
-
-La quantité $\xi$ a été choisie scalaire. Des essais ont été réalisés en considérant~$\xi$ dépendant également de l'espace. L'équation régissant~$\xi$ était alors la même que l'équation~\eqref{eq_xi} mais sans l'intégrale. Cet essai a soulevé beaucoup de problème. Le principal, étant que~$\xi$, qui est produit par les cellules proliférantes, est concentré sur son lieu de production, \ie dans la tumeur, alors que la vascularisation~$M$ est concentrée à l'extérieur. Les variables~$\xi$ et~$M$ ont donc des supports quasiment disjoints, ce qui pose problème pour le transport de~$M$. Appliquer un transport et/ou une diffusion sur~$\xi$ aurait pu résoudre ce problème mais aurait complexifié le modèle qui compte déjà beaucoup de paramètres.
+\bigskip
+La quantité~$\xi$ est scalaire et représente la concentration totale de facteur de croissance %(VEGF inhibé par le second traitement et autres facteurs de croissance ) 
+produite par la tumeur. Cette description est bien entendu réductrice et il existe des modèles avec une répartition spatiale des facteurs de croissances (\cf~\cite{Billy2009545}) qui inclus leur production, leur diffusion, leur élimination, etc. Ces modèles sont très riches d'un point de vue biologique mais comprennent un grand nombre de paramètre qui serait difficile à gérer dans notre cas. 
+%La quantité $\xi$ a été choisie scalaire. Des essais ont été réalisés en considérant~$\xi$ dépendant également de l'espace. L'équation régissant~$\xi$ était alors la même que l'équation~\eqref{eq_xi} mais sans l'intégrale. Cet essai a soulevé beaucoup de problème. Le principal, étant que~$\xi$, qui est produit par les cellules proliférantes, est concentré sur son lieu de production, \ie dans la tumeur, alors que la vascularisation~$M$ est concentrée à l'extérieur. Les variables~$\xi$ et~$M$ ont donc des supports quasiment disjoints, ce qui pose problème pour le transport de~$M$. Appliquer un transport et/ou une diffusion sur~$\xi$ aurait pu résoudre ce problème mais aurait complexifié le modèle qui compte déjà beaucoup de paramètres.
 
 \subsection{Formulation vectorielle des équations sur les cellules cancéreuses}
 
@@ -350,12 +379,17 @@ Notez que la densité de cellules saines~$S$ est donnée par~\eqref{eq_saturatio
 
 
 %%%%%% Rajout par rapport à l'article
-\subsection{Propriétés mathématiques du modèle\todo{Prop du modèle : Section 2.3 ou sous-section 2.2.3 ?}}
+\subsection{Propriétés mathématiques du modèle}
 \subsubsection{Positivité}
+%\begin{prop}\label{prop:positivite_modele}
+%Dans le modèle~\eqref{eq_transport_pop}, si
+% $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ appartiennent à~$L^\infty, \ \forall t \geq 0$, 
+%alors $ \forall t\geq 0, \ P_i \geq 0, N \geq 0$ et $S\geq 0.$
+%\end{prop}
 \begin{prop}\label{prop:positivite_modele}
 Dans le modèle~\eqref{eq_transport_pop}, si
- $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ appartiennent à~$L^\infty, \ \forall t \geq 0$, 
-alors $ \forall t\geq 0, \ P_i \geq 0, N \geq 0$ et $S\geq 0.$
+Soient $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ une solution de classe~$\mathcal{C}([0,T]\times \Omega)$ du système~\eqref{eq_transport_pop}. Supposons que la vitesse~$\vit$ est régulière et que~$M$ est bornée. Si $P_i(0,\vecx), N(0,\vecx)$ et~$S(0,\vecx)$ sont positives ou nulles alors 
+$$\forall t \in [0,T], \quad  N(t,\vecx)\geq0, \quad  P_i(t,\vecx)\geq0, \quad S(t,\vecx)\geq0. $$
 \end{prop}
 Pour démontrer cette positivité, nous allons montrer que les parties négatives de ces quantités sont toutes nulles. Les parties négatives sont définies comme suit~:
 \begin{dfn}[Parties positive et négative]~
@@ -369,10 +403,11 @@ On notera les propriétés intéressantes de ces quantités~:
 Quelle que soit la fonction~$f$, on a~:
 \begin{itemize}
 \item $f^+ \geq 0$ et $f^- \geq 0$
+\item $ff^+=(f^+)^2$  et $ff^-=-(f^-)^2$ 
 \item  $f'f^+=(f^+)'f^+$  et $f'f^-=-(f^-)'f^-$ 
 \end{itemize} 
 \end{prop}
-La première partie de cette propriété découle directement de la définition, la seconde se démontre de manière immédiate par disjonction des cas~$f\geq0$ et~$f<0$. Ayant définit ces parties négatives et positives, nous pouvons maintenant démontrer la positivité de notre modèle.
+%La première partie de cette propriété découle directement de la définition, la seconde se démontre de manière immédiate par disjonction des cas~$f\geq0$ et~$f<0$. Ayant définit ces parties négatives et positives, nous pouvons maintenant démontrer la positivité de notre modèle.
 
 \begin{proof}[Démonstration de la Propriété~\ref{prop:positivite_modele}]
 On suppose que $P_i,N$ et $S$ sont bornées. Commençons par démontrer la positivité de~$P_i$. On a~:
@@ -384,27 +419,28 @@ $$
 &\overset{IPP\protect\footnotemark}{\Longleftrightarrow} \intx (\partial_t P_i) P_i^- + \intbord \vit . \nn P_i P_i^- - \intx (\vit P_i).\nabla (P_i^-)  = \intx \bar{\GG_i} P_i P_i^-  \\
 &\overset{\textrm{Prop. \ref{prop:partie_neg_et_pos}}}{\Longleftrightarrow}  - \intx (\partial_t P_i^-) P_i^- - \intbord \vit . \nn (P_i^-)^2 + \intx P_i^- \vit.\nabla (P_i^-)  = - \intx \bar{\GG_i} (P_i^-)^2  \\
 &\Longleftrightarrow  \frac{-1}{2} \intx \partial_t \big( (P_i^-)^2 \big) - \intbord \vit . \nn (P_i^-)^2 + \frac{1}{2} \intx \vit.\nabla \big( (P_i^-)^2\big)   = - \intx \bar{\GG_i} (P_i^-)^2  \\
-&\overset{IPP}{\Longleftrightarrow}  \frac{-1}{2} \intx \partial_t \big( (P_i^-)^2 \big) -\frac{1}{2} \intbord \vit . \nn (P_i^-)^2 + \frac{1}{2} \intx (\dive \vit)  (P_i^-)^2  = - \intx \bar{\GG_i} (P_i^-)^2  \\
+&\overset{IPP}{\Longleftrightarrow}  \frac{-1}{2} \intx \partial_t \big( (P_i^-)^2 \big) -\frac{1}{2} \intbord \vit . \nn (P_i^-)^2 - \frac{1}{2} \intx (\dive \vit)  (P_i^-)^2  = - \intx \bar{\GG_i} (P_i^-)^2  \\
+%%&\Longleftrightarrow  \intx \partial_t \big( (P_i^-)^2 \big) + \intbord \vit . \nn (P_i^-)^2 + \intx (\dive \vit)  (P_i^-)^2  = 2 \intx \bar{\GG_i} (P_i^-)^2  \\
 \end{aligned}$$
 \footnotetext{IPP~: Intégration Par Parties.}
 Ainsi
 \begin{equation}
-\partial_t \intx (P_i^-)^2  = - \intx (\dive \vit + 2\bar{\GG_i})  (P_i^-)^2 - \intbord \vit . \nn (P_i^-)^2.
+\partial_t \intx (P_i^-)^2  = \intx (2\bar{\GG_i} - \dive \vit)  (P_i^-)^2 - \intbord \vit . \nn (P_i^-)^2.
 \end{equation}
 Or $$\intbord \vit . \nn (P_i^-)^2 \geq 0. $$
 Si~$\vit.\nn\geq0$, ceci est immédiat, sinon la condition limite impose~$P_i=0$. 
 Les quantités~$P_i$ , $N$ et~$M$ étant bornées, alors~$\dive \vit$ et~$\bar{\GG}_i$ sont bornés. Ceci nous conduit à la majoration suivante~:
-\begin{equation}
-\partial_t \intx (P_i^-)^2 \leq \| \dive \vit + 2\bar{\GG_i} \|_{\infty} \intx (P_i^-)^2.
+\begin{equation}\label{eq:demo_positivite}
+\partial_t \intx (P_i^-)^2 \leq \| 2\bar{\GG_i} - \dive \vit \|_{\infty} \intx (P_i^-)^2.
 \end{equation}
-En posant $y(t):=\intx (P_i^-(t))^2$, le lemme de Gronwall nous conduit à
+En posant $y(t):=\displaystyle \intx (P_i^-(t))^2$, le lemme de Gronwall nous conduit à
 \begin{equation}
-y(t) \leq y(t=0) \exp ( \| \dive \vit + 2\bar{\GG_i} \|_{\infty} t  ).
+y(t) \leq y(t=0) \exp ( \| 2\bar{\GG_i} - \dive \vit \|_{\infty} t  ).
 \end{equation}
 Or~$P_i\geq 0$ au temps initial, donc~$y(t=0)=0$. Il en découle que~$y(t)\leq0, \forall t\geq0$. Mais par définition, $y$ est nécessairement positif. Ainsi~$y$ est identiquement nulle. Ceci conduit à~$P_i^-(t)\equiv0, \forall t\geq0$, et donc $P_i(t)\geq0, \forall t\geq0$. \\
 Le même type de raisonnement permet de montrer la positivité de~$S$ (il suffit de remplacer~$P_i$ par~$S$ et~$\bar{\GG}_i$ par~$-\gammasd$ qui est borné. Pour la positivité de~$N$, sachant que~$P$ et~$S$ le sont alors on a
 $$ \partial_t N + \dive (\vit N) \geq \bar{\GG}_4 N.$$
-En procédant de la même manière également, et en remplaçant les égalités par la majoration ci-dessus, on obtient également la positivité de~$N$ en tout temps positif. Ceci clôt la démonstration.
+En procédant de la même manière et en remplaçant les égalités par la minoration ci-dessus, on obtient également la majoration~\eqref{eq:demo_positivite} avec~$N^-$, de laquelle découle la positivité de~$N$ en tout temps positif. Ceci clôt la démonstration.
 \end{proof}
 
 
@@ -420,7 +456,6 @@ Le vecteur~$\W=\trans{(P_1, P_2, P_3, N, S)}$ vérifie une condition de saturati
 \sum_i \W_i = 1 \quad \Leftrightarrow \quad \sum_i  [ \partial_t \W_i + \dive(\vit\W_i) ] = \dive \vit
 \end{equation}
 \end{prop}
-
 \begin{proof}
 Pour réaliser cette preuve, notons $\sigma := \sum_i \W_i$ \\
 $\Rightarrow$) Quasiment immédiat.
@@ -462,7 +497,8 @@ converge vers le modèle~B sans nécrose
 \nabla.v & = ( \gammapp - \gammapd  ) P.
 \end{empheq}
 \end{subequations}
-Pour montrer cela, on considère une nouvelle variable~$Z$ définie comme suit 
+
+\begin{proof}Considérons une nouvelle variable~$Z$ définie comme suit 
 \begin{equation}
  Z=\gammapd P- N/\epsilon.
 \end{equation}
@@ -480,8 +516,8 @@ En multipliant \eqref{modele1equiv-eq2} par $Z$, puis en intégrant en espace, o
 \end{equation}
 Or une série de deux intégrations par parties (IPP) nous fournit l'égalité suivante~:
 \begin{align*}
-\intx Z \partial_t Z + \intx Z \nabla.(vZ) & \overset{IPP}{=} \intx Z \partial_t Z - \intx v Z \nabla Z + \intbord (v.\vec{n}) Z^2 \\
-&= \frac{1}{2} \partial_t \intx Z^2 - \frac{1}{2} \intx v \nabla (Z^2) + \intbord (v.\vec{n}) Z^2 \\
+\intx Z \partial_t Z + \intx Z \nabla.(vZ) & \overset{IPP}{=} \intx Z \partial_t Z - \intx v Z . \nabla Z + \intbord (v.\vec{n}) Z^2 \\
+&= \frac{1}{2} \partial_t \intx Z^2 - \frac{1}{2} \intx v . \nabla (Z^2) + \intbord (v.\vec{n}) Z^2 \\
 & \overset{IPP}{=} \frac{1}{2} \partial_t \intx Z^2 + \frac{1}{2} \intx Z^2 \nabla.v + \frac{1}{2} \intbord (v.\vec{n}) Z^2 \\
 \end{align*}
 D'où :
@@ -517,14 +553,18 @@ Par le lemme de Gronwall, on a $\forall t\in [0,T]$ :
 
 Lorsque $\epsilon \to 0$, on obtient que $Z \to 0$. Ainsi, par définition de~$Z$, $N$ tend vers 0 à la même vitesse que~$\epsilon$. Ceci montre que le modèle A avec nécrose converge vers le modèle sans nécrose lorsque $\epsilon \to 0$. 
 Pour ce qui est du modèle complet, des simulations numériques ont été réalisées avec de grandes valeurs de~$\muN$. On constate bien une convergence vers~$N\equiv0$.
-
+\end{proof}
+Le résultat a été également étudié sur le système complet dans~\cite{michel:hal-01211770}. Ce type de résultat montre que notre système est uniformément valide en fonction du paramètre $\muN$, \cad qu'il est capable de décrire de façon continue des situations où la nécrose s'évacue instantanément ou bien avec un temps caractéristique. Ceci est important dans notre cas, car il est difficile d'estimer ce temps caractéristique.
 
 \section{Méthodes numériques}\label{sec:NumMet}
 
-Nous utilisons une méthode de volumes finis sur grille uniforme 2D. Pour la simulation numérique, le domaine~$\Omega$ est le 
-rectangle~$[0,L]\times[0,D]$. Le domaine est maillé avec une grille cartésienne contenant~$N_x$ points sur l'axe~$x$ et~$N_y$ points sur l'axe~$y$.
+Nous utilisons une méthode de volumes finis sur grille uniforme 2D. 
+Nous avons choisi de travailler en 2D pour coller aux habitudes cliniques des radiologistes. En effet, pour l'évaluation de la réponse à un traitement, le critère RECIST impose de mesurer le diamètre de la métastase sur la coupe sur laquelle il est le plus grand. L'évaluation est donc réalisée dans un cadre 2D.
 
-Les densités de cellules cancéreuses sont discrétisées au centre des mailles et les vitesses sont discrétisées au milieu de chaque arête comme montrées sur la Figure~\ref{fig:place_inconnues}.
+
+Pour la simulation numérique, le domaine~$\Omega$ est le 
+rectangle~$[0,L]\times[0,D]$. Le domaine est maillé avec une grille cartésienne contenant~$N_x$ points sur l'axe~$x$ et~$N_y$ points sur l'axe~$y$, avec des mailles décalées pour la vitesse et les populations de cellules. 
+Les densités de cellules sont discrétisées au centre des mailles et les vitesses sont discrétisées au milieu de chaque arête comme montrées sur la Figure~\ref{fig:place_inconnues}.
 
 \begin{figure}[h]
 \centering
@@ -533,14 +573,14 @@ Les densités de cellules cancéreuses sont discrétisées au centre des mailles
 \end{figure}
 
 
-Notez que l'égalité~\eqref{eq_saturation} donne directement~$S$, sans résoudre l'équation~\eqref{eq_S}. Le calcul est séparé en plusieurs étapes  (spliting), comme suit~:
+On remarque que l'égalité~\eqref{eq_saturation} donne directement~$S$, sans résoudre l'équation~\eqref{eq_S}. Le calcul est séparé en plusieurs étapes, comme suit~:
 \begin{myitemize}
 \item Etant donnés\footnote{L'exposant~$^n$ représente le temps discret~$t^n$ de la quantité 
 (par exemple~$S^n$ est la densité de cellules saines au temps~$t^n$)}
 $\W^n$ et~$M^n$ au temps~$t^n$, on infère~$\Frm^n=\Frm(M^n,\W^n)$ et
 $\GG^n=\GG(M^n,\W^n)$.
 \item On calcule d'abord la pression~$\Pi^n$ solution de l'équation~\eqref{eq_pression} avec~$\Frm^n$ comme membre de droite, pression à partir de laquelle on en  déduit la vitesse~$\vit^n$ grâce à l'équation~\eqref{eq_darcy}.
-\item Ensuite le nouveau temps~$t^{n+1}=t^n+\Delta t$ est déterminé en utilisant l'équation~\eqref{eq:dt}.
+\item Ensuite le nouveau temps~$t^{n+1}=t^n+\Delta t$ est déterminé en utilisant la condition  CFL~\eqref{eq:dt}.
 \item Après cela, $\W^{n+1}$ est calculé à partir de~\eqref{eq_transport_pop}, à partir duquel on infère~$S^{n+1}$.
 \item On termine par le calcul de~$\xi^{n+1}$ et de~$M^{n+1}$ grâce à~\eqref{eq_xi}--\eqref{eq_M}.
 \end{myitemize}
@@ -572,7 +612,7 @@ $\vecx_{i+1/2\,j}$ ({\it resp.} la composante selon~$\ey$, $v^{y,n}_{i,
 v^{x,n}_{i+1/2,j} = -k \frac{\Pi^n_{i+1,j}-\Pi^n_{i,j}}{\Delta x},\quad
 v^{y,n}_{i,j+1/2} = -k \frac{\Pi^n_{i,j+1}-\Pi^n_{i,j}}{\Delta y}
 \end{equation*}
-et la vitesse~$\vit^n_{ij}$ au point~$\vecx_{ij}$ est approximée par
+et la vitesse~$\vit^n_{ij}$ au point~$\vecx_{ij}$ est approchée par
 \begin{align}
   \label{eq_vit_discr}
   \vit^n_{ij}=    v^{x,n}_{ij}\ex
@@ -592,18 +632,18 @@ résolue grâce au spliting en temps suivant~:
 \begin{align}
  \dfrac{\W^*-\W^n}{\Delta t / 2}  &= \GG^n-\Frm^n\W^n, %% & \textrm{then}
  \label{eq_snd_membre} \\
-\dfrac{\W^\#-\W^*}{\Delta t} + (\nabla \W^*).\vit^n&= 0,%%& \textrm{then} 
+\dfrac{\W^\#-\W^*}{\Delta t} + \vit^n.(\nabla \W^*)&= 0,%%& \textrm{then} 
  \label{eq_transp_weno}\\
  \dfrac{\W^{n+1}-\W^\#}{\Delta t / 2}  &= \GG^n-\Frm^n\W^n. \label{eq_snd_membre2} 
 \end{align}
 Cette forme non conservative est choisie dans le but de réutiliser les informations que nous possédons déjà sur la divergence de la vitesse, grâce à la relation~\eqref{eq_divv}.
 
 
-Une méthode de type WENO5 comme donnée par~\cite{Liu1994} est utilisée pour approximer le gradient~$\nabla \W$ impliqué  dans~\eqref{eq_transp_weno}. Cette variante du WENO5, appelée \twinweno, est présentée dans le chapitre suivant, section~\ref{sec:twinweno}. 
-D'autres schémas d'ordre moins élevé ont aussi été essayés. Cependant la diffusion numérique de ces schémas est trop importante. Ceci conduit à une diffusion artificielle des nutriments dans la tumeur. La croissance tumorale est alors complètement modifiée par cet artefact. La résolution précise du transport est par conséquent un point important. De plus,  utiliser un schéma d'ordre élevé réduit, par le gain de convergence, les problèmes usuels liés à la résolution du problème non conservatif.
+Une méthode de type WENO5 comme donnée par~\cite{Liu1994} est utilisée pour approcher le gradient~$\nabla \W$ impliqué  dans~\eqref{eq_transp_weno}. Cette variante du WENO5, appelée \twinweno, est présentée dans le chapitre suivant, section~\ref{sec:twinweno}. 
+D'autres schémas d'ordre moins élevé ont aussi été essayés. Cependant la diffusion numérique de ces schémas est trop importante. Ceci conduit à une diffusion artificielle des nutriments dans la tumeur. La croissance tumorale est alors modifiée par cet artefact. La résolution précise du transport est par conséquent un point important. De plus,  utiliser un schéma d'ordre élevé réduit, par le gain de convergence, les problèmes usuels liés à la résolution du problème non conservatif.
 
 \subsection{Calcul des quantités~$\xi$ et~$M$}
-L'équation scalaire~\eqref{eq_xi} est résolue grâce à la méthode classique d'Euler explicite~:
+L'équation scalaire~\eqref{eq_xi} est résolue grâce à la méthode d'Euler explicite~:
 \begin{equation}\label{eq:xi_disc}
 \dfrac{\xi^{n+1}-\xi^n}{\Delta t} = \alpha \int_\Omega \big(1+\epsilon_{\xi} - \gammapp(M^n) / \gamma_0 \big)\Big((P_1^n +P_2^n) \big(1-\nuS \chiS(t^n) \big)+P_3^n \Big) \textrm{\;d}\vecx - \lambda \xi^n,
 \end{equation} 
@@ -619,13 +659,13 @@ satisfaite par~$M$, le spliting en temps suivant est réalisé~:
 \label{eq_transp_diff_M}\\
 \dfrac{M^{n+1}-M^\#}{\Delta t/2} &= C_0 S^n \left( 1-\dfrac{M^n}{2\Ms}\right) - \eta P^nM^n. \label{eq_snd_membre_M}
 \end{align}
-L'équation~\eqref{eq_transp_diff_M} est calculée comme une équation de la chaleur avec un schéma standard à 5 points de grille. Le membre de droite est approximé par un schéma  \twinweno également.
+L'équation~\eqref{eq_transp_diff_M} est calculée comme une équation de la chaleur un terme source.  Pour l'opérateur de diffusion, un schéma standard à 5 points de grille est utilisé. Le membre de droite est approché par un schéma \twinweno également.
 
 
 %%%%%%%%%\subsection{Le \twinweno~: un schéma WENO5 modifié}
 \subsection{Condition CFL}
 
-En outre, une restriction de type CFL est requise pour assurer la stabilité numérique. Tout d'abord, le schéma de type WENO5 conduit à une condition CFL qui s'écrit~:
+En outre, une restricti on de type CFL est requise pour assurer la stabilité numérique. Tout d'abord, le schéma de type WENO5, utilisé dans~\eqref{eq_transp_weno} et~\eqref{eq_transp_diff_M}, conduit à une condition CFL qui s'écrit~:
 \begin{equation}\label{eq:CFL-weno}
 \Delta t < \min \left( \frac{\Delta x}{\max |v_x|} , \frac{\Delta y}{\max |v_y|}, \frac{\min(\Delta x , \Delta y )}{\xi}\right) := \Delta t_{adv}.
 \end{equation}
@@ -650,15 +690,15 @@ sur la vascularisation, conduit à
 \Delta t < \min \left(  \frac{1}{\eta} , \frac{1}{\lambda}\right) := \Delta t_{angio}.
 \end{equation}
 Finalement, comme la vitesse peut être très petite, pour éviter les pas de temps 
-$\Delta t$ trop larges, nous choisissons arbitrairement une vitesse~$\bar{\vit}$ et notre condition CFL s'écrit\footnote{Dans les simulations, nous choisissons 
+$\Delta t$ trop grands, nous choisissons arbitrairement une vitesse~$\bar{\vit}$ et notre condition de stabilité globale s'écrit\footnote{Dans les simulations, nous choisissons 
 $\bar{\vit}=1\;cm/mois$, en considérant~$30\;jours$ par mois et~$C_{\CFL}=0.4$.} 
 \begin{equation}\label{eq:dt}
 \Delta t =C_{\CFL}\min \left( \frac{1}{{\bar{\vit}}} \min( \Delta x, \Delta y) , \Delta t_{adv}, \Delta t_{W} , \Delta t_{angio} \right),
 \end{equation}
 pour une constante donnée~$C_{\CFL}<1$.
 
-Notez qu'un schéma implicite aurait pu être utilisé pour relaxer les conditions~\eqref{eq:CFL-spliting-pop}-\eqref{eq:CFL-spliting-vasc}. 
-Cependant avec l'ensemble de paramètres utilisé, le pas de temps est seulement limité par~$\Delta t_{adv}$, et cette condition reste aussi avec une méthode implicite. 
+Un schéma implicite aurait pu être utilisé pour relaxer les conditions~\eqref{eq:CFL-spliting-pop}-\eqref{eq:CFL-spliting-vasc}. 
+Cependant avec l'ensemble de paramètres utilisé, le pas de temps est principalement limité par~$\Delta t_{adv}$. Ainsi, procéder de manière implicite ne modifie pas la condition~\eqref{eq:dt}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Résultats numériques}\label{sec:NumRes}
@@ -769,7 +809,7 @@ d(\vecx)=\sqrt{\left(\dfrac{\mid x - L/2 \mid }{e\mid x - L/2 \mid +
       D/2 \mid + \crm r_2}\right)^2 },
 \end{equation}
 avec~$\vecx=(x,y)$ et où~$c=\dfrac{2\pi}{2\pi-\arccos(1-2\epsilon_{th})}$. 
-La fonction~$Y$ definie par\footnote{Notez que si~$e=0$, alors~$Y$ est  invariant par rotation.}
+La fonction~$Y$ definie par\footnote{Notons que si~$e=0$, alors~$Y$ est  invariant par rotation.}
 \begin{equation}Y(\vecx)=\left\{
 \begin{array}{ll}
 1 & \textrm{si}\ d(\vecx)\leq 0.5,\\
@@ -784,8 +824,9 @@ est ensuite utilisée afin d'imposer la condition initiale~:
 \begin{aligned}
 P_1|_{t=0}&=(1-\Sigma_{ini})Y, \quad
 P_2|_{t=0}=\dfrac{\Sigma_{ini}}{1+q_{ini}}Y, \quad
-P_3|_{t=0}=q_{ini}P_2(t=0), \quad N|_{t=0}=0, \\
-M|_{t=0}&=2\Ms,
+P_3|_{t=0}=q_{ini}P_2(t=0), \\
+N|_{t=0}&=0, \qquad \qquad \quad
+M|_{t=0}=2\Ms,
 \end{aligned}
 \end{equation}
 où~$\Sigma_{ini}$ représente la proportion de cellules résistantes au traitement~$\TI$ et~$q_{ini}$ est la proportion de cellules~$P_2$
@@ -820,7 +861,7 @@ L'aspect spatial des simulations numériques présentées dans la Figure~\ref{fi
 \item \label{last} Finalement, au jour~1116, une nouvelle rechute se prépare. Ici encore, elle est caractérisée par une couronne proliférante au bord de la tumeur (\cf  Figure~\ref{fig_nber_simu_spatial_6}).
 \end{myenumerate}
 
-Curieusement, les résultats numériques spatiaux sont en accord avec les données, au moins jusqu'au début de la dernière rechute autour du jour~1000. En fait, les cinq étapes que nous observons numériquement sont également constatées sur les scanners (\cf Figure~\ref{fig_hen_spatial_1}-\ref{fig_hen_spatial_6}).
+Les résultats numériques spatiaux sont en accord avec les données, au moins jusqu'au début de la dernière rechute autour du jour~1000. En fait, les cinq étapes que nous observons numériquement sont également constatées sur les scanners (\cf Figure~\ref{fig_hen_spatial_1}-\ref{fig_hen_spatial_6}).
 
 
 Après le jour~1116, notre modèle n'est probablement plus valide car la structure de la tumeur numérique est très différente de celles des scanners. Peut-être que d'autres phénomènes qui ne sont pas pris en compte par notre modèle se produisent, comme des changements microenvironementaux ou d'autres mutations cellulaires. Des interactions dans la~$3^\textrm{ième}$ direction (non prise en compte ici, le modèle étant 2D) peuvent aussi être impliquées.
@@ -872,8 +913,8 @@ De plus, notre modèle présente des différences entre l'évolution de l'aire t
 En particulier, la masse de cellules cancéreuses décroît juste après l'administration du traitement alors que l'aire tumorale décroît avec un retard. 
 Ce délai est dû au fait que les cellules proliférantes tuées basculent dans une phase nécrosée. Ainsi l'aire tumorale reste la même jusqu'à ce que le système immunitaire élimine cette nécrose. 
 De plus, notre modèle permet de distinguer les effets des deux traitements sur l'angiogenèse. 
-En effet, le traitement~$\TS$ inhibe directement le signal angiogénique alors que le  traitement~$\TI$ tue la population~$P_1$, ce qui implique indirectement une diminution de la production du signal.
-
+En effet, le traitement~$\TS$ inhibe directement le signal angiogénique alors que le  traitement~$\TI$ tue la population~$P_1$, ce qui implique indirectement une diminution de la production du signal. 
+Notre modèle permet donc de décrire un mécanisme plausible de réponse tumorale face à un traitement. 
 
 \subsubsection{Etude numérique de l'influence de l'efficacité du traitement~$\TI$}\label{subsec:NumEff}
 Nous nous intéressons ici, à l'étude numérique de différents aboutissements obtenus avec le 
@@ -888,7 +929,7 @@ Définissons deux durées caractéristiques~:
 \begin{figure}[!htb]
 \centering
 \captionsetup[subfigure]{margin=10pt}
-\subfloat[Temps de survie sans aggravation ($\TPFS$ en jours) en fonction de~$\muI$.]{
+\subfloat[Temps de survie sans progression ($\TPFS$ en jours) en fonction de~$\muI$.]{
 \label{fig:Tmaintien_nber}
 \includegraphics[width=0.5\textwidth]{DB-nber-eff-glivec/Tmaintien.png}}
 \subfloat[Temps de doublement ($T_{double}$ en jours) en fonction de~$\muI$.]{
@@ -904,7 +945,8 @@ Définissons deux durées caractéristiques~:
 \end{figure}
 
 
-Notez que cette étude est purement théorique et ne peut pas être utilisée telle quelle pour l'optimisation de traitement car l'évolution complète de la maladie (phases de rechute incluses) est nécessaire pour calibrer les paramètres utilisés dans les simulations. Par conséquent, il est clair que notre approche ne peut pour l'instant pas conduire à une détermination d'un protocole optimal de traitement, mais cette étude numérique est déjà un premier pas crucial au vue de l'importance de l'enjeu.
+Notons que cette étude est purement théorique et ne peut pas être utilisée telle quelle pour l'optimisation de traitement car l'évolution complète de la maladie (phases de rechute incluses) est nécessaire pour calibrer les paramètres utilisés dans les simulations. Par conséquent, il est clair que notre approche ne peut pour l'instant pas conduire à une détermination d'un protocole optimal de traitement. 
+%, mais cette étude numérique est déjà un premier pas crucial au vue de l'importance de l'enjeu.
 
 
 Sur la Figure~\ref{fig:Tmaintien_nber} est présenté le temps de survie sans aggravation~$\TPFS$ en fonction de~$\muI$. 
@@ -915,16 +957,16 @@ Sur la Figure~\ref{fig:Tdouble_nber} est présenté le temps de doublement~$\Td$
 Comme nous pouvons le voir, $\Td$ n'augmente pas avec l'augmentation de la dose au-delà du seuil~$\mu_{th}$, ce qui signifie une fois de plus qu'il n'est pas nécessaire d'augmenter la dose au-delà d'une certaine valeur seuil.
 
 
-L'aire minimale atteinte par la tumeur en fonction de~$\muI$ est présentée sur la Figure~\ref{fig:Amin_nber}. Notez que la courbe est décroissante~: en effet plus~$\muI$ est élevé, plus l'aire minimale atteinte est petite. Cependant, comme le montre la  Figure~\ref{fig:portrait_phase_nber}, la relation entre la taille minimale et le temps de doublement n'est pas monotone. En particulier, si la taille minimale est très petite, alors le temps de doublement peut être plus petit.  
+L'aire minimale atteinte par la tumeur en fonction de~$\muI$ est présentée sur la Figure~\ref{fig:Amin_nber}. Notons que la courbe est décroissante~: en effet plus~$\muI$ est élevé, plus l'aire minimale atteinte est petite. Cependant, comme le montre la  Figure~\ref{fig:portrait_phase_nber}, la relation entre la taille minimale et le temps de doublement n'est pas monotone. En particulier, si la taille minimale est très petite, alors le temps de doublement peut être plus petit.  
 Ceci peut être dû à des mécanismes de sélection darwinienne~: 
 la population~$P_1$, qui est prédominante lorsque la lésion est détectée, est tuée plus vite par le traitement et ainsi plus de place et de nutriments sont disponibles pour la croissance des populations résistantes~$P_2$ et~$P_3$. Ainsi le temps de doublement devient plus court car l'émergence de ces populations résistantes est plus rapide. 
-Ces courbes montrent qu'il existe un seuil~$\mu_{th}$ à partir duquel le traitement~$\treat_1$ est efficace. Au-delà de ce seuil, l'aire minimale atteinte par la tumeur décroît, mais le temps de survie du patient n'augmente pas.
+Ces courbes montrent qu'il existe un seuil~$\mu_{th}$ à partir duquel le traitement~$\treat_1$ est efficace. Au-delà de ce seuil, l'aire minimale atteinte par la tumeur décroît, mais le temps de survie sans progression du patient n'augmente pas.
 
 \section{Discussion}
 Dans la section précédente, nous avons étudié en détail notre modèle sur un patient spécifique, \Nber, dont la lésion tumorale a été suivie par une série de scanners. Nous avons trouvé les paramètres qui rendent possible la comparaison qualitative des images médicales avec les images numériques, grâce à notre synthèse numérique de scanners, et nous avons également fité l'aire tumorale. La lésion du patient est intéressante car elle est confinée à l'intérieur du foie, et donc son évolution n'est pas mécaniquement contrainte par l'organe. 
 Cependant, dans certains cas, la métastase est proche du bord du foie. Dans de tels cas, il n'y a pas d'espoir de produire des résultats quantitatifs sur l'évolution spatiale de la lésion, mais dans la section suivante, nous montrerons que l'évolution de l'aire tumorale peut être correctement décrite.
 \subsection{Evolution de l'aire tumorale de \Chen}\label{section chen}
-Dans cette section, on s'intéresse à \Chen, dont l'évolution tumorale est assez différente de celle \Nber. En effet le protocole clinique de ce patient est le suivant~:
+Dans cette section, on s'intéresse à \Chen, dont l'évolution tumorale est assez différente de celle \Nber. En effet le protocole clinique associé à ce patient est le suivant~:
 \begin{myenumerate}[label=\roman*)]
 \item \Chen est traité dans un premier temps avec un inhibiteur de tyrosine kinase mono-cible (imatinib), qui stabilise l'aire de la tumeur pendant plus de 10 mois avant une rechute. 
 \item Le sunitinib, inhibiteur de tyrosine kinase multi-cibles, est démarré mais contrairement à \Nber, il est totalement inefficace. 
@@ -1042,10 +1084,10 @@ Le modèle a été numériquement comparé avec les observations cliniques conce
 Comme présenté sur la 
 Figure~\ref{fig:fit_area_henbert}, notre modèle fournit des résultats qui sont qualitativement en accord avec les données cliniques. En particulier, notre modèle est capable de décrire non seulement l'évolution de la taille de la lésion, mais aussi sa structure, comme l'illustrent les Figures~\ref{fig_nber} et~\ref{fig:compare_spatial_nber}.
 
-Il est intéressant de noter que nos simulations numériques font apparaître une couronne de cellules proliférantes sur le pourtour de la tumeur juste avant la rechute. Ceci semble corroboré dans les scanners par l'augmentation de l'\hetero tumorale, au sens des niveaux de gris, avant la rechute. Plus la métastase est hétérogène, plus la rechute est imminente. Ce résultat souligne le fait que le critère RECIST n'est pas suffisant pour évaluer l'efficacité d'un traitement.
+Il est intéressant de noter que nos simulations numériques font apparaître une couronne de cellules proliférantes sur le pourtour de la tumeur juste avant la rechute. Ceci semble corroboré dans les scanners par l'augmentation de l'\hetero tumorale, au sens des niveaux de gris, avant la rechute. Plus la métastase est hétérogène, plus la rechute est imminente. Ce résultat souligne le fait que le critère RECIST n'est pas suffisant dans ce cas pour évaluer l'efficacité d'un traitement.
 
 
-Nous avons également étudié numériquement l'effet du paramètre~$\muI$, lié à l'efficacité du traitement~$\TI$. Nous avons montré que, selon notre modèle, augmenter la valeur de~$\muI$ -- ce qui peut être vu comme une augmentation de la dose administrée -- ne fournit pas de meilleurs résultats en terme de survie sans aggravation comme le montre la Figure~\ref{fig:eff_glivec_nber}.
+Nous avons également étudié numériquement l'effet du paramètre~$\muI$, lié à l'efficacité du traitement~$\TI$. Nous avons montré que, selon notre modèle, augmenter la valeur de~$\muI$ -- ce qui peut être vu comme une augmentation de la dose administrée -- ne fournit pas de meilleurs résultats en terme de survie sans progression comme le montre la Figure~\ref{fig:eff_glivec_nber}.
 
 
 Il est important de noter que notre modèle fite bien les données, cependant il n'est pas prédictif. En effet, comme expliqué par la Figure~\ref{fig:possibilites2}, on peut voir que les trois comportements typiques~$\rm{b,c,d}$ peuvent être obtenus avec le même comportement durant les 400 premiers jours. Ceci est dû au fait que sur les images médicales, il est compliqué de dire {\it a priori}, ce qu'il va se passer lors du second traitement avant même de l'avoir utilisé. 

@@ -5,8 +5,9 @@
 \specialchap{Introduction}
 %\chapter{Introduction}
 
-\lettrine{L}{e} cancer est l'un des plus grand fléau du XXI\ieme %\up{ième} 
-siècle.  Dans les pays industrialisés, il est la deuxième cause de mortalité derrière les maladies cardio-vasculaires. 
+%\lettrine{L}{e} cancer est l'un des plus grand fléau du XXI\ieme %\up{ième} 
+%siècle.  Dans les pays industrialisés, il est la deuxième cause de mortalité derrière les maladies cardio-vasculaires. 
+\lettrine{L}{e} cancer est, dans les pays industrialisés, la deuxième cause de mortalité derrière les maladies cardio-vasculaires. 
 %% http://www.lexpress.fr/actualite/societe/sante/le-cancer-un-fleau-en-plein-essor_1552976.html
 En 2012, l'OMS\footnote{Organisation Mondiale de la Santé} attribuait à cette maladie approximativement 14 millions de nouveaux cas et 8,2 millions de décès. 
 %% World Cancer Report 2014, IARC
@@ -16,12 +17,12 @@ En 2012, l'OMS\footnote{Organisation Mondiale de la Santé} attribuait à cette 
 %% http://www.who.int/healthinfo/global_burden_disease/2004_report_update/en/
 
 \paragraph{}
-De nombreuses études fondamentales, pré-cliniques ou cliniques ont déjà été réalisées afin de mieux comprendre les mécanismes impliqués dans la genèse et le développement du cancer. De même, de nombreux travaux ont permis d'apprécier la réponse aux traitements. Toutefois, il persiste encore beaucoup d'interrogations sur cette maladie. De nouvelles méthodes d'exploration et de compréhension sont donc nécessairement à développer.
+De nombreuses études fondamentales, pré-cliniques ou cliniques ont été réalisées afin de mieux comprendre les mécanismes impliqués dans la genèse et le développement du cancer. De même, de nombreux travaux ont permis d'apprécier la réponse aux traitements. Toutefois, il persiste encore beaucoup d'interrogations sur cette maladie. De nouvelles méthodes d'exploration et de compréhension sont donc nécessairement à développer.
 % Bien que de nombreuses recherches soient financées sur le sujet, beaucoup d'interrogations règnent encore sur cette maladie. 
- D'un autre côté, les mathématiques ont pris une place omniprésente dans la vie de tous les jours au travers de la modélisation~: aéronautique, aérospatial, automobile ... Elles sont capables de modéliser un très large spectre de problèmes physiques, chimiques, biologiques, épidémiologiques, etc. Pourquoi ne pas les utiliser pour modéliser la croissance tumorale ? pour prédire les rechutes aux traitements ? pour personnaliser les traitements à chaque patient ? 
+ D'un autre côté, les mathématiques ont pris une place omniprésente dans la vie de tous les jours au travers de la modélisation~: aéronautique, aérospatial, automobile, économie, télécommunication... Elles sont capables de modéliser un très large spectre de problèmes physiques, chimiques, biologiques, épidémiologiques, etc. Pourquoi ne pas les utiliser pour modéliser la croissance tumorale, en particulier pour prédire les rechutes aux traitements ou pour personnaliser les traitements à chaque patient ? 
  
 \paragraph{}
-Les travaux présentés ici s'inscrivent pleinement dans cette démarche. Ils constituent un premier pas dans la modélisation de résistance aux traitements, basée sur des images cliniques. 
+Les travaux présentés ici s'inscrivent dans cette démarche. Ils constituent un premier pas dans la modélisation de résistance aux traitements, basée sur des images cliniques. 
 Plus particulièrement, il s'agit là de proposer un modèle mathématique décrivant la croissance de métastases 
 %(tumeurs filles) 
 (localisations secondaires disséminées à partir d'une lésion primitive)
@@ -29,15 +30,19 @@ hépatiques en provenance d'une
 tumeur stromale\footnote{Le stroma est un tissu de soutien, non impliqué dans la fonction première de l'organe.} de l'intestin grêle
 %cancer du stroma\footnote{Tissu de soutien, non impliqué dans la fonction première de l'organe.} gastro-instestinal  
 (GIST).
-Ce type de cancer touche de 9 à 14 personnes sur un million par an~\cite{Nilsson2005}. Dans 25\% des cas, ce cancer migre vers le foie~\cite{dematteo2000}. 
+Ce type de cancer touche de 9 à 14 personnes sur un million par an~\cite{Nilsson2005}. 
+il s'agit donc d'un cancer assez rare mais il présente des spécificités qui en font un modèle intéressant pour l'étude de résistances aux traitements. 
+Dans 25\% des cas, ce cancer migre vers le foie~\cite{dematteo2000}. 
 %%Ces métastases sont connues pour être relativement résistantes aux traitements anti-cancéreux, ce qui donne un intérêt certain à la modélisation de leurs comportements. 
 %Ces métastases peuvent être résistantes aux traitements conventionnels comme la chimiothérapie ou la radiothérapie. Ainsi d'autres thérapeutiques ont été proposées comme les inhibiteurs de la tyrosine kinase ou les traitements anti-angiogéniques.  Malheureusement, en fonction des mutations rencontrées ou acquises, des résistances à ces traitements peuvent également être rencontrées sur ce type de métastases, ce qui donne un intérêt certain à la modélisation de leurs comportements. 
 En fonction des mutations rencontrées ou acquises, ces métastases peuvent être résistantes aussi bien aux traitements conventionnels (comme la chimiothérapie ou la radiothérapie) qu'aux nouvelles thérapies ciblées (comme les inhibiteurs de la tyrosine kinase ou les traitements anti-angiogéniques), ce qui donne un intérêt certain à la modélisation de leurs comportements. 
 Notre but ici, est de construire un modèle qui reproduise qualitativement et quantitativement la croissance d'une tumeur, et ce à partir de l'imagerie médicale.
 
 \paragraph{}
-Le suivi clinique des patients sous traitement est assuré par des scanners réguliers, réalisés généralement tous les deux mois. Ceux-ci constituent la seule et unique source d'informations cliniques dont nous disposons ici.  
-A l'heure actuelle, pour mesurer l'efficacité d'un traitement, le corps médical utilise le critère RECIST\footnote{de l'anglais~: Response Evaluation Criteria In Solid Tumors}, qui consiste à ne retenir, des images médicales, que le diamètre de la plus large lésion. 
+Le suivi clinique des patients sous traitement est assuré par la réalisation de scanners réguliers, réalisés généralement tous les deux mois. Ceux-ci constituent la seule et unique source d'informations cliniques dont nous disposons ici.  
+A l'heure actuelle, pour mesurer l'efficacité d'un traitement, on %le corps médical 
+utilise le critère RECIST\footnote{de l'anglais~: Response Evaluation Criteria In Solid Tumors}, qui consiste à ne retenir %, des images médicales, 
+que le diamètre de la plus large lésion. 
 L'information exploitée %retenue 
 semble donc très faible au regard de toutes celles contenues dans les scanners. 
 Plusieurs études ont déjà montrées ses limitations, en particulier lors de traitements anti-angiogéniques REFFF. L'imagerie fait apparaître beaucoup d'autres particularités, notamment l'\hetero tumorale à laquelle nous nous intéresserons tout au long de ce manuscrit. L'\hetero peut-elle être liée à l'émergence de populations cellulaires résistantes ? Peut-on reproduire ce caractère par la modélisation ? Comment la quantifier ?
@@ -50,7 +55,10 @@ Plusieurs études ont déjà montrées ses limitations, en particulier lors de t
 Les interrogations précédemment posées seront abordées dans ce manuscrit au travers de ses différents chapitres. 
 
 \paragraph{}
-Le premier chapitre est dédié à la présentation des aspects biologiques et cliniques du cancer.  Il présente non pas de manière exhaustive tous les mécanismes du cancer, mais ceux nécessaires à la compréhension des choix réalisés dans la modélisation. La croissance d'une tumeur sera d'abord présentée. Puis, la manière dont les métastases se disséminent sera abordée. Les différents types de traitements seront ensuite présentés. La seule et unique source d'informations cliniques que nous ayons étant des images scanners, nous nous devons de comprendre comment ce type d'images est acquis. Nous discuterons ensuite du critère RECIST et de ses limitations avant de terminer par les spécificités des métastases hépatiques de GISTs.
+Le premier chapitre est dédié à la présentation des aspects biologiques et cliniques du cancer.  
+Il présente non pas de manière exhaustive tous les mécanismes du cancer, mais ceux nécessaires à la compréhension des choix réalisés dans notre modélisation. 
+La croissance d'une tumeur sera d'abord présentée. 
+Puis, la manière dont les métastases se disséminent sera abordée. Les différents types de traitements seront ensuite présentés. La seule et unique source d'informations cliniques que nous ayons étant des images scanners, nous nous devons de comprendre comment ce type d'images est acquis. Nous discuterons ensuite du critère RECIST et de ses limitations avant de terminer par les spécificités des métastases hépatiques de GISTs.
 
 
 \paragraph{}
@@ -76,13 +84,16 @@ Les résultats de ce second chapitre sont un premier pas vers la compréhension 
 
 
 \paragraph{}
-Dans un troisième chapitre, les aspects numériques seront abordés. En particulier, il a fallu faire face à une instabilité numérique que l'on présentera et à laquelle l'équipe n'avait jamais été confrontée avec les schémas classiques utilisés. %qu'elle utilisait. 
-Nous étudions ici des croissances de tumeurs avec traitement, sur du long terme et avec de forts rétrécissements de la taille induit par les traitements. Ce sont là autant de raisons qui présentent l'originalité du problème. Nous montrerons que les champs de vitesses non communs obtenus lors de la simulation numérique  sont à l'origine des instabilités numériques. Enfin un nouveau schéma de transport sera proposé, le \twinweno, pour palier à cette instabilité.
-
+Dans un troisième chapitre, les aspects numériques seront abordés. 
+%En particulier, il a fallu faire face à une instabilité numérique que l'on présentera et à laquelle l'équipe n'avait jamais été confrontée avec les schémas classiques utilisés. %qu'elle utilisait. 
+Nous étudions ici des croissances de tumeurs avec traitement, sur du long terme et avec de forts rétrécissements de la taille induit par les traitements. Ce sont là autant de raisons qui présentent l'originalité du problème. Nous montrerons que les champs de vitesses non communs obtenus lors de la simulation numérique  sont à l'origine d'instabilités numériques. 
+%Enfin un nouveau schéma de transport sera proposé, le \twinweno, pour palier à cette instabilité.
+Enfin une variante du schéma de transport sera proposé, le \twinweno, pour palier à cette instabilité.
 
 \paragraph{}
 Dans le quatrième chapitre, nous détaillerons la reconstruction %comment construit-on 
-d'images scanners de synthèse à partir des résultats numériques. La simulation numérique fournit la répartition spatio-temporelle de différentes populations cellulaires. En aucun cas cela ne fournit les niveaux d'absorptions des tissus au rayons X, comme mesurés par les scanners. Il nous faut donc un moyen de reconstituer des images scanners de synthèse à partir de ces densités de populations, dans le but de rapprocher au plus près (une optimisation a été faite) le format des résultats numériques à celui des données cliniques.
+d'images scanners de synthèse à partir des résultats numériques. La simulation numérique fournit la répartition spatio-temporelle de différentes populations cellulaires. En aucun cas cela ne fournit les niveaux d'absorptions des tissus au rayons X, comme mesurés par les scanners. Il nous faut donc un moyen de reconstituer des images scanners de synthèse à partir de ces densités de populations, dans le but de rapprocher au plus près %(une optimisation a été faite) 
+le format des résultats numériques à celui des données cliniques.
 Cette construction d'images scanners de synthèse permettra une meilleure comparaison des résultats obtenus avec les données cliniques. 
 %Elle est également d'un intérêt non négligeable pour le clinicien, qui peut ainsi regarder nos résultats numériques comme s'il s'agissait de scanners réels. 
 

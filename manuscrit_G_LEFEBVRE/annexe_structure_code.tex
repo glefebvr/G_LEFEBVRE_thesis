@@ -34,8 +34,15 @@ Cette classe contient entre autre~:
 \item les points de contrôle (les populations sont-elles toujours comprises entre 0 et 1, moyennant une certaine tolérance ?),
 \item les sorties fichiers.
 \end{myitemize}
-\item Une classe de méta-modèle, permettant d'explorer, de différentes manières, l'espace des paramètres lié à un modèle. Cette classe m'a notamment servie pour réaliser le fit (présenté sur la Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert})  des données cliniques par le modèle EDP. Plusieurs méthodes d'exploration ont été abordées : Monte-Carlo, méthode de sensitivité ou de descente, algorithmes génétiques... Le modèle EDP ayant beaucoup de paramètres et admettant beaucoup de minima locaux, il n'a pas été facile d'obtenir un fit acceptable.
+\item Une classe de méta-modèle, permettant d'explorer, de différentes manières, l'espace des paramètres lié à un modèle. Cette classe m'a notamment servie pour réaliser le fit (présenté sur la Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert}, dont les paramètres sont présentés dans la Table~\ref{table_param} page~\pageref{table_param}) des données cliniques par le modèle EDP. Plusieurs méthodes d'exploration ont été abordées : Monte-Carlo, méthode de sensitivité ou de descente, algorithmes génétiques... 
 \end{myitemize}
+
+Le modèle EDP ayant beaucoup de paramètres et admettant beaucoup de minima locaux, il n'a pas été facile d'obtenir un fit acceptable du volume tumoral. Les fits présentés dans ce manuscrit représentent  donc des minima locaux de l'erreur $L^2$, et non des minima globaux. La méthode adoptée est la suivante~: 
+\begin{myenumerate}
+\item Méthode de Monte Carlo. Des méthodes où l'on choisit de mailler l'espace des paramètres ont également été examinées. Le nombre de paramètres étant importants cette méthode a finalement été écartée car beaucoup trop coûteuse. 
+\item Après avoir réalisé des centaines de simulations avec des jeux de paramètres aléatoires, les meilleurs candidats ont été examinés de plus près. Pour chacun d'eux, une analyse de sensibilité a été effectué sur chaque paramètres afin de comprendre localement l'influence de ceux-ci sur le modèle.
+\item Pour les meilleurs candidats, une méthode de descente, combinée à de nombreuses interventions manuelles, a finalement été effectuée pour converger vers un minimum de l'erreur $L^2$. 
+\end{myenumerate}
 
 
 Le code de calcul est séquentiel. La partie recherche d'optimum dans l'espace des paramètres a elle été (pseudo-)parallélisée. A un jeu de paramètres donné, il y a un modèle qui est calculé sur un unique processeur. Les méthodes d'exploration de l'espace des paramètres nécessitant l'évaluation de plusieurs modèles, on partage l'ensemble des évaluations à réaliser entre les différents processeurs. Par exemple, sur une méthode de gradient, à chaque pas de l'algorithme, une approximation du gradient (dérivée du modèle par rapport à ses $n$ paramètres ici) est requise. Ainsi pour chaque paramètre, une évaluation est nécessaire. Chaque évaluation est réalisée sur une seul et unique processeur, mais on partage les $n$ évaluations requises sur le nombre de processeurs disponibles.
@@ -59,7 +66,7 @@ Le code de calcul générant le pourcentage d'\hetero aussi bien clinique que nu
 \end{myitemize}
 \end{myitemize}
 
-Notez qu'au niveau des données, il n'y a pas que la nature des images qui diffère~: le moyen d'acquérir le contour diffère également. 
+Au niveau des données, il n'y a pas que la nature des images qui diffère~: le moyen d'acquérir le contour diffère également. 
 Pour les données cliniques, grâce au logiciel OsiriX, nous pouvons contourer manuellement les tumeurs, et en exporter le contour au format xml. 
 En ce qui concerne les images provenant de la simulation numérique, il n'y a pas de contour défini. Le choix (assez naturel) a été fait de le définir en prenant un seuil sur la population saine. Moyennant un parseur xml, on peut donc se ramener à un contour semblable dans les deux cas.
 

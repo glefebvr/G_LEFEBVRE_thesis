@@ -18,7 +18,7 @@ Les histogrammes associés à ces scanners (que l'on appellera par abus de langa
 Dans un second temps, nous appliquerons ce même traitement aux images produites par la simulation numérique du modèle EDP présenté précédemment. Les histogrammes des images de synthèse produites numériquement (que l'on appellera aussi par abus de langage \og histogrammes numériques \fg) seront présentés et comparés aux histogrammes cliniques. De même, le quantificateur de l'\hetero que l'on aura construit sera appliqué aux histogrammes numériques. Nous pourrons ainsi voir à quel point le modèle EDP est capable de reproduire les aspects homogènes et \heterogenes des tumeurs que l'on considère.
 
 
-Le code de calcul développé pour traiter cette partie fait intervenir plusieurs langages de programmation. Sa structure complexe est présenté dans l'Annexe~\ref{chap:structure_code}. 
+Le code de calcul développé pour traiter cette partie fait intervenir plusieurs langages de programmation. Sa structure est présenté dans l'Annexe~\ref{chap:structure_code}. 
 
 
 \section{Construction des histogrammes de niveaux de gris.}
@@ -80,7 +80,7 @@ où~:
 \label{eq:hauteur_gaussienne}
 h_i := \dfrac{w_i}{\sigma_i \sqrt{2\pi}} \qquad i=1;2,
 \end{equation}
-où~$w_i$ est le poids associé à chacune des composantes. Notez que les poids sont choisis de telle sorte que~:
+où~$w_i$ est le poids associé à chacune des composantes, choisi de telle sorte que~:
 \begin{equation}
 w_1+w_2=1.
 \end{equation}
@@ -169,7 +169,7 @@ La vraisemblance, dont on maximise le logarithme selon~$\theta$, est quant à el
 \begin{equation}
 \mathcal{L}(X,\theta) = \prod_{x \in X} g(x,\theta).
 \end{equation}
-Notez que quel que soit~$\theta$, l'intégrale de~$g$ vaut~1 (puisque l'intégrale de $g_i$ vaut $w_i$\todo{REF}). 
+Pour tout~$\theta$, l'intégrale de~$g$ vaut~1 (puisque l'intégrale de $g_i$ vaut $w_i$). 
 %(\cf Propriété~\ref{prop:integ1}, page~\pageref{prop:integ1} dans l'annexe~\ref{chap:anx_gmm}). 
 Ainsi la vraisemblance est le produit des probabilités que chacun des éléments de~$X$ appartienne à la distribution de paramètre~$\theta$.
 
@@ -179,7 +179,7 @@ Cet algorithme de mélanges de gaussiennes nous fournit alors la meilleure  (au 
 L'ensemble des fits bi-gaussiens, pour les images cliniques, est présenté sur les Figures~\ref{fig:histo_dcm_Nber} et~\ref{fig:histo_dcm_Chen} de l'Annexe~\ref{chap:anx_img_complement}. La Figure~\ref{fig:hetero_simu_nber} donne quant à elle un aperçu des histogrammes numériques en fonction du contourage identifié par seuillage. 
 %%La principal différence ici avec les histogrammes cliniques, c'est ici que le diagramme 
 Voyons à présent, comment nous pouvons exploiter ceci pour quantifier une hétérogénéité. 
-\todo[noline]{Presentation de l'ensemble des histo numérique en annexe?}
+%%\todo[noline]{Presentation de l'ensemble des histo numérique en annexe?}
 
 
 \section{Définition d'une fonction objectif à reproduire}
@@ -592,7 +592,7 @@ L'\hetero clinique, pour \Nber, fournie par le critère\HH est présentée sur l
 %Notons que bien qu'écartés, plusieurs autres critères (notamment~$\mathcal{H}_{10}$ et~$\mathcal{H}_6(\widehat{MRA})$) 
 %avaient aussi capté cette subtilité. 
 Enfin la forte homogénéisation causée par le second traitement est également bien traduite. 
-Nous avons donc trouvé un critère qui semble quantifier de manière acceptable l'\hetero clinique de \Nber. Cela dit ce critère a été construit dans ce but~! Afin de le valider, regardons ce qu'il en est sur notre second patient~: \Chen.
+Nous avons donc trouvé un critère qui semble quantifier de manière acceptable l'\hetero clinique de \Nber. Cela dit ce critère a été construit dans ce but. Afin de le valider, regardons ce qu'il en est sur notre second patient~: \Chen.
 
 
 L'\hetero clinique, pour \Chen, fournie par le critère\HH est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_chen}. Ici aussi, la retranscription est aussi tout à fait acceptable. Les phases où il y a regain d'\hetero sont toutes correctement décrites. Au tout début (jusqu'au jour~279) la métastase est très petite. Il est donc difficile d'apprécier visuellement l'\hetero. De plus, le quantificateur sera aussi plus sensible aux erreurs dues au contourage. La tendance réelle à une baisse de l'\hetero est tout à fait plausible. D'autant plus que c'est le comportement attendu lorsqu'on traite de manière efficace~: l'ensemble de la métastase tend à se nécroser, et donc le tout s'homogénéise. 
@@ -604,7 +604,9 @@ Bien qu'étant plus larges, les histogrammes cliniques de \Chen n'occupent pas l
 
 \section{L'\hetero sur les simulations numériques}
 
-Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), faisons parler ce critère sur nos simulations numériques. En ce qui concerne cet aspect, les images de synthèse (dont le procédé est détaillé dans le Chapitre~\ref{chap:optim_grey}) résultants des simulations numériques dépendent de 3 paramètres~: $\tau_N, \tau_P$ et~$\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveaux de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit~: $\tau_N=38, \tau_P=166$ et~$\tau_S=204$. 
+Maintenant que nous avons un critère qui décrit correctement l'\hetero clinique (d'une métastase à partir de l'imagerie médicale), testons le %faisons parler ce critère 
+sur nos simulations numériques. 
+En ce qui concerne cet aspect, les images de synthèse (dont le procédé est détaillé dans le Chapitre~\ref{chap:optim_grey}) résultants des simulations numériques dépendent de 3 paramètres~: $\tau_N, \tau_P$ et~$\tau_S$ qui représentent les niveaux de gris associés à chacune de nos populations de notre modèle EDP. Ainsi, pour une simulation numérique donnée, il n'y a pas unicité de l'image produite en niveaux de gris, et donc non unicité de l'histogramme. Tout dépend de ces 3 paramètres. Dans un premier temps,  on examinera ce que cela donne avec les valeurs heuristiques considérées  dans la première partie de ce manuscrit~: $\tau_N=38, \tau_P=166$ et~$\tau_S=204$. 
 Dans un second temps, on pourra faire varier ces paramètres pour examiner l'influence de ceux-ci sur l'\hetero numérique. On examinera notamment ce qui est produit avec les niveaux de gris optimaux du chapitre précédent. 
 
 %On ne montrera ici que l'\hetero numérique de \Nber. Celle de \Chen n'a absolument aucune chance d'être correctement reproduite pour la simple et bonne raison que le premier scan est très \heterogene, alors que notre condition initial dans le modèle numérique est complètement homogène. Il faudrait prendre une condition initiale plus en relation avec l'image médicale, à minima une condition initiale qui présenterait le même niveaux d'\hetero pour pouvoir poursuivre l'étude avec ce patient.
