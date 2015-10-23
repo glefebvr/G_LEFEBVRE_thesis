@@ -2,9 +2,9 @@
 \pagestyle{main}
 
 \begin{document}
-\chapter{Le cancer~: aspects biologiques et cliniques \label{chap:biologie_du_cancer}}\todo[noline]{tumeur en general ou GIST?}
+\chapter{Le cancer~: aspects biologiques et cliniques \label{chap:biologie_du_cancer}}%\todo[noline]{tumeur en general ou GIST?}
 \mylettrine{L}{a} biologie du cancer est encore à ce jour non entièrement connue. 
-Sa complexité n'étant pas des moindres, on présentera dans ce chapitre uniquement les points clés nécessaires à l'élaboration des modèles mathématiques présentés dans ce manuscrit. 
+Sa complexité n'étant pas des moindres, on présentera dans ce chapitre uniquement les points clés nécessaires à l'élaboration des modèles mathématiques présentés dans ce manuscrit (le lecteur pourra se référer à~\cite{bast2000tumor} pour une description détaillée de l'ensemble des phénomènes impliqués dans le cancer). 
 Nous présenterons tout d'abord sommairement comment croît une tumeur, puis comment elle se répand dans l'organisme. Nous aborderons ensuite les traitements actuels. Puis nous examinerons de plus près le fonctionnement d'un scanner; les scanners constituant le seul et unique support d'informations médicales dont nous disposons. Enfin, la manière dont on évalue les réponses au traitement (le critère RECIST) sera présentée.
 
 \section{Croissance tumorale}
@@ -85,7 +85,7 @@ si les conditions extérieures ne sont pas bonnes (surpopulation, manque de nutr
 \end{wrapfigure}
 L'ensemble du processus métastatique est résumé sur le schéma de la %%présenté 
  Figure~\ref{fig:schema_dissemination_metastase}. Décrivons-le. La tumeur primaire  cherche continuellement à se vasculariser davantage, %toujours plus, 
- mais paradoxalement, sa croissance va endommager le réseau sanguin qui l'irrigue. Une partie des cellules tumorales (cellules invasives) va alors pouvoir pénétrer dans les voies sanguines. La plupart de ces essaims seront éliminés par le système immunitaire. Une partie arrivera à s'installer dans un autre organe~: elle forme des tumeurs filles appelées~\emph{métastases}. Chaque type de cancer a une préférence métastatique~: le GIST\todo[noline]{\url{http://www.nature.com/nrc/journal/v9/n4/abs/nrc2622.html} + Langely 2011}, le cancer du pancréas ou du colon migre au foie; les cancers du sein, du rein, de la vessie et de l'estomac migrent dans les poumons; le cancer de la prostate migre dans les os. Les métastases s'installent généralement dans des endroits bien vascularisés~:  les poumons et le foie sont les deux organes les plus touchés [REF].
+ mais paradoxalement, sa croissance va endommager le réseau sanguin qui l'irrigue. Une partie des cellules tumorales (cellules invasives) va alors pouvoir pénétrer dans les voies sanguines. La plupart de ces essaims seront éliminés par le système immunitaire. Une partie arrivera à s'installer dans un autre organe~: elle forme des tumeurs filles appelées~\emph{métastases}. Chaque type de cancer a une préférence métastatique~\cite{nguyen2009metastasis,langley2011seed}~: le GIST, le cancer du pancréas ou du colon migre au foie; les cancers du sein, du rein, de la vessie et de l'estomac migrent dans les poumons; le cancer de la prostate migre dans les os. Les métastases s'installent généralement dans des endroits bien vascularisés~:  les poumons et le foie sont les deux organes les plus touchés. %%\todo[REF].
 
 
 De simples cellules ne pourraient pas nicher dans un autre organe que celui auquel elles appartenaient au départ. Les cellules tumorales le peuvent, car à force de divisions elles s'\emph{indifférencient}. Autrement dit, elles s'approchent de ce qu'elles étaient au stade embryonnaire~: des cellules souches qui en se différenciant formeront aussi bien des cellules de l'intestin que des cellules du foie. Dans le cas de métastases hépatiques en provenance de GIST, les cellules cancéreuses provenant de l'intestin ne sont donc pas reconnues comme étrangères au foie et la métastase peut s'installer. La métastase créera ensuite son propre réseau néovasculaire tout comme une tumeur primaire.
@@ -93,7 +93,7 @@ De simples cellules ne pourraient pas nicher dans un autre organe que celui auqu
 \section{Les traitements}
 A l'heure actuelle aucun traitement ne permet de guérir de manière sûre les cancers, d'autant plus s'ils sont avancés. Cependant plusieurs techniques existent pour prolonger et/ou améliorer la vie des patients.
 \paragraph{La chirurgie} ne peut-être réalisée que sur des cancers primaires %, non métastasés et donc 
-détectés tôt. C'est la première option considérée par le corps médical (bien que la chirurgie elle-même puisse être source de dissémination de métastase, \cf par exemple  \url{http://www.sciencedirect.com/science/article/pii/S0748798305000089}).
+détectés tôt. C'est la première option considérée par le corps médical (bien que la chirurgie elle-même puisse être source de dissémination de métastase, \cf par exemple~\cite{topal2005cancer}.
 
 \paragraph{L'ablation par radiofréquence} (ou bien aussi la cryoablation, les micro-ondes et l'électroporation) permet, à l'aide d'une sonde électromagnétique à haute fréquence, de brûler une région définie par le médecin. Par ce biais, une ablation peut être effectuée sans avoir à opérer le patient. 
 Cette technique ne peut cependant être utilisée que pour des petites tumeurs, ne dépassant pas une certaine taille (jusqu'à 6 centimètres maximum) et n'étant pas à proximité d'organes sensibles. 
@@ -123,15 +123,14 @@ En exemple nous pouvons citer l'\emph{imatinib} (Glivec) qui se fixe sur les ré
 Nous pouvons également citer le \emph{bevacizumab} (Avastin), qui inhibe l'angiogenèse, en se fixant sur les récepteurs de VEGF (que l'on abrège communément VEGFR). D'autres molécules, comme  le sorafenib ou le sunitinib, ont des effets multiples. 
 Le \emph{sorafenib} (Nexavar) est un inhibiteur, à la fois, de VEGFR et de Raf-kinase (tyrosine kinase intervenant dans la cascade de kinases activées lors de la mitose). 
 Le \emph{sunitinib} (Sutent) inhibe également les VEGFRs ainsi que les KIT-kinases (protéïnes CD117, qui sont des tyrosines kinases très souvent exprimées dans le cas de GIST, kinases normalement produites uniquement par les cellules souches).
-\todo[noline]{Kit --> commande la survie, la prolif, ou la division cellulaire}
+%%\todo[noline]{Kit --> commande la survie, la prolif, ou la division cellulaire}
 
 
-Tous les cas cliniques que nous étudions dans cet ouvrage ont été traités avec ce type de traitement. Dans le cas de métastases de GIST, l'imatinib est recommandé en première ligne. 
+Tous les cas cliniques que nous étudions dans cet ouvrage ont été traités avec ce type de traitement. Dans le cas de métastases de GIST, l'imatinib est recommandé en première ligne~\cite{demetri2002efficacy}. 
 %Si 
 Lorsque celui-ci devient inefficace %(ce qui arrive très souvent, 
-(des cellules résistantes se développant), le sunitinb est utilisé en seconde ligne. (REF)\todo[noline]{\url{http://www.sciencedirect.com/science/article/pii/S0140673606694464}}
-\todo[noline]{\url{http://jco.ascopubs.org/content/25/30/4793.short}}
-Dans certains cas de mutation génétique (du gène KIT notamment), il a même été montré une résistance à l'imatinib plus accrue que chez les autres patients [???].
+(des cellules résistantes se développant), le sunitinb est utilisé en seconde ligne~\cite{Demetri20061329,saltz2007phase,houk2010relationship}. 
+Dans certains cas de mutation génétique (du gène KIT notamment), il a même été montré une résistance à l'imatinib plus accrue que chez les autres patients (\cf~\cite{rubin2001kit,lux2000kit,lasota2000mutations}).
 
 %============= deb rapportstage M2 ==============\\
 %
@@ -153,7 +152,7 @@ Dans certains cas de mutation génétique (du gène KIT notamment), il a même �
 \section{Fonctionnement du scanner \label{sec:fct_scan}}
 \subsection{Le scanner en général}
 Le scanner est un examen médical qui permet d'acquérir des images d'une partie de l'organisme par le biais d'une irradiation aux rayons~X. %Oui, oui, une irradiation ! 
-Cependant l'irradiation est faible et de plus en plus d'études mettent en avant des méthodes pour la réduire encore  \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2743386/} ). Le bénéfice est donc très important devant les risques marginaux. C'est certainement l'une des raisons pour laquelle le scanner (tout comme la radiographie, ou l'IRM) est aujourd'hui très utilisé pour diagnostiquer une maladie, ou %ne serait-ce  que 
+Cependant l'irradiation est faible et de plus en plus d'études mettent en avant des méthodes pour la réduire encore~\cite{mccollough2009strategies}. Le bénéfice est donc très important devant les risques marginaux. C'est certainement l'une des raisons pour laquelle le scanner (tout comme la radiographie, ou l'IRM) est aujourd'hui très utilisé pour diagnostiquer une maladie, ou %ne serait-ce  que 
 pour contrôler la santé d'un patient.
 
 
@@ -178,11 +177,13 @@ pour contrôler la santé d'un patient.
 \captionof{figure}{\label{fig:schema_coupe} Plans de coupe du corps humain.}
 \end{wrapfigure}
 Un scanner procède par acquisition d'images en couches. En ce qui concerne le scanner du thorax, le patient est \og découpé \fg{} %de part en part 
-\url{http://www.impactscan.org/download/msctdose.pdf} selon le plan axial (\cf Figure~\ref{fig:schema_coupe} présentant l'orientation des plans de coupe). 
+%% A  voir : http://www.impactscan.org/download/msctdose.pdf
+\cite{goldman2008principles} selon le plan axial (\cf Figure~\ref{fig:schema_coupe} présentant l'orientation des plans de coupe). 
 Sur chacun de ces plans on mesure l'absorption aux rayons~X~: la \emph{tomodensitométrie}. 
 Cette absorption dépend de la densité du tissu mais pas seulement~: elle dépend aussi de sa nature, de sa composition. 
 Chaque constituant de l'organisme à sa propre tomodensitométrie. 
-Celle-ci se mesure en \emph{unité Hounsfield}~(HU). Sur cette échelle, l'absorption au rayons~X de l'eau est définie comme étant zéro. Toute autre tomodensitométrie est alors exprimée relativement à cette absorption de référence. Par exemple l'air a une tomodensitométrie de \numprint[HU]{-1000}, le poumon de \numprint[HU]{-500}, la graisse de \numprint{-100} à \numprint[HU]{-50}, le foie autour de \numprint[HU]{+50}, les os entre \numprint{+700} et \numprint[HU]{+3000} \todo{REF ?} selon leurs spongiosités. %s'ils sont spongieux ou non. 
+Celle-ci se mesure en \emph{unité Hounsfield}~(HU). Sur cette échelle, l'absorption au rayons~X de l'eau est définie comme étant zéro. Toute autre tomodensitométrie est alors exprimée relativement à cette absorption de référence. Par exemple l'air a une tomodensitométrie de \numprint[HU]{-1000}, le poumon de \numprint[HU]{-500}, la graisse de \numprint{-100} à \numprint[HU]{-50}, le foie autour de \numprint[HU]{+50}, les os entre \numprint{+700} et \numprint[HU]{+3000} %\todo{REF ?} 
+selon leurs spongiosités. %s'ils sont spongieux ou non. 
 La tomodensitométrie est donc très variable. Pour pouvoir visualiser cette quantité, il est nécessaire de choisir une échelle adaptée à ce que l'on veut regarder. L'échelle sera définie par~:
 \begin{myitemize}
 \item deux absorptions limites choisies. 
@@ -208,17 +209,18 @@ Cependant, pour le foie les variations de tomodensitométrie sont assez faibles,
 %\vspace{-10mm}
 %\caption{\label{fig:schema_irrig_foie} Schéma de l'irrigation du foie.}
 %\end{wrapfigure}
-Pour réaliser ce type d'examen, la procédure d'acquisition de l'image est la même que pour un simple scanner, avec le même équipement. La différence réside dans l'injection en intraveineuse d'un produit de contraste iodé (PCI), juste avant l'examen. 
+Pour réaliser ce type d'examen, la procédure d'acquisition de l'image est la même que pour un simple scanner, avec le même équipement. La différence réside dans l'injection en intraveineuse d'un produit de contraste iodé (PCI), juste avant l'examen~\cite{rengo2011optimal}. 
 L'iode ayant un fort taux d'absorption des rayons~X, il va éclaircir l'ensemble des zones dans lequel il se trouve (on appelle ceci le rehaussement). 
 En ce qui concerne le foie, pour comprendre pourquoi le foie sain est plus éclairci par le PCI que les métastases, nous devons nous intéresser à la manière dont arrive le PCI au foie et à la tumeur. 
 La Figure~\ref{fig:schema_irrig_foie} présente le schéma général de la vascularisation du foie. 
 Il possède une double vascularisation. La première est apportée directement depuis le c{\oe}ur par l'artère hépatique. Du sang riche en nutriments (glucose et oygène) vient ainsi irriguer les cellules hépatiques. La seconde provient d'une dérivation. 
-Le sang veineux en provenance du système digestif ne retourne pas directement au c{\oe}ur~: il est envoyé au foie par la veine porte. Ce sang bien qu'étant pauvre en oxygène, est riche en glucose puisqu'il contient l'ensemble des éléments digérés. Dans un foie sain, la vascularisation portale est de l'ordre de 70\% et la vascularisation artérielle de l'ordre de 30\%. Dans une tumeur hépatique, ce ratio est inversé. REFF\todo{ref} En effet, en grandissant la tumeur va accroître ses besoins en glucose mais aussi en oxygène~: la néovascularisation se fait donc principalement depuis la vascularisation artérielle. 
+Le sang veineux en provenance du système digestif ne retourne pas directement au c{\oe}ur~: il est envoyé au foie par la veine porte. Ce sang bien qu'étant pauvre en oxygène, est riche en glucose puisqu'il contient l'ensemble des éléments digérés. Dans un foie sain, la vascularisation portale est de l'ordre de 70\% et la vascularisation artérielle de l'ordre de 30\%. Dans une tumeur hépatique, ce ratio est inversé~\cite{li2011assessment}. 
+En effet, en grandissant la tumeur va accroître ses besoins en glucose mais aussi en oxygène~: la néovascularisation se fait donc principalement depuis la vascularisation artérielle. 
 
 
-Revenons au PCI. Dans la mesure où il y a deux voies sanguines pour accéder au foie, il y a deux temps caractéristiques~:
+Revenons au PCI. Dans la mesure où il y a deux voies sanguines pour accéder au foie, il y a deux temps caractéristiques~(\cf~\cite{kim2014ct,ichikawa2006multiphasic}):
 \begin{myitemize}
-\item Le \emph{temps artériel.} C'est le temps après l'injection, que le PCI met pour parvenir au foie par la voie artérielle. Il est d'environ 30 secondes.\todo{Ref}
+\item Le \emph{temps artériel.} C'est le temps après l'injection, que le PCI met pour parvenir au foie par la voie artérielle. Il est d'environ 30 secondes.
 \item Le \emph{temps portal.} C'est le temps après l'injection, que le PCI met pour parvenir au foie par la voie portale. Il est d'environ 70 secondes. 
 \end{myitemize}
 Les scanners réalisés avec PCI, sont effectués au temps portal. Ainsi au moment de l'acquisition de l'image, le PCI se trouve majoritairement dans les tissus vascularisés par la voie portale \ie le foie sain. Le tissu tumoral, beaucoup moins irrigué par voie portale contiendra donc nettement moins de PCI. Ceci se traduit directement sur le contraste de l'image médicale~: le tissu sain ayant fortement éclairci, le tissu tumoral apparait de manière beaucoup plus évidente, en sombre. 
@@ -235,8 +237,8 @@ Il consiste à ne retenir de chaque scanner qu'une seule et unique information~:
  l'échec thérapeutique est considéré %(et dans ce cas là, 
  (le traitement est alors changé). 
  Ce critère  a l'avantage d'être simple. 
-Ceci étant, il a déjà démontré ses limites \cf~\cite{benjamin2007we} et \url{http://jco.ascopubs.org/content/25/13/1760.full}, principalement dans l'évaluation de l'efficacité de traitements antiangiogéniques qui font apparaître  beaucoup de nécrose. 
-D'autres critères sont à l'étude, dont le critère Choi notamment (\cf~\cite{choi2008response}), qui prend en compte aussi les densités internes de la métastase. 
+Ceci étant, il a déjà démontré ses limites~\cite{benjamin2007we,choi2007correlation}, principalement dans l'évaluation de l'efficacité de traitements antiangiogéniques qui font apparaître  beaucoup de nécrose. 
+D'autres critères sont à l'étude, dont le critère Choi notamment (\cf~\cite{choi2008response,kalkmann2012consensus}), qui prend en compte aussi les densités internes de la métastase. 
 
 
 Dans le chapitre suivant, nous allons construire un modèle mathématique qui simule la croissance d'une tumeur. Ce modèle qui se démarque des précédents modèles notamment par son caractère spatial, soulignera particulièrement l'importance de la prise en compte des densités (caractère homogène ou \heterogene) dans l'évaluation de la réponse aux traitements dans le cas de métastases hépatiques de GIST.
@@ -248,7 +250,7 @@ Dans 25\% des cas (\cf~\cite{dematteo2000}), ce type
 de cancer migre au foie. 
 
 
-Bien que les GISTs résistent à la plupart des chimiothérapies anticancéreuses conventionnelles, 
+Bien que les GISTs résistent à la plupart des chimiothérapies anticancéreuses conventionnelles~\cite{demetri2011gastrointestinal}, 
 la découverte de mutations actives du gène KIT, aussi bien que le rôle du PDGFR\footnote{un type particulier de récepteurs de facteurs de croissances. De l'anglais~: Platelet Derived Growth Factor Receptor} et le développement thérapeutique qui en découle, ont révolutionné le traitement des GISTs.
 %the discovery of activating mutations of the KIT as well as the role of PDGFR and the new subsequent therapeutic development have revolutionized GISTs traitements. 
 Grâce à ces thérapies ciblées, les GISTs sont devenus des modèles typiques de traitements personnalisés du cancer~\cite{Blay2012}. 

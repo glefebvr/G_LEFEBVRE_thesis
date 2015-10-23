@@ -5,7 +5,7 @@
 \chapter{Exploration de différentes pénalisations sur la fonction coût utilisée pour optimiser les niveaux de gris de la synthèse d'images scanners \label{chap:anx_penalisation} }
 \chaptermark{Exploration de différentes pénalisations} %%% Titre court pour l'entete
 
-\mylettrine{L}{ors} de la synthèse d'images scanners présentée au Chapitre~\ref{chap:optim_grey}, l'optimisation des niveaux de gris n'a pas été sans posée  de problème. Après avoir étudier des optimisations sur 3 niveaux de gris, puis 2, les cas atteignant pathologiquement le bord du domaine autorisé ($[0;255]$) persistaient. Des fonctions de pénalisation plus régulière qu'un simple créneau ont alors été testées à savoir une parabole tronquée ($\mathcal{C}^0$), puis une parabole tronquée régularisée avec le procédé de Moreau-Yosida que l'on présente ici (la régularisée est alors $\mathcal{C}^1$).
+\mylettrine{L}{ors} de la synthèse d'images scanners présentée au Chapitre~\ref{chap:optim_grey}, l'optimisation des niveaux de gris n'a pas été sans posée  de problème. Après avoir étudier des optimisations sur 3 niveaux de gris, puis 2, les cas atteignant pathologiquement le bord du domaine autorisé ($[0;255]$) persistaient. Des fonctions de pénalisation plus régulière qu'un simple créneau ont alors été testées à savoir une parabole tronquée ($\mathcal{C}^0$), puis une parabole tronquée régularisée avec le procédé de Moreau-Yosida que l'on présente ici (la régularisée est alors $\mathcal{C}^1$). On pourra se référer à~\cite{lemarechal1997practical,mifflin1999properties} pour plus de détails sur cette régularisation).
 
 \section{Régularisation de Moreau-Yosida}
 \subsection{Présentation de la régularisation et propriétés}

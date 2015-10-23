@@ -16,7 +16,7 @@ implémentés~:
 
 \section{Code de calcul pour la simulation numérique du modèle EDP}
 Le code permettant la simulation numérique via le modèle EDP a été développé en C++, avec la librairie eLYSe. Cette librairie, commune a toute l'équipe de recherche et développée par Olivier Saut, est une interface qui fournit un certain nombre de solveurs pour les problèmes classiques (transport et diffusion) traités par une méthode de volumes finis sur maillages cartésiens. Elle est multi-plateforme (Linux et MacOS). 
-Elle s'appuie sur la librairie d'algèbre linéaire PETSc, bien qu'aucune connaissance de PETSc ne soit nécessaire pour utiliser eLYSe. 
+Elle s'appuie sur la librairie d'algèbre linéaire PETSc~\cite{balay2012zhang,balay2012petsc}, bien qu'aucune connaissance de PETSc ne soit nécessaire pour utiliser eLYSe. 
 Ceci est principalement du au fait de la présence des structures de types Field (tableaux 2D et 3D) que cette librairie fournit. 
 
 \paragraph{}
@@ -34,7 +34,7 @@ Cette classe contient entre autre~:
 \item les points de contrôle (les populations sont-elles toujours comprises entre 0 et 1, moyennant une certaine tolérance ?),
 \item les sorties fichiers.
 \end{myitemize}
-\item Une classe de méta-modèle, permettant d'explorer, de différentes manières, l'espace des paramètres lié à un modèle. Cette classe m'a notamment servie pour réaliser le fit (présenté sur la Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert}, dont les paramètres sont présentés dans la Table~\ref{table_param} page~\pageref{table_param}) des données cliniques par le modèle EDP. Plusieurs méthodes d'exploration ont été abordées : Monte-Carlo, méthode de sensitivité ou de descente, algorithmes génétiques... 
+\item Une classe de méta-modèle, permettant d'explorer, de différentes manières, l'espace des paramètres lié à un modèle. Cette classe m'a notamment servie pour réaliser le fit (présenté sur la Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert}, dont les paramètres sont présentés dans la Table~\ref{table_param} page~\pageref{table_param}) des données cliniques par le modèle EDP. Plusieurs méthodes d'exploration ont été abordées : Monte-Carlo~\cite{spall2005introduction}, méthode de sensitivité ou de descente, algorithmes génétiques~\cite{davis1987genetic,goldberg1994algorithmes}... 
 \end{myitemize}
 
 Le modèle EDP ayant beaucoup de paramètres et admettant beaucoup de minima locaux, il n'a pas été facile d'obtenir un fit acceptable du volume tumoral. Les fits présentés dans ce manuscrit représentent  donc des minima locaux de l'erreur $L^2$, et non des minima globaux. La méthode adoptée est la suivante~: 

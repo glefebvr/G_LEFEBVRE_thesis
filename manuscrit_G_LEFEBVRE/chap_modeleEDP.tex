@@ -7,7 +7,7 @@
 %\mylettrine{N}{ous} allons ici présenter le cheminement qui, depuis les mécanismes biologiques et cliniques, a conduit à un modèle mathématique. 
 
 \mylettrine{C}{e} chapitre, ainsi qu'une partie du chapitre suivant, %(la partie sur le \twinweno) 
-ont  fait l'objet d'une publication (actuellement en review) et d'un poster (présenté en Annexe, dans la Figure~\ref{fig:poster}, page~\pageref{fig:poster}). %Nous allons ici garder la structure de l'article, en commençant par présenter les principaux résultats. 
+ont  fait l'objet d'une publication~\cite{lefebvre:hal-01089452} (actuellement en review) et d'un poster (présenté en Annexe, dans la Figure~\ref{fig:poster}, page~\pageref{fig:poster}). %Nous allons ici garder la structure de l'article, en commençant par présenter les principaux résultats. 
 Après avoir présenté la problématique, les principaux résultats obtenus seront décrit.  
 La construction du modèle sera ensuite détaillée. Nous discuterons enfin plus précisément, sur les résultats numériques apportés par notre modèle, et les diverses informations que l'on peut en tirer.
 
@@ -94,12 +94,12 @@ Bresch {\it et al.}~\cite{Bresch2010}.
 La tumeur est décrite grâce à des densités de cellules proliférantes et une densité de cellules cancéreuses nécrosées notées~$P$ et~$N$ respectivement. 
 La prolifération cellulaire conduit à une augmentation de l'aire causée par une surpression dont le gradient transporte les cellules saines environnantes~$S$ loin du c\oe{}ur de la tumeur. 
 Les cellules situées au centre de la tumeur se nécrosent à cause du manque d'oxygène, sauf si l'angiogenèse intervient pour leur apporter les provisions nutritives nécessaires.
-L'angiogenèse et l'apport en nutriments sont pris en compte dans notre modèle via une description simpliste similaire à celle de~\cite{Fathallah2013,Billy2009545}: comme la vascularisation gouverne la concentration de nutriments parvenant à la tumeur, nous introduisons une variable~$M$ 
+L'angiogenèse et l'apport en nutriments sont pris en compte dans notre modèle via une description simpliste similaire à celle de~\cite{Fathallah2013,Billy2009545} (on pourra se référer à~\cite{macklin2009multiscale} pour un modèle plus complet de l'angiogenèse)~: comme la vascularisation gouverne la concentration de nutriments parvenant à la tumeur, nous introduisons une variable~$M$ 
 qui décrit à la fois la vascularisation, la néovascularisation et les nutriments apportés à la tumeur grâce à une équation d'advection-diffusion. 
 Nous introduisons également les effets liés aux facteurs de croissance au travers de la variable~$\xi$ qui module~$M$. L'ensemble des quantités utilisées dans notre modèle est résumé dans la Table~\ref{table_variable}.
 
 
-La principale nouveauté réside en la modélisation des traitements. Deux traitements sont considérés (on peut voir dans \cite{lorz2013}, les récents travaux de Lorz~\etal\ pour des modèles plus élaborés sur les résistances aux traitements). 
+La principale nouveauté réside en la modélisation des traitements. Deux traitements sont considérés (on peut voir dans \cite{lorz2013,lorz2013populational}, les récents travaux de Lorz~\etal\ pour des modèles plus élaborés sur les résistances aux traitements). 
 Le premier est un inhibiteur de tyrosine kinase (imatinib), %, comme l'imatinib, 
 qui a un effet cytotoxique 
 sur les cellules proliférantes. Le second est inhibiteur multi-kinases, comme le sunitinib ou le sorafenib, qui a un effet à la fois cytotoxique et antiangiogénique. En d'autres termes, en plus de l'effet cytotoxique, il bloque la production de facteurs de croissance, comme le facteur de croissance vasculaire endothélial (VEGF), et ainsi réduit la quantité de nutriments apportée à la tumeur. 
@@ -262,7 +262,7 @@ La condition de Dirichlet homogène, dans~\eqref{eq_darcy}, impose qu'en dehors 
 %Observez qu'une condition de flux nul impliquerait nécessairement que l'intégrale~$\int_{\Omega} \gammapp P - \delta (1+M)N \textrm{\;d}\vecx$ s'annule en tout temps, ce qui n'est pas satisfait à~$t=0$.
 
 
-Nous soulignons que l'on traite ici de métastases hépatiques de GIST et non de tumeurs primaires du foie. Par conséquent, les cellules métastatiques ne grandissent pas dans leur milieu d'origine~: elles ne peuvent pas infiltrer le foie mais leur prolifération induit une pression qui pousse les cellules saines vers l'extérieur. Pour ces raisons, nous choisissons une loi de Darcy pour décrire la croissance de la métastase. 
+Nous soulignons que l'on traite ici de métastases hépatiques de GIST et non de tumeurs primaires du foie. Par conséquent, les cellules métastatiques ne grandissent pas dans leur milieu d'origine~: elles ne peuvent pas infiltrer le foie (comme le ferait un glioblastome dans le cerveau par exemple~\cite{Fathallah2013}) mais leur prolifération induit une pression qui pousse les cellules saines vers l'extérieur. Pour ces raisons, nous choisissons une loi de Darcy pour décrire la croissance de la métastase. 
 
 
 Bien sûr, une loi de Stokes ou n'importe quelles autre loi plus complexe (loi viscoélastique par exemple) pourrait être utilisée, nous en référons à~\cite{Bresch2009}  et~\cite{ambrosi2002,byrne2003} pour plus de détails. 
@@ -558,7 +558,7 @@ Le résultat a été également étudié sur le système complet dans~\cite{mich
 
 \section{Méthodes numériques}\label{sec:NumMet}
 
-Nous utilisons une méthode de volumes finis sur grille uniforme 2D. 
+Nous utilisons une méthode de volumes finis sur grille uniforme 2D~\cite{eymard2000finite}. 
 Nous avons choisi de travailler en 2D pour coller aux habitudes cliniques des radiologistes. En effet, pour l'évaluation de la réponse à un traitement, le critère RECIST impose de mesurer le diamètre de la métastase sur la coupe sur laquelle il est le plus grand. L'évaluation est donc réalisée dans un cadre 2D.
 
 
@@ -639,7 +639,7 @@ résolue grâce au spliting en temps suivant~:
 Cette forme non conservative est choisie dans le but de réutiliser les informations que nous possédons déjà sur la divergence de la vitesse, grâce à la relation~\eqref{eq_divv}.
 
 
-Une méthode de type WENO5 comme donnée par~\cite{Liu1994} est utilisée pour approcher le gradient~$\nabla \W$ impliqué  dans~\eqref{eq_transp_weno}. Cette variante du WENO5, appelée \twinweno, est présentée dans le chapitre suivant, section~\ref{sec:twinweno}. 
+Une méthode de type WENO5 comme donnée par~\cite{shu1988efficient,Liu1994,gottlieb2006fifth} est utilisée pour approcher le gradient~$\nabla \W$ impliqué  dans~\eqref{eq_transp_weno}. Cette variante du WENO5, appelée \twinweno, est présentée dans le chapitre suivant, section~\ref{sec:twinweno}. 
 D'autres schémas d'ordre moins élevé ont aussi été essayés. Cependant la diffusion numérique de ces schémas est trop importante. Ceci conduit à une diffusion artificielle des nutriments dans la tumeur. La croissance tumorale est alors modifiée par cet artefact. La résolution précise du transport est par conséquent un point important. De plus,  utiliser un schéma d'ordre élevé réduit, par le gain de convergence, les problèmes usuels liés à la résolution du problème non conservatif.
 
 \subsection{Calcul des quantités~$\xi$ et~$M$}
