@@ -14,7 +14,7 @@ implémentés~:
 \item le second, pour calculer un quantificateur de l'\hetero à partir d'une image, que ce soit une image provenant directement de l'appareil d'imagerie médicale ou une image provenant de la simulation numérique.
 \end{myitemize}  
 
-\section{Code de calcul pour la simulation numérique du modèle EDP}
+\section{Code de calcul pour la simulation numérique du modèle EDP\label{sec:code_modeleEDP}}
 Le code permettant la simulation numérique via le modèle EDP a été développé en C++, avec la librairie eLYSe. Cette librairie, commune a toute l'équipe de recherche et développée par Olivier Saut, est une interface qui fournit un certain nombre de solveurs pour les problèmes classiques (transport et diffusion) traités par une méthode de volumes finis sur maillages cartésiens. Elle est multi-plateforme (Linux et MacOS). 
 Elle s'appuie sur la librairie d'algèbre linéaire PETSc~\cite{balay2012zhang,balay2012petsc}, bien qu'aucune connaissance de PETSc ne soit nécessaire pour utiliser eLYSe. 
 Ceci est principalement du au fait de la présence des structures de types Field (tableaux 2D et 3D) que cette librairie fournit. 

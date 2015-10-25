@@ -98,20 +98,7 @@ L'angiogenèse et l'apport en nutriments sont pris en compte dans notre modèle 
 qui décrit à la fois la vascularisation, la néovascularisation et les nutriments apportés à la tumeur grâce à une équation d'advection-diffusion. 
 Nous introduisons également les effets liés aux facteurs de croissance au travers de la variable~$\xi$ qui module~$M$. L'ensemble des quantités utilisées dans notre modèle est résumé dans la Table~\ref{table_variable}.
 
-
-La principale nouveauté réside en la modélisation des traitements. Deux traitements sont considérés (on peut voir dans \cite{lorz2013,lorz2013populational}, les récents travaux de Lorz~\etal\ pour des modèles plus élaborés sur les résistances aux traitements). 
-Le premier est un inhibiteur de tyrosine kinase (imatinib), %, comme l'imatinib, 
-qui a un effet cytotoxique 
-sur les cellules proliférantes. Le second est inhibiteur multi-kinases, comme le sunitinib ou le sorafenib, qui a un effet à la fois cytotoxique et antiangiogénique. En d'autres termes, en plus de l'effet cytotoxique, il bloque la production de facteurs de croissance, comme le facteur de croissance vasculaire endothélial (VEGF), et ainsi réduit la quantité de nutriments apportée à la tumeur. 
-Il est bien connu que les médicaments cytotoxiques n'ont pas un impact similaire sur toutes les cellules cancéreuses métastatiques car des phénotypes résistants peuvent apparaître dans la population de cellules proliférantes. De plus les cellules cancéreuses peuvent résister différemment à l'hypoxie. Par conséquent nous découpons, comme dans~\cite{Bresch2009}, la densité~$P$ de cellules proliférantes en 3 sous-populations~$P_1$, $P_2$ et~$P_3$, telles  que~$P=P_1+P_2+P_3$, où
-\begin{myitemize}
-\item $P_1$ représente la fraction de cellules proliférantes qui sont sensibles au premier traitement~$\TI$, basé sur la molécule d'imatinib, et sensible aussi au second traitement~$\TS$, à base de sunitinib ou de sorafenib, qui a un effet à la fois cytoxique et antiangiogénique. 
-\item $P_2$ désigne la densité de cellules proliférantes qui sont résistantes à~$\TI$ et sensibles à~$\TS$,
-\item $P_3$ représente les cellules proliférantes résistantes aux deux traitements. 
-\end{myitemize}
-
-
- \begin{table}[h]
+ \begin{table}[t]
  %\begin{threeparttable}[b]
  \centering
  \rowcolors{2}{white}{gray!40}
@@ -164,6 +151,19 @@ Il est bien connu que les médicaments cytotoxiques n'ont pas un impact similair
  \end{table}
 \footnotetext{L'unité de masse dans la pression~$\Pi$ et la perméabilité~$k$ n'ont pas d'importance. Seule la quantité~$k\nabla\Pi$ est pertinente et ce terme est homogène à~$cm.d^{-1}$. 
 Ainsi~$k$ et~$\Pi$ doivent juste avoir la même unité arbitraire de masse.}
+
+
+La principale nouveauté réside en la modélisation des traitements. Deux traitements sont considérés (on peut voir dans \cite{lorz2013,lorz2013populational}, les récents travaux de Lorz~\etal\ pour des modèles plus élaborés sur les résistances aux traitements). 
+Le premier est un inhibiteur de tyrosine kinase (imatinib), %, comme l'imatinib, 
+qui a un effet cytotoxique 
+sur les cellules proliférantes. Le second est inhibiteur multi-kinases, comme le sunitinib ou le sorafenib, qui a un effet à la fois cytotoxique et antiangiogénique. En d'autres termes, en plus de l'effet cytotoxique, il bloque la production de facteurs de croissance, comme le facteur de croissance vasculaire endothélial (VEGF), et ainsi réduit la quantité de nutriments apportée à la tumeur. 
+Il est bien connu que les médicaments cytotoxiques n'ont pas un impact similaire sur toutes les cellules cancéreuses métastatiques car des phénotypes résistants peuvent apparaître dans la population de cellules proliférantes. De plus les cellules cancéreuses peuvent résister différemment à l'hypoxie. Par conséquent nous découpons, comme dans~\cite{Bresch2009}, la densité~$P$ de cellules proliférantes en 3 sous-populations~$P_1$, $P_2$ et~$P_3$, telles  que~$P=P_1+P_2+P_3$, où
+\begin{myitemize}
+\item $P_1$ représente la fraction de cellules proliférantes qui sont sensibles au premier traitement~$\TI$, basé sur la molécule d'imatinib, et sensible aussi au second traitement~$\TS$, à base de sunitinib ou de sorafenib, qui a un effet à la fois cytoxique et antiangiogénique. 
+\item $P_2$ désigne la densité de cellules proliférantes qui sont résistantes à~$\TI$ et sensibles à~$\TS$,
+\item $P_3$ représente les cellules proliférantes résistantes aux deux traitements. 
+\end{myitemize}
+
 
 
 Il est important de noter que notre but n'est pas de décrire l'évolution de la tumeur depuis le tout début du GIST, mais de nous focaliser sur l'évolution des métastases situées dans le foie. 
@@ -388,7 +388,7 @@ Notez que la densité de cellules saines~$S$ est donnée par~\eqref{eq_saturatio
 %\end{prop}
 \begin{prop}\label{prop:positivite_modele}
 Dans le modèle~\eqref{eq_transport_pop}, si
-Soient $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ une solution de classe~$\mathcal{C}([0,T]\times \Omega)$ du système~\eqref{eq_transport_pop}. Supposons que la vitesse~$\vit$ est régulière et que~$M$ est bornée. Si $P_i(0,\vecx), N(0,\vecx)$ et~$S(0,\vecx)$ sont positives ou nulles alors 
+Soient $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ une solution de classe~$\mathscr{C}([0,T]\times \Omega)$ du système~\eqref{eq_transport_pop}. Supposons que la vitesse~$\vit$ est régulière et que~$M$ est bornée. Si $P_i(0,\vecx), N(0,\vecx)$ et~$S(0,\vecx)$ sont positives ou nulles alors 
 $$\forall t \in [0,T], \quad  N(t,\vecx)\geq0, \quad  P_i(t,\vecx)\geq0, \quad S(t,\vecx)\geq0. $$
 \end{prop}
 Pour démontrer cette positivité, nous allons montrer que les parties négatives de ces quantités sont toutes nulles. Les parties négatives sont définies comme suit~:
@@ -451,20 +451,27 @@ Dans ce paragraphe, on considère~$\W=\trans{(P_1, P_2, P_3, N, S)}$ dans sa for
 \end{equation}
 pour compléter la formulation~\eqref{eq_transport_pop}.
 \begin{prop}
-Le vecteur~$\W=\trans{(P_1, P_2, P_3, N, S)}$ vérifie une condition de saturation \ssi la somme d'un transport conservatif sur chacune de ses composantes est égale à la divergence de la vitesse régissant ce transport.
+%Le vecteur~$\W=\trans{(P_1, P_2, P_3, N, S)}$ vérifie une condition de saturation \ssi la somme d'un transport conservatif sur chacune de ses composantes est égale à la divergence de la vitesse régissant ce transport.
+%\begin{equation}
+%\sum_i \W_i = 1 \quad \Leftrightarrow \quad \sum_i  [ \partial_t \W_i + \dive(\vit\W_i) ] = \dive \vit
+%\end{equation}
+Si $(P+N+S)(t=0,\vecx)=1,\ \forall \vecx \in \Omega$ alors 
 \begin{equation}
-\sum_i \W_i = 1 \quad \Leftrightarrow \quad \sum_i  [ \partial_t \W_i + \dive(\vit\W_i) ] = \dive \vit
+(P+N+S)(t,\vecx)=1,\quad \forall \vecx \in \Omega, \quad \forall t\geq 0.
 \end{equation}
 \end{prop}
 \begin{proof}
-Pour réaliser cette preuve, notons $\sigma := \sum_i \W_i$ \\
-$\Rightarrow$) Quasiment immédiat.
-\begin{align*}
-\sum_i  [ \partial_t \W_i + \dive(\vit\W_i) ] & = \sum_i  [ \partial_t \W_i + \dive(\vit) \W_i + \vit . \nabla \W_i ] \\
-& = \partial_t \sigma + (\dive\vit) \sigma + \vit . \nabla \sigma = \dive \vit,
-\end{align*}
-puisque les dérivées de $\sigma$  sont nulles car ici il est constant. \\
-$\Leftarrow$) On suppose ici que $\partial_t \sigma + \dive (\vit \sigma ) = \dive \vit$ ou autrement écrit que $$ \partial_t \sigma + \vit . \nabla \sigma  = (1-\sigma) \dive \vit.$$ Montrons que ceci implique que~$\sigma\equiv1$. Remarquons que $\sigma\equiv1$ est solution de l'équation ci-dessus. Il ne reste donc plus qu'à montrer son unicité pour conclure. Considérons~$\sigma_1$ et~$\sigma_2$, deux solutions de cette équation. Soit $d:=\sigma_2-\sigma_1$. On a alors~:
+Pour réaliser cette preuve, notons $\sigma := \sum_i \W_i = P+N+S$. %\\
+%$\Rightarrow$) Quasiment immédiat.
+%\begin{align*}
+%\sum_i  [ \partial_t \W_i + \dive(\vit\W_i) ] & = \sum_i  [ \partial_t \W_i + \dive(\vit) \W_i + \vit . \nabla \W_i ] \\
+%& = \partial_t \sigma + (\dive\vit) \sigma + \vit . \nabla \sigma = \dive \vit,
+%\end{align*}
+%puisque les dérivées de $\sigma$  sont nulles car ici il est constant. \\
+%$\Leftarrow$) 
+%On suppose ici que 
+En utilisant les équations~\eqref{eq_P1},\eqref{eq_P2},\eqref{eq_P3},\eqref{eq_S},\eqref{eq_N} et~\eqref{eq_divv}, un calcul immédiat montre que 
+$\displaystyle\partial_t \sigma + \dive (\vit \sigma ) = \sum_i  [ \partial_t \W_i + \dive(\vit\W_i) ]  = \dive \vit$ ou autrement écrit que $$ \partial_t \sigma + \vit . \nabla \sigma  = (1-\sigma) \dive \vit.$$ Montrons que ceci implique que~$\sigma\equiv1$. Remarquons que $\sigma\equiv1$ est solution de l'équation ci-dessus. Il ne reste donc plus qu'à montrer son unicité pour conclure. Considérons~$\sigma_1$ et~$\sigma_2$, deux solutions de cette équation. Soit $d:=\sigma_2-\sigma_1$. On a alors~:
 $$ \partial_t d + \dive (\vit d) = 0 \textrm{~~avec~~} d(t=0,\vecx)\equiv0. $$
 Par le même procédé qu'utilisé précédemment (estimation d'énergie pour démontrer la positivité de la solution), on a~:
 \begin{equation}
@@ -475,14 +482,16 @@ Ainsi par le lemme de Gronwall, appliqué à la fonction~$\left(\intx d^2 \right
 \left(\intx d^2 \right)(t) \leq \left(\intx d^2 \right)(t=0) \exp ( \| \dive \vit \|_{\infty} t ) = 0
 \end{equation}
 Donc~$d(t,\vecx)^2\equiv0, \forall t$, donc $d$ est identiquement nulle. Ceci conduit donc à~$\sigma_1=\sigma_2$, d'où l'unicité de la solution. 
+Il en découle donc $P+N+S=1, \forall t\geq 0$.
 \end{proof}
 
 \subsubsection{Comportement asymptotique lorsque le taux d'élimination de la nécrose tend vers l'infini ($\delta \to +\infty$)}
 Nous allons montrer ici que notre modèle tend, lorsque le taux d'élimination devient grand, vers un modèle sans nécrose. Nous allons procéder sur un modèle un peu plus simple. Les 3 populations $P_1,P_2$ et~$P_3$ vérifiant des équations similaires, on se restreindra à une seule population de cellules proliférantes. Le raisonnement étant analogue en considérant l'effet cytotoxique des traitements ou non, on ne considèrera pas cette aspect pour simplifier les calculs. D'autre part, nous allons ici considérer la vascularisation~$M$ constante (dans l'espace et le temps). Posons 
 \begin{equation}
-\epsilon:= \frac{1}{\muN(1+M)},
+\epsilon:= \frac{1}{\muN(1+M)}.
 \end{equation}
-et montrons que lorsque~$\epsilon \to 0$, le modèle~A avec nécrose 
+On a alors la propriété suivante~:
+\begin{prop} Le modèle~A avec nécrose 
 \begin{subequations}\label{eq:modele_simplifie1}
 \begin{empheq}[left={(\rm A)\quad}\empheqlbrace]{align} %%%% grace au package empheq
 \partial_t P + \nabla.(vP)& = ( \gammapp - \gammapd  ) P, \label{modele1-eq1}\\
@@ -497,6 +506,24 @@ converge vers le modèle~B sans nécrose
 \nabla.v & = ( \gammapp - \gammapd  ) P.
 \end{empheq}
 \end{subequations}
+lorsque $\epsilon$ tend vers 0.
+\end{prop}
+
+%et montrons que lorsque~$\epsilon \to 0$, le modèle~A avec nécrose 
+%\begin{subequations}\label{eq:modele_simplifie1}
+%\begin{empheq}[left={(\rm A)\quad}\empheqlbrace]{align} %%%% grace au package empheq
+%\partial_t P + \nabla.(vP)& = ( \gammapp - \gammapd  ) P, \label{modele1-eq1}\\
+%\partial_t N + \nabla.(vN)& =\gammapd P- N/\epsilon, \label{modele1-eq2} \\
+%\nabla.v & = \gammapp P- N/\epsilon,
+%\end{empheq}
+%\end{subequations}
+%converge vers le modèle~B sans nécrose
+%\begin{subequations}\label{eq:modele_sans_necrose}
+%\begin{empheq}[left={(\rm B)\quad}\empheqlbrace]{align} %%%% grace au package empheq
+%\partial_t P + \nabla.(vP) & = ( \gammapp - \gammapd  ) P, \\
+%\nabla.v & = ( \gammapp - \gammapd  ) P.
+%\end{empheq}
+%\end{subequations}
 
 \begin{proof}Considérons une nouvelle variable~$Z$ définie comme suit 
 \begin{equation}
@@ -552,9 +579,12 @@ Par le lemme de Gronwall, on a $\forall t\in [0,T]$ :
 \end{equation}
 
 Lorsque $\epsilon \to 0$, on obtient que $Z \to 0$. Ainsi, par définition de~$Z$, $N$ tend vers 0 à la même vitesse que~$\epsilon$. Ceci montre que le modèle A avec nécrose converge vers le modèle sans nécrose lorsque $\epsilon \to 0$. 
-Pour ce qui est du modèle complet, des simulations numériques ont été réalisées avec de grandes valeurs de~$\muN$. On constate bien une convergence vers~$N\equiv0$.
 \end{proof}
-Le résultat a été également étudié sur le système complet dans~\cite{michel:hal-01211770}. Ce type de résultat montre que notre système est uniformément valide en fonction du paramètre $\muN$, \cad qu'il est capable de décrire de façon continue des situations où la nécrose s'évacue instantanément ou bien avec un temps caractéristique. Ceci est important dans notre cas, car il est difficile d'estimer ce temps caractéristique.
+
+Pour ce qui est du modèle complet, des simulations numériques ont été réalisées avec de grandes valeurs de~$\muN$. On constate bien une convergence vers~$N\equiv0$. 
+Le comportement asymptotique du modèle complet (incluant le couplage avec la vascularisation~$M$) a été étudié également de manière théorique et plus précise  
+%Le résultat a été également étudié sur le système complet 
+dans~\cite{michel:hal-01211770}. Ce type de résultat montre que notre système est uniformément valide en fonction du paramètre~$\muN$, \cad qu'il est capable de décrire de façon continue des situations où la nécrose s'évacue instantanément ou bien avec un temps caractéristique. Ceci est important dans notre cas, car il est difficile d'estimer ce temps caractéristique.
 
 \section{Méthodes numériques}\label{sec:NumMet}
 
@@ -632,7 +662,7 @@ résolue grâce au spliting en temps suivant~:
 \begin{align}
  \dfrac{\W^*-\W^n}{\Delta t / 2}  &= \GG^n-\Frm^n\W^n, %% & \textrm{then}
  \label{eq_snd_membre} \\
-\dfrac{\W^\#-\W^*}{\Delta t} + \vit^n.(\nabla \W^*)&= 0,%%& \textrm{then} 
+\dfrac{\W^\#-\W^*}{\Delta t} + \vit^n.\nabla \W^*&= 0,%%& \textrm{then} 
  \label{eq_transp_weno}\\
  \dfrac{\W^{n+1}-\W^\#}{\Delta t / 2}  &= \GG^n-\Frm^n\W^n. \label{eq_snd_membre2} 
 \end{align}
@@ -763,7 +793,7 @@ $L=D=6\;cm$ avec 120 points dans chaque direction.
 Le pas de temps~$\Delta t$ est calculé en utilisant l'équation~\eqref{eq:dt}. 
 
 
-Les paramètres numériques ont été choisis de sorte à reproduire l'évolution de l'aire tumorale. En particulier, nous n'essayons pas de fiter avec les images, on vérifie seulement que l'évolution spatiale soit plausible comparée aux images médicales. Les paramètres sont résumés dans la Table~\ref{table_param}.
+Les paramètres numériques ont été choisis de sorte à reproduire l'évolution de l'aire tumorale. En particulier, nous n'essayons pas de fiter avec les images, on vérifie seulement que l'évolution spatiale soit plausible comparée aux images médicales. La manière dont a été obtenu les paramètres est abordée dans la section~\ref{sec:code_modeleEDP} de l'annexe~\ref{chap:structure_code}.  L'ensemble des paramètres est résumé dans la Table~\ref{table_param}.
 
 \begin{table}
 \rowcolors{4}{white}{gray!40}

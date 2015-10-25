@@ -250,13 +250,14 @@ Dans tous les cas, on ne considérera pas le premier scanner (numéro~0) car la 
 
 En ce qui concerne les algorithmes d'optimisations utilisés, nous en choisirons quatre~:
 \begin{myitemize}
-\item SLSQP (Sequential Least SQuares Programming)~: Méthodes des moindres carrés 
-\item GC~: Gradient Conjugué
-\item Neldear-Mead~: Algorithme basé sur une méthode du Simplex.
-\item BFGS (Broyden, Fletcher, Goldfarb, and Shanno)~: Méthode quasi newtonnienne basée  également sur une approximation de la dérivée.
-\todo[inline]{Ref : Piocher ref algo : \url{http://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.optimize.minimize.html} }
+\item SLSQP (Sequential Least SQuares Programming)~\cite{kraft1988software}~: Méthodes des moindres carrés 
+\item GC~\cite{nocedal2006numerical}~: Gradient Conjugué
+\item Neldear-Mead~\cite{nelder1965simplex,wright1996direct,wright2010nelder}~: Algorithme basé sur une méthode du Simplex.
+\item BFGS (Broyden, Fletcher, Goldfarb, and Shanno)~\cite{nocedal2006numerical}~: Méthode quasi newtonnienne basée  également sur une approximation de la dérivée.
+%\todo[inline]{Ref : Piocher ref algo : \url{http://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.optimize.minimize.html} }
 \end{myitemize}
-Ces algorithmes seront initialisés avec les paramètres~$\tau_N, \tau_P$ et~$\tau_S$ considérés dans la section~\ref{sec:NumRes} page~\pageref{sec:NumRes}. Lorsqu'ils sont nécessaires, les gradients (voire les hessiennes) sont approchées par les algorithmes eux-mêmes. Outre un vecteur de paramètre initial et la fonction coût à optimiser~\eqref{eq:min_optim_grey}, aucune information supplémentaire n'est fournie à ces différents algorithmes.
+Ces algorithmes seront initialisés avec les paramètres~$\tau_N, \tau_P$ et~$\tau_S$ considérés dans la section~\ref{sec:NumRes} page~\pageref{sec:NumRes}. Lorsqu'ils sont nécessaires, les gradients (voire les hessiennes) sont approchées par les algorithmes eux-mêmes. Outre un vecteur de paramètre initial et la fonction coût à optimiser~\eqref{eq:min_optim_grey}, aucune information supplémentaire n'est fournie à ces différents algorithmes. Le code de calcul permettant de réaliser ces optimisations a été développé en Python et s'appuie sur la librairie SciPy~\cite{jones2014scipy}.  
+
 
 
 La Table~\ref{tab:optim3gris} synthétise une partie des résultats d'optimisation obtenus sur les différents tests qui ont été réalisés. 

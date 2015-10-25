@@ -5,7 +5,7 @@
 \chapter{Exploration de différentes pénalisations sur la fonction coût utilisée pour optimiser les niveaux de gris de la synthèse d'images scanners \label{chap:anx_penalisation} }
 \chaptermark{Exploration de différentes pénalisations} %%% Titre court pour l'entete
 
-\mylettrine{L}{ors} de la synthèse d'images scanners présentée au Chapitre~\ref{chap:optim_grey}, l'optimisation des niveaux de gris n'a pas été sans posée  de problème. Après avoir étudier des optimisations sur 3 niveaux de gris, puis 2, les cas atteignant pathologiquement le bord du domaine autorisé ($[0;255]$) persistaient. Des fonctions de pénalisation plus régulière qu'un simple créneau ont alors été testées à savoir une parabole tronquée ($\mathcal{C}^0$), puis une parabole tronquée régularisée avec le procédé de Moreau-Yosida que l'on présente ici (la régularisée est alors $\mathcal{C}^1$). On pourra se référer à~\cite{lemarechal1997practical,mifflin1999properties} pour plus de détails sur cette régularisation).
+\mylettrine{L}{ors} de la synthèse d'images scanners présentée au Chapitre~\ref{chap:optim_grey}, l'optimisation des niveaux de gris n'a pas été sans posée  de problème. Après avoir étudier des optimisations sur 3 niveaux de gris, puis 2, les cas atteignant pathologiquement le bord du domaine autorisé ($[0;255]$) persistaient. Des fonctions de pénalisation plus régulière qu'un simple créneau ont alors été testées à savoir une parabole tronquée ($\mathscr{C}^0$), puis une parabole tronquée régularisée avec le procédé de Moreau-Yosida que l'on présente ici (la régularisée est alors $\mathscr{C}^1$). On pourra se référer à~\cite{lemarechal1997practical,mifflin1999properties} pour plus de détails sur cette régularisation).
 
 \section{Régularisation de Moreau-Yosida}
 \subsection{Présentation de la régularisation et propriétés}
@@ -334,10 +334,10 @@ Ici la pénalisation intervient sur un intervalle légèrement plus court que~$[
 \DTLcleardb{optim2_grey}
 
 Les résultats des optimisations de niveaux de gris faites avec la pénalisation~\eqref{eq:penalisation_quad} sont présentés dans la Table~\ref{tab:optim2gris_pen_quad}. Ici plus de valeurs négatives, cependant la borne 1.5 est atteinte à plusieurs reprises. De même les résultats entre les algorithmes sont très variables. Ainsi, ici, il est difficile de dire s'il y a eu une amélioration ou non par rapport à la pénalisation en créneau. 
-La pénalisation considérée ici n'est que~$\mathcal{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
+La pénalisation considérée ici n'est que~$\mathscr{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
 
 
-Essayons donc une troisième fonction de pénalisation qui soit~$\mathcal{C}^1$. Considérons la régularisation de Moreau-Yosida de la pénalisation précédente. La courbe de la régularisée d'une parabole tronquée est représentée sur la Figure~\ref{fig:regul_para_coupee} (on prend ici $a=126; u=E(\tau)-127.5$). Les niveaux de gris optimaux obtenus avec cette nouvelle pénalisation plus régulière sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
+Essayons donc une troisième fonction de pénalisation qui soit~$\mathscr{C}^1$. Considérons la régularisation de Moreau-Yosida de la pénalisation précédente. La courbe de la régularisée d'une parabole tronquée est représentée sur la Figure~\ref{fig:regul_para_coupee} (on prend ici $a=126; u=E(\tau)-127.5$). Les niveaux de gris optimaux obtenus avec cette nouvelle pénalisation plus régulière sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
 
 
 Visiblement rien ne semble y faire : il y a toujours des valeurs de~$\tau_N$ qui s'approchent des bornes autorisées et les cas où l'on considère les images~$[2,5,7]$ et~$[3,7,9]$ par exemple  fournissent des résultats très différents selon les algorithmes d'optimisation utilisés, qui de plus font apparaître~$\tau_N{\gg}\tau_S$ ce qui est aberrant.
