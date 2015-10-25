@@ -111,7 +111,8 @@ Notons que la fonction n'est régulière qu'aux abords des minimums. La valeur 0
 Remarquons également que plus le paramètre $c$ est grand, plus l'intervalle sur lequel agit la régularisation est large.
 
 
-On pourrait aller beaucoup plus loin dans l'étude des propriétés de cette régularisation. \todo{biblio} De nombreuses publications ont été faites notamment dans des cas où l'on ne connait pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
+On pourrait aller beaucoup plus loin dans l'étude des propriétés de cette régularisation. %%\todo{biblio} 
+De nombreuses publications ont été faites notamment dans des cas où l'on ne connait pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
 
 %%%%%%%%%%%%%%%%%
 \subsection{Régularisation de Moreau-Yosida appliquée à une parabole tronquée.}
@@ -337,11 +338,12 @@ Les résultats des optimisations de niveaux de gris faites avec la pénalisation
 La pénalisation considérée ici n'est que~$\mathscr{C}^0$ car il y a 2 points anguleux. Peut-être que cette régularité n'est pas suffisante encore.
 
 
-Essayons donc une troisième fonction de pénalisation qui soit~$\mathscr{C}^1$. Considérons la régularisation de Moreau-Yosida de la pénalisation précédente. La courbe de la régularisée d'une parabole tronquée est représentée sur la Figure~\ref{fig:regul_para_coupee} (on prend ici $a=126; u=E(\tau)-127.5$). Les niveaux de gris optimaux obtenus avec cette nouvelle pénalisation plus régulière sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}.
+Essayons donc une troisième fonction de pénalisation qui soit~$\mathscr{C}^1$. Considérons la régularisation de Moreau-Yosida de la pénalisation précédente. La courbe de la régularisée d'une parabole tronquée est représentée sur la Figure~\ref{fig:regul_para_coupee} (on prend ici $a=126; u=E(\tau)-127.5$). Les niveaux de gris optimaux obtenus avec cette nouvelle pénalisation plus régulière sont présentés dans la Table~\ref{tab:optim2gris_pen_quad_reg}. 
+Visiblement, il n'y a pas d'amélioration ici~: il y a toujours des valeurs de~$\tau_N$ qui s'approchent des bornes autorisées et les cas où l'on considère les images~$[2,5,7]$ et~$[3,7,9]$ par exemple  fournissent des résultats très différents selon les algorithmes d'optimisation utilisés, qui de plus font apparaître~$\tau_N{\gg}\tau_S$ ce qui est aberrant.
+%La régularité de la pénalisation ne semble donc pas en cause ici. En effet, le problème vient d'ailleurs (\cf fin de la Section~\ref{sec:optim_2_param} traitant des problèmes de mauvais conditionnement des systèmes considérés).
 
 
-Visiblement rien ne semble y faire : il y a toujours des valeurs de~$\tau_N$ qui s'approchent des bornes autorisées et les cas où l'on considère les images~$[2,5,7]$ et~$[3,7,9]$ par exemple  fournissent des résultats très différents selon les algorithmes d'optimisation utilisés, qui de plus font apparaître~$\tau_N{\gg}\tau_S$ ce qui est aberrant.
-La régularité de la pénalisation ne semble donc pas en cause ici. En effet, le problème vient d'ailleurs (\cf fin de la Section~\ref{sec:optim_2_param} traitant des problèmes de mauvais conditionnement des systèmes considérés).
+Les différentes méthodes de pénalisations sont donc sensiblement toutes équivalentes et les imprécisions sur les déterminations de niveaux de gris~$\tau_N$ et~$\tau_P$ proviennent de problèmes de mauvais conditionnement (\cf fin de la Section~\ref{sec:optim_2_param}, page~\pageref{subsec:pb_condi}).
 
 %En ce qui concerne l'aberration, cela peut venir du fait que les images 5,7 et 9 sont petites, et donc le bruit est très important et l'image numéro 3, de taille moyenne n'arrive pas à rattraper ce bruit. Il faut donc éviter de prendre en compte les images où la tumeur est trop petite, et si l'on en prend il faut que ces images soient minoritaires devant les autres.
 

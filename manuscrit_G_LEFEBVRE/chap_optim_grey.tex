@@ -245,7 +245,7 @@ La résolution de l'équation~\eqref{eq:min_optim_grey} fournit le~$\tau$ optima
 %\item la fonction coût utilisée
 \end{myitemize}
 
-\todo[noline]{Presenter les algo}
+%%\todo[noline]{Presenter les algo}
 Dans tous les cas, on ne considérera pas le premier scanner (numéro~0) car la condition initiale du modèle EDP (donnée par les équations~\eqref{eq:CI_forme} et~\eqref{eq:CI} page~\pageref{eq:CI_forme}) n'est pas prise de sorte à respecter la répartition des niveaux de gris du scanner. Evitons donc d'inclure dans l'optimisation une erreur de base qui serait incompressible. On regardera des situations avec seulement 2 images (problème sous-déterminé) ou 3 images (problème fermé) ou plus (problème sur-déterminé).
 
 En ce qui concerne les algorithmes d'optimisations utilisés, nous en choisirons quatre~:
@@ -289,12 +289,12 @@ Il n'en reste pas moins que le niveau de gris~$\tau_S$ est mal estimé, et ce qu
 
 %%%%%  ---- SECTION  OPTIM SUR 2 NVX DE GRIS ----- %%%%%
 \section{Optimisation sur 2 paramètres, $\tau_S$ fixé \label{sec:optim_2_param}}
-Pour essayer de palier aux problèmes rencontrés dans la section précédente, nous allons fixer~$\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de~0 à~255). Cette valeur a été fixée en réalisant un contourage d'une zone de tissu sain dans OsiriX (\cf  Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de~134.5 HU. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, 134.5~HU est  équivalent à un gris de 77\% soit un gris de niveau~197.
+Pour essayer de palier aux problèmes rencontrés dans la section précédente, nous allons fixer~$\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de~0 à~255). Cette valeur a été fixée en réalisant un contourage d'une zone de tissu sain dans OsiriX (\cf  Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de~\numprint[HU]{134.5}. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, \numprint[HU]{134.5} est  équivalent à un gris de 77\% soit un gris de niveau~197.
 
 
 \begin{figure}
 \includegraphics[width=\textwidth]{OsiriX_gris_sain_rognee.png}
-\caption{\label{fig:contourage_sain}Contourage d'une zone saine réalisé à l'aide du logiciel OsiriX -- Moyenne de la valeur des pixels dans ce périmètre : 134.5 HU (avec une échelle HU de \mbox{-135 à 215}).}
+\caption{\label{fig:contourage_sain}Contourage d'une zone saine réalisé à l'aide du logiciel OsiriX -- Moyenne de la valeur des pixels dans ce périmètre : \numprint[HU]{134.5} (avec une échelle HU de \mbox{-135 à 215}).}
 \end{figure}
 
 %%%%%% Cout1
@@ -347,8 +347,12 @@ Pour essayer de palier aux problèmes rencontrés dans la section précédente, 
 }%
 \DTLforeach*{optim2_1stat}{%
 \NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
+\ifthenelse{\value{DTLrowi}=1}{
 \\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
-Moyenne : & \col & \CG & \NM & \BFGS  }
+Moyenne : & \col & \CG & \NM & \BFGS }{}%
+\ifthenelse{\value{DTLrowi}=2}{
+\\ \hline Ecart-type : & \col & \CG & \NM & \BFGS }{}%
+ }
 \\ \hline
 \end{tabular}
 %\centering
@@ -410,6 +414,46 @@ Moyenne : & \col & \CG & \NM & \BFGS  }
 %%\vspace{-4cm}
 \end{table}
 \DTLcleardb{optim2_1bgrey}
+
+
+
+Ainsi nous résolvons toujours l'équation~\eqref{eq:Atau_egal_B}, mais ici avec
+\begin{equation}
+\label{eq:corresp_A_integ}
+\begin{aligned}
+A_{i,...}.\tau & = \frac{1}{\mathcal{N}\big(Z_1(t_i)\big)}\left( \tau_N\!\!\sum_{x\in Z_1(t_i)}\!\!N(t_i,x) + \tau_P\!\!\sum_{x\in Z_1(t_i)}\!\!P(t_i,x) \right), \\
+B_i &= \frac{1}{\mathcal{N}\big(Z_2(t_i)\big)} \sum_{x\in Z_2(t_i)}\!\! s(t_i,x,z_0) - \frac{\bar{\tau_S}}{\mathcal{N}\big(Z_1(t_i)\big)}\sum_{x\in Z_1(t_i)}\!\!S(t_i,x),
+\end{aligned}
+\end{equation}
+avec $i \in \{1,...,n\}$, 
+où~$A_{i,...}$ désigne la $i$-ième ligne de la matrice~$A$ et où~$\bar{\tau_S}$ est fixé à~197.
+
+
+Les premiers essais ont été réalisés avec la même fonction coût \eqref{eq:min_optim_grey} et avec la même pénalisation~\eqref{eq:penalisation_creneau} que pour l'optimisation sur 3 paramètres. 
+L'ensemble des résultats d'optimisation de~$\tau_N$ et de~$\tau_P$ avec~$\tau_S$ fixé à~197  %%et (( avec une parabole tronquée régularisée comme pénalisation ))\todo{penalisation} 
+est fourni dans les Tables~\ref{tab:optim2gris} et~\ref{tab:optim2gris_bad}. 
+
+
+La Table~\ref{tab:optim2gris} présente les cas correctement convergés. Ici les niveaux de gris moyens fournis sont conformes aux attentes dans le sens où l'on a~$\tau_N{<}\tau_P{<}\tau_S$.  Une nouvelle fois, l'algorithme basé sur la méthode des moindres carrés se démarque des 3 autres qui fournissent des optima très similaires. 
+Contrairement aux résultats fournis par l'optimisation sur 3 paramètres, les variations sur les optima sont beaucoup moins importantes en fonction des images choisies, comme en atteste le faible écart-type, inférieur à 10 niveaux de gris (\cf dernière ligne de la Table~\ref{tab:optim2gris}), voire inférieur à 5 niveaux de gris pour l'algorithme SLSQP sur les 256 qu'offre l'échelle.  
+Les résultats obtenus ici sont donc tout à fait satisfaisants.  
+Les niveaux de gris que l'on pourra considérer comme optimaux seront ainsi donnés par la moyenne de tous ces cas de figures, à savoir aux environs de~: 
+\begin{equation}
+\tau_N=25, \quad \tau_P=143, \quad \textrm{avec\ } \tau_S = 197. 
+\end{equation}
+
+
+Notons tout de même que dans certaines configurations, présentées dans la Table~\ref{tab:optim2gris_bad}, les algorithmes tendent vers un jeu de paramètres optimal qui s'approche du bord 0 ou du bord 255 %, voire qui est négatif 
+(\ie non convergence de l'algorithme d'optimisation) %. 
+%Même en écartant les configurations qui tendent vers le bord~0, il reste encore quelques combinaisons qui paraissent très pathologiques avec
+ou bien tel que~$\tau_N{\gg}\tau_S$ ce qui est aberrant. 
+%Notons que l'algorithme basé sur la méthode des moindres carrés semble moins touché par ce problème. 
+Ces erreurs pourraient être dues notamment au fait que la pénalisation choisie \eqref{eq:penalisation_creneau} présente une discontinuité. 
+Les algorithmes de descente fonctionnant sur une approximation du gradient peuvent ainsi être perturbés par cette discontinuité aux abords des bornes autorisées. Dans l'annexe~\ref{chap:anx_penalisation} page~\pageref{chap:anx_penalisation}, l'enquête menée sur les fonctions de pénalisation est présentée. 
+Des pénalisations plus régulières ont été testées (parabole tronquée et parabole tronquée régularisée) mais n'améliorent que très peu le résultat final. Ceci nous amène à penser que ce n'est donc pas la régularité de la pénalisation qui est à mettre en cause mais les données elles-mêmes. Certaines combinaisons d'images fourniraient donc de mauvais résultats, d'autres de bons.  
+
+
+\subsubsection*{Pourquoi y-a-t-il des cas convergents et d'autres non ?\label{subsec:pb_condi}}
 
 %%%%%%% Tableau conditionnement
 \DTLloaddb{optim2_1bcond}{../data/cout_1_bad/optim2_cond.csv}
@@ -515,51 +559,23 @@ $[1,3]$ & 1.8e+01 \\ \hline
 \DTLcleardb{optim2_1gcond}
 \DTLcleardb{optim3_1gcond}
 
-
-
-Ainsi nous résolvons toujours l'équation~\eqref{eq:Atau_egal_B}, mais ici avec
-\begin{equation}
-\label{eq:corresp_A_integ}
-\begin{aligned}
-A_{i,...}.\tau & = \frac{1}{\mathcal{N}\big(Z_1(t_i)\big)}\left( \tau_N\!\!\sum_{x\in Z_1(t_i)}\!\!N(t_i,x) + \tau_P\!\!\sum_{x\in Z_1(t_i)}\!\!P(t_i,x) \right), \\
-B_i &= \frac{1}{\mathcal{N}\big(Z_2(t_i)\big)} \sum_{x\in Z_2(t_i)}\!\! s(t_i,x,z_0) - \frac{\bar{\tau_S}}{\mathcal{N}\big(Z_1(t_i)\big)}\sum_{x\in Z_1(t_i)}\!\!S(t_i,x),
-\end{aligned}
-\end{equation}
-avec $i \in \{1,...,n\}$, 
-où~$A_{i,...}$ désigne la $i$-ième ligne de la matrice~$A$ et où~$\bar{\tau_S}$ est fixé à~197.
-
-
-Les premiers essais ont été réalisés avec la même fonction coût \eqref{eq:min_optim_grey} et avec la même pénalisation~\eqref{eq:penalisation_creneau} que pour l'optimisation sur 3 paramètres. 
-L'ensemble des résultats d'optimisation de~$\tau_N$ et de~$\tau_P$ avec~$\tau_S$ fixé à~197  %%et (( avec une parabole tronquée régularisée comme pénalisation ))\todo{penalisation} 
-est fourni dans les Tables~\ref{tab:optim2gris} et~\ref{tab:optim2gris_bad}. 
-
-
-La Table~\ref{tab:optim2gris} présente les cas correctement convergés. Ici les niveaux de gris moyens fournis sont conformes aux attentes dans le sens où l'on a~$\tau_N{<}\tau_P{<}\tau_S$.  Une nouvelle fois, l'algorithme basé sur la méthode des moindres carrés se démarque des 3 autres qui fournissent des optima très similaires. 
-Contrairement aux résultats fournis par l'optimisation sur 3 paramètres, les variations sur les optima sont beaucoup moins importantes en fonction des images choisies.
-
-
-Cependant dans certaines configurations, présentées dans la Table~\ref{tab:optim2gris_bad}, les algorithmes tendent vers un jeu de paramètres optimal qui s'approche du bord 0 ou du bord 255, voire qui est négatif (\ie non convergence de l'algorithme d'optimisation). 
-Même en écartant les configurations qui tendent vers le bord~0, il reste encore quelques combinaisons qui paraissent très pathologiques avec~$\tau_N{\gg}\tau_S$ ce qui est aberrant. 
-Notons que l'algorithme basé sur la méthode des moindres carrés semble moins touché par ce problème. 
-Ces erreurs pourraient être dues notamment au fait que la pénalisation choisie \eqref{eq:penalisation_creneau} présente une discontinuité. 
-Les algorithmes de descente fonctionnant sur une approximation du gradient peuvent ainsi être perturbés par cette discontinuité  aux abords des bornes autorisées. Dans l'annexe~\ref{chap:anx_penalisation} page~\pageref{chap:anx_penalisation}, l'enquête menée sur les fonctions de pénalisation est présentée. 
-Des pénalisations plus régulières ont été testées (parabole tronquée et parabole tronquée régularisée) mais n'améliorent que très peu le résultat final. Ceci nous amène à penser que ce n'est donc pas la régularité de la pénalisation qui est à mettre en cause mais les données elles-mêmes. Certaines combinaisons d'images fourniraient donc de mauvais résultats. 
-
-
-
-
 Pour une combinaison de 2 ou 3 images, on s'attend à ce que l'optimum soit la solution exacte du système linéaire, et ce indépendamment de l'algorithme choisi. Dans la mesure où ce n'est pas le cas, nous devons nous interroger sur le conditionnement des systèmes que l'on résout. S'ils ne 
 sont pas bien conditionnés, alors une petite perturbation des données entraîne un très grand écart sur la solution du système. Bien que nous ne résolvions pas directement le système, mais que nous effectuions une minimisation, ces problèmes de sensibilité aux données n'ont aucune raison de ne pas se reporter. La Table~\ref{tab:condi2} présente les conditionnements (rapport de la plus grande valeur propre sur la plus petite) associés aux différentes combinaisons d'images que nous avons examinées. 
 Pour les cas ayant bien convergé (partie inférieure des tableaux), le conditionnement reste raisonnable (excepté peut-être pour le cas~[1,2,3]). 
-Maintenant, si on examine les cas ayant mal convergé, on constate des conditionnements très élevés (dans la partie supérieure des tableaux, les conditionnements dépassent~$10^3$). Le conditionnement semble donc expliquer la plupart des configurations non convergentes avec~2 ou~3 images. Pour les configurations où l'on considère un plus grand nombres d'images, si un sous-ensemble d'images fournit une configuration instable, alors il y a de fortes chances que l'image (ou les 2 images) supplémentaire(s) ne parvienne(nt) pas à contrebalancer cette instabilité. On pourra donner comme  exemple la configuration~[2,5,7] pour laquelle l'ajout de l'image n°1 ne fournit pas d'amélioration (\cf résultats de la configuration~[1,2,5,7]) ou bien la configuration~[1,3,5,7] qui n'améliore pas la configuration~[3,5,7] ou encore la configuration~[1,3,7,11] qui n'améliore pas non plus la configuration~[1,7,11].
+Maintenant, si on examine les cas ayant mal convergé, on constate des conditionnements très élevés (dans la partie supérieure des tableaux, les conditionnements dépassent~$10^3$). 
+Le conditionnement semble donc expliquer pourquoi certaines configurations avec 2 ou 3 images convergent bien, et d'autres non. 
+Pour les configurations avec plus d'images, un examen des conditionnements des sous-systèmes carrés permet d'arriver à la même conclusion. 
+%Le conditionnement semble donc expliquer la plupart des configurations non convergentes avec~2 ou~3 images. 
+% Pour les configurations où l'on considère un plus grand nombres d'images, si un sous-ensemble d'images fournit une configuration instable, alors il y a de fortes chances que l'image (ou les 2 images) supplémentaire(s) ne parvienne(nt) pas à contrebalancer cette instabilité. On pourra donner comme  exemple la configuration~[2,5,7] pour laquelle l'ajout de l'image n°1 ne fournit pas d'amélioration (\cf résultats de la configuration~[1,2,5,7]) ou bien la configuration~[1,3,5,7] qui n'améliore pas la configuration~[3,5,7] ou encore la configuration~[1,3,7,11] qui n'améliore pas non plus la configuration~[1,7,11].
 
-
-Pour les configurations contenant l'image n°11, on peut aussi avancer que le modèle EDP n'est pas proche de la réalité en terme de volume tumoral (\cf Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert}). Bien qu'ici les niveaux de gris soit moyennés, il y a certainement des erreurs qui se reportent sur nos systèmes.
+%Pour les configurations contenant l'image n°11, on peut aussi avancer que le modèle EDP n'est pas proche de la réalité en terme de volume tumoral (\cf Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert}). Bien qu'ici les niveaux de gris soit moyennés, il y a certainement des erreurs qui se reportent sur nos systèmes.
 
 \section{Conclusion}
-L'algorithme basé sur la méthode des moindres carrés semble plus robuste que les autres méthodes examinées. Malgré tout, il peut également fournir des résultats biaisés dans le cas de systèmes mal conditionnés. Il est donc important d'examiner le conditionnement -- ou du moins le conditionnement des sous-systèmes carrés -- pour donner de la crédibilité (ou non) aux optima fournis.
+Des cas mal conditionnés ont été identifiés. Après élimination de ceux-ci, on considère les optima fournis par les cas biens conditionnés restants. Les optima fournis sont relativement proches les uns des autres même en faisant varier la méthode d'optimisation ou bien les images considérées comme en atteste la Table~\ref{tab:optim2gris}. Dans la suite de ce manuscrit, on fixera alors les niveaux de gris~$\tau_N=25$, $\tau_P=143$ et~$\tau_S=197$ qui sont les niveaux de gris moyens identifiés comme optimaux. 
 
-Dans les cas bien conditionnés,  les optima fournis sont relativement proches les uns des autres même en faisant varier la méthode d'optimisation ou bien les images considérées comme en atteste la Table~\ref{tab:optim2gris}. Dans la suite de ce manuscrit, on fixera alors les niveaux de gris~$\tau_N=25$, $\tau_P=143$ et~$\tau_S=197$.
+%L'algorithme basé sur la méthode des moindres carrés semble plus robuste que les autres méthodes examinées. Malgré tout, il peut également fournir des résultats biaisés dans le cas de systèmes mal conditionnés. Il est donc important d'examiner le conditionnement -- ou du moins le conditionnement des sous-systèmes carrés -- pour donner de la crédibilité (ou non) aux optima fournis.
+%
+%Dans les cas bien conditionnés,  les optima fournis sont relativement proches les uns des autres même en faisant varier la méthode d'optimisation ou bien les images considérées comme en atteste la Table~\ref{tab:optim2gris}. Dans la suite de ce manuscrit, on fixera alors les niveaux de gris~$\tau_N=25$, $\tau_P=143$ et~$\tau_S=197$.
 
 
 \end{document}
