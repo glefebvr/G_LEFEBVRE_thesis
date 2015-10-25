@@ -284,12 +284,12 @@ Bien que paraissant le meilleur algorithme, l'optimisation réalisée par la mé
 
 Pour expliquer l'erreur commise sur~$\tau_S$, on pourrait penser à une large variabilité permise sur ce paramètre due à la présence très minoritaire de tissu  sain dans la tumeur. Ainsi~$\tau_S$ serait très peu influent dans le calcul de l'erreur~\eqref{eq:min_optim_grey}. Cependant après avoir examiné de plus près les valeurs des intégrales de l'équation~\eqref{eq:optim_grey_integ_aire} (\ie les coefficients de la matrice~$A$), il y a toujours au moins 10\% de cellules saines. La plupart du temps, elles sont réparties sur le pourtour de la tumeur, dans la zone de transition sur laquelle il y a un mélange de tissu sain et de tissu tumoral. Ceci écarte donc l'hypothèse avancée. On pourrait alors avancer des variations dans les données (bruit dans les images, erreur sur le contourage, variation du temps d'acquisition du scanner qui impacte les niveaux de gris, ... ) pour justifier cela, mais les impacts sont difficiles à mesurer. 
 Il n'en reste pas moins que le niveau de gris~$\tau_S$ est mal estimé, et ce quel que soit l'algorithme d'optimisation utilisé. 
-%%Pour palier à cela, nous allons le fixer dans la section suivante.
+%%Pour pallier à cela, nous allons le fixer dans la section suivante.
 
 
 %%%%%  ---- SECTION  OPTIM SUR 2 NVX DE GRIS ----- %%%%%
 \section{Optimisation sur 2 paramètres, $\tau_S$ fixé \label{sec:optim_2_param}}
-Pour essayer de palier aux problèmes rencontrés dans la section précédente, nous allons fixer~$\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de~0 à~255). Cette valeur a été fixée en réalisant un contourage d'une zone de tissu sain dans OsiriX (\cf  Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de~\numprint[HU]{134.5}. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, \numprint[HU]{134.5} est  équivalent à un gris de 77\% soit un gris de niveau~197.
+Pour essayer de pallier aux problèmes rencontrés dans la section précédente, nous allons fixer~$\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de~0 à~255). Cette valeur a été fixée en réalisant un contourage d'une zone de tissu sain dans OsiriX (\cf  Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de~\numprint[HU]{134.5}. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, \numprint[HU]{134.5} est  équivalent à un gris de 77\% soit un gris de niveau~197.
 
 
 \begin{figure}

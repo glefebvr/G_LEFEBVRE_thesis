@@ -224,7 +224,7 @@
   \fancyfoot[LO,RE]{{\fontfamily{pzc}\selectfont\small Guillaume Lefebvre}}%
   %%\addtolength{\footskip}{7mm}%
   \renewcommand{\headrulewidth}{0pt}%
-  \fancyhead[CO]{(Version du \today, \printtime)} %%%% A retirer pour la version definitive
+  %%%\fancyhead[CO]{(Version du \today, \printtime)} %%%% A retirer pour la version definitive
 }
 
 \fancypagestyle{prefacestyle}{%
@@ -353,6 +353,11 @@
 
 \input{mes_macros.tex}
 
+%\newcommand{\titrefr}{Résistances aux traitements : modélisation et analyse de l'\hetero tumorale dans le cas de métastases hépatiques de GIST}
+%\newcommand{\titreen}{Treatments resistances~: tumor heterogeneity modeling and analysis in case of GIST liver metastases}
+
+\newcommand{\titrefr}{Modélisation et analyse de l'\hetero tumorale lors de résistance aux traitements~: cas des métastases hépatiques de GIST}
+\newcommand{\titreen}{Tumor heterogeneity modeling and analysis, during  treatments resistance: case of GIST liver metastases}
 
 %%%=====================================================%%%%
 %%%      ***     --- DEBUT DU DOCUMENT ----    ***       %%%%
@@ -373,12 +378,17 @@ Thèse de \\
 ~\\
 {\LARGE Guillaume LEFEBVRE}\\
 \vspace{5cm}
-Résistances aux traitements : modélisation et analyse de l'\hetero tumorale dans le cas de métastases hépatiques de GIST. \\
+\titrefr \\
 \vspace{5cm}
+\normalsize
 Version du \today, \printtime
 \end{titlepage}
 
 \frontmatter % Le prologue du livre
+
+\cleardoublepage
+\subfile{resume}
+
 
 %\specialchap{Remerciements} %%% defauts si mis dans un autre fichier avec subfile
 %%\chapter{Remerciements}

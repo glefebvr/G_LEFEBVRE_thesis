@@ -243,10 +243,10 @@ Dans le cas particulier où $k\equiv1$ et où $\Delta x = \Delta y := h$ alors l
 \Leftrightarrow \dfrac{1}{4h^2} \Big[  & -\Pi_{i-1}^{j-1} -2 \Pi_i^{j-1} - \Pi_{i+1}^{j-1} - 2\Pi_{i-1}^j + 12 \Pi_i^j \\
 & \hspace{3cm} - 2\Pi_{i+1}^j - \Pi_{i-1}^{j+1} -2 \Pi_i^{j+1} - \Pi_{i+1}^{j+1} \Big]  = F_i^j \numberthis
 \end{align*}
-Le schéma présenté ici est donc équivalent à un schéma à 9 points, comme illustré sur la Figure~\ref{fig:schema_laplace_9pts_custom}, avec des poids différents des poids standards (comme utilisé dans~\ref{leveque2007finite}).
+Le schéma présenté ici est donc équivalent à un schéma à 9 points, comme illustré sur la Figure~\ref{fig:schema_laplace_9pts_custom}, avec des poids différents des poids standards (comme utilisé dans~\cite{leveque2007finite}).
 
 \begin{figure}
-\subfloat[\label{fig:schema_laplace_9pts_classique}Schéma classique]{
+\subfloat[\label{fig:schema_laplace_9pts_classique}Schéma classique (\cf \cite{leveque2007finite})]{
 \resizebox{.49\textwidth}{!}{\input{tex_pictures/stencil_9pts_classique.tex}}}
 \subfloat[\label{fig:schema_laplace_9pts_custom}Autre schéma découlant d'une méthode mixte VF/EF présentée dans l'annexe annexe~\ref{chap:anx_methode_mixte_VFEF}]{
 \resizebox{.49\textwidth}{!}{\input{tex_pictures/stencil_9pts_custom.tex}}}
