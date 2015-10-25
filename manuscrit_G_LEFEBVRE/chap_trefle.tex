@@ -12,17 +12,18 @@
 %
 %\mylettrine{T}{ransporter} (ou diffuser) une quantité invariante par rotation n'est pas chose facile. Pour illustrer cela, nous allons montrer dans un premier temps les résultats obtenus, lorsqu'on discrétise le modèle présenté au chapitre précédent avec des schémas classiques.  Nous examinerons ensuite les diverses sources causant
 
-\mylettrine{C}{onsidérons} le modèle que nous avons construit au chapitre précédent avec pour donnée initiale des densités invariantes par rotation. Le champ de vitesses (dont la divergence est  donnée par ces mêmes densités, \cf Eq.~\eqref{eq_darcy}) est donc invariant par rotation. Ainsi pour tout temps nos densités devraient être invariantes par rotation. Sauf que sur maillage cartésien, avec les schémas numériques classiques, pour certains jeux de paramètres,  cette propriété n'est pas du tout conservée au fil du temps... Comme nous allons le présenter au début de ce chapitre, les lignes de niveaux, au départ circulaires, vont peu à peu se déformer devenant progressivement carrées puis prenant plus tard la forme d'un trèfle à 4 feuilles !... Deux pistes seront alors étudiées~:
+\mylettrine{C}{onsidérons} le modèle que nous avons construit au chapitre précédent avec pour donnée initiale des densités invariantes par rotation. Le champ de vitesses (dont la divergence est  donnée par ces mêmes densités, \cf Eq.~\eqref{eq_darcy}) est donc invariant par rotation. Ainsi pour tout temps nos densités devraient être invariantes par rotation. Sauf que sur maillage cartésien, avec les schémas numériques classiques, pour certains jeux de paramètres,  cette propriété n'est pas du tout conservée au fil du temps... Comme nous allons le présenter au début de ce chapitre, les lignes de niveaux, au départ circulaires, vont peu à peu se déformer devenant progressivement carrées puis prenant plus tard la forme d'un trèfle à 4 feuilles.  
+Deux pistes seront alors étudiées~:
 \begin{myitemize}
 \item défaut du schéma de diffusion
 \item défaut du schéma de transport
 \end{myitemize}
 
-
 \noindent Une fois le défaut identifié, un correctif sera finalement proposé~: le schéma \twinweno. 
 
 \section{Présentation du problème}
-Sans plus tarder, présentons le problème en image. Sur la Figure~\ref{fig:trefle}, est présentée une simulation numérique du modèle EDP construit au chapitre précédent avec~:
+%%Sans plus tarder, présentons le problème en image. 
+Sur la Figure~\ref{fig:trefle}, est présentée une simulation numérique du modèle EDP construit au chapitre précédent avec~:
 \begin{myitemize}
 \item un schéma classique à 5 points pour la diffusion,
 \item un WENO5 (avec splitting directionnel) pour le transport.
@@ -41,27 +42,28 @@ Sans plus tarder, présentons le problème en image. Sur la Figure~\ref{fig:tref
 \caption{\label{fig:trefle} Simulations numériques réalisées avec un WENO5 pour le transport et un Laplacien classique à 5 points pour la diffusion. Partant d'une donnée initiale circulaire, 
 une structure en forme de trèfle apparaît.}
 \end{figure}
-
 Partant d'une donnée initiale irrotationelle, on constate que la simulation numérique peut générer une structure en forme de trèfle, comme présentée  sur la Figure~\ref{fig:trefle}, alors que la forme circulaire devrait être préservée. 
 
-Ce problème n'apparaît pas de manière systématique. L'ensemble des simulations numériques réalisées pour \Nber, ne le faisait pas apparaître. Le problème a été identifié par incident, lorsque nous cherchions à recoller notre modèle aux données de \Chen. 
+Ce problème n'apparaît pas de manière systématique. L'ensemble des simulations numériques réalisées pour \Nber, ne le fait pas apparaître. Le problème a été identifié en traitant les données concernant~\Chen. 
+%par incident, lorsque nous cherchions à recoller notre modèle aux données de \Chen. 
 
 
-Notez que ce type d'erreur sur la forme conduit à une erreur sur l'évolution de l'aire de la lésion. En effet la forme de trèfle augmente la surface de contact ce qui modifie l'interaction entre la vascularisation et la tumeur. Ce type d'instabilités doit être fixé.
+Notons que ce type d'erreur sur la forme conduit à une erreur sur l'évolution de l'aire de la lésion. En effet la forme de trèfle augmente la surface de contact ce qui modifie l'interaction entre la vascularisation et la tumeur. Ce type d'instabilités doit être fixé.
 
 
 \section{Le schéma de diffusion}
 \subsection{Influence de la condition limite}
-Le schéma associé à la diffusion a été le premier à être incriminé. En effet dans l'équation~\eqref{eq_pression_disc} sur la pression~$\Pi$, la condition limite (CL) est imposée au bord du domaine de calcul~$\Omega$, domaine qui est carré. La CL ne vérifie donc pas, dès le départ, l'invariance par rotation. Ceci est illustré sur la Figure~\ref{fig:ligne_nvx_laplace_carre} qui présente la solution de l'équation
-\begin{equation}\label{eq:pression_iter1}
-\left\{
-\begin{aligned}
--\Delta \Pi(\vecx) &= P(t=0,x) & \quad \textrm{ dans }  \Omega , \\
-\Pi(\vecx) &=0 & \quad \textrm{ sur  } \partial \Omega,
-\end{aligned}
-\right.
-\end{equation}
-qui n'est autre que l'équation résolue lors de la première itération de l'algorithme sur le modèle complet ($M$ étant initialisé au dessus du seuil d'hypoxie, on a alors au départ $\gammapp=1$ dans l'équation~\eqref{eq_darcy}. De plus, comme $N=0$ au départ, on obtient alors $\dive \vit = P$, car $k\equiv1$). Dans les itérations suivantes certes le second membre de l'équation va varier, mais cela ne va pas changer le fait que la forme du bord impacte les lignes de niveaux.
+Le schéma associé à la diffusion a été le premier à être incriminé. En effet dans l'équation~\eqref{eq_pression_disc} sur la pression~$\Pi$, la condition limite (CL) est imposée au bord du domaine de calcul~$\Omega$, domaine qui est carré. La CL ne vérifie donc pas, dès le départ, l'invariance par rotation, comme présenté sur la Figure~\ref{fig:ligne_nvx_laplace_carre}.  %Ceci est illustré sur la Figure~\ref{fig:ligne_nvx_laplace_carre}, qui montre les lignes de niveaux de la pression. 
+% qui présente la solution de l'équation
+%\begin{equation}\label{eq:pression_iter1}
+%\left\{
+%\begin{aligned}
+%-\Delta \Pi(\vecx) &= P(t=0,x) & \quad \textrm{ dans }  \Omega , \\
+%\Pi(\vecx) &=0 & \quad \textrm{ sur  } \partial \Omega,
+%\end{aligned}
+%\right.
+%\end{equation}
+%qui n'est autre que l'équation résolue lors de la première itération de l'algorithme sur le modèle complet ($M$ étant initialisé au dessus du seuil d'hypoxie, on a alors au départ $\gammapp=1$ dans l'équation~\eqref{eq_darcy}. De plus, comme $N=0$ au départ, on obtient alors $\dive \vit = P$, car $k\equiv1$). Dans les itérations suivantes certes le second membre de l'équation va varier, mais cela ne va pas changer le fait que la forme du bord impacte les lignes de niveaux.
 \begin{figure}
 \centering
 \subfloat[Sans masque\label{fig:ligne_nvx_laplace_carre} ]{
@@ -74,43 +76,39 @@ qui n'est autre que l'équation résolue lors de la première itération de l'al
 {simu/graph_v2.2.d/ref_mask/pression_2.png}}
 %\vspace{-4mm}\\
 \caption{\label{fig:ligne_nvx_laplace} Résolution de la pression donnée par un laplacien. La forme du domaine de calcul carré se répercute sur le résultat.}
-\end{figure}
-
+\end{figure} 
 L'effet carré sur les lignes de niveaux de la pression, apparaît surtout près du bord du domaine de calcul. Ainsi, pour tenter de palier à ce défaut, la première idée fut de considérer un domaine plus grand, laissant une sorte de couche limite pour absorber les déformations. Des simulations numériques de notre modèle ont été réalisées en doublant la longueur dans chaque direction (la taille d'une maille restant inchangée, on double aussi le nombre de mailles). Malheureusement, une forme de trèfle est toujours visible. On a même du mal à distinguer visuellement s'il y a eu une amélioration. 
 %Visiblement cette 
 Cette couche limite ne suffit donc pas. 
-La seconde idée, fut d'imposer la CL sur un cercle, de sorte à ce que celle-ci soit invariante par rotation. Considérons alors un disque~$\mathcal{D}$ (un masque) inclus dans notre domaine de calcul initial~$\Omega$ et imposons la CL de Dirichlet sur son bord. L'équation~\eqref{eq_pression_disc} sur la pression devient alors~: 
-\begin{equation}\label{eq:pression_iter1_mask}
-\left\{
-\begin{aligned}
--\Delta \Pi(t,\vecx) &= F(t,\vecx) & \quad \textrm{ dans }  \mathcal{D} , \\
-\Pi(t,\vecx) &=0 & \quad \textrm{ sur  } \partial\mathcal{D},
-\end{aligned}
-\right. \quad \forall t>0
-\end{equation}
-Pour résoudre cela on procède par pénalisation de tout ce qui est à l'extérieur du disque~:
-\begin{equation}\label{eq:pression_masque_penalisation}
-- \Delta \Pi(t,\vecx) = F(t,\vecx) + \frac{1}{\epsilon} \Pi \mathds{1}_{\mathcal{D}^c}(\vecx),
-\end{equation}
-où $\mathcal{D}^c$ désigne le complémentaire de $\mathcal{D}$ et où $\epsilon$ est un paramètre de pénalisation (que l'on prend petit~: $10^-5$). Ainsi, le domaine de calcul reste~$\Omega$ entier, mais en dehors de~$\mathcal{D}$, la pénalisation impose\footnote{En multipliant l'équation~\eqref{eq:pression_masque_penalisation} par $\epsilon$ puis en faisant tendre $\epsilon$ vers 0, on obtient alors que la pénalisation impose $\Pi \mathds{1}_{\mathcal{D}^c}(\vecx)=0.$}~$\Pi=0$. Cette technique nous garantit ainsi l'invariance par rotation de~$\Pi$ si le terme source~$F$ l'est. 
-Comme on peut le voir sur la Figure~\ref{fig:ligne_nvx_laplace_mask}, l'utilisation d'un masque permet bien d'assurer la préservation de l'invariance par rotation sur la pression. Malheureusement, les simulations numériques réalisées avec ce masque circulaire ne montrent qu'une très légère amélioration 
+
+
+La seconde idée, fut d'imposer la CL sur un cercle, de sorte à ce que celle-ci soit invariante par rotation. 
+%Considérons alors un disque~$\mathcal{D}$ (un masque) inclus dans notre domaine de calcul initial~$\Omega$ et imposons la CL de Dirichlet sur son bord. L'équation~\eqref{eq_pression_disc} sur la pression devient alors~: 
+%\begin{equation}\label{eq:pression_iter1_mask}
+%\left\{
+%\begin{aligned}
+%-\Delta \Pi(t,\vecx) &= F(t,\vecx) & \quad \textrm{ dans }  \mathcal{D} , \\
+%\Pi(t,\vecx) &=0 & \quad \textrm{ sur  } \partial\mathcal{D},
+%\end{aligned}
+%\right. \quad \forall t>0
+%\end{equation}
+%Pour résoudre cela on procède par pénalisation de tout ce qui est à l'extérieur du disque~:
+%\begin{equation}\label{eq:pression_masque_penalisation}
+%- \Delta \Pi(t,\vecx) = F(t,\vecx) + \frac{1}{\epsilon} \Pi \mathds{1}_{\mathcal{D}^c}(\vecx),
+%\end{equation}
+%où $\mathcal{D}^c$ désigne le complémentaire de $\mathcal{D}$ et où $\epsilon$ est un paramètre de pénalisation (que l'on prend petit~: $10^-5$). Ainsi, le domaine de calcul reste~$\Omega$ entier, mais en dehors de~$\mathcal{D}$, la pénalisation impose\footnote{En multipliant l'équation~\eqref{eq:pression_masque_penalisation} par $\epsilon$ puis en faisant tendre $\epsilon$ vers 0, on obtient alors que la pénalisation impose $\Pi \mathds{1}_{\mathcal{D}^c}(\vecx)=0.$}~$\Pi=0$. Cette technique nous garantit ainsi l'invariance par rotation de~$\Pi$ si le terme source~$F$ l'est. 
+La CL est alors imposée via un masque que l'on gère dans le calcul numérique de la pression par une pénalisation.  
+Comme on peut le voir sur la Figure~\ref{fig:ligne_nvx_laplace_mask}, l'utilisation d'un masque permet bien d'assurer la préservation de l'invariance par rotation sur la pression. 
+Cependant, %Malheureusement, 
+les simulations numériques réalisées avec ce masque circulaire ne montrent qu'une très légère amélioration 
 %\todo{Montrer graphique?} 
 de la forme~: le trèfle persiste. 
 Explorons alors une autre piste. 
 
 \subsection{Schéma à 9 points}
 La forme du trèfle fait très clairement apparaître les directions du maillage. Il est alors légitime de se demander si un schéma avec un stencil à 9 points ferait aussi apparaître ce genre de forme. 
-\begin{figure}
-\subfloat[\label{fig:schema_laplace_9pts_classique}Schéma classique]{
-\resizebox{.49\textwidth}{!}{\input{tex_pictures/stencil_9pts_classique.tex}}}
-\subfloat[\label{fig:schema_laplace_9pts_custom}Autre schéma découlant d'une méthode mixte VF/EF présentée dans l'annexe annexe~\ref{chap:anx_methode_mixte_VFEF}]{
-\resizebox{.49\textwidth}{!}{\input{tex_pictures/stencil_9pts_custom.tex}}}
-\caption{\label{fig:schema_laplacien}Poids associés à chacun des points du stencil à 9 points de schémas discrétisant le laplacien ($h$ étant le pas d'espace, égal dans chaque direction).}
-\end{figure}
-Le premier schéma à 9 points essayé est le schéma classique, présenté notamment dans~\cite{leveque2007finite}, ayant des poids comme indiqués sur la Figure~\ref{fig:schema_laplace_9pts_classique}. Aucune amélioration n'a malheureusement été constatée... Un second schéma à 9 points a été imaginé à partir d'une méthode mixte éléments finis/volumes finis comme présentée et utilisée dans~\cite{latige2013second}. Le principe est le suivant.  
-%%%% Figure basculées en annexe
-Sur chaque maille~$\mathcal{M}$, une approximation par un polynôme~$\mathbb{Q}1$ est réalisée à partir des valeurs aux quatre coins de la maille. Le flux au travers du volume de contrôle est alors calculé comme l'intégrale sur le bord de ce volume, de la dérivée du polynôme. Les détails concernant cette méthode sont présentés en  annexe~\ref{chap:anx_methode_mixte_VFEF}. Il y est notamment montré que ce schéma mixte se ramène en réalité à un schéma à 9 points avec des poids un peu différents, comme présenté dans la Figure~\ref{fig:schema_laplace_9pts_custom}. 
-Ici encore le trèfle persiste. Tout ceci nous amène à penser que le schéma de diffusion n'est pas le responsable de cette instabilité numérique qui génère le trèfle. Regardons maintenant de plus près le schéma de transport. 
+Le premier schéma à 9 points essayé est le schéma classique, présenté notamment dans~\cite{leveque2007finite}, ayant des poids comme indiqués sur la Figure~\ref{fig:schema_laplace_9pts_classique}, page~\pageref{fig:schema_laplace_9pts_classique}. Aucune amélioration n'a malheureusement été constatée... Un second schéma à 9 points a été imaginé à partir d'une méthode mixte éléments finis/volumes finis comme présentée et utilisée dans~\cite{latige2013second} (méthode d'ordre 2 pour les équations elliptiques à coefficients discontinus, \cf annexe~\ref{chap:anx_methode_mixte_VFEF} pour plus de détail). 
+Ici encore le trèfle persiste. Tout ceci nous amène à penser que le schéma de diffusion n'est pas responsable de cette instabilité numérique qui génère le trèfle. Regardons maintenant de plus près le schéma de transport. 
 
 \section{Le schéma de transport}
 \subsection{Reproduction du problème sur un modèle réduit}

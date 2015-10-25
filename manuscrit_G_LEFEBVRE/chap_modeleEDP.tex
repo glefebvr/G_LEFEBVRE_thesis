@@ -375,7 +375,7 @@ et
     \Pi(t,\vecx) &=0 & \quad \textrm{ sur  }& \partial \Omega.
 \end{aligned}
 \right. \end{equation}
-Notez que la densité de cellules saines~$S$ est donnée par~\eqref{eq_saturation}.
+Notons que la densité de cellules saines~$S$ est donnée par~\eqref{eq_saturation}.
 
 
 %%%%%% Rajout par rapport à l'article
@@ -1004,7 +1004,16 @@ Dans cette section, on s'intéresse à \Chen, dont l'évolution tumorale est ass
 \end{myenumerate}
 Malheureusement, comme illustré par la Figure~\ref{fig_chen_spatial}, l'évolution tumorale est très rapide entre le scanner du jour~429 et celui de jour~845 sur lequel la métastase a atteint le bord du foie, et ainsi, avec notre modèle nous n'avons pas espoir de fournir une croissance tumorale numérique qui soit spatialement en accord avec les scanners car les effets de bord de l'organe devraient être pris en compte. Par conséquent, nous nous intéresserons à  l'aire tumorale comme donnée par les cliniciens, le principal enjeu ici étant de capter une croissance aussi rapide. 
 
-\begin{figure}[h]
+
+Comme le sunitinib est totalement inefficace dans ce cas, nous considérons que le 
+traitement~$\TI$ est administré du jour~0 au jour~845, tandis que le 
+traitement~$\TS$, basé sur le sorafinib, est administré du jour~1049 au jour~1600. 
+Nous avons trouvé des paramètres qui rendent possible la comparaison qualitative entre l'aire tumorale mesurée par les cliniciens et notre aire tumorale numérique. Ces paramètres sont donnés dans la  Table~\ref{table_param}. 
+La donnée initiale a été choisie invariante par rotation, puisque nous ne pouvons pas %en accord avec les données de la Figure~\ref{fig_chen_spatial_1}.
+ici reproduire la forme de la métastase qui atteint rapidement le bord du foie.
+Comme on peut le voir, l'évolution tumorale est très raide~: entre le  jour~416 et le jour~614 l'aire de la tumeur a été multipliée par plus de 9, et une fois que le sorafenib est administré, l'aire décroît de~4\;500\;$mm^2$ à~2\;850\;$mm^2$. Nous parvenons malgré tout à obtenir, au moins qualitativement, un tel comportement avec notre modèle, même si le fit n'est pas parfait. 
+
+\begin{figure}[t]
 \captionsetup[subfigure]{margin={7pt,7pt}}
 \begin{tabular}{@{\hspace{-1mm}}ccc}
 \setlength{\unitlength}{0.01\textwidth}
@@ -1046,15 +1055,6 @@ Les valeurs des paramètres utilisés dans la simulation numérique sont donnée
 \caption{\label{fig_chen_spatial} Evolution spatiale de la métastase hépatique de \Chen sur une série de scanners. Nous examinons l'évolution de la lésion\protect\footnotemark~située au départ en haut à gauche de la Figure~\ref{fig_chen_spatial_1}. Ici ne sont présentés qu'une sélection de scanners~: l'ensemble complet est présenté dans l'annexe~\ref{chap:anx_img_complement}.}
 \end{figure}
 \footnotetext{Ne pas confondre la métastase avec la vésicule biliaire qui est plus grosse sur les deux premiers scanners.}
-
-
-Comme le sunitinib est totalement inefficace dans ce cas, nous considérons que le 
-traitement~$\TI$ est administré du jour~0 au jour~845, tandis que le 
-traitement~$\TS$, basé sur le sorafinib, est administré du jour~1049 au jour~1600. 
-Nous avons trouvé des paramètres qui rendent possible la comparaison qualitative entre l'aire tumorale mesurée par les cliniciens et notre aire tumorale numérique. Ces paramètres sont donnés dans la  Table~\ref{table_param}. 
-La donnée initiale a été choisie invariante par rotation, puisque nous ne pouvons pas %en accord avec les données de la Figure~\ref{fig_chen_spatial_1}.
-ici reproduire la forme de la métastase qui atteint rapidement le bord du foie.
-Comme on peut le voir, l'évolution tumorale est très raide~: entre le  jour~416 et le jour~614 l'aire de la tumeur a été multipliée par plus de 9, et une fois que le sorafenib est administré, l'aire décroît de~4\;500\;$mm^2$ à~2\;850\;$mm^2$. Nous parvenons malgré tout à obtenir, au moins qualitativement, un tel comportement avec notre modèle, même si le fit n'est pas parfait. 
 
 
 Nous avons aussi examiné l'effet de l'efficacité du traitement~$\treat_1$, comme pour \Nber. 
