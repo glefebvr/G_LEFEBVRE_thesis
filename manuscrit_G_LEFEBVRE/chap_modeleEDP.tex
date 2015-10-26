@@ -794,7 +794,7 @@ $L=D=6\;cm$ avec 120 points dans chaque direction.
 Le pas de temps~$\Delta t$ est calculé en utilisant l'équation~\eqref{eq:dt}. 
 
 
-Les paramètres numériques ont été choisis de sorte à reproduire l'évolution de l'aire tumorale. En particulier, nous n'essayons pas de fiter avec les images, on vérifie seulement que l'évolution spatiale soit plausible comparée aux images médicales. La manière dont a été obtenu les paramètres est abordée dans la section~\ref{sec:code_modeleEDP} de l'annexe~\ref{chap:structure_code}.  L'ensemble des paramètres est résumé dans la Table~\ref{table_param}.
+Les paramètres numériques ont été choisis de sorte à reproduire l'évolution de l'aire tumorale. En particulier, nous n'essayons pas de fiter avec les images, nous vérifions seulement que l'évolution spatiale soit plausible comparée aux images médicales. La manière dont a été obtenu les paramètres est abordée dans la section~\ref{sec:code_modeleEDP} de l'annexe~\ref{chap:structure_code}.  L'ensemble des paramètres est résumé dans la Table~\ref{table_param}.
 
 \begin{table}
 \rowcolors{4}{white}{gray!40}
@@ -827,7 +827,7 @@ $\beta$ & Poids du \Twinweno &-&0&0.3\\
 L'aire tumorale numérique est ensuite comparée aux aires mesurées sur la Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert}.  
 %(les cercles représentent les données réelles, et la ligne pleine représente la simulation numérique). 
 Il est important de noter que d'après cette 
-figure, l'évolution de l'aire tumorale est bien reproduite. 
+figure, l'évolution de l'aire tumorale est correctement reproduite. 
 
 
 Nous soulignons que la donnée initiale est cruciale dans la croissance de la tumeur. Afin de reproduire qualitativement la forme de la lésion au temps initial (\cf Figure~\ref{fig_hen_spatial_1}), 
@@ -997,7 +997,7 @@ Ces courbes montrent qu'il existe un seuil~$\mu_{th}$ à partir duquel le traite
 Dans la section précédente, nous avons étudié en détail notre modèle sur un patient spécifique, \Nber, dont la lésion tumorale a été suivie par une série de scanners. Nous avons trouvé les paramètres qui rendent possible la comparaison qualitative des images médicales avec les images numériques, grâce à notre synthèse numérique de scanners et nous avons également fité l'aire tumorale. La lésion du patient est intéressante car elle est confinée à l'intérieur du foie et donc son évolution n'est pas mécaniquement contrainte par l'organe. 
 Cependant, dans certains cas, la métastase est proche du bord du foie. Dans de tels cas, il n'y a pas d'espoir de produire des résultats quantitatifs sur l'évolution spatiale de la lésion, mais dans la section suivante, nous montrerons que l'évolution de l'aire tumorale peut être correctement décrite.
 \subsection{Evolution de l'aire tumorale de \Chen}\label{section chen}
-Dans cette section, on s'intéresse à \Chen, dont l'évolution tumorale est assez différente de celle \Nber. En effet le protocole clinique associé à ce patient est le suivant~:
+Dans cette section, nous nous intéressons à \Chen, dont l'évolution tumorale est assez différente de celle \Nber. En effet le protocole clinique associé à ce patient est le suivant~:
 \begin{myenumerate}[label=\roman*)]
 \item \Chen est traité dans un premier temps avec un inhibiteur de tyrosine kinase mono-cible (imatinib), qui stabilise l'aire de la tumeur pendant plus de 10 mois avant une rechute. 
 \item Le sunitinib, inhibiteur de tyrosine kinase multi-cibles, est démarré mais contrairement à \Nber, il est totalement inefficace. 
@@ -1059,7 +1059,7 @@ Les valeurs des paramètres utilisés dans la simulation numérique sont donnée
 
 
 Nous avons aussi examiné l'effet de l'efficacité du traitement~$\treat_1$, comme pour \Nber. 
-On a pu observer que le temps de survie sans aggravation~$\TPFS$, le temps de doublement~$\Td$ et l'aire minimale atteinte par la  lésion~$\Amin$ ont le même profil que pour le patient étudié dans la section précédente. En particulier, il existe un seuil~$\mu_{th}$ en dessous duquel le  traitement n'a aucun effet sur~$\TPFS$. Ensuite une augmentation de la dose n'améliore pas non plus~$\TPFS$ qui atteint un plateau au-delà de~$\mu_{th}$ comme pour \Nber. 
+Nous avons pu observer que le temps de survie sans aggravation~$\TPFS$, le temps de doublement~$\Td$ et l'aire minimale atteinte par la  lésion~$\Amin$ ont le même profil que pour le patient étudié dans la section précédente. En particulier, il existe un seuil~$\mu_{th}$ en dessous duquel le  traitement n'a aucun effet sur~$\TPFS$. Ensuite une augmentation de la dose n'améliore pas non plus~$\TPFS$ qui atteint un plateau au-delà de~$\mu_{th}$ comme pour \Nber. 
 Le temps de doublement~$\Td$ en fonction de~$\muI$ est également monotone, contrairement à~$\Amin$. Ainsi, comme précédemment, au-delà du seuil~$\mu_{th}$, le minimum de l'aire tumorale décroît encore, mais le temps de survie globale du patient n'est pas augmenté.
 
 
@@ -1102,7 +1102,7 @@ Ensuite le traitement~$\TS$ est efficace avant une rechute.
 \item Le traitement~$\TI$ est totalement inefficace. 
 Ensuite le  traitement~$\TS$ est totalement inefficace. 
 Ce type de profil est représentatif des patients avec une mutation génétique EXON, comme rapporté par Andersson
-{\it et al.}~\cite{Andersson2006}, ou Hirota {\it et al.}~\cite{Hirota1998}.
+{\it et al.}~\cite{Andersson2006}, ou Hirota {\it et al.}~\cite{Hirota1998} et comme présenté dans le chapitre précédent sur la Figure~\ref{fig:patients_EXON}, page~\pageref{fig:patients_EXON}. 
 \end{myenumerate}
 
 \FloatBarrier
