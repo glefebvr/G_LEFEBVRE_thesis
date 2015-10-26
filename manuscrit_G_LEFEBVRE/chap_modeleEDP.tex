@@ -51,7 +51,7 @@ Les valeurs des paramètres utilisés dans la simulation numérique sont donnée
  \includegraphics[width=0.5\textwidth]{fit_henbert_form3/henbert_area.png}
  }}
 \end{tabular}
-\caption{\label{fig_nber} Evolution spatiale de la métastase hépatique de \Nber sur une série de scanners. Ici ne sont présentés qu'une sélection de scanners~: l'ensemble complet est présenté dans l'annexe~\ref{chap:anx_img_complement}.}
+\caption{\label{fig_nber} Evolution spatiale de la métastase hépatique de \Nber sur une série de scanners. Ici n'est présenté qu'une sélection de scanners~: l'ensemble complet est présenté dans l'annexe~\ref{chap:anx_img_complement}.}
 \end{figure}
 
 
@@ -199,7 +199,7 @@ Le taux de prolifération (respectivement de mortalité) des cellules proliféra
 où~$R$ est un paramètre numérique régularisant\footnote{Notons que les fonctions~$\gammapp$ et~$\gammapd$ sont des fonctions de Heaviside régularisées. Pour les simulations numériques, nous fixerons arbitrairement~$R$ à 5.}, $\gamma_0$ et
 $\gamma_1$ sont respectivement les paramètres de 
 prolifération/mortalité et~$\Ms$ est le seuil d'hypoxie. 
-Cette forme des coefficients assure que lorsque~$M$ est dessus du seuil d'hypoxie~$\Ms$ alors~$\gammapp$ est supérieur à sa valeur moyenne~$\gamma_0/2$ et~$\gammapd$ est inférieur à sa valeur moyenne~$\gamma_1/2$. De plus, si~$R$ est grand, $\gammapp$ est proche de~$\gamma_0$ et~$\gammapd$ est proche de~0 dès lors que~$M>\Ms$ et de façon symétrique, si~$M<\Ms$ alors~$\gammapp$ est proche de~0  et~$\gammapd$ est proche de~$\gamma1$.
+Cette forme des coefficients assure que lorsque~$M$ est au-dessus du seuil d'hypoxie~$\Ms$ alors~$\gammapp$ est supérieur à sa valeur moyenne~$\gamma_0/2$ et~$\gammapd$ est inférieur à sa valeur moyenne~$\gamma_1/2$. De plus, si~$R$ est grand, $\gammapp$ est proche de~$\gamma_0$ et~$\gammapd$ est proche de~0 dès lors que~$M>\Ms$ et de façon symétrique, si~$M<\Ms$ alors~$\gammapp$ est proche de~0  et~$\gammapd$ est proche de~$\gamma1$.
 
 
 
@@ -211,7 +211,7 @@ où~$\gammasd$ est le taux de mortalité des cellules saines dû à l'hypoxie~:
 \begin{equation}
 \gammasd(M)=C_S \gamma_1  \max\Big(0,-\tanh\big(R(M-\Ms)\big)\Big). \label{eq_gammasd}
 \end{equation}
-La fonction~$\gammasd$  s'annule exactement si~$M\geq\Ms$ dans le but d'assurer que~$S=1$ à l'extérieur de la lésion en tout temps. Finalement, la densité de tissus nécrosées satisfait la relation 
+La fonction~$\gammasd$  s'annule exactement si~$M\geq\Ms$ dans le but d'assurer que~$S=1$ à l'extérieur de la lésion en tout temps. Finalement, la densité de tissus nécrosés satisfait la relation 
 \begin{equation}\label{eq_N}
 \begin{aligned}
 \partial_t N + \dive(\vit N) & =  \gammapd(M) P +\gammasd(M) S  + \\ & \big(\muI \chiI(t)P_1 + \muS\chiS(t)(P_1+P_2)\big)(1+M) - \muN(1+M)N,
@@ -221,7 +221,7 @@ où
 P = P_1+P_2+P_3,
 \end{equation}
 et où~$\muN$ est un paramètre qui contrôle le taux d'élimination de la nécrose par le système immunitaire. 
-Le membre de droite de l'équation~\eqref{eq_N} collecte tous les termes de mort cellulaires des équations~\eqref{eq_P1},\eqref{eq_P2},\eqref{eq_P3} et \eqref{eq_S}. 
+Le membre de droite de l'équation~\eqref{eq_N} collecte tous les termes de mort cellulaire des équations~\eqref{eq_P1},\eqref{eq_P2},\eqref{eq_P3} et \eqref{eq_S}. 
 Le terme $1+M$ traduit le fait que plus le milieu est vascularisé, plus l'élimination de la nécrose est rapide. 
 %Notez que b
 %Biologiquement il ne serait pas aberrant de considérer que cette élimination pourrait dépendre également de la pression $\Pi$ du milieu (que l'on décrit un peu plus loin). 
@@ -318,8 +318,8 @@ alors pour tout temps~$t$, $0\leq M(t) \leq 2\Ms$.
 \end{myitemize}
 
 \bigskip
-La quantité~$\xi$ est scalaire et représente la concentration totale de facteur de croissance %(VEGF inhibé par le second traitement et autres facteurs de croissance ) 
-produite par la tumeur. Cette description est bien entendu réductrice et il existe des modèles avec une répartition spatiale des facteurs de croissances (\cf~\cite{Billy2009545}) qui inclus leur production, leur diffusion, leur élimination, etc. Ces modèles sont très riches d'un point de vue biologique mais comprennent un grand nombre de paramètre qui serait difficile à gérer dans notre cas. 
+La quantité~$\xi$ est scalaire et représente la concentration totale de facteurs de croissances %(VEGF inhibé par le second traitement et autres facteurs de croissance ) 
+produite par la tumeur. Cette description est bien entendu réductrice et il existe des modèles avec une répartition spatiale des facteurs de croissances (\cf~\cite{Billy2009545}) qui inclus leur production, leur diffusion, leur élimination, etc. Ces modèles sont très riches d'un point de vue biologique mais comprennent un grand nombre de paramètres qui serait difficile à gérer dans notre cas. 
 %La quantité $\xi$ a été choisie scalaire. Des essais ont été réalisés en considérant~$\xi$ dépendant également de l'espace. L'équation régissant~$\xi$ était alors la même que l'équation~\eqref{eq_xi} mais sans l'intégrale. Cet essai a soulevé beaucoup de problème. Le principal, étant que~$\xi$, qui est produit par les cellules proliférantes, est concentré sur son lieu de production, \ie dans la tumeur, alors que la vascularisation~$M$ est concentrée à l'extérieur. Les variables~$\xi$ et~$M$ ont donc des supports quasiment disjoints, ce qui pose problème pour le transport de~$M$. Appliquer un transport et/ou une diffusion sur~$\xi$ aurait pu résoudre ce problème mais aurait complexifié le modèle qui compte déjà beaucoup de paramètres.
 
 \subsection{Formulation vectorielle des équations sur les cellules cancéreuses}
@@ -388,7 +388,7 @@ Notons que la densité de cellules saines~$S$ est donnée par~\eqref{eq_saturati
 %alors $ \forall t\geq 0, \ P_i \geq 0, N \geq 0$ et $S\geq 0.$
 %\end{prop}
 \begin{prop}\label{prop:positivite_modele}
-Dans le modèle~\eqref{eq_transport_pop}, si
+%%Dans le modèle~\eqref{eq_transport_pop}, si
 Soient $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ une solution de classe~$\mathscr{C}([0,T]\times \Omega)$ du système~\eqref{eq_transport_pop}. Supposons que la vitesse~$\vit$ est régulière et que~$M$ est bornée. Si $P_i(0,\vecx), N(0,\vecx)$ et~$S(0,\vecx)$ sont positives ou nulles alors 
 $$\forall t \in [0,T], \quad  N(t,\vecx)\geq0, \quad  P_i(t,\vecx)\geq0, \quad S(t,\vecx)\geq0. $$
 \end{prop}
@@ -438,7 +438,7 @@ En posant $y(t):=\displaystyle \intx (P_i^-(t))^2$, le lemme de Gronwall nous co
 \begin{equation}
 y(t) \leq y(t=0) \exp ( \| 2\bar{\GG_i} - \dive \vit \|_{\infty} t  ).
 \end{equation}
-Or~$P_i\geq 0$ au temps initial, donc~$y(t=0)=0$. Il en découle que~$y(t)\leq0, \forall t\geq0$. Mais par définition, $y$ est nécessairement positif. Ainsi~$y$ est identiquement nulle. Ceci conduit à~$P_i^-(t)\equiv0, \forall t\geq0$ et donc $P_i(t)\geq0, \forall t\geq0$. \\
+Or~$P_i\geq 0$ au temps initial, donc~$y(t=0)=0$. Il en découle que~$y(t)\leq0, \forall t\geq0$. Mais par définition, $y$ est nécessairement positive. Ainsi~$y$ est identiquement nulle. Ceci conduit à~$P_i^-(t)\equiv0, \forall t\geq0$ et donc $P_i(t)\geq0, \forall t\geq0$. \\
 Le même type de raisonnement permet de montrer la positivité de~$S$ (il suffit de remplacer~$P_i$ par~$S$ et~$\bar{\GG}_i$ par~$-\gammasd$ qui est borné). Pour la positivité de~$N$, sachant que~$P$ et~$S$ le sont alors on a
 $$ \partial_t N + \dive (\vit N) \geq \bar{\GG}_4 N.$$
 En procédant de la même manière et en remplaçant les égalités par la minoration ci-dessus, on obtient également la majoration~\eqref{eq:demo_positivite} avec~$N^-$, de laquelle découle la positivité de~$N$ en tout temps positif. Ceci clôt la démonstration.
@@ -556,11 +556,11 @@ Or
 \begin{equation}
 \intbord (v.\vec{n}) Z^2 \geq 0.
 \end{equation}
-En effet si $v.\vec{n} \geq 0$ c'est trivial, sinon les C.L ($P=N=0$ sur $\partial \Omega$) implique que $Z=0$ sur $\partial \Omega$. Dans ce dernier cas, le terme est donc nul. Ainsi :
+En effet si $v.\vec{n} \geq 0$ c'est trivial, sinon les C.L ($P=N=0$ sur $\partial \Omega$) impliquent que $Z=0$ sur $\partial \Omega$. Dans ce dernier cas, le terme est donc nul. Ainsi :
 \begin{equation}
  \partial_t \intx Z^2 \leq - \frac{2}{\epsilon} \intx Z^2 + 2 \intx rPZ - \intx Z^2 \nabla.v
 \end{equation}
-Considérons une solution suffisamment régulière de notre problème de telle sorte que $\nabla.v \in L^\infty$, $P \in L^2, N \in L^2$ et par conséquent $Z \in L^2$. De plus, $r$ est constant (\ie ne dépend ni de l'espace ni du temps) puisque nous avons considéré~$M$ constant ici. Par l'inégalité triangulaire et l'inégalité de Young\footnote{L'inégalité de Young affirme que pour tout couple de réel $(a,b)$ positif et pour tout couple de réels $(p,q)$ positif et conjugué (\ie tel que $\frac{1}{p}+\frac{1}{q}=1$) alors on a~: $ab \leq \frac{a^p}{p} + \frac{b^q}{q}$. L'inégalité est utilisée ici avec $p=q=2$. }, 
+Considérons une solution suffisamment régulière de notre problème de telle sorte que $\nabla.v \in L^\infty$, $P \in L^2, N \in L^2$ et par conséquent $Z \in L^2$. De plus, $r$ est constant (\ie ne dépend ni de l'espace ni du temps) puisque nous avons considéré~$M$ constant ici. Par l'inégalité triangulaire et l'inégalité de Young\footnote{L'inégalité de Young affirme que pour tout couple de réels $(a,b)$ positifs et pour tout couple de réels $(p,q)$ positifs et conjugués (\ie tel que $\frac{1}{p}+\frac{1}{q}=1$) alors on a~: $ab \leq \frac{a^p}{p} + \frac{b^q}{q}$. L'inégalité est utilisée ici avec $p=q=2$. }, 
 on obtient alors~:
 \begin{align*}
 \partial_t \| Z \|^2_2 & \leq -\frac{2}{\epsilon} \intx Z^2 + 2 \intx  |r| \dfrac{\sqrt{\epsilon}}{\sqrt{\epsilon}} P|Z| + \intx Z^2 | \nabla.v | \\
@@ -776,7 +776,7 @@ coefficients~$\tau_P$, $\tau_S$ et~$\tau_N$ à chacune de nos populations   et n
 \begin{equation}\label{eq:grey_level}
 \tau_P P + \tau_N N + \tau_S S,
 \end{equation}
-qui est une sorte d'échelle de niveau de gris numérique. 
+qui est une sorte d'échelle de niveaux de gris numérique. 
 %Comme pour les scanners abdominaux, l'échelle de Hounsfield est limitée de 
 Nous considérons ici une échelle de Hounsfield allant de 
 -200 à +200 (en associant ainsi à la valeur -200 la couleur noir et à +200 le blanc) et nous fixons arbitrairement les coefficients ci-dessus à 
@@ -794,7 +794,7 @@ $L=D=6\;cm$ avec 120 points dans chaque direction.
 Le pas de temps~$\Delta t$ est calculé en utilisant l'équation~\eqref{eq:dt}. 
 
 
-Les paramètres numériques ont été choisis de sorte à reproduire l'évolution de l'aire tumorale. En particulier, nous n'essayons pas de fiter avec les images, nous vérifions seulement que l'évolution spatiale soit plausible comparée aux images médicales. La manière dont a été obtenu les paramètres est abordée dans la section~\ref{sec:code_modeleEDP} de l'annexe~\ref{chap:structure_code}.  L'ensemble des paramètres est résumé dans la Table~\ref{table_param}.
+Les paramètres numériques ont été choisis de sorte à reproduire l'évolution de l'aire tumorale. En particulier, nous n'essayons pas de fiter avec les images, nous vérifions seulement que l'évolution spatiale soit plausible comparée aux images médicales. La manière dont ont été obtenus les paramètres est abordée dans la section~\ref{sec:code_modeleEDP} de l'annexe~\ref{chap:structure_code}.  L'ensemble des paramètres est résumé dans la Table~\ref{table_param}.
 
 \begin{table}
 \rowcolors{4}{white}{gray!40}
@@ -1053,7 +1053,7 @@ Les valeurs des paramètres utilisés dans la simulation numérique sont donnée
  \includegraphics[width=0.5\textwidth]{chen_area.png}
  }}
 \end{tabular}
-\caption{\label{fig_chen_spatial} Evolution spatiale de la métastase hépatique de \Chen sur une série de scanners. Nous examinons l'évolution de la lésion\protect\footnotemark~située au départ en haut à gauche de la Figure~\ref{fig_chen_spatial_1}. Ici ne sont présentés qu'une sélection de scanners~: l'ensemble complet est présenté dans l'annexe~\ref{chap:anx_img_complement}.}
+\caption{\label{fig_chen_spatial} Evolution spatiale de la métastase hépatique de \Chen sur une série de scanners. Nous examinons l'évolution de la lésion\protect\footnotemark~située au départ en haut à gauche de la Figure~\ref{fig_chen_spatial_1}. Ici n'est présenté qu'une sélection de scanners~: l'ensemble complet est présenté dans l'annexe~\ref{chap:anx_img_complement}.}
 \end{figure}
 \footnotetext{Ne pas confondre la métastase avec la vésicule biliaire qui est plus grosse sur les deux premiers scanners.}
 
