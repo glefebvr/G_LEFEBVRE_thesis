@@ -369,15 +369,15 @@ Ci-dessous est présenté l'ensemble des histogrammes cliniques de \Chen, corres
 %\begin{tabular}{|c|c|c|c|c|}
 %\hline
 %%%\hhline{|>{\arrayrulecolor{white}}->{\arrayrulecolor{black}}|-|-|}
-%\rowcolor{gray!70}
-%& \multicolumn{4}{c|}{ \cellcolor{gray!70} \bfseries  Algorithme d'optimisation} \\
-%\hhline{|>{\arrayrulecolor{gray!70}}->{\arrayrulecolor{black}}|-|-|-|-|}
-%\rowcolor{gray!70}
+%\rowcolor{\grisfonce}
+%& \multicolumn{4}{c|}{ \cellcolor{\grisfonce} \bfseries  Algorithme d'optimisation} \\
+%\hhline{|>{\arrayrulecolor{\grisfonce}}->{\arrayrulecolor{black}}|-|-|-|-|}
+%\rowcolor{\grisfonce}
 %& \bfseries SLSQP
 %& \bfseries GC 
 %& \bfseries Neldear-Mead 
 %& \bfseries BFGS \\
-%\rowcolor{gray!70}
+%\rowcolor{\grisfonce}
 %\multirow{-3}{\firstcolwidth}{\scriptsize \bfseries \centering Scanners choisis pour l'optimisation}
 %& $\tau_N, \qquad \tau_P$
 %& $\tau_N, \qquad \tau_P$
@@ -387,7 +387,7 @@ Ci-dessous est présenté l'ensemble des histogrammes cliniques de \Chen, corres
 %\scan=scan,\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG,
 %\errNM=errNM,\errBFGS=errBFGS,\errcol=errSLSQP,\errCG=errCG}{%
 %\\
-%\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+%\DTLifoddrow{\rowcolor{white}}{\rowcolor{\grisclair}}%
 %\scan & \begin{tabular}{c}
 %\col \\ \errcol
 %\end{tabular} & \begin{tabular}{c}
@@ -400,7 +400,7 @@ Ci-dessous est présenté l'ensemble des histogrammes cliniques de \Chen, corres
 %}%
 %\DTLforeach*{optim2_0stat}{%
 %\NM=NM,\BFGS=BFGS,\col=SLSQP,\CG=CG}{%
-%\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{gray!40}}%
+%\\ \hline \hline %\DTLifoddrow{\rowcolor{white}}{\rowcolor{\grisclair}}%
 %Moyenne : & \col & \CG & \NM & \BFGS  }
 %\\ \hline
 %\end{tabular}
@@ -422,11 +422,13 @@ est présenté dans la Table~\ref{table_param_possibilites}.
 \begin{table}[h]
 \centering
 \hspace*{-3mm}
-\rowcolors{2}{gray!40}{white}
+\rowcolors{2}{\grisclair}{white}
 {\small
+\setlength{\doublerulesep}{3pt}
 \begin{tabular}{|*{8}{p{15mm}|}}
 \hline
-\rowcolor[gray]{0.7} 
+%\rowcolor[gray]{0.7} 
+\rowcolor{\grisfonce} 
 Nom & a) & b) & c) &d) &e) &f) &g) \\
 \hline
 \input{../data/params_value/table_possibilites.txt}

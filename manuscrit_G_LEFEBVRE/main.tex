@@ -166,8 +166,8 @@
 \usepackage[Bjornstrup]{fncychap}
 %\usepackage[Peters]{fncychap}
 %\usepackage{fncychap}
-%%\usepackage{fancyhdr} %%%% incompatible avec la class memoir
-\usepackage{fancyhdr}
+\usepackage{fancyhdr} %%%% incompatible avec la class memoir
+
 
 \usepackage[bottom]{footmisc} %%% force les footnotes sur la meme page que le footnotemark
 
@@ -178,7 +178,7 @@
 
 \renewcommand{\chaptermark}[1]{\markboth{{\sc \chaptername } \thechapter.\ #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
-\addtolength{\footskip}{7mm}%
+\addtolength{\footskip}{7mm}% espacement entre le bas du texte et le pied de page
 
 \DeclareCaptionFormat{mycaptionformat}{%
   % #1: label (e.g. "Table 1")
@@ -254,6 +254,10 @@
 
 %%\setlength{\parskip}{1em} %%% espace entre les paragraphes
 
+%\newcommand{\grisclair}{gray!40}
+%\newcommand{\grisfonce}{gray!70}
+\newcommand{\grisclair}{gray!30}
+\newcommand{\grisfonce}{gray!50}
 
 \setlength\doublerulesep{2mm} %% hauteur entre 2 \hline successifs
 \newlength{\retraittableau}
@@ -290,8 +294,10 @@
 %%http://ctan.mines-albi.fr/macros/latex/contrib/lettrine/doc/demo.pdf
 \renewcommand{\LettrineFontHook}{
 %\fontfamily{yfrak}
-\fontfamily{pag}
-\fontseries{bx}\fontshape{it}
+%\fontfamily{pzc}
+%\fontfamily{pbk}\fontshape{it}
+\fontfamily{pnc}\fontshape{it}
+%%\fontfamily{pag}\fontseries{bx}\fontshape{it}
 %\color[gray]{0.5}
 }
 
@@ -512,6 +518,7 @@ Version du \today, \printtime
 \renewcommand\chaptername{Bibliographie}
 %%%\addcontentsline{toc}{chapter}{Bibliographie}
 \small
-\bibliographystyle{plain}
+%\bibliographystyle{plain}
+\bibliographystyle{unsrt} %% Ordonne les references par ordre d'apparition
 \bibliography{biblio}
 \end{document}

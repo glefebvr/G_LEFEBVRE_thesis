@@ -8,7 +8,7 @@
 
 \mylettrine{C}{e} chapitre, ainsi qu'une partie du chapitre suivant, %(la partie sur le \twinweno) 
 ont  fait l'objet d'une publication~\cite{lefebvre:hal-01089452} (actuellement en review) et d'un poster (présenté en Annexe, dans la Figure~\ref{fig:poster}, page~\pageref{fig:poster}). %Nous allons ici garder la structure de l'article, en commençant par présenter les principaux résultats. 
-Après avoir présenté la problématique, les principaux résultats obtenus seront décrit.  
+Après avoir présenté la problématique, les principaux résultats obtenus seront décrits.  
 La construction du modèle sera ensuite détaillée. Nous discuterons enfin plus précisément, sur les résultats numériques apportés par notre modèle et les diverses informations que l'on peut en tirer.
 
 \section{Problématique}
@@ -102,7 +102,7 @@ Nous introduisons également les effets liés aux facteurs de croissance au trav
  \begin{table}[t]
  %\begin{threeparttable}[b]
  \centering
- \rowcolors{2}{white}{gray!40}
+ \rowcolors{2}{white}{\grisclair}
  {\footnotesize%%\smaller[0.5]
  %%\small
  %%\scriptsize 
@@ -696,7 +696,7 @@ L'équation~\eqref{eq_transp_diff_M} est calculée comme une équation de la cha
 %%%%%%%%%\subsection{Le \twinweno~: un schéma WENO5 modifié}
 \subsection{Condition CFL}
 
-En outre, une restricti on de type CFL est requise pour assurer la stabilité numérique. Tout d'abord, le schéma de type WENO5, utilisé dans~\eqref{eq_transp_weno} et~\eqref{eq_transp_diff_M}, conduit à une condition CFL qui s'écrit~:
+En outre, une restriction de type CFL est requise pour assurer la stabilité numérique. Tout d'abord, le schéma de type WENO5, utilisé dans~\eqref{eq_transp_weno} et~\eqref{eq_transp_diff_M}, conduit à une condition CFL qui s'écrit~:
 \begin{equation}\label{eq:CFL-weno}
 \Delta t < \min \left( \frac{\Delta x}{\max |v_x|} , \frac{\Delta y}{\max |v_y|}, \frac{\min(\Delta x , \Delta y )}{\xi}\right) := \Delta t_{adv}.
 \end{equation}
@@ -797,13 +797,15 @@ Le pas de temps~$\Delta t$ est calculé en utilisant l'équation~\eqref{eq:dt}.
 Les paramètres numériques ont été choisis de sorte à reproduire l'évolution de l'aire tumorale. En particulier, nous n'essayons pas de fiter avec les images, nous vérifions seulement que l'évolution spatiale soit plausible comparée aux images médicales. La manière dont ont été obtenus les paramètres est abordée dans la section~\ref{sec:code_modeleEDP} de l'annexe~\ref{chap:structure_code}.  L'ensemble des paramètres est résumé dans la Table~\ref{table_param}.
 
 \begin{table}
-\rowcolors{4}{white}{gray!40}
+\vspace{-1mm}
+\rowcolors{4}{white}{\grisclair}
 {\footnotesize\smaller[0.5]
+\setlength{\doublerulesep}{3pt}
 \begin{tabularx}{\textwidth}{|l|X|l|p{18mm}|p{18mm}|}
 \hline
 %\rowcolor[gray]{0.7}  & & &  Valeur pour & Valeur pour \\
 %\rowcolor[gray]{0.7}  & & & le fit de  & le fit de \\
-\rowcolor[gray]{0.7} &&& \multicolumn{2}{|c|}{\cellcolor[gray]{0.7} Valeur pour le fit de} \\
+\rowcolor[gray]{0.7} &&& \multicolumn{2}{c|}{\cellcolor[gray]{0.7} Valeur pour le fit de} \\
 \cline{4-5}
 \rowcolor[gray]{0.7}  Nom & Signification & Unité & \Nber & \Chen \\
 \rowcolor[gray]{0.7}  &   &  & (Figure~\ref{fig:fit_area_henbert}) & (Figure~\ref{fig:fit_area_chen})\\
@@ -820,6 +822,7 @@ $\beta$ & Poids du \Twinweno &-&0&0.3\\
 \hline
 \end{tabularx}
 }
+\vspace{-1mm}
 \caption{\label{table_param}Liste des paramètres du modèle et leur valeurs pour les deux patients considérés -- $d=\textrm{Jour (day)}$
 }
 \end{table}

@@ -148,7 +148,7 @@ De plus, aux alentours de~$1.5\;cm$ du centre de la tumeur, il y a une couronne 
 {track_10x10_7/coupe_vitesse_v2_56.png}
 \caption{Profil de la vitesse~$\vit_x$ le long de~$\ex$ au Jour 905 -- Simulation numérique avec le modèle complet, dont la densité tumorale est présentée Figure~\ref{fig:trefle} \label{fig:vx_profile}}
 \includegraphics[width=.49\textwidth]{vitesse_imposee.png}
-\caption{Composantes de la vitesse imposée dans l'équation de transport~\eqref{eq:mod_reduit_test_transp} -- Ici $L=9$ donc le rayon~$r$ varie entre~$0$ et~$4,5$\label{fig:vitesse+et-imposees} }
+\caption{Composantes de la vitesse imposée dans l'équation de transport~\eqref{eq:mod_reduit_test_transp} -- Ici $L=9$ donc le rayon~$r$ varie entre~$0$ et~$4.5$\label{fig:vitesse+et-imposees} }
 \end{multicols}
 \end{figure}
 
@@ -272,6 +272,7 @@ En particulier pour~$\beta=0$, on retrouve le WENO5 standard.
 Sur la Figure~\ref{fig:evo_test_transp_twinweno}, on peut visualiser le bénéfice apporté par le \twinweno sur le modèle réduit. Ici bien que le résultat final ne soit pas parfaitement circulaire (de l'ordre de quelques pourcents d'erreur), on peut voir que la conservation de l'invariance par rotation est très améliorée. Cette amélioration est également rendue sur le modèle complet comme nous pouvons le voir sur la Figure~\ref{fig:compWENO5}, comparée à la même simulation présentée~Figure~\ref{fig:trefle}, réalisée avec un WENO5 standard.
 
 \begin{figure}[!htb]
+\vspace{-5mm}
 \centering
 \subfloat[Jour 0]{\label{fig:correction_cross_spatial_1}
 \includegraphics[width=0.33\textwidth]{track_14x14_cross/vue_S/1.png}}
@@ -283,7 +284,6 @@ Sur la Figure~\ref{fig:evo_test_transp_twinweno}, on peut visualiser le bénéfi
 Comparée à la Figure~\ref{fig:trefle}, la conservation de l'invariance par rotation est très clairement améliorée. 
 }\label{fig:compWENO5}
 \end{figure}
-
 %\paragraph{
 \subsubsection{
 Quelle est la valeur optimale pour le paramètre~$\beta$ ?} 
