@@ -15,8 +15,8 @@ implémentés~:
 \end{myitemize}  
 
 \section{Code de calcul pour la simulation numérique du modèle EDP\label{sec:code_modeleEDP}}
-Le code permettant la simulation numérique via le modèle EDP a été développé en C++, avec la librairie eLYSe. Cette librairie, commune a toute l'équipe de recherche et développée par Olivier Saut, est une interface qui fournit un certain nombre de solveurs pour les problèmes classiques (transport et diffusion) traités par une méthode de volumes finis sur maillages cartésiens. Elle est multi-plateforme (Linux et MacOS). 
-Elle s'appuie sur la librairie d'algèbre linéaire PETSc~\cite{balay2012zhang,balay2012petsc}, bien qu'aucune connaissance de PETSc ne soit nécessaire pour utiliser eLYSe. 
+Le code permettant la simulation numérique via le modèle EDP a été développé en C++, avec la librairie eLYSe. Cette librairie, commune à toute l'équipe de recherche et développée par Olivier Saut, est une interface qui fournit un certain nombre de solveurs pour les problèmes classiques (transport et diffusion) traités par une méthode de volumes finis sur maillages cartésiens. Elle est multi-plateforme (Linux et MacOS). 
+Elle s'appuie sur la librairie d'algèbre linéaire PETSc~\cite{balay2014petsc,balay2012petsc}, bien qu'aucune connaissance de PETSc ne soit nécessaire pour utiliser eLYSe. 
 Ceci est principalement du au fait de la présence des structures de types Field (tableaux 2D et 3D) que cette librairie fournit. 
 
 \paragraph{}
@@ -25,7 +25,7 @@ Après avoir appris le C++, j'ai pu prendre en main cet outil. Divers modules on
 \item Un module pour les schémas à stencil croisé (de type \twinweno)
 \item Un module fournissant diverses géométries en fonction de paramètres permettant de construire la condition initiale du modèle EDP.
 \item Une classe Modele qui est à même de calculer, en fonction de paramètres (ceux fournis dans le chapitre~\ref{chap:modele_EDP}, dans la Table~\ref{table_variable} de la  page~\pageref{table_variable}) l'évolution spatio-temporelle des différentes quantités du modèle EDP (notamment les diverses populations de cellules). 
-Cette classe contient entre autre~:
+Cette classe contient entre autres~:
 \begin{myitemize}[label=--]
 \item la définition des paramètres et leurs affectations,
 \item les allocations mémoire des variables intervenant dans le modèle EDP,
@@ -45,7 +45,7 @@ Le modèle EDP ayant beaucoup de paramètres et admettant beaucoup de minima loc
 \end{myenumerate}
 
 
-Le code de calcul est séquentiel. La partie recherche d'optimum dans l'espace des paramètres a elle été (pseudo-)parallélisée. A un jeu de paramètres donné, il y a un modèle qui est calculé sur un unique processeur. Les méthodes d'exploration de l'espace des paramètres nécessitant l'évaluation de plusieurs modèles, on partage l'ensemble des évaluations à réaliser entre les différents processeurs. Par exemple, sur une méthode de gradient, à chaque pas de l'algorithme, une approximation du gradient (dérivée du modèle par rapport à ses $n$ paramètres ici) est requise. Ainsi pour chaque paramètre, une évaluation est nécessaire. Chaque évaluation est réalisée sur une seul et unique processeur, mais on partage les $n$ évaluations requises sur le nombre de processeurs disponibles.
+Le code de calcul est séquentiel. La partie recherche d'optimum dans l'espace des paramètres a elle été (pseudo-)parallélisée. A un jeu de paramètres donné, il y a un modèle qui est calculé sur un seul et  unique processeur. Les méthodes d'exploration de l'espace des paramètres nécessitant l'évaluation de plusieurs modèles, on partage l'ensemble des évaluations à réaliser entre les différents processeurs. Par exemple, sur une méthode de gradient, à chaque pas de l'algorithme, une approximation du gradient (dérivée du modèle par rapport à ses $n$ paramètres ici) est requise. Ainsi pour chaque paramètre, une évaluation est nécessaire. Chaque évaluation est réalisée sur une seul et unique processeur, mais on partage les $n$ évaluations requises sur le nombre de processeurs disponibles.
 
 
 Pour donner un ordre d'idée du code manipulé, présentons le en quelques chiffres. Ce code est subdivisé en une dizaine de modules conduisant à un total d'environ \numprint{10000} lignes. Il est exécuté sur la plateforme de calcul INRIA, nommée PlaFRIM, sans laquelle de nombreuses simulations numériques n'auraient pas pu être réalisées. Le temps moyen d'exécution d'une simulation est d'environ~1h30. 
@@ -67,8 +67,8 @@ Le code de calcul générant le pourcentage d'\hetero aussi bien clinique que nu
 \end{myitemize}
 
 Au niveau des données, il n'y a pas que la nature des images qui diffère~: le moyen d'acquérir le contour diffère également. 
-Pour les données cliniques, grâce au logiciel OsiriX, nous pouvons contourer manuellement les tumeurs, et en exporter le contour au format xml. 
-En ce qui concerne les images provenant de la simulation numérique, il n'y a pas de contour défini. Le choix (assez naturel) a été fait de le définir en prenant un seuil sur la population saine. Moyennant un parseur xml, on peut donc se ramener à un contour semblable dans les deux cas.
+Pour les données cliniques, grâce au logiciel OsiriX~\cite{rosset2004osirix,ratib2006open}, nous pouvons contourer manuellement les tumeurs, et en exporter le contour au format xml. 
+En ce qui concerne les images provenant de la simulation numérique, il n'y a pas de contour défini. Le choix (assez naturel) a été fait de le définir en prenant un seuil sur la population saine. Moyennant un parseur\footnote{\correction{Analyseur syntaxique, qui permet de dissocier, dans un fichier écrit en un certain  langage (XML ici), le fond de la forme et de la structure propre au langage.}} XML, on peut donc se ramener à un contour semblable dans les deux cas.
 
 \begin{sidewaysfigure}
 %%\begin{figure}
@@ -99,7 +99,7 @@ Cette brique est basée sur la librairie Python Scikit-learn, qui contient un mo
 %L'ensemble de l'articulation entre les différents modules est présenté sur la Figure~\ref{fig:schema_struct_code}.
 Afin de faciliter le chainage entre les différentes étapes du calcul, deux scripts Bash ont été développés (représenté par les cadres rouges et vert sur la Figure~\ref{fig:schema_struct_code}). Le premier permet de traiter de A à Z, les données cliniques. L'utilisateur fournit un dossier contenant un ou plusieurs scanners avec leur contourage provenant d'OsiriX. Le script fournit en sortie, des images post-traitées ainsi que les valeurs des histogrammes des niveaux de gris correspondant aux zones contourées et leur description en mélanges de gaussiennes. Le second script requiert en entrée les résultats de simulations numériques du modèle EDP, et les valeurs des 3 niveaux de gris $\tau_N, \tau_P$ et $\tau_S$. Il fournit les mêmes sorties que le premier script. 
 Dans chacun de ces scripts une dernière option (non présentée sur le schéma) est disponible, pour réaliser après coup, le tracé de différents critères quantifiant l'\hetero. 
-L'ensemble de la chaine de calcul a donc été automatisée et s'exécute ainsi de manière très simple bien que sa structure interne soit hétéroclite. 
+L'ensemble de la chaîne de calcul a donc été automatisée et s'exécute ainsi de manière très simple bien que sa structure interne soit hétéroclite. 
 
 
 Terminons en donnant brièvement quelques statistiques. Ce deuxième code fait environ \numprint{5000} lignes. Le temps d'exécution est de quelques secondes.

@@ -14,11 +14,11 @@
 %%\end{equation}
 %% afin de rapprocher au maximum la visualisation des résultats numériques de la visualisation des scanners médicaux.
 
-\mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons-nous sur la manière de présenter ses résultats. La simulation numérique fournit  l'évolution des densités~$N(t,x)$, $P(t,x)$ et~$S(t,x)$ (toutes comprises entre 0 et 1). 
+\mylettrine{M}{aintenant} que nous avons un modèle EDP qui reproduit bien les aspects constatés en clinique, interrogeons-nous sur la manière de présenter ses résultats. La simulation numérique fournit  l'évolution des densités~$N(t,\vecx)$, $P(t,\vecx)$ et~$S(t,\vecx)$ (toutes comprises entre 0 et 1). 
 Les données cliniques quant à elles fournissent des images en niveaux de gris. 
 L'enjeu ici, consiste à traiter les résultats numériques de sorte à produire des images en niveaux de gris comparable à un scanner. 
 Rappelons que le niveau de gris d'un scanner traduit l'absorption des tissus aux rayons X. D'un point de vue biologique, on ne peut pas relier à une population un niveau de gris car les populations ne sont pas isolées, et aucun moyen %(mise à part la biopsie peut-être) 
-ne permet d'en déceler leur proportions dans chaque voxel du scanner. La lien entre densité de populations et absorption aux rayons X n'est donc pas connu. Ainsi le choix a été fait de créer une image scanner de synthèse, à partir de l'évolution des populations données par la simulation numérique, en considérant l'interpolation 
+ne permet d'en déceler leur proportions dans chaque voxel du scanner. Le lien entre densité de populations et absorption aux rayons X n'est donc pas connu. Ainsi le choix a été fait de créer une image scanner de synthèse, à partir de l'évolution des populations données par la simulation numérique, en considérant l'interpolation 
 \begin{equation}\label{eq:nvx_gris}
 \tau_N N + \tau_P P + \tau_S S,
 \end{equation}
@@ -32,13 +32,14 @@ Sur ces~$n$ images, nous proposons d'optimiser les coefficients (niveaux de gris
 \begin{equation}
 \label{eq:optim_grey_integ_aire}
 \begin{aligned}
-\frac{1}{\aire\big(Z_1(t_i)\big)}&\left( \tau_N\intperso{Z_1(t_i)}N(t_i,x) \dx + \tau_P\intperso{Z_1(t_i)}P(t_i,x) \dx + \tau_S\intperso{Z_1(t_i)} S(t_i,x) \dx \right) \\
-&= \frac{1}{\aire\big(Z_2(t_i)\big)} \ \intperso{Z_2(t_i)} s(t_i,x,z_0) \dx \qquad i \in \{1,...,n\}
+\frac{1}{\aire\big(Z_1(t_i)\big)}&\left( \tau_N\intperso{Z_1(t_i)}N(t_i,\vecx) \dvecx + \tau_P\intperso{Z_1(t_i)}P(t_i,\vecx) \dvecx + \tau_S\intperso{Z_1(t_i)} S(t_i,\vecx) \dvecx \right) \\
+&= \frac{1}{\aire\big(Z_2(t_i)\big)} \ \intperso{Z_2(t_i)} s(t_i,\vecx,z_0) \dvecx \qquad i \in \{1,...,n\}
 \end{aligned}
 \end{equation}
 où : \begin{myitemize}
 \item $\aire(Z)$ est l'aire de la zone $Z$.
-\item $Z_1(t_i)$ est la zone correspondant à la tumeur dans les simulations numériques au temps~$t_i$. Elle est définie par un seuillage sur~$S$.
+\item $Z_1(t_i)$ est la zone correspondant à la tumeur dans les simulations numériques au temps~$t_i$. Elle est définie par un seuillage sur~$S$ 
+\correction{\begin{equation}Z_1(t)=\{ \vecx \in \omega, S(\vecx)<1-\epsilon_{th} \}.\end{equation}}
 %%\todo[noline]{specifier le seuillage ?}
 \item $Z_2(t_i)$ est la zone tumorale sur le scanner réalisé au temps~$t_i$. Cette zone a été définie par contourage manuel à l'aide du logiciel OsiriX (\cf contourage des tumeurs en Annexe~\ref{chap:anx_img_complement} pages~\pageref{fig:contourageNber} et~\pageref{fig:contourageChen}).
 \item $z_0$ est la coupe que nous avons choisi d'étudier dans les scanners. Cette coupe est approximativement la même au cours du temps de sorte à suivre l'évolution d'une même section du foie. 
@@ -48,8 +49,8 @@ En utilisant la discrétisation, aussi bien sur les simulations numériques que 
 \begin{equation}
 \label{eq:optim_grey_eq_discr}
 \begin{aligned}
-\frac{1}{\mathcal{N}\big(Z_1(t_i)\big)}&\left( \tau_N\!\!\sum_{x\in Z_1(t_i)}\!\!N(t_i,x) + \tau_P\!\!\sum_{x\in Z_1(t_i)}\!\!P(t_i,x) + \tau_S\!\!\sum_{x\in Z_1(t_i)}\!\!S(t_i,x) \right) \\
-&= \frac{1}{\mathcal{N}\big(Z_2(t_i)\big)} \sum_{x\in Z_2(t_i)}\!\! s(t_i,x,z_0) \qquad i \in \{1,...,n\}
+\frac{1}{\mathcal{N}\big(Z_1(t_i)\big)}&\left( \tau_N\!\!\sum_{\vecx\in Z_1(t_i)}\!\!N(t_i,\vecx) + \tau_P\!\!\sum_{\vecx\in Z_1(t_i)}\!\!P(t_i,\vecx) + \tau_S\!\!\sum_{\vecx\in Z_1(t_i)}\!\!S(t_i,\vecx) \right) \\
+&= \frac{1}{\mathcal{N}\big(Z_2(t_i)\big)} \sum_{\vecx\in Z_2(t_i)}\!\! s(t_i,\vecx,z_0) \qquad i \in \{1,...,n\}
 \end{aligned}
 \end{equation}
 où~$\mathcal{N}(Z)$ désigne le nombre de pixels contenus dans la zone~$Z$. On a donc un système linéaire de 3 inconnues à~$n$ équations que l'on peut réécrire :
@@ -257,7 +258,7 @@ En ce qui concerne les algorithmes d'optimisations utilisés, nous en choisirons
 \item BFGS (Broyden, Fletcher, Goldfarb, and Shanno)~\cite{nocedal2006numerical}~: Méthode quasi newtonnienne basée  également sur une approximation de la dérivée.
 %\todo[inline]{Ref : Piocher ref algo : \url{http://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.optimize.minimize.html} }
 \end{myitemize}
-Ces algorithmes seront initialisés avec les paramètres~$\tau_N, \tau_P$ et~$\tau_S$ considérés dans la section~\ref{sec:NumRes} page~\pageref{sec:NumRes}. Lorsqu'ils sont nécessaires, les gradients (voire les hessiennes) sont approchées par les algorithmes eux-mêmes. Outre un vecteur de paramètre initial et la fonction coût à optimiser~\eqref{eq:min_optim_grey}, aucune information supplémentaire n'est fournie à ces différents algorithmes. Le code de calcul permettant de réaliser ces optimisations a été développé en Python et s'appuie sur la librairie SciPy~\cite{jones2014scipy}.  
+Ces algorithmes seront initialisés avec les paramètres~$\tau_N, \tau_P$ et~$\tau_S$ considérés dans la section~\ref{sec:NumRes} page~\pageref{sec:NumRes}. Lorsqu'ils sont nécessaires, les gradients (voire les hessiennes) sont approchés par les algorithmes eux-mêmes. Outre un vecteur de paramètre initial et la fonction coût à optimiser~\eqref{eq:min_optim_grey}, aucune information supplémentaire n'est fournie à ces différents algorithmes. Le code de calcul permettant de réaliser ces optimisations a été développé en Python et s'appuie sur la librairie SciPy~\cite{jones2014scipy}.  
 
 
 
@@ -290,12 +291,12 @@ Il n'en reste pas moins que le niveau de gris~$\tau_S$ est mal estimé, et ce qu
 
 %%%%%  ---- SECTION  OPTIM SUR 2 NVX DE GRIS ----- %%%%%
 \section{Optimisation sur 2 paramètres, $\tau_S$ fixé \label{sec:optim_2_param}}
-Pour essayer de pallier aux problèmes rencontrés dans la section précédente, nous allons fixer~$\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de~0 à~255). Cette valeur a été fixée en réalisant un contourage d'une zone de tissu sain dans OsiriX (\cf  Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de~\numprint[HU]{134.5}. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, \numprint[HU]{134.5} est  équivalent à un gris de 77\% soit un gris de niveau~197.
+Pour essayer de pallier les problèmes rencontrés dans la section précédente, nous allons fixer~$\tau_S$ à une valeur de 197 (sur l'échelle des niveaux de gris de~0 à~255). Cette valeur a été fixée en réalisant un contourage d'une zone de tissu sain dans OsiriX (\cf  Figure~\ref{fig:contourage_sain}). La moyenne de ce contourage est de~\numprint[HU]{134.5}. Le niveau de gris étant échelonné linéairement entre~-135 et~215, on peut ainsi faire correspondre cette quantité en HU à un niveau de gris compris entre~0 et~255 (\cf Figure~\ref{fig:schema_correspondance_gris}). Ainsi, selon l'échelle considérée ici, \numprint[HU]{134.5} est  équivalent à un gris de 77\% soit un gris de niveau~197.
 
 
-\begin{figure}
+\begin{figure}[!b]
 \includegraphics[width=\textwidth]{OsiriX_gris_sain_rognee.png}
-\caption{\label{fig:contourage_sain}Contourage d'une zone saine réalisé à l'aide du logiciel OsiriX -- Moyenne de la valeur des pixels dans ce périmètre : \numprint[HU]{134.5} (avec une échelle HU de \mbox{-135 à 215}).}
+\caption{\label{fig:contourage_sain}Contourage d'une zone saine réalisé à l'aide du logiciel OsiriX~\cite{rosset2004osirix,ratib2006open} -- Moyenne de la valeur des pixels dans ce périmètre : \numprint[HU]{134.5} (avec une échelle HU de \mbox{-135 à 215}).}
 \end{figure}
 
 %%%%%% Cout1
@@ -422,8 +423,8 @@ Ainsi nous résolvons toujours l'équation~\eqref{eq:Atau_egal_B}, mais ici avec
 \begin{equation}
 \label{eq:corresp_A_integ}
 \begin{aligned}
-A_{i,...}.\tau & = \frac{1}{\mathcal{N}\big(Z_1(t_i)\big)}\left( \tau_N\!\!\sum_{x\in Z_1(t_i)}\!\!N(t_i,x) + \tau_P\!\!\sum_{x\in Z_1(t_i)}\!\!P(t_i,x) \right), \\
-B_i &= \frac{1}{\mathcal{N}\big(Z_2(t_i)\big)} \sum_{x\in Z_2(t_i)}\!\! s(t_i,x,z_0) - \frac{\bar{\tau_S}}{\mathcal{N}\big(Z_1(t_i)\big)}\sum_{x\in Z_1(t_i)}\!\!S(t_i,x),
+A_{i,...}.\tau & = \frac{1}{\mathcal{N}\big(Z_1(t_i)\big)}\left( \tau_N\!\!\sum_{\vecx\in Z_1(t_i)}\!\!N(t_i,\vecx) + \tau_P\!\!\sum_{\vecx\in Z_1(t_i)}\!\!P(t_i,\vecx) \right), \\
+B_i &= \frac{1}{\mathcal{N}\big(Z_2(t_i)\big)} \sum_{\vecx\in Z_2(t_i)}\!\! s(t_i,\vecx,z_0) - \frac{\bar{\tau_S}}{\mathcal{N}\big(Z_1(t_i)\big)}\sum_{\vecx\in Z_1(t_i)}\!\!S(t_i,\vecx),
 \end{aligned}
 \end{equation}
 avec $i \in \{1,...,n\}$, 
@@ -573,7 +574,7 @@ Pour les configurations avec plus d'images, un examen des conditionnements des s
 %Pour les configurations contenant l'image n°11, on peut aussi avancer que le modèle EDP n'est pas proche de la réalité en terme de volume tumoral (\cf Figure~\ref{fig:fit_area_henbert}, page~\pageref{fig:fit_area_henbert}). Bien qu'ici les niveaux de gris soit moyennés, il y a certainement des erreurs qui se reportent sur nos systèmes.
 
 \section{Conclusion}
-Des cas mal conditionnés ont été identifiés. Après élimination de ceux-ci, on considère les optima fournis par les cas biens conditionnés restants. Les optima fournis sont relativement proches les uns des autres même en faisant varier la méthode d'optimisation ou bien les images considérées comme en atteste la Table~\ref{tab:optim2gris}. Dans la suite de ce manuscrit, nous fixerons alors les niveaux de gris~$\tau_N=25$, $\tau_P=143$ et~$\tau_S=197$ qui sont les niveaux de gris moyens identifiés comme optimaux. 
+Des cas mal conditionnés ont été identifiés. Après élimination de ceux-ci, on considère les optima fournis pour les cas biens conditionnés restants. Les optima fournis sont relativement proches les uns des autres même en faisant varier la méthode d'optimisation ou bien les images considérées comme en atteste la Table~\ref{tab:optim2gris}. Dans la suite de ce manuscrit, nous fixerons alors les niveaux de gris~$\tau_N=25$, $\tau_P=143$ et~$\tau_S=197$ qui sont les niveaux de gris moyens identifiés comme optimaux. 
 
 %L'algorithme basé sur la méthode des moindres carrés semble plus robuste que les autres méthodes examinées. Malgré tout, il peut également fournir des résultats biaisés dans le cas de systèmes mal conditionnés. Il est donc important d'examiner le conditionnement -- ou du moins le conditionnement des sous-systèmes carrés -- pour donner de la crédibilité (ou non) aux optima fournis.
 %

@@ -43,7 +43,7 @@ Ces protéines commandent la création de nouveaux vaisseaux
  sanguins, processus appelé \emph{angiogenèse}. 
 Les cellules endothéliales -- cellules qui recouvrent la paroi intérieure des vaisseaux sanguins -- sont les destinataires de ces facteurs de croissance. 
 Elles possèdent des \emph{récepteurs} spécifiques au VEGF, les VEGFRs. 
-Au contact du VEGF, les VEGFRs vont activer diverses fonctionnalités des cellules endothéliales comme leurs divisions et leurs maturations. 
+Au contact du VEGF, les VEGFRs vont activer diverses fonctionnalités des cellules endothéliales comme leur division et leur maturation. 
 Ceci fournit le matériel nécessaire à la création de nouveaux vaisseaux sanguins. 
 Ils sont construit par \emph{chimiotactisme} \cad qu'ils sont 
  orientés dans le sens où la concentration de facteur de croissance est la plus forte. 
@@ -117,20 +117,30 @@ Ceci explique ses principaux effets secondaires car elle va impacter aussi des c
 \paragraph{Les thérapies ciblées} sont des médicaments qui peuvent également être administrés par voies intraveineuses, mais sont de plus en plus prescrits en %métronomique sous forme de cachet à. Des versions
 systémique 
 %commencent également à voir le jour 
-(\ie sous forme de comprimés à prendre à heures fixes). Bien qu'étant diffusées dans tout l'organisme, ces thérapies ciblent un type spécifique de voies moléculaires (ou de récepteurs), voies moléculaires généralement caractéristiques des cellules malignes. Ce peut être des anticorps (X-mab) ou de petites molécules ciblant les fonctions tyrosines kinases (X-inib), fonctions impliquées dans l'activité cellulaire et la mitose. 
+(\ie sous forme de comprimés à prendre à heures fixes). Bien qu'étant diffusées dans tout l'organisme, ces thérapies ciblent un type spécifique de voies moléculaires (ou de récepteurs), voies moléculaires généralement caractéristiques des cellules malignes. 
+\correction{Chaque fonction cellulaire (mitose, apoptose, quiescence, ...) est régie par un ensemble de protéines qui agissent en cascade comme messagers~: les \emph{tyrosines kinases} (TK) (\cf Figure~\ref{fig:TK}). Les  thérapies ciblées inhibent ces tyrosines. Elles peuvent être des anticorps (le nom de la molécule thérapeutique est alors de la forme X-mab), comme illustrés sur la Figure~\ref{fig:TKI} ou de petites molécules ciblant les récepteurs de tyrosines kinases (RTK)  comme présentées sur la Figure~\ref{fig:RTKI} (le nom de la molécule est alors ici de la forme X-nib).}
+%Ce peut être des anticorps (X-mab) ou de petites molécules ciblant les fonctions tyrosines kinases (X-inib), fonctions impliquées dans l'activité cellulaire et la mitose. 
 
-En exemple nous pouvons citer l'\emph{imatinib} (Glivec) qui se fixe sur les récepteurs cellulaires (récepteurs de tyrosine kinase, RTK) commandant l'activité intra-cellulaire. En inhibant ces récepteurs, l'apoptose tend à se réactiver dans les cellules défectueuses. 
-Nous pouvons également citer le \emph{bevacizumab} (Avastin), qui inhibe l'angiogenèse, en se fixant sur les récepteurs de VEGF (que l'on abrège communément VEGFR). D'autres molécules, comme  le sorafenib ou le sunitinib, ont des effets multiples. 
-Le \emph{sorafenib} (Nexavar) est un inhibiteur, à la fois, de VEGFR et de Raf-kinase (tyrosine kinase intervenant dans la cascade de kinases activées lors de la mitose). 
-Le \emph{sunitinib} (Sutent) inhibe également les VEGFRs ainsi que les KIT-kinases (protéïnes CD117, qui sont des tyrosines kinases très souvent exprimées dans le cas de GIST, kinases normalement produites uniquement par les cellules souches).
+\begin{figure}
+\subfloat[\label{fig:TK}Les tyrosines kinases~: des messagers cellulaires]{\includegraphics[trim= 0mm 190mm 85mm 0mm, clip=true, width=.32\textwidth]{schema/voies_moleculaires.pdf}}\hfill
+\subfloat[\label{fig:TKI}Mode d'action d'un inhibiteur de tyrosine kinase (X-mab)]{\includegraphics[trim= 0mm 195mm 85mm 0mm, clip=true, width=.32\textwidth]{schema/anticorps.pdf}}\hfill
+\subfloat[\label{fig:RTKI}Mode d'action d'un inhibiteur de récepteurs à tyrosine kinase (X-inib)]{\includegraphics[trim= 0mm 195mm 85mm 0mm, clip=true, width=.32\textwidth]{schema/inhibiteur.pdf}}
+\caption{Les tyrosines kinases et leurs inhibiteurs\label{fig:voies_moleculaires}}
+\end{figure}
+
+En exemple nous pouvons citer l'\emph{imatinib} (Glivec\footnote{\correction{Nom commercial sous lequel la molécule en question est vendue.\label{footnote:nom_medoc}}}) qui se fixe sur les récepteurs cellulaires de tyrosines kinases %(récepteurs de tyrosine kinase, RTK) 
+commandant l'activité intra-cellulaire. En inhibant ces récepteurs, l'apoptose tend à se réactiver dans les cellules défectueuses. 
+Nous pouvons également citer le \emph{bévacizumab} (Avastin\samefootnote{footnote:nom_medoc}), qui inhibe l'angiogenèse, en se fixant sur les récepteurs de VEGF (que l'on abrège communément VEGFR). D'autres molécules, comme  le sorafénib ou le sunitinib, ont des effets multiples. 
+Le \emph{sorafénib} (Nexavar\samefootnote{footnote:nom_medoc}) est un inhibiteur, à la fois, de VEGFR et de Raf-kinase (tyrosine kinase intervenant dans la cascade de kinases activées lors de la mitose). 
+Le \emph{sunitinib} (Sutent\samefootnote{footnote:nom_medoc}) inhibe également les VEGFRs ainsi que les KIT-kinases (protéïnes CD117, qui sont des tyrosines kinases très souvent exprimées dans le cas de GIST, kinases normalement produites uniquement par les cellules souches).
 %%\todo[noline]{Kit --> commande la survie, la prolif, ou la division cellulaire}
 
 
-Tous les cas cliniques que nous étudions dans cet ouvrage ont été traités avec ce type de traitement. Dans le cas de métastases de GIST, l'imatinib est recommandé en première ligne~\cite{demetri2002efficacy}. 
+Tous les cas cliniques que nous étudions dans cet ouvrage ont été traités avec ce type de traitement. Dans le cas de métastases hépatiques de GIST, l'imatinib est recommandé en première ligne~\cite{demetri2002efficacy}. 
 %Si 
 Lorsque celui-ci devient inefficace %(ce qui arrive très souvent, 
 (des cellules résistantes se développant), le sunitinb est utilisé en seconde ligne~\cite{Demetri20061329,saltz2007phase,houk2010relationship}. 
-Dans certains cas de mutation génétique (du gène KIT notamment), il a même été montré une résistance à l'imatinib plus accrue que chez les autres patients (\cf~\cite{rubin2001kit,lux2000kit,lasota2000mutations}).
+Dans certains cas de mutation génétique (du gène KIT notamment), il a même été montré une résistance à l'imatinib plus accrue que chez les autres patients  (\cf~\cite{rubin2001kit,lux2000kit,lasota2000mutations}).
 
 %============= deb rapportstage M2 ==============\\
 %
@@ -182,15 +192,15 @@ Un scanner procède par acquisition d'images en couches. En ce qui concerne le s
 Sur chacun de ces plans on mesure l'absorption aux rayons~X~: la \emph{tomodensitométrie}. 
 Cette absorption dépend de la densité du tissu mais pas seulement~: elle dépend aussi de sa nature, de sa composition. 
 Chaque constituant de l'organisme à sa propre tomodensitométrie. 
-Celle-ci se mesure en \emph{unité Hounsfield}~(HU). Sur cette échelle, l'absorption au rayons~X de l'eau est définie comme étant zéro. Toute autre tomodensitométrie est alors exprimée relativement à cette absorption de référence. Par exemple l'air a une tomodensitométrie de \numprint[HU]{-1000}, le poumon de \numprint[HU]{-500}, la graisse de \numprint{-100} à \numprint[HU]{-50}, le foie autour de \numprint[HU]{+50}, les os entre \numprint{+700} et \numprint[HU]{+3000} %\todo{REF ?} 
-selon leurs spongiosités. %s'ils sont spongieux ou non. 
+Celle-ci se mesure en \emph{unité Hounsfield}~(HU). Sur cette échelle, l'absorption aux rayons~X de l'eau est définie comme étant zéro. Toute autre tomodensitométrie est alors exprimée relativement à cette absorption de référence. Par exemple l'air a une tomodensitométrie de \numprint[HU]{-1000}, le poumon de \numprint[HU]{-500}, la graisse de \numprint{-100} à \numprint[HU]{-50}, le foie autour de \numprint[HU]{+50}, les os entre \numprint{+700} et \numprint[HU]{+3000} %\todo{REF ?} 
+selon leur spongiosité. %s'ils sont spongieux ou non. 
 La tomodensitométrie est donc très variable. Pour pouvoir visualiser cette quantité, il est nécessaire de choisir une échelle adaptée à ce que l'on veut regarder. L'échelle sera définie par~:
 \begin{myitemize}
 \item deux absorptions limites choisies. 
-Le noir est associé à la plus petites de ces bornes, le blanc à l'autre. Au-delà de ces bornes aucune nuance de couleur n'apparaitra.
+Le noir est associé à la plus petite de ces bornes, le blanc à l'autre. Au-delà de ces bornes aucune nuance de couleur n'apparaitra.
 \item une fonction qui va définir la manière de passer du noir au blanc. Généralement, une fonction linéaire est considérée \cad que la variation du noir au blanc est constante.
 \end{myitemize}
-Par exemple, si nous nous intéressons aux poumons, l'échelle pourra être fixée entre \numprint[HU]{-1200} et~\numprint[HU]{+200} (qui est l'échelle suggérée par le logiciel OsiriX dans le cas du poumon). Avec cette échelle le foie apparait tout blanc avec très peu de nuances. Elle est donc inadaptée si nous  souhaitons observer le foie. Pour le foie, une échelle allant de \numprint{-135} à \numprint[HU]{+215} par exemple, sera beaucoup plus adaptée. 
+Par exemple, si nous nous intéressons aux poumons, l'échelle pourra être fixée entre \numprint[HU]{-1200} et~\numprint[HU]{+200} (qui est l'échelle suggérée par le logiciel OsiriX~\cite{rosset2004osirix,ratib2006open} dans le cas du poumon). Avec cette échelle le foie apparait tout blanc avec très peu de nuances. Elle est donc inadaptée si nous  souhaitons observer le foie. Pour le foie, une échelle allant de \numprint{-135} à \numprint[HU]{+215} par exemple, sera beaucoup plus adaptée. 
 Une telle échelle est illustrée plus loin dans ce manuscrit, \cf Figure~\ref{fig:schema_correspondance_gris} page~\pageref{fig:schema_correspondance_gris}.
 Cependant, pour le foie les variations de tomodensitométrie sont assez faibles, même en cas de maladie (métastases notamment). Les médecins ont alors recours à une méthode particulière pour augmenter le contraste des images~: le scanner avec produit de contraste iodé (PCI).
 
@@ -228,7 +238,7 @@ Les scanners réalisés avec PCI, sont effectués au temps portal. Ainsi au mome
 Des nuances au sein de la tumeur (entre le centre et le pourtour notamment) seront même discernables, ce qui va particulièrement nous intéresser pour tout ce qui concerne l'\hetero tumorale. L'ensemble des scanners présentés dans cet ouvrage a été réalisé avec un PCI.
 
 \section{Evaluation clinique de la réponse au traitement~: le critère RECIST}
-La surveillance des patients ayant des métastases hépatiques de GIST est assurée grâce à des scanners avec PCI réalisés environ tous les 2 mois. Ainsi, tous les 2 mois, les médecins acquièrent une série d'images en niveaux de gris, chaque image représentant une coupe transversale du thorax du patient. Les images que nous possédons ont une résolution de $512\times512$ pixels et chaque image est espacée d'environ $1mm$, ce qui représente environ 800 images par scanner du thorax. 
+La surveillance des patients ayant des métastases hépatiques de GIST est assurée grâce à des scanners avec PCI réalisés environ tous les 2 mois. Ainsi, tous les 2 mois, les médecins acquièrent une série d'images en niveaux de gris, chaque image représentant une coupe transversale du thorax du patient. Les images que nous possédons ont une résolution de $512\times512$ pixels et chaque image est espacée d'environ \numprint[mm]{1}, ce qui représente environ 800 images par scanner du thorax. 
 Le foie est présent sur environ 200 de ces coupes. 
 Ceci représente donc un nombre important de pixels. 
 Ainsi, pour évaluer la progression de la tumeur, il est nécessaire d'avoir un critère, qui permette de synthétiser les informations apportées par tous ces nombreux pixels. 
@@ -236,10 +246,12 @@ Le critère RECIST (de l'anglais Response Evaluation Criteria In Solid Tumors) e
 Il consiste à ne retenir de chaque scanner qu'une seule et unique information~: le diamètre de la métastase (ou de la plus grosse des métastases si le patient en a plusieurs). Si ce diamètre décroît ou est stable, alors le traitement est considéré comme efficace. S'il augmente de plus de 10\,\%, %alors
  l'échec thérapeutique est considéré %(et dans ce cas là, 
  (le traitement est alors changé). 
- Ce critère  a l'avantage d'être simple. 
+ Ce critère a l'avantage d'être simple. 
 Ceci étant, il a déjà démontré ses limites~\cite{benjamin2007we,choi2007correlation}, principalement dans l'évaluation de l'efficacité de traitements antiangiogéniques qui font apparaître  beaucoup de nécrose. 
-D'autres critères sont à l'étude, dont le critère Choi notamment (\cf~\cite{choi2008response,kalkmann2012consensus}), qui prend en compte aussi les densités internes de la métastase. 
-
+D'autres critères sont à l'étude, dont le critère Choi notamment  (\cf~\cite{choi2008response,kalkmann2012consensus}). 
+%, qui prend en compte aussi les densités internes de la métastase. 
+\correction{Ce critère améliore le critère RECIST. Il tient compte du diamètre de la métastase mais aussi de son niveau de gris moyen. Il illustre notamment qu'une tumeur peut évoluer sans qu'il y ait nécessairement une variation de l'aire tumorale~: dans ce cas les densités tumorales (et donc le  niveau de gris sur le scanner) varient. 
+Les travaux présentés ici, proposent une manière plus fine d'examiner les niveaux de gris par la prise en compte de leur répartition spatiale.}
 
 Dans le chapitre suivant, nous allons construire un modèle mathématique qui simule la croissance d'une tumeur. Ce modèle qui se démarque des précédents modèles notamment par son caractère spatial, soulignera particulièrement l'importance de la prise en compte des densités (caractère homogène ou \heterogene) dans l'évaluation de la réponse aux traitements dans le cas de métastases hépatiques de GIST.
 
@@ -255,24 +267,26 @@ la découverte de mutations actives du gène KIT, aussi bien que le rôle du PDG
 %the discovery of activating mutations of the KIT as well as the role of PDGFR and the new subsequent therapeutic development have revolutionized GISTs traitements. 
 Grâce à ces thérapies ciblées, les GISTs sont devenus des modèles typiques de traitements personnalisés du cancer~\cite{Blay2012}. 
 En particulier, la vie des patients ayant un GIST a été améliorée avec l'utilisation d'inhibiteurs de tyrosine kinase comme l'imatinib en première ligne, puis avec un inhibiteur multi-récepteurs de tyrosine kinase comme 
-le sunitinib ou le sorafenib,  
+le sunitinib ou le sorafénib,  
 qui inhibe les PDGFRs, VEGFRs et KIT, en seconde ligne de traitement. 
 Cependant plusieurs limites, en terme de diagnostic et en terme de résultats, résident encore.
 % However several limitations in terms of diagnosis and outcomes still remain. 
 Tout d'abord, une importante variabilité existe dans les caractéristiques moléculaires et génétiques qui gouvernent le pathogène de ces tumeurs.
 Hirota \etal\ ont démontré la présence d'altérations moléculaires du gène KIT dans ces tumeurs (\cf \cite{Hirota1998}). 
 En plus de ces mutations de la tumeur primaire, de secondes mutations ont été identifiées chez les patients atteints de GIST avancé prétraité avec un inhibiteur de tyrosine kinase. A l'heure actuelle, 10 ensembles moléculaires différents de GIST avec différentes altérations moléculaires ont été identifiés. 
-Chez les patients avec une mutation du gène KIT, une résistance à l'imatininb est fréquemment observée, comme reporté dans~\cite{Blay2011} et montré sur la Figure~\ref{fig:patients_EXON}. 
+Chez les patients avec une mutation du gène KIT, une résistance à l'imatinib est fréquemment observée, comme reporté dans~\cite{Blay2011} et montré sur la Figure~\ref{fig:patients_EXON_a}. 
+\correction{Dans ces cas là, il est alors fréquent de démarrer directement avec un traitement habituellement administré en seconde ligne (\cf Figure~\ref{fig:patients_EXON_b}).}  
 Chez les autres patients, l'imatinib contrôle les lésions métastatiques pendant une période plus ou moins longue, autour de~20-24 mois dans~85\% des cas. 
 Les praticiens doivent ensuite changer de molécule, ou bien utiliser une thérapie alternative. 
 Comme le pronostic et la sensibilité aux thérapies ciblées dépendent de chaque patient, notre but est de développer un modèle mathématique qui soit basé sur les images médicales des métastases au foie et qui soit dépendant de chaque patient. 
 Nous nous intéressons ici aux GISTs avancés afin de déterminer, pour chaque patient, aussi bien le moment de l'émergence de mutations dans les cellules cancéreuses, que le temps de rechute après la première ligne et la seconde ligne de traitement ainsi que des aspects géométriques de la croissance tumorale.
 
 \begin{figure}
-\subfloat[Patient présentant une mutation génétique EXON 11]{\includegraphics[width=.48\textwidth]{brio.png}}\hfill
-\subfloat[Patient présentant une mutation génétique EXON 9]{\includegraphics[width=.48\textwidth]{LAN.png}}
+\subfloat[Patient présentant une mutation génétique EXON 11\label{fig:patients_EXON_a}]{\includegraphics[width=.48\textwidth]{brio.png}}\hfill
+\subfloat[Patient présentant une mutation génétique EXON 9\label{fig:patients_EXON_b}]{\includegraphics[width=.48\textwidth]{LAN.png}}
 \caption{\label{fig:patients_EXON}Evolution de l'aire tumorale sur deux patients présentant des mutations génétiques EXON -- De telles mutations engendrent des résistances aux traitements accrues.}
 \end{figure}
+
 
 Ensuite, les nouveaux agents anti-cancéreux avec des mécanismes d'actions ciblés, comme ceux utilisés pour traiter les GISTs, ont démontré les limitations inhérentes et l'inadéquation de  l'évaluation usuelle (\ie le critère RECIST, \cf~\cite{suzuki2008}) de l'anatomie tumorale. En effet, celle-ci ne considère seulement que le plus large diamètre de la lésion. 
 Pour les cliniciens, le challenge consiste à optimiser ces traitements et en particulier à déterminer le moment le plus adéquat pour passer de la première ligne de traitement à la seconde afin d'augmenter la survie globale du patient. L'estimation du temps de rechute est donc cruciale.

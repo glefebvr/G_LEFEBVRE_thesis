@@ -5,7 +5,7 @@
 \chapter{Exploration de différentes pénalisations sur la fonction coût utilisée pour optimiser les niveaux de gris de la synthèse d'images scanners \label{chap:anx_penalisation} }
 \chaptermark{Exploration de différentes pénalisations} %%% Titre court pour l'entete
 
-\mylettrine{L}{ors} de la synthèse d'images scanners présentée au Chapitre~\ref{chap:optim_grey}, l'optimisation des niveaux de gris n'a pas été sans posée  de problème. Après avoir étudier des optimisations sur 3 niveaux de gris, puis 2, les cas atteignant pathologiquement le bord du domaine autorisé ($[0;255]$) persistaient. Des fonctions de pénalisation plus régulière qu'un simple créneau ont alors été testées à savoir une parabole tronquée ($\mathscr{C}^0$), puis une parabole tronquée régularisée avec le procédé de Moreau-Yosida que l'on présente ici (la régularisée est alors $\mathscr{C}^1$). On pourra se référer à~\cite{lemarechal1997practical,mifflin1999properties} pour plus de détails sur cette régularisation).
+\mylettrine{L}{ors} de la synthèse d'images scanners présentée au Chapitre~\ref{chap:optim_grey}, l'optimisation des niveaux de gris n'a pas été sans poser de problème. Après avoir étudié des optimisations sur 3 niveaux de gris, puis 2, les cas atteignant pathologiquement le bord du domaine autorisé ($[0;255]$) persistaient. Des fonctions de pénalisation plus régulière qu'un simple créneau ont alors été testées à savoir une parabole tronquée ($\mathscr{C}^0$), puis une parabole tronquée régularisée avec le procédé de Moreau-Yosida que l'on présente ici (la régularisée est alors $\mathscr{C}^1$). On pourra se référer à~\cite{lemarechal1997practical,mifflin1999properties} pour plus de détails sur cette régularisation).
 
 \section{Régularisation de Moreau-Yosida}
 \subsection{Présentation de la régularisation et propriétés}
@@ -21,7 +21,7 @@ $\forall c>0, \quad \forall u \in \reel^n, \quad J_c(u) \leq J(u) .$
 \end{prop}
 \noindent Si $J$ est une fonction à minimiser, alors la propriété suivante est utile~:
 \begin{prop}
-Soit $a$ le minimum de $J$. Soit $u$ l'un des antécédants de $a$. Alors $u$ minimise aussi $J_c$ et on a $J_c(u)=J(u)=a$ quelque soit $c>0$.
+Soit $a$ le minimum de $J$. Soit $u$ l'un des antécédents de $a$. Alors $u$ minimise aussi $J_c$ et on a $J_c(u)=J(u)=a$ quelque soit $c>0$.
 \end{prop}
 \begin{proof}Notons $f_u(v) := J(v) + \frac{1}{2c} \| v-u \|^2$.
 \begin{myitemize}
@@ -106,13 +106,13 @@ J_c(u) = \left\{  \begin{aligned}
 \end{equation*}
 L'allure de la fonction créneau~$J$ et de sa régularisée~$J_c$, sont présentées Figure~\ref{fig:regul_creneau}.
 
-Notons que la fonction n'est régulière qu'aux abords des minimums. La valeur 0 est raccordée de manière dérivable, mais pas de dérivabilité pour le raccord en~$1$.
+Notons que la fonction n'est régulière qu'aux abords des minima. La valeur 0 est raccordée de manière dérivable, mais pas de dérivabilité pour le raccord en~$1$.
 
 Remarquons également que plus le paramètre $c$ est grand, plus l'intervalle sur lequel agit la régularisation est large.
 
 
 On pourrait aller beaucoup plus loin dans l'étude des propriétés de cette régularisation. %%\todo{biblio} 
-De nombreuses publications ont été faites notamment dans des cas où l'on ne connait pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
+De nombreuses publications ont été faites notamment dans des cas où l'on ne connaît pas analytiquement la fonction $J$ et où l'on s'intéresse notamment au problème adjoint... Nous ne nous étalerons pas plus sur ce vaste sujet : là n'est pas l'objet de ce manuscrit.
 
 %%%%%%%%%%%%%%%%%
 \subsection{Régularisation de Moreau-Yosida appliquée à une parabole tronquée.}

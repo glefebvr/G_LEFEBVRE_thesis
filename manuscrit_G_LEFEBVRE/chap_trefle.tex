@@ -48,7 +48,7 @@ Ce problème n'apparaît pas de manière systématique. L'ensemble des simulatio
 %par incident, lorsque nous cherchions à recoller notre modèle aux données de \Chen. 
 
 
-Notons que ce type d'erreur sur la forme conduit à une erreur sur l'évolution de l'aire de la lésion. En effet la forme de trèfle augmente la surface de contact ce qui modifie l'interaction entre la vascularisation et la tumeur. Ce type d'instabilités doit être fixé.
+Notons que ce type d'erreur sur la forme conduit à une erreur sur l'évolution de l'aire de la lésion. En effet la forme de trèfle augmente la surface de contact ce qui modifie l'interaction entre la vascularisation et la tumeur. Ce type d'instabilités doit être supprimé.
 
 
 \section{Le schéma de diffusion}
@@ -77,7 +77,7 @@ Le schéma associé à la diffusion a été le premier à être incriminé. En e
 %\vspace{-4mm}\\
 \caption{\label{fig:ligne_nvx_laplace} Résolution de la pression donnée par un laplacien. La forme du domaine de calcul carré se répercute sur le résultat.}
 \end{figure} 
-L'effet carré sur les lignes de niveaux de la pression, apparaît surtout près du bord du domaine de calcul. Ainsi, pour tenter de pallier à ce défaut, la première idée fut de considérer un domaine plus grand, laissant une sorte de couche limite pour absorber les déformations. Des simulations numériques de notre modèle ont été réalisées en doublant la longueur dans chaque direction (la taille d'une maille restant inchangée, on double aussi le nombre de mailles). Malheureusement, une forme de trèfle est toujours visible. On a même du mal à distinguer visuellement s'il y a eu une amélioration. 
+L'effet carré sur les lignes de niveaux de la pression, apparaît surtout près du bord du domaine de calcul. Ainsi, pour tenter de pallier ce défaut, la première idée fut de considérer un domaine plus grand, laissant une sorte de couche limite pour absorber les déformations. Des simulations numériques de notre modèle ont été réalisées en doublant la longueur dans chaque direction (la taille d'une maille restant inchangée, on double aussi le nombre de mailles). Malheureusement, une forme de trèfle est toujours visible. On a même du mal à distinguer visuellement s'il y a eu une amélioration. 
 %Visiblement cette 
 Cette couche limite ne suffit donc pas. 
 
@@ -107,7 +107,7 @@ Explorons alors une autre piste.
 
 \subsection{Schéma à 9 points}
 La forme du trèfle fait très clairement apparaître les directions du maillage. Il est alors légitime de se demander si un schéma avec un stencil à 9 points ferait aussi apparaître ce genre de forme. 
-Le premier schéma à 9 points essayé est le schéma classique, présenté notamment dans~\cite{leveque2007finite}, ayant des poids comme indiqués sur la Figure~\ref{fig:schema_laplace_9pts_classique}, page~\pageref{fig:schema_laplace_9pts_classique}. Aucune amélioration n'a malheureusement été constatée... Un second schéma à 9 points a été imaginé à partir d'une méthode mixte éléments finis/volumes finis comme présentée et utilisée dans~\cite{latige2013second} (méthode d'ordre 2 pour les équations elliptiques à coefficients discontinus, \cf annexe~\ref{chap:anx_methode_mixte_VFEF} pour plus de détail). 
+Le premier schéma à 9 points essayé est le schéma classique, présenté notamment dans~\cite{leveque2007finite}, ayant des poids comme indiqués sur la Figure~\ref{fig:schema_laplace_9pts_classique}, page~\pageref{fig:schema_laplace_9pts_classique}. Aucune amélioration n'a malheureusement été constatée... Un second schéma à 9 points a été imaginé à partir d'une méthode mixte éléments finis/volumes finis comme présentée et utilisée dans~\cite{latige2013second} (méthode d'ordre 2 pour les équations elliptiques à coefficients discontinus, \cf annexe~\ref{chap:anx_methode_mixte_VFEF} pour plus de détails). 
 Ici encore le trèfle persiste. Tout ceci nous amène à penser que le schéma de diffusion n'est pas responsable de cette instabilité numérique qui génère le trèfle. Regardons maintenant de plus près le schéma de transport. 
 
 \section{Le schéma de transport}
@@ -269,7 +269,7 @@ où~$\beta\in[0,1]$ est un paramètre numérique que nous devons choisir.
 En particulier pour~$\beta=0$, on retrouve le WENO5 standard. 
 
 
-Sur la Figure~\ref{fig:evo_test_transp_twinweno}, on peut visualiser le bénéfice apporté par le \twinweno sur le modèle réduit. Ici bien que le résultat final ne soit pas parfaitement circulaire (de l'ordre de quelques pourcents d'erreur), on peut voir que la conservation de l'invariance par rotation est très améliorée. Cette amélioration est également rendue sur le modèle complet comme nous pouvons le voir sur la Figure~\ref{fig:compWENO5}, comparée à la même simulation présentée~Figure~\ref{fig:trefle}, réalisée avec un WENO5 standard.
+Sur la Figure~\ref{fig:evo_test_transp_twinweno}, on peut visualiser le bénéfice apporté par le \twinweno sur le modèle réduit. Ici, bien que le résultat final ne soit pas parfaitement circulaire (de l'ordre de quelques pourcents d'erreur), on peut voir que la conservation de l'invariance par rotation est très améliorée. Cette amélioration est également rendue sur le modèle complet comme nous pouvons le voir sur la Figure~\ref{fig:compWENO5}, comparée à la même simulation présentée~Figure~\ref{fig:trefle}, réalisée avec un WENO5 standard.
 
 \begin{figure}[!htb]
 \vspace{-5mm}

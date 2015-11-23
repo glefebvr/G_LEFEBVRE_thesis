@@ -18,7 +18,7 @@ Les histogrammes associés à ces scanners (que nous appellerons par abus de lan
 Dans un second temps, nous appliquerons ce même traitement aux images produites par la simulation numérique du modèle EDP présenté précédemment. Les histogrammes des images de synthèse produites numériquement (que nous  appellerons aussi par abus de langage \og histogrammes numériques \fg) seront présentés et comparés aux histogrammes cliniques. De même, le quantificateur de l'\hetero que nous aurons construit sera appliqué aux histogrammes numériques. Nous pourrons ainsi voir à quel point le modèle EDP est capable de reproduire les aspects homogènes et \heterogenes des tumeurs que l'on considère.
 
 
-Le code de calcul développé pour traiter cette partie fait intervenir plusieurs langages de programmation. Sa structure est présenté dans l'Annexe~\ref{chap:structure_code}. 
+Le code de calcul développé pour traiter cette partie fait intervenir plusieurs langages de programmation. Sa structure est présentée dans l'Annexe~\ref{chap:structure_code}. 
 
 
 \section{Construction des histogrammes de niveaux de gris}
@@ -35,7 +35,7 @@ H(x) = \dfrac{ \# X_x  }{ \# X }, \qquad \forall x \in \{ 0,1,2,\ldots,255 \}
 où~$x$ désigne un niveau de gris et~$X_x$ désigne la partition de la liste~$X$ qui ne contient que les éléments~$x$ (le symbole~$\#$ désignant le cardinal).
 
 \subsection{Histogrammes cliniques} 
-Les données dont nous disposons (\cf Annexe~\ref{chap:anx_img_complement}) sont celles produites par le scanner (\cf Section~\ref{sec:fct_scan} pour la description de la procédure d'acquisition d'images médicales). Beaucoup plus riches qu'un agglomérat de pixels, ces données (méta-images) au format DICOM, nécessitent l'utilisation d'un outil adapté pour les visualiser. OsiriX est ainsi utilisé pour:
+Les données dont nous disposons (\cf Annexe~\ref{chap:anx_img_complement}) sont celles produites par le scanner (\cf Section~\ref{sec:fct_scan} pour la description de la procédure d'acquisition d'images médicales). Beaucoup plus riches qu'un agglomérat de pixels, ces données (méta-images) au format DICOM, nécessitent l'utilisation d'un outil adapté pour les visualiser. Le logiciel OsiriX~\cite{rosset2004osirix,ratib2006open} est ainsi utilisé pour~:
 \begin{myitemize}
 \item Choisir une coupe pertinente sur chaque scanner et l'exporter (également au format DICOM) de sorte à avoir ensuite des données 2D à traiter.
 \item Contourer manuellement la métastase. OsiriX dispose d'un outil crayon adapté à ce type de manipulation. Le contourage réalisé définit alors une ROI, que l'on peut également exporter (au format .xml).
@@ -81,7 +81,7 @@ où~:
 \label{eq:hauteur_gaussienne}
 h_i := \dfrac{w_i}{\sigma_i \sqrt{2\pi}} \qquad i=1;2,
 \end{equation}
-où~$w_i$ est le poids associé à chacune des composantes, choisi de telle sorte que~:
+où~$w_i$ est le poids associé à chacune des composantes, choisis de telle sorte que~:
 \begin{equation}
 w_1+w_2=1.
 \end{equation}
@@ -589,7 +589,7 @@ Examinons à présent les résultats fournis par ce critère.
 \end{figure}
 
 
-L'\hetero clinique, pour \Nber, fournie par le critère\HH est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_nber}. Ici, le critère reproduit bien les pics d'\heteros (jour~119 et jour~776). La regain d'\hetero final, qui démarre avant la rechute au second traitement (jour 1100), et qui se poursuit pendant la rechute, est également bien capturé. Les phases homogènes sont également relativement bien reproduites. L'évaluation visuelle qui amenait à considérer l'\hetero constante du jour~209 au jour~688 est ainsi précisée par le critère. Manifestement le jour~331 est donc légèrement plus \heterogene. 
+L'\hetero clinique, pour \Nber, fournie par le critère\HH est présentée sur la Figure~\ref{fig:critere_dc2_sur_dh_nber}. Ici, le critère reproduit bien les pics d'\heteros (jour~119 et jour~776). Le regain d'\hetero final, qui démarre avant la rechute au second traitement (jour 1100), et qui se poursuit pendant la rechute, est également bien capturé. Les phases homogènes sont également relativement bien reproduites. L'évaluation visuelle qui amenait à considérer l'\hetero constante du jour~209 au jour~688 est ainsi précisée par le critère. Manifestement le jour~331 est donc légèrement plus \heterogene. 
 %Notons que bien qu'écartés, plusieurs autres critères (notamment~$\mathcal{H}_{10}$ et~$\mathcal{H}_6(\widehat{MRA})$) 
 %avaient aussi capté cette subtilité. 
 Enfin la forte homogénéisation causée par le second traitement est également bien traduite. 

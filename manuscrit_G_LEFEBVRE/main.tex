@@ -106,6 +106,11 @@
 \usepackage{lipsum}
 \usepackage{booktabs} %% midrule
 \usepackage{array}
+%%% Ajout de descripteur de colonne
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{colortbl} %% rowcolor
@@ -131,7 +136,19 @@
 %%\usepackage{showkeys} %%% Pour faire afficher les label utilisés
 %%%%%\usepackage[plain]{fancyref}
 \usepackage{xr}
-\usepackage{hyperref} %%% Les premieres compilations fournisse une erreur. recompiler plsrs fois ...
+
+%%%%% Definition des metadonnees du fichier pdf
+\usepackage[pdftex,
+            pdfauthor={Guillaume LEFEBVRE},
+            pdftitle={Modélisation et analyse de l'hétérogénéité tumorale lors de résistance aux traitements~: cas des métastases hépatiques de GIST},
+            pdfsubject={Mathématiques appliquées à la cancérologie},
+            pdfkeywords={modélisation, simulation numérique, cancer, croissance tumorale, hétérogénéité  tumorale, résistance aux traitements, EDPs},
+            pdfinfo={Manuscrit de thèse de Guillaume LEFEBVRE},
+            pdfdisplaydoctitle={true},
+            linktocpage={true},
+            linkcolor={blue},
+            linkbordercolor={0 0 1},
+            hyperfootnotes={false}]{hyperref} %%% Les premieres compilations fournisse une erreur. recompiler plsrs fois ...
 
 %%% Dimension page pour final
 %\usepackage[left=35mm,right=25mm,top=30mm,bottom=30mm]{geometry} 
@@ -169,7 +186,7 @@
 \usepackage{fancyhdr} %%%% incompatible avec la class memoir
 
 
-\usepackage[bottom]{footmisc} %%% force les footnotes sur la meme page que le footnotemark
+\usepackage[bottom]{footmisc} %%% force les footnotes sur la meme page que le footnotemark et donne la commande \footref (pour faire reference plusieurs fois a une meme note de bas de page)
 
 %%%%%% Parametrage des entetes et pied de page %%%%%%%%
 \pagestyle{fancy}
@@ -258,6 +275,7 @@
 %\newcommand{\grisfonce}{gray!70}
 \newcommand{\grisclair}{gray!30}
 \newcommand{\grisfonce}{gray!50}
+\newcommand{\correction}[1]{{\color{blue}#1}}
 
 \setlength\doublerulesep{2mm} %% hauteur entre 2 \hline successifs
 \newlength{\retraittableau}
@@ -362,7 +380,12 @@
 %\newcommand{\titrefr}{Résistances aux traitements : modélisation et analyse de l'\hetero tumorale dans le cas de métastases hépatiques de GIST}
 %\newcommand{\titreen}{Treatments resistances~: tumor heterogeneity modeling and analysis in case of GIST liver metastases}
 
-\newcommand{\titrefr}{Modélisation et analyse de l'\hetero tumorale lors de résistance aux traitements~: cas des métastases hépatiques de GIST}
+%\newcommand{\titrefr}{Modélisation et analyse de l'\hetero tumorale lors de résistance aux traitements~: cas des métastases hépatiques de GIST}
+%\newcommand{\titreen}{Tumor heterogeneity modeling and analysis, during  treatments resistance: case of GIST liver metastases}
+
+\newcommand{\shortitlefr}{Modélisation et analyse de l'\hetero tumorale lors de résistance aux traitements}
+\newcommand{\subtitlefr}{cas des métastases hépatiques de GIST}
+\newcommand{\titrefr}{\shortitlefr~: \subtitlefr}
 \newcommand{\titreen}{Tumor heterogeneity modeling and analysis, during  treatments resistance: case of GIST liver metastases}
 
 %%%=====================================================%%%%
@@ -378,33 +401,92 @@
 
 
 \begin{titlepage}
-\centering \Large
+\vspace*{-2cm}\hspace*{-2cm}\includegraphics[width=0.3\textwidth]{logo/Universite_Bordeaux_CMJN-10.jpg}\\
+%\vspace{0.5cm}
+  \begin{center}
+  \textbf{\textsc{\LARGE Thèse}}\\
+
+  	\vspace{0.5cm}
+   pour l'obtention du grade de\\
+   	\vspace{0.5cm}
+  \textbf{\textsc{\LARGE Docteur de l'université de Bordeaux}}\\
+  	\vspace{0.5cm}
+  {\Large École doctorale de mathématiques et d'informatique\\
+  	Mathématiques appliquées et calcul scientifique}\\
+  \vfill
+  \textbf{\Large Guillaume LEFEBVRE}\\
+  \vfill
+  \hrule \vspace{0.5cm}
+  \begin{tabular}{C{12cm}}
+  \sc \Large \shortitlefr~: \vspace{1mm}\\ 
+  \sc \large \subtitlefr  
+  \end{tabular}
+  \vspace{0.5cm}\hrule
+\vfill
+sous la direction de : \textbf{Thierry COLIN}
+\end{center}
+\vfill
+\begin{flushleft}
+\textit{Soutenue le 3 décembre 2015}\\ \vspace{5mm}
+\textit{Devant la commission d'examen :}
+\end{flushleft}
+\vspace{-5mm}
+\begin{center}\begin{tabular}{p{6cm} p{50mm} l}
+ Mme. Simona MANCINI & Maître de conférence & Rapporteur \\
+ Mme. Stéphanie SALMON & Professeur & Rapporteur \\
+ M. Thierry COLIN & Professeur & Directeur \\
+ M. Fran\c cois CORNELIS & Docteur & Examinateur \\
+ M. Nicolas MEUNIER & Maître de conférence & Examinateur \\
+ M. Olivier SAUT & Maître de conférence & Examinateur\\
+\end{tabular}\end{center}
+\end{titlepage}
+
+%\begin{titlepage}
+%\centering \Large
+%\vspace*{4cm}
+%Thèse de \\
+%~\\
+%{\LARGE Guillaume LEFEBVRE}\\
+%\vspace{5cm}
+%\titrefr \\
+%\vspace{5cm}
+%\normalsize
+%Version du \today, \printtime
+%\end{titlepage}
+
+\cleardoublepage
+\thispagestyle{empty}
+{\centering \Large
 \vspace*{4cm}
 Thèse de \\
 ~\\
 {\LARGE Guillaume LEFEBVRE}\\
 \vspace{5cm}
 \titrefr \\
-\vspace{5cm}
+\vspace{55mm}
 \normalsize
+\begin{flushright}
 Version du \today, \printtime
-\end{titlepage}
+\end{flushright}
+}
 
 \frontmatter % Le prologue du livre
 
 \cleardoublepage
+%%\thispagestyle{empty}
+\thispagestyle{plain}
 \subfile{resume}
 
+\cleardoublepage
+\specialchap{Remerciements} %%% defauts si mis dans un autre fichier avec subfile
+%%%\chapter{Remerciements}
+%%%\renewcommand\chaptername{Remerciements}
+\input{remerciements.tex}
 
-%\specialchap{Remerciements} %%% defauts si mis dans un autre fichier avec subfile
-%%\chapter{Remerciements}
-%%\renewcommand\chaptername{Remerciements}
-%\input{remerciements.tex}
-
-
+\cleardoublepage
 %%\updatechaptername
 %%\renewcommand\chaptername{Sommaire}
-\pagestyle{plain} \cleardoublepage
+\pagestyle{plain}
 %%\setcounter{tocdepth}{5}
 \addcontentsline{toc}{chapter}{Sommaire}
 \tableofcontents    % Table des matières

@@ -19,7 +19,7 @@ De nombreuses études fondamentales, pré-cliniques ou cliniques ont été réal
  D'un autre côté, les mathématiques ont pris une place omniprésente dans la vie de tous les jours au travers de la modélisation~: aéronautique, aérospatial, automobile, économie, télécommunication... Elles sont capables de modéliser un très large spectre de problèmes physiques, chimiques, biologiques, épidémiologiques, etc. Pourquoi ne pas les utiliser pour modéliser la croissance tumorale, en particulier pour prédire les rechutes aux traitements ou pour personnaliser les traitements à chaque patient ? 
  
 \paragraph{}
-Les travaux présentés ici s'inscrivent dans cette démarche~\cite{cornelis2013vivo,jouganous2014}. Ils constituent un premier pas dans la modélisation de résistance aux traitements, basée sur des images cliniques. 
+Les travaux présentés ici s'inscrivent dans cette démarche~\cite{cornelis2013vivo,jouganous2014}. Ils constituent un premier pas dans la modélisation de la résistance aux traitements, basée sur des images cliniques. 
 Plus particulièrement, il s'agit là de proposer un modèle mathématique décrivant la croissance de métastases 
 %(tumeurs filles) 
 (localisations secondaires disséminées à partir d'une lésion primitive)
@@ -32,7 +32,7 @@ il s'agit donc d'un cancer assez rare mais il présente des spécificités qui e
 Dans 25\% des cas, ce cancer migre vers le foie~\cite{dematteo2000}. 
 %%Ces métastases sont connues pour être relativement résistantes aux traitements anti-cancéreux, ce qui donne un intérêt certain à la modélisation de leurs comportements. 
 %Ces métastases peuvent être résistantes aux traitements conventionnels comme la chimiothérapie ou la radiothérapie. Ainsi d'autres thérapeutiques ont été proposées comme les inhibiteurs de la tyrosine kinase ou les traitements anti-angiogéniques.  Malheureusement, en fonction des mutations rencontrées ou acquises, des résistances à ces traitements peuvent également être rencontrées sur ce type de métastases, ce qui donne un intérêt certain à la modélisation de leurs comportements. 
-En fonction des mutations rencontrées ou acquises, ces métastases peuvent être résistantes aussi bien aux traitements conventionnels (comme la chimiothérapie ou la radiothérapie) qu'aux nouvelles thérapies ciblées (comme les inhibiteurs de la tyrosine kinase ou les traitements anti-angiogéniques), ce qui donne un intérêt certain à la modélisation de leurs comportements. 
+En fonction des mutations rencontrées ou acquises, ces métastases peuvent être résistantes aussi bien aux traitements conventionnels (comme la chimiothérapie ou la radiothérapie) qu'aux nouvelles thérapies ciblées (comme les inhibiteurs de la tyrosine kinase ou les traitements anti-angiogéniques), ce qui donne un intérêt certain à la modélisation de leur comportement. 
 Notre but ici, est de construire un modèle qui reproduise qualitativement et quantitativement la croissance d'une tumeur, et ce à partir de l'imagerie médicale.
 
 \paragraph{}
@@ -42,7 +42,7 @@ utilise le critère RECIST\footnote{de l'anglais~: Response Evaluation Criteria 
 que le diamètre de la plus large lésion. 
 L'information exploitée %retenue 
 semble donc très faible au regard de toutes celles contenues dans les scanners. 
-Plusieurs études ont déjà montrées ses limitations~\cite{benjamin2007we}, en particulier lors de traitements anti-angiogéniques. L'imagerie fait apparaître beaucoup d'autres particularités, notamment l'\hetero tumorale~\cite{heppner1984tumor,chabat2003obstructive} à laquelle nous nous intéresserons tout au long de ce manuscrit. L'\hetero peut-elle être liée à l'émergence de populations cellulaires résistantes (comme dans le cas des sarcomes~\cite{eary2008spatial}) ? Peut-on reproduire ce caractère par la modélisation ? Comment la quantifier ?
+Plusieurs études ont déjà montré ses limitations~\cite{benjamin2007we}, en particulier lors de traitements anti-angiogéniques. L'imagerie fait apparaître beaucoup d'autres particularités, notamment l'\hetero tumorale~\cite{heppner1984tumor,chabat2003obstructive} à laquelle nous nous intéresserons tout au long de ce manuscrit. L'\hetero peut-elle être liée à l'émergence de populations cellulaires résistantes (comme dans le cas des sarcomes~\cite{eary2008spatial}) ? Peut-on reproduire ce caractère par la modélisation ? Comment la quantifier ?
 %La principale particularité à laquelle nous nous intéresserons sera l'\hetero tumorale. Quelles sont les informations sur le comportement de la tumeur que l'ont peut extraire de l'imagerie médicale ? Les critères actuels de lecture de l'imagerie médicale sont-ils suffisant ? L'\hetero peut-elle apportée une information supplémentaire ? 
 
 
@@ -63,7 +63,7 @@ Dans le second chapitre, nous présentons le modèle, qui consiste en un systèm
 les modèles basés sur des équations différentielles ordinaires (EDOs), comme les modèles~\cite{gerlee2013model} de Mendelsohn, de Gompertz ou de 
 Bertalanffy, permettent de suivre la croissance de l'aire tumorale mais ils ne considèrent aucun aspect spatial de cette croissance. Nous en référons à l'analyse de Benzekry {\it et al.} pour plus de détails sur de tels modèles 1D~\cite{benzekry2014}. 
 Notre modèle est dans le même esprit que celui de Ribba~{\it et
-  al.}~\cite{Ribba2006532} -- nous vous renvoyons également à~\cite{Iollo2012,gallinato2014} -- pour décrire l'évolution de la maladie. 
+  al.}~\cite{Ribba2006532} -- nous renvoyons également à~\cite{Iollo2012,gallinato2014} -- pour décrire l'évolution de la maladie. 
 En ce qui concerne notre modèle, il a été choisi de travailler en 2D d'espace dans le but de coller avec les habitudes des radiologistes (le critère RECIST imposant de sélectionner une coupe). De nombreux modèles spatiaux existent déjà~: des modèles basés sur des automates  cellulaires~\cite{alarcon2003cellular,drasdo2003individual}, à ceux basés sur la théorie du mélange~\cite{ambrosi2002}, en passant par les modèles d'agents~\cite{mansury2002emerging} et les modèles basés sur la théorie de réaction-diffusion~\cite{rockne2009mathematical} ou sur la mécanique des fluides~\cite{Iollo2012}. Plusieurs échelles de modélisation sont couvertes par ce panel de modèles~\cite{cristini2010multiscale}. Afin de reproduire les données cliniques, un modèle macroscopique a été choisi ici. 
 %%%%% on n'a pas choisi le modele de diffusion car requiert une connaissance au bord de la tumeur, qui ne peut pas etre extraite precisemment des scanners + bord tumoral = notion controversé
 
@@ -87,14 +87,14 @@ Les résultats de ce second chapitre sont un premier pas vers la compréhension 
 \paragraph{}
 Dans un troisième chapitre, les aspects numériques seront abordés. 
 %En particulier, il a fallu faire face à une instabilité numérique que l'on présentera et à laquelle l'équipe n'avait jamais été confrontée avec les schémas classiques utilisés. %qu'elle utilisait. 
-Nous étudions ici des croissances de tumeurs avec traitement, sur du long terme et avec de forts rétrécissements de la taille induit par les traitements. Ce sont là autant de raisons qui présentent l'originalité du problème. Nous montrerons que les champs de vitesses non communs obtenus lors de la simulation numérique  sont à l'origine d'instabilités numériques. 
-%Enfin un nouveau schéma de transport sera proposé, le \twinweno, pour pallier à cette instabilité.
-Enfin une variante du schéma de transport sera proposée, le \twinweno, pour pallier à cette instabilité.
+Nous étudions ici des croissances de tumeurs avec traitement, sur du long terme et avec de forts rétrécissements de la taille induits par les traitements. Ce sont là autant de raisons qui présentent l'originalité du problème. Nous montrerons que les champs de vitesses non communs obtenus lors de la simulation numérique  sont à l'origine d'instabilités numériques. 
+%Enfin un nouveau schéma de transport sera proposé, le \twinweno, pour pallier cette instabilité.
+Enfin une variante du schéma de transport sera proposée, le \twinweno, pour pallier cette instabilité.
 
 \paragraph{}
 Dans le quatrième chapitre, nous détaillerons la reconstruction %comment construit-on 
-d'images scanners de synthèse à partir des résultats numériques. La simulation numérique fournit la répartition spatio-temporelle de différentes populations cellulaires. En aucun cas cela ne fournit les niveaux d'absorptions des tissus au rayons X, comme mesurés par les scanners. Il nous faut donc un moyen de reconstituer des images scanners de synthèse à partir de ces densités de populations, dans le but de rapprocher au plus près %(une optimisation a été faite) 
-le format des résultats numériques à celui des données cliniques.
+d'images scanners de synthèse à partir des résultats numériques. La simulation numérique fournit la répartition spatio-temporelle de différentes populations cellulaires. En aucun cas cela ne fournit les niveaux d'absorption des tissus au rayons X, comme mesurés par les scanners. Il nous faut donc un moyen de reconstituer des images scanners de synthèse à partir de ces densités de populations, dans le but de rapprocher au plus près %(une optimisation a été faite) 
+le format des résultats numériques de celui des données cliniques.
 Cette construction d'images scanners de synthèse permettra une meilleure comparaison des résultats obtenus avec les données cliniques. 
 %Elle est également d'un intérêt non négligeable pour le clinicien, qui peut ainsi regarder nos résultats numériques comme s'il s'agissait de scanners réels. 
 
@@ -134,6 +134,7 @@ La robustesse du critère vis-à-vis de la paramétrisation choisie pour la synt
 Ce critère montrera notamment les limites du modèle EDP en terme de reproduction de l'\hetero tumorale.
 
 \paragraph{}
-Enfin diverses annexes viendront compléter les discussions menées au cours de ce manuscrit. En particulier, j'attire l'attention sur l'annexe~\ref{chap:anx_img_complement} qui présente notamment, en images, l'ensemble des données cliniques dont nous disposons pour les deux patients, données qui ont toutes été acquises sur la même machine. 
+Enfin diverses annexes viendront compléter les discussions menées au cours de ce manuscrit. En particulier, %j'attire l'attention sur 
+l'annexe~\ref{chap:anx_img_complement} qui présente notamment, en images, l'ensemble des données cliniques dont nous disposons pour les deux patients, données qui ont toutes été acquises sur la même machine. 
 
 \end{document}

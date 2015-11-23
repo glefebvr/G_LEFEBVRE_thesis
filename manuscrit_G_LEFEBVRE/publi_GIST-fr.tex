@@ -222,7 +222,7 @@ la découverte de mutations actives du gène KIT, aussi bien que le rôle du PDG
 %the discovery of activating mutations of the KIT as well as the role of PDGFR and the new subsequent therapeutic development have revolutionized GISTs traitements. 
 Grâce à ces thérapies ciblées, les GISTs sont devenus des modèles typiques de traitements personnalisés du cancer \cite{Blay2012}. 
 En particulier, la vie des patients ayant un GIST a été améliorée avec l'utilisation d'inhibiteurs de tyrosine kinase comme l'imatinib en première ligne, puis avec un inhibiteur multi-récepteurs de tyrosine kinase comme
-le sunitinib ou le sorafenib,  
+le sunitinib ou le sorafénib,  
 qui inhibe les PDGFRs, VEGFRs et KIT, en seconde ligne de traitement. 
 Cependant plusieurs limites, en terme de diagnostic et en terme de résultats, résident encore.
 % However several limitations in terms of diagnosis and outcomes still remain. 
@@ -349,10 +349,10 @@ Nous introduisons également les effets liés aux facteurs de croissance au trav
 
 La principale nouveauté réside en la modélisation des traitements. Deux traitements sont considérés (on peut voir dans \cite{lorz2013}, les récents travaux de Lorz~\etal\ pour des modèles plus élaborés sur les résistances aux traitements). 
 Le premier est un inhibiteur de tyrosine kinase, comme l'imatinib, qui a un effet cytotoxique 
-sur les cellules proliférantes. Le second est inhibiteur multi-kinases, comme le sunitinib ou le sorafenib, qui a un effet à la fois cytotoxique et antiangiogénique. En d'autres termes, en plus de l'effet cytotoxique, il bloque la production de facteurs de croissance, comme le facteur de croissance vasculaire endothélial (VEGF), et ainsi réduit la quantité de nutriments apportée à la tumeur. 
+sur les cellules proliférantes. Le second est inhibiteur multi-kinases, comme le sunitinib ou le sorafénib, qui a un effet à la fois cytotoxique et antiangiogénique. En d'autres termes, en plus de l'effet cytotoxique, il bloque la production de facteurs de croissance, comme le facteur de croissance vasculaire endothélial (VEGF), et ainsi réduit la quantité de nutriments apportée à la tumeur. 
 Il est bien connu que les médicaments cytotoxiques n'ont pas un impact similaire sur toutes les cellules cancéreuses métastatiques car des phénotypes résistants peuvent apparaître dans la population de cellules proliférantes. De plus les cellules cancéreuses peuvent résister différemment à l'hypoxie. Par conséquent nous découpons, comme dans~\cite{Bresch2009}, la densité~$P$ de cellules proliférantes en 3 sous-populations~$P_1$, $P_2$ et~$P_3$, telles  que~$P=P_1+P_2+P_3$, où
 \begin{itemize}
-\item $P_1$ représente la fraction de cellules proliférantes qui sont sensibles au premier traitement~$\TI$, basé sur la molécule d'imatinib, et sensible aussi au second traitement~$\TS$, à base de sunitinib ou de sorafenib, qui a un effet à la fois cytoxique et antiangiogénique. 
+\item $P_1$ représente la fraction de cellules proliférantes qui sont sensibles au premier traitement~$\TI$, basé sur la molécule d'imatinib, et sensible aussi au second traitement~$\TS$, à base de sunitinib ou de sorafénib, qui a un effet à la fois cytoxique et antiangiogénique. 
 \item $P_2$ désigne la densité de cellules proliférantes qui sont résistantes à~$\TI$ et sensibles à~$\TS$,
 \item $P_3$ représente les cellules proliférantes résistantes aux deux traitements. 
 \end{itemize}
@@ -1031,7 +1031,7 @@ Dans cette section, on s'intéresse à \Chen, dont l'évolution tumorale est ass
 \begin{enumerate}[label=\roman*)]
 \item \Chen est traité dans un premier temps avec un inhibiteur de tyrosine kinase mono-cible (imatinib), qui stabilise l'aire de la tumeur pendant plus de 10 mois avant une rechute. 
 \item Le sunitinib, inhibiteur de tyrosine kinase multi-cibles, est démarré mais contrairement à \Nber, il est totalement inefficace. 
-\item Un troisième traitement est administré. Le sorafenib est un autre inhibiteur de tyrosine kinase multi-cibles, qui a à la fois un effet cytotoxique et antiangiogénique. La tumeur semble être sensible à ce médicament pendant plusieurs mois jusqu'à ce qu'une nouvelle rechute arrive. 
+\item Un troisième traitement est administré. Le sorafénib est un autre inhibiteur de tyrosine kinase multi-cibles, qui a à la fois un effet cytotoxique et antiangiogénique. La tumeur semble être sensible à ce médicament pendant plusieurs mois jusqu'à ce qu'une nouvelle rechute arrive. 
 \end{enumerate}
 Malheureusement, comme illustré par la Figure~\ref{fig:fit_area_chen}, l'évolution tumorale est très rapide entre le scanner du jour~429 et celui de jour~845 sur lequel la métastase a atteint le bord du foie, et ainsi, avec notre modèle nous n'avons pas espoir de fournir une croissance tumorale numérique qui soit spatialement en accord avec les scanners car les effets de bord de l'organe devraient être pris en compte. Par conséquent, nous nous intéresserons à la l'aire tumorale comme donnée par les cliniciens, le principal enjeu ici étant de capter une croissance aussi rapide. 
 
@@ -1082,11 +1082,11 @@ Les valeurs des paramètres utilisés dans la simulation numérique sont donnée
 
 Comme le sunitinib est totalement inefficace dans ce cas, nous considérons que le 
 traitement~$\TI$ est administré du jour~0 au jour~845, tandis que le 
-traitement~$\TS$, basé sur le sorafinib, est administré du jour~1049 au jour~1600. 
+traitement~$\TS$, basé sur le sorafénib, est administré du jour~1049 au jour~1600. 
 Nous avons trouvé des paramètres qui rendent possible la comparaison qualitative entre l'aire tumorale mesurée par les cliniciens et notre aire tumorale numérique. Ces paramètres sont donnés dans la  Table~\ref{table_param}. 
 La donnée initiale a été choisie invariante par rotation, en accord avec les données de la 
 Figure~\ref{fig_chen_spatial_1}.
-Comme on peut le voir, l'évolution tumorale est très raide~: entre le  jour~416 et le jour~614 l'aire de la tumeur a été multipliée par plus de 9, et une fois que le sorafenib est administré, l'aire décroît de~4\;500\;$mm^2$ à~2\;850\;$mm^2$. Nous parvenons malgré tout à obtenir, au moins qualitativement, un tel comportement avec notre modèle, même si le fit n'est pas parfait. 
+Comme on peut le voir, l'évolution tumorale est très raide~: entre le  jour~416 et le jour~614 l'aire de la tumeur a été multipliée par plus de 9, et une fois que le sorafénib est administré, l'aire décroît de~4\;500\;$mm^2$ à~2\;850\;$mm^2$. Nous parvenons malgré tout à obtenir, au moins qualitativement, un tel comportement avec notre modèle, même si le fit n'est pas parfait. 
 
 
 Nous avons aussi examiné l'effet de l'efficacité du traitement~$\treat_1$, comme pour \Nber. 
@@ -1122,8 +1122,8 @@ Notre modèle reproduit les données cliniques pour \Nber et \Chen. De plus, il 
 \begin{enumerate}[label={\alph{*})}]
 \item La métastase est contrôlée par le traitement~$\TI$ (imatinib). 
 Dans ce cas, il n'y a pas besoin de changer de traitement. 
-\item La métastase est contrôlée par le traitement~$\TI$ mais la tumeur recroît ensuite. Le traitement~$\TS$ (sunitinib ou sorafenib) est alors administré avec succès et l'aire tumorale est contrôlée. 
-\item La métastase est contrôlée par le traitement~$\TI$ avant une première rechute. Le traitement~$\TS$ (sunitinib ou sorafenib) est alors administré et est efficace avant une seconde rechute. 
+\item La métastase est contrôlée par le traitement~$\TI$ mais la tumeur recroît ensuite. Le traitement~$\TS$ (sunitinib ou sorafénib) est alors administré avec succès et l'aire tumorale est contrôlée. 
+\item La métastase est contrôlée par le traitement~$\TI$ avant une première rechute. Le traitement~$\TS$ (sunitinib ou sorafénib) est alors administré et est efficace avant une seconde rechute. 
 \item La métastase est contrôlée par le traitement~$\TI$ avant une première rechute. Ensuite le traitement~$\TS$ est totalement inefficace. 
 \item Le traitement~$\TI$ est totalement inefficace. 
 Ensuite le traitement~$\TS$ est efficace et l'aire de la tumeur est contrôlée. 
