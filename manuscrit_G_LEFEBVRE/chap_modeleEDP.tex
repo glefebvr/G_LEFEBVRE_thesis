@@ -172,7 +172,8 @@ Par conséquent, selon les observations cliniques, il semble pertinent de consid
 
 \subsection{Le modèle mathématique}
 
-Soit~$\Omega$ le domaine d'intérêt, où la tumeur croît, et soit~$\partial\Omega$ son bord, qui est supposé aussi régulier que nécessaire. Le domaine~$\Omega$ est supposé strictement inclus dans le tissu --le foie-- qui est plus grand \correction{(sinon, notre modèle devrait aussi prendre en compte des contraintes physiques liées à la paroi du foie)}. De plus, nous supposons que la tumeur n'atteint pas le bord~$\partial\Omega$ \correction{(sinon la donnée au bord du domaine de calcul devient prépondérante, donnée que nous ne possédons pas de manière précise d'autant  plus que la notion de front tumoral reste encore très controversée)}.
+Soit~$\Omega$ le domaine d'intérêt, où la tumeur croît, et soit~$\partial\Omega$ son bord, qui est supposé aussi régulier que nécessaire. Le domaine~$\Omega$ est supposé strictement inclus dans le tissu --le foie-- qui est plus grand \correction{(sinon, notre modèle devrait aussi prendre en compte des contraintes physiques liées à la paroi du foie, contraintes que nous ne savons pas décrire qualitativement). Nous supposons donc que la tumeur n'atteint pas le  bord~$\partial\Omega$.} 
+%\correction{(sinon la donnée au bord du domaine de calcul devient prépondérante, donnée que nous ne possédons pas de manière précise d'autant  plus que la notion de front tumoral reste encore très controversée)}.
 
 \subsubsection{EDPs sur les cellules proliférantes, nécrosées et saines}
 
@@ -190,7 +191,8 @@ La densité de cellules proliférantes est gouvernée par l'équation de transpo
 où~$\chii(t)=\mathds{1}_{[\Tini{i},\rm \Tend{i}[}(t)$ est la fonction temps-caractéristique du 
 traitement~$\treat_{\rm i}$ et~$\mu_{\rm i}$ représente le taux de mortalité\footnote{Le taux de mortalité dû au traitement est clairement lié à la dose de médicament délivrée au patient, mais pas seulement. Par exemple la sensibilité du patient et la dose parvenant vraiment à la tumeur sont aussi impliquées.} causé par~$\treat_{\rm i}$ sur les cellules proliférantes, pour~$\rm i\in\{1,2\}$. 
 Le terme~$\vit (t,\vecx)$ désigne la vitesse impliquée dans les changements d'aire de la tumeur et~$M(t,\vecx)$ représente la vascularisation et l'apport en nutriments. 
-Le terme $1+M$ traduit le fait que les traitements arrivent principalement par le réseau sanguin. 
+Le terme $1+M$ traduit le fait que les traitements arrivent à la tumeur principalement\footnote{\correction{Un traitement administré en intraveineuse agit même sur les tumeurs non vascularisées. Une partie du traitement parvient donc toujours à la tumeur. A cet apport de traitement de base (considéré égal à 1), s'ajoute l'apport par voies sanguines ($M$).}} par le réseau sanguin. 
+%\correction{Nous avons arbitrairement choisi de décomposer ce terme en deux composantes~: une partie (égale à 1) qui arrive toujours à la tumeur même si elle est non vascularisée à laquelle s'ajoute la partie acheminée via le réseau sanguin~$M$.}  
 Le taux de prolifération (respectivement de mortalité) des cellules proliférantes, noté~$\gammapp$ (respectivement~$\gammapd$), dépend de~$M$ comme suit~:
 \begin{align}
 \gammapp(M) &=\gamma_0 \frac{1+\tanh\big(R(M-\Ms)\big)}{2}, \label{eq_gammapp}\\
@@ -228,7 +230,8 @@ P = P_1+P_2+P_3,
 \end{equation}
 et où~$\muN$ est un paramètre qui contrôle le taux d'élimination de la nécrose par le système immunitaire. 
 Le membre de droite de l'équation~\eqref{eq_N} collecte tous les termes de mort cellulaire des équations~\eqref{eq_P1},\eqref{eq_P2},\eqref{eq_P3} et \eqref{eq_S}. 
-Le terme $1+M$ traduit le fait que plus le milieu est vascularisé, plus l'élimination de la nécrose est rapide. 
+Le terme $1+M$ traduit le fait que plus le milieu est vascularisé, plus l'élimination de la nécrose est rapide\footnote{\correction{Les phagocytes (cellules qui éliminent la nécrose) circulent dans l'organisme à travers le réseau lymphatique et le réseau sanguin. Ainsi, nous avons choisi de distribuer l'élimination de la nécrose de la même manière : une élimination de fond de la nécrose (que l'on considère égale à 1), qui a toujours lieu, même sans vascularisation, 
+ à laquelle s'ajoute une élimination par voie sanguines ($M$).}}.
 %Notez que b
 %Biologiquement il ne serait pas aberrant de considérer que cette élimination pourrait dépendre également de la pression $\Pi$ du milieu (que l'on décrit un peu plus loin). 
 %Ce type de considération conduit cependant à un modèle mathématiquement mal posé. 
@@ -898,7 +901,7 @@ qui sont aussi résistantes au traitement~$\TS$. \correction{Pour \Nber, le choi
 \begin{figure}
 \subfloat[\label{fig:CI_Y1D}Section de la condition initiale (en $y=0$) représentative du comportement générale. Ici $e=0$ et $r_1=1.5\;cm$.]{\includegraphics[width=.49\textwidth]{CI/Yini_d.png}}\quad
 \subfloat[\label{fig:CI_Y2D}Aspect spatial de la CI pour la simulation numérique lié à \Nber ($e=0.35, r_1=0.47, r_2=0.36$) -- Seule la région ${[2,4]^2}$ est présentée ici, la fonction étant nulle sur le reste du domaine.]{\includegraphics[width=.49\textwidth]{CI/Yini_ligne_de_nvx.png}}
-\caption{Géométrie de la condition initiale (avec ici $L=D=6\;cm$)\label{fig:CI_Y}}
+\caption{\correction{Géométrie de la condition initiale (avec ici $L=D=6\;cm$)\label{fig:CI_Y}}}
 \end{figure}
 
 \subsubsection{Comparaison des résultats numériques avec les données cliniques}
