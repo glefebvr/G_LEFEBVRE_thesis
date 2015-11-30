@@ -1016,7 +1016,7 @@ Définissons deux durées caractéristiques~:
 \subfloat[Portrait de phase.]{
 \label{fig:portrait_phase_nber}
 \includegraphics[width=0.5\textwidth]{DB-nber-eff-glivec/portrait_phase.png}}
-\caption{Efficacité du traitement~$\muI$ sur \Nber. Les étoiles correspondent aux paramètres utilisés dans la Figure~\ref{fig_nber} pour le fit de l'aire tumorale. \label{fig:eff_glivec_nber}}
+\caption{Efficacité du traitement~$\TI$ (imatinib) sur \Nber. Les étoiles correspondent aux paramètres utilisés dans la Figure~\ref{fig_nber} pour le fit de l'aire tumorale. -- $\muI$~: Taux de mortalité des cellules proliférantes dû au traitement~$\TI$. \label{fig:eff_glivec_nber}}
 \end{figure}
 
 
@@ -1038,7 +1038,9 @@ la population~$P_1$, qui est prédominante lorsque la lésion est détectée, es
 Ces courbes montrent qu'il existe un seuil~$\mu_{th}$ à partir duquel le traitement~$\treat_1$ est efficace. Au-delà de ce seuil, l'aire minimale atteinte par la tumeur décroît, mais le temps de survie sans progression du patient n'augmente pas.
 
 \section{Discussion}
-Dans la section précédente, nous avons étudié en détail notre modèle sur un patient spécifique, \Nber, dont la lésion tumorale a été suivie par une série de scanners. Nous avons trouvé les paramètres qui rendent possible la comparaison qualitative des images médicales avec les images numériques, grâce à notre synthèse numérique de scanners et nous avons également fité l'aire tumorale. La lésion du patient est intéressante car elle est confinée à l'intérieur du foie et donc son évolution n'est pas mécaniquement contrainte par l'organe. 
+Dans la section précédente, nous avons étudié en détail notre modèle sur un patient spécifique, \Nber, dont la lésion tumorale a été suivie par une série de scanners. Nous avons trouvé les paramètres qui rendent possible la comparaison qualitative des images médicales avec les images numériques, grâce à notre synthèse numérique de scanners et nous reproduisons également 
+% avons également fité 
+l'aire tumorale. La lésion du patient est intéressante car elle est confinée à l'intérieur du foie et donc son évolution n'est pas mécaniquement contrainte par l'organe. 
 Cependant, dans certains cas, la métastase est proche du bord du foie. Dans de tels cas, il n'y a pas d'espoir de produire des résultats quantitatifs sur l'évolution spatiale de la lésion, mais dans la section suivante, nous montrerons que l'évolution de l'aire tumorale peut être correctement décrite.
 \subsection{Evolution de l'aire tumorale de \Chen}\label{section chen}
 Dans cette section, nous nous intéressons à \Chen, dont l'évolution tumorale est assez différente de celle de \Nber. En effet le protocole clinique associé à ce patient est le suivant~:
@@ -1165,7 +1167,8 @@ Il est intéressant de noter que nos simulations numériques font apparaître un
 Nous avons également étudié numériquement l'effet du paramètre~$\muI$, lié à l'efficacité du traitement~$\TI$. Nous avons montré que, selon notre modèle, augmenter la valeur de~$\muI$ -- ce qui peut être vu comme une augmentation de la dose administrée -- ne fournit pas de meilleurs résultats en terme de survie sans progression comme le montre la Figure~\ref{fig:eff_glivec_nber}.
 
 
-Il est important de noter que notre modèle fite bien les données, cependant il n'est pas prédictif. En effet, comme expliqué par la Figure~\ref{fig:possibilites2}, on peut voir que les trois comportements typiques~$\rm{b,c,d}$ peuvent être obtenus avec le même comportement durant les 400 premiers jours. Ceci est dû au fait que sur les images médicales, il est compliqué de dire {\it a priori}, ce qu'il va se passer lors du second traitement avant même de l'avoir utilisé. 
+Il est important de noter que notre modèle reproduit %fite
+ bien les données, cependant il n'est pas prédictif. En effet, comme expliqué par la Figure~\ref{fig:possibilites2}, on peut voir que les trois comportements typiques~$\rm{b,c,d}$ peuvent être obtenus avec le même comportement durant les 400 premiers jours. Ceci est dû au fait que sur les images médicales, il est compliqué de dire {\it a priori}, ce qu'il va se passer lors du second traitement avant même de l'avoir utilisé. 
 %avant d'utiliser le second traitement, entre 
 Entre une tumeur principalement composée de la population~$P_2$ (comme pour le cas~${\rm b}$) de la Figure~\ref{fig:possibilites2}) et une tumeur avec une population~$P_3$ (comme donnée par la courbe~${\rm d}$) de la Figure~\ref{fig:possibilites2}), les issues à long terme sont très différentes. 
 En d'autres termes, on peut trouver différents jeux de paramètres qui donnent le même comportement initial. Ceci signifie que des données plus précises, comme de l'imagerie fonctionnelle, devront être nécessaires pour une meilleure analyse de la structure interne de la métastase. 
