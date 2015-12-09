@@ -257,7 +257,7 @@ on obtient
 \end{equation}
 Nous soulignons que nous traitons ici de métastases hépatiques de GIST et non de tumeurs primaires du foie. Par conséquent, les cellules métastatiques ne grandissent pas dans leur milieu d'origine~: elles ne peuvent pas infiltrer le foie (comme le ferait un glioblastome dans le cerveau par exemple~\cite{Fathallah2013}) mais leur prolifération induit une pression qui pousse les cellules saines vers l'extérieur. Pour ces raisons, nous choisissons une loi de Darcy pour décrire la croissance de la métastase %. 
 %La loi de Darcy assure 
-et assurer la solvabilité du système, de manière similaire à~\cite{Ribba2006532}:
+et assurer la solvabilité du système, de manière similaire à~\cite{Ribba2006532}~:
 \begin{equation}\label{eq_darcy}
 \left\{
 \begin{aligned}
@@ -406,8 +406,8 @@ Notons que la densité de cellules saines~$S$ est donnée par~\eqref{eq_saturati
 %\end{prop}
 \begin{prop}\label{prop:positivite_modele}
 %%Dans le modèle~\eqref{eq_transport_pop}, si
-Soient $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ une solution de classe~$\mathscr{C}([0,T]\times \Omega)$ du système~\eqref{eq_transport_pop}. 
-\correction{On suppose que la divergence de la vitesse~$\vit$ est bornée ($L^\infty([0,T]\times \Omega)$) et que~$M$ l'est aussi.}  
+Soient $P_i(t,\vecx), N(t,\vecx) $ et $S(t,\vecx)$ une solution de classe $\mathscr{C}([0,T]\times \Omega)$ du système~\eqref{eq_transport_pop}. 
+\correction{On suppose que la divergence de la vitesse~$\vit$ est bornée ($\dive \vit \in L^\infty([0,T]\times \Omega)$) et que~$M$ l'est aussi.}  
 %la vitesse~$\vit$ est régulière et que~$M$ est bornée. 
 Si $P_i(0,\vecx), N(0,\vecx)$ et~$S(0,\vecx)$ sont positives ou nulles alors 
 $$\forall t \in [0,T], \quad  N(t,\vecx)\geq0, \quad  P_i(t,\vecx)\geq0, \quad S(t,\vecx)\geq0. $$
@@ -873,8 +873,8 @@ d(\vecx)=\sqrt{\left(\dfrac{ x - L/2 }{e (x - L/2) +
       \crm r_1}\right)^2+\left(\dfrac{ y - D/2 }{e (y -
       D/2 ) + \crm r_2}\right)^2 },
 \end{equation}
-avec~$\vecx=(x,y)$ et où~$c=\dfrac{2\pi}{2\pi-\arccos(1-2\epsilon_{th})}$. 
-La fonction~$Y$ définie par\footnote{Notons que si~$e=0$, alors~$Y$ est  invariant par rotation.}
+avec~$\vecx=(x,y)$ et où~$c=\dfrac{2\pi}{2\pi-\arccos(1-2\epsilon_{th})}$.
+Considérons~$Y$ défini par\footnote{Notons que si~$e=0$, alors~$Y$ est  invariant par rotation.}
 \begin{equation}Y(\vecx)=\left\{
 \begin{array}{ll}
 1 & \textrm{si}\ d(\vecx)\leq 0.5,\\
@@ -899,7 +899,7 @@ où~$\Sigma_{ini}$ représente la proportion de cellules résistantes au traitem
 qui sont aussi résistantes au traitement~$\TS$. \correction{Pour \Nber, le choix des paramètres~$e=0.35$ et~$r_1=0.47$, $r_2=0.36$ fournit une géométrie acceptable\footnote{Acceptable du point de vue de nos objectifs. La condition initiale construite avec ces paramètres ressemble assez à la tumeur réelle, mais ce n'est en aucun cas une reproduction fidèle de la géométrie constatée sur les scanners. Ici, notre but premier n'est pas de reproduire cette géométrie. L'approximation réalisée ici nous suffit donc.}.} 
 
 \begin{figure}
-\subfloat[\label{fig:CI_Y1D}Section de la condition initiale (en $y=0$) représentative du comportement générale. Ici $e=0$ et $r_1=1.5\;cm$.]{\includegraphics[width=.49\textwidth]{CI/Yini_d.png}}\quad
+\subfloat[\label{fig:CI_Y1D}Section de la condition initiale (en $y=0$) représentative du comportement générale. Ici $e=0$ et $r_1=1.5\;cm$.]{\includegraphics[width=.49\textwidth]{CI/Yini_d.png}}\hfill
 \subfloat[\label{fig:CI_Y2D}Aspect spatial de la CI pour la simulation numérique lié à \Nber ($e=0.35, r_1=0.47, r_2=0.36$) -- Seule la région ${[2,4]^2}$ est présentée ici, la fonction étant nulle sur le reste du domaine.]{\includegraphics[width=.49\textwidth]{CI/Yini_ligne_de_nvx.png}}
 \caption{\correction{Géométrie de la condition initiale (avec ici $L=D=6\;cm$)\label{fig:CI_Y}}}
 \end{figure}
@@ -933,7 +933,7 @@ L'aspect spatial des simulations numériques présentées dans la Figure~\ref{fi
 \includegraphics[width=0.32\textwidth]{fit_henbert_form3/vue_scan/vue_scan86.png}}
 \caption{Simulation numérique pour \Nber~: évolution\protect\footnotemark~spatiale de la lésion avec reconstruction numérique de scanners} \label{fig:simu_henbert_scan}
 \end{figure}
-\footnotetext{\correction{Le décalage de quelque jour entre les images cliniques et les images numériques est dû au fait que les sorties numériques (étant limitées pour ne pas alourdir le calcul numérique déjà  couteux) ne coïncident pas nécessairement avec les jours auxquels sont réalisés les examens médicaux.}}
+\footnotetext{\correction{Le décalage de quelques jours entre les images cliniques et les images numériques est dû au fait que les sorties numériques (étant limitées pour ne pas alourdir le calcul numérique déjà  coûteux) ne coïncident pas nécessairement avec les jours auxquels sont réalisés les examens médicaux.}}
 
 
 Les résultats numériques spatiaux sont en accord avec les données, au moins jusqu'au début de la dernière rechute autour du jour~1000. En fait, les cinq étapes que nous observons numériquement sont également constatées sur les scanners (\cf Figure~\ref{fig_hen_spatial_1}-\ref{fig_hen_spatial_6}).
