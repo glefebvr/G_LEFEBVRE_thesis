@@ -5,7 +5,7 @@ $M_{th}$ & Seuil d'hypoxie & - & 2 & 2 \\
 $\muN$ & Taux d'élimination de la nécrose par le \mbox{système} \mbox{immunitaire} & $d^{-1}$ & 1.33e-2 & 8.19e-2 \\
 $\psi$ & Taux de diffusion des nutriments & $cm^2.d^{-1}$ & 1.33e-2 & 3.33e-3 \\
 $\eta$ & Taux de consommation des cellules cancéreuses & $d^{-1}$ & 6.67e-2 & 8.05e-3 \\
-$\alpha$ & Excitabilité angiogénique & $d^{-1}$ & 1.11e-3 & 8.0e-3 \\
+$\alpha$ & Excitabilité angiogénique & $cm^{-1}.d^{-2}$ & 1.11e-3 & 8.0e-3 \\
 $\lambda$ & Taux d'élimination du signal de facteurs de \mbox{croissance} \mbox{angiogénique} & $d^{-1}$ & 2.0e-2 & 0.68 \\
 $C_0$ & Capacité angiogénique du tissu sain & $d^{-1}$ & 3.33e-2 & 3.33e-2 \\
 $k$ & Perméabilité du tissu & $kg^{-1}.cm^3.d$ & 1 & 1 \\
